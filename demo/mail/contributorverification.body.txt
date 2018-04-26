@@ -1,0 +1,8 @@
+Değerli {{title}} {{firstName}} {{lastName}};
+
+ideaport sistemine hoş geldiniz. Yenilenen sistematiklerimiz, internet sitemiz ve ilgi çekici içeriklerle çok yakın zamanda sizlerle buluşacağız. Bir kez daha hatırlatmak isteriz ki destek verme konusunda verdiğiniz yanıtlar bağlayıcı değildir. İhtiyaca göre, katkının verilmesi ve şartları konusunda sizinle ayrıca temasa geçilebilecektir. Gelişmelerden sizleri haberdar edeceğiz. Gösterdiğiniz ilgi için teşekkür ederiz.
+
+Sizi daha iyi tanımamız için lütfen bilgi formunu doldurunuz:
+http://etkilesim.ideaport.org.tr/survey1/{{sessionKey}}
+
+Bu e-posta {{emailFromName}} tarafından {{emailAddress}} adresine gönderilmiştir.
