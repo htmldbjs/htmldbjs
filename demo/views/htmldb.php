@@ -8,7 +8,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Title</title>
 	<meta name="description" content="">
-	<base href="/spac/v1.0/htmldbtest/" />
 	<meta name="author" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<meta name="apple-mobile-web-app-capable" content="yes">
@@ -176,7 +175,7 @@ data-htmldb-priority=""></div>
 			data-htmldb-priority=""></div>
 		-->
 
-		<script type="text/javascript" src="assets/js/htmldb.1.1.0.js"></script>
+		<script type="text/javascript" src="../source/htmldb.js"></script>
 
 	</body>
 	</html>
