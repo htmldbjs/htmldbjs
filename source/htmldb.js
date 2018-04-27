@@ -107,39 +107,51 @@ var HTMLDB = {
 			return false;
 		}
 	},
-	"validate":function(tableElementId, p2, functionDone) {
+	"validate":function(tableElementId, object, functionDone) {
 		var tableElement = document.getElementById(tableElementId);
 		if (!tableElement) {
+        	throw(new Error("HTMLDB table "
+        			+ tableElementId
+        			+ " will be readed, but not found."));
 			return false;
 		}
 
-		if (p2.id == undefined) {
+		var loading = parseInt(tableElement.getAttribute("data-htmldb-loading"));
+
+		if (loading > 0) {
+        	throw(new Error("HTMLDB table "
+        			+ tableElementId
+        			+ " is loading right now."));
 			return false;
 		}
 
-		var bLoading = parseInt(tableElement.getAttribute("data-htmldb-loading"));
-
-		if (bLoading > 0) {
+		if (object.id == undefined) {
+        	throw(new Error("HTMLDB table "
+        			+ tableElementId
+        			+ " rows must have unique id field."));
 			return false;
 		}
 
-		var strValidateURL = "";
-		strValidateURL = tableElement.getAttribute("data-htmldb-validate-url");
+		var validateURL = HTMLDB.__getHTMLDBParameter(tableElement, "validate-url");
+		validateURL = HTMLDB.__evaluateHTMLDBExpression(validateURL);
 
-		if ("" == strValidateURL) {
+		if ("" == validateURL) {
+        	throw(new Error("HTMLDB table "
+        			+ tableElementId
+        			+ " validate URL attribute is empty."));
 			return false;
 		}
 
 		var iframeFormGUID = document.getElementById(tableElementId + "_iframe_container").children.length;
 		HTMLDB.__createNewIframeAndForm(tableElementId, iframeFormGUID);
 
-		var strTarget = (tableElementId + "_iframe_" + iframeFormGUID);
-		if (!document.getElementById(strTarget)) {
+		var target = (tableElementId + "_iframe_" + iframeFormGUID);
+		if (!document.getElementById(target)) {
 			return false;
 		}
 
 		var formHTMLDB = document.getElementById(tableElementId + "_form_" + iframeFormGUID);
-		var iframeHTMLDB = document.getElementById(strTarget);
+		var iframeHTMLDB = document.getElementById(target);
 		var iframeNewElement = iframeHTMLDB.cloneNode(true);
 		iframeHTMLDB.parentNode.replaceChild(iframeNewElement, iframeHTMLDB);
 		iframeHTMLDB = iframeNewElement;
@@ -169,26 +181,26 @@ var HTMLDB = {
 
         formHTMLDB.innerHTML = "";
 
-		var strFormContent = "<input class=\"inputaction\" type=\"hidden\" name=\""
-				+ "inputaction0"
+		var formContent = "<input class=\"htmldbaction\" type=\"hidden\" name=\""
+				+ "htmldbaction0"
 				+ "\" value=\""
-				+ ((0 == p2.id) ? "inserted" : "updated")
+				+ ((0 == object.id) ? "inserted" : "updated")
 				+ "\" />";
 
-		var strPropertyName = "";
+		var propertyName = "";
 
-		for (var strPropertyName in p2) {
-        	if (p2.hasOwnProperty(strPropertyName)) {
-				strFormContent += "<input class=\"inputfield\" type=\"hidden\" name=\""
-						+ "inputfield0" + strPropertyName
+		for (var propertyName in object) {
+        	if (object.hasOwnProperty(propertyName)) {
+				formContent += "<input class=\"htmldbfield\" type=\"hidden\" name=\""
+						+ "htmldbfield0_" + propertyName
 				 		+ "\" value=\""
-						+ p2[strPropertyName]
+						+ object[propertyName]
 						+ "\" />";
         	}
     	}
 
-		formHTMLDB.innerHTML = strFormContent;
-        formHTMLDB.action = strValidateURL;
+		formHTMLDB.innerHTML = formContent;
+        formHTMLDB.action = validateURL;
 
         try {
 			formHTMLDB.submit();
@@ -567,6 +579,7 @@ var HTMLDB = {
 	"__initializeHTMLDBButtons": function() {
 		HTMLDB.__initializeHTMLDBRefreshButtons();
 		HTMLDB.__initializeHTMLDBAddButtons();
+		HTMLDB.__initializeHTMLDBSaveButtons();
 	},
 	"__resetForm": function (form) {
 		var elements = form.elements;
@@ -669,7 +682,7 @@ var HTMLDB = {
             return false;
         }
 
-        var tableElementId = HTMLDB.__exploreHTMLDBTable(element);
+        var tableElement = HTMLDB.__exploreHTMLDBTable(element);
 
         if ((element.HTMLDBInitials !== undefined)
         		&& (element.HTMLDBInitials.attributes !== undefined)) {
@@ -680,7 +693,7 @@ var HTMLDB = {
             for (var i = 0; i < attributeCount; i++) {
                 attributeName = element.HTMLDBInitials.attributes[i].name;
                 attributeValue = element.HTMLDBInitials.attributes[i].value;
-                content = HTMLDB.__evaluateHTMLDBExpression(attributeValue, tableElementId);
+                content = HTMLDB.__evaluateHTMLDBExpression(attributeValue, tableElement.id);
                 element.setAttribute(attributeName, content);
             }
         }
@@ -696,7 +709,7 @@ var HTMLDB = {
         if (0 == childrenCount) {
             if ((element.HTMLDBInitials !== undefined)
             		&& (element.HTMLDBInitials.content !== undefined)) {
-                content = HTMLDB.__evaluateHTMLDBExpression(element.HTMLDBInitials.content, tableElementId);
+                content = HTMLDB.__evaluateHTMLDBExpression(element.HTMLDBInitials.content, tableElement.id);
                 element.innerHTML = content;
             } else {
             	if (HTMLDB.__hasHTMLDBParameter(element, "content")) {
@@ -710,12 +723,12 @@ var HTMLDB = {
     	var inputCount = inputs.length;
     	var input = null;
     	var valueTemplate = "";
-    	var tableElementId = HTMLDB.__exploreHTMLDBTable(form);
+    	var tableElement = HTMLDB.__exploreHTMLDBTable(form);
     	for (var i = 0; i < inputCount; i++) {
     		input = inputs[i];
     		valueTemplate = HTMLDB.__getHTMLDBParameter(input, "value");
 			HTMLDB.__setInputValue(input,
-					HTMLDB.__evaluateHTMLDBExpression(valueTemplate, tableElementId));
+					HTMLDB.__evaluateHTMLDBExpression(valueTemplate, tableElement.id));
     	}
     },
 	"__initializeHTMLDBRefreshButtons": function () {
@@ -743,6 +756,20 @@ var HTMLDB = {
 				buttonElement.addEventListener("click", HTMLDB.__doAddButtonClick, true);
 			} else if (buttonElement.attachEvent) {
 	            buttonElement.attachEvent("onclick", HTMLDB.__doAddButtonClick);
+	        }
+	    }
+	},
+	"__initializeHTMLDBSaveButtons": function () {
+        var buttonElements = document.body.querySelectorAll(".htmldb-button-save");
+        var buttonElementCount = buttonElements.length;
+        var buttonElement = null;
+
+        for (var i = 0; i < buttonElementCount; i++) {
+        	buttonElement = buttonElements[i];
+			if (buttonElement.addEventListener) {
+				buttonElement.addEventListener("click", HTMLDB.__doSaveButtonClick, true);
+			} else if (buttonElement.attachEvent) {
+	            buttonElement.attachEvent("onclick", HTMLDB.__doSaveButtonClick);
 	        }
 	    }
 	},
@@ -1575,7 +1602,34 @@ var HTMLDB = {
     			exit = true;
     		}
     	}
-    	return parent;
+
+    	parentElement = document.getElementById(parent);
+
+    	if (!parentElement) {
+        	throw(new Error("HTMLDB table " + parent + " not found."));
+			return false;
+    	}
+
+    	return parentElement;
+    },
+    "__exploreHTMLDBForm": function(element) {
+    	var exit = false;
+    	if (element.className.indexOf("htmldb-form") != -1) {
+    		return element;
+    	}
+    	var element = element.parentNode;
+    	while (!exit && (-1 == element.className.indexOf("htmldb-form"))) {
+    		element = element.parentNode;
+    		if ("body" == element.tagName.toLowerCase()) {
+    			exit = true;
+    		}
+    	}
+    	if (exit) {
+        	throw(new Error("HTMLDB form not found."));
+			return false;
+    	} else {
+    		return element;
+    	}
     },
 	"__doReaderIframeLoad":function(p1) {
 		HTMLDB.__doirlc(p1, false);
@@ -1586,13 +1640,63 @@ var HTMLDB = {
 	},
 	"__doAddButtonClick": function(event) {
 		var formElement = document.getElementById(HTMLDB.__getHTMLDBParameter(event.target, "form"));
-
 		if (!formElement) {
         	throw(new Error("Add button HTMLDB form not found."));
 			return false;
 		}
-
 		HTMLDB.__resetForm(formElement);
+	},
+	"__doSaveButtonClick":function(event) {
+		var formId = HTMLDB.__getHTMLDBParameter(event.target, "form");
+		var form = null;
+
+		if (formId != "") {
+			form = document.getElementById(formId);
+			if (!form) {
+	        	throw(new Error("Save button HTMLDB form not found."));
+				return false;
+			}
+		} else {
+			form = HTMLDB.__exploreHTMLDBForm(event.target);			
+		}
+
+		var tableElementId = HTMLDB.__getHTMLDBParameter(form, "table");
+
+		if (!document.getElementById(tableElementId)) {
+	        throw(new Error(formId + " form HTMLDB table not found."));
+			return false;			
+		}
+
+		var elements = form.querySelectorAll(".htmldb-field");
+		var elementCount = elements.length;
+		var element = null;
+		var object = {};
+
+		for (var i = 0; i < elementCount; i++) {
+			element = elements[i];
+			object[element.getAttribute("data-htmldb-field")]
+					= HTMLDB.__getInputValue(element);
+		}
+
+		HTMLDB.validate(tableElementId, object, function (DIVId, response) {
+			var responseObject = JSON.parse(String(response).trim());
+			if (responseObject.errorCount > 0) {
+				HTMLDB.__showError(tableElementId, responseObject.lastError);
+			} else {
+				HTMLDB.insert(tableElementId + "_writer", object);
+			}
+		});
+	},
+	"__showError":function(tableElementId, errorText) {
+		var containers = document.body.querySelectorAll(".htmldb-error");
+		var containerCount = containers.length;
+		var container = null;
+		for (var i = 0; i < containerCount; i++) {
+			container = containers[i];
+			if (HTMLDB.__getHTMLDBParameter(container, "table") == tableElementId) {
+				container.innerHTML = errorText;
+			}
+		}
 	},
 	"__doEditButtonClick":function(event) {
 		var tableElement = document.getElementById(HTMLDB.__getHTMLDBParameter(event.target, "table"));

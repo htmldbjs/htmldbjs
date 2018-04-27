@@ -65,6 +65,7 @@
 				</tr>
 				<tr>
 					<td>
+						<div class="htmldb-error" data-htmldb-table="activeCompaniesHTMLDB"></div>
 						<button type="button"
 						class="htmldb-button-save"
 						data-htmldb-form="">Save</button>
@@ -137,7 +138,8 @@ data-htmldb-table="companiesHTMLDB"
 data-htmldb-filter="active/eq/0"
 data-htmldb-readonly="0"
 data-htmldb-writeonly="0"
-data-htmldb-priority=""></div>
+data-htmldb-priority=""
+data-htmldb-validate-url="index.php?u=companies/validate"></div>
 
 <div id="companyUnitsHTMLDB"
 class="htmldb-table"
