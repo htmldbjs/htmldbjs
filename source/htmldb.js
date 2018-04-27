@@ -454,6 +454,7 @@ var HTMLDB = {
             	HTMLDB.__renderFormElement(form);
             }
         }
+        HTMLDB.__initializeHTMLDBEditButtons(tableElement);
 	},
 	"getColumnNames":function(p1, p2) {
 		var elTHead = document.getElementById(p1 + "_reader_thead");
@@ -500,6 +501,10 @@ var HTMLDB = {
 			return false;
 		}
 		return document.getElementById(tableElementId + "_reader_td" + activeId + column).innerHTML;
+	},
+	"setTableActiveId":function(tableElement, id) {
+		tableElement.setAttribute("data-htmldb-active-id", id);
+		HTMLDB.render(tableElement);
 	},
 	"__initializeHTMLDBTables": function() {
         var tableElements = document.body.querySelectorAll(".htmldb-table");
@@ -618,62 +623,8 @@ var HTMLDB = {
         }
     },
 	"__initializeHTMLDBForms": function() {
-        var forms = document.body.querySelectorAll(".htmldb-form");
-        var formCount = forms.length;
-        for (var i = 0; i < formCount; i++) {
-            HTMLDB.__storeFormElementTemplates(forms[i]);
-        }
+
 	},
-    "__storeFormElementTemplates": function(element) {
-        if (!element) {
-            return false;
-        }
-
-        element.HTMLDBInitials = {
-            "attributes":[],
-            "value":""
-        };
-
-        var attributeCount = element.attributes.length;
-        var attribute = null;
-
-        for (var i = 0; i < attributeCount; i++) {
-
-            attribute = element.attributes[i];
-            if (attribute.value.indexOf("{{") != -1) {
-                element.HTMLDBInitials.attributes.push(
-                        {"name":attribute.name, "value":attribute.value});
-            }
-
-        }
-
-        if (0 == element.HTMLDBInitials.attributes.length) {
-            element.HTMLDBInitials.attributes = undefined;
-        }
-
-        var childrenCount = element.children.length;
-        var children = null;
-        var value = "";
-
-        for (var i = 0; i < childrenCount; i++) {
-            children = element.children[i];
-            HTMLDB.__storeFormElementTemplates(children);
-        }
-
-        if (0 == childrenCount) {
-        	value = HTMLDB.__getInputValue(element);
-            if (value.indexOf("{{") != -1) {
-                element.HTMLDBInitials.value = value;
-            } else {
-                element.HTMLDBInitials.value = undefined;
-            }
-        }
-
-        if ((undefined === element.HTMLDBInitials.attributes)
-                && (undefined === element.HTMLDBInitials.content)) {
-            element.HTMLDBInitials = undefined;
-        }
-    },
     "__renderSectionElement": function(element) {
         if (!element) {
             return false;
@@ -684,12 +635,14 @@ var HTMLDB = {
         if ((element.HTMLDBInitials !== undefined)
         		&& (element.HTMLDBInitials.attributes !== undefined)) {
             var attributeCount = element.HTMLDBInitials.attributes.length;
-            var attribute = null;
+            var attributeName = "";
+            var attributeValue = "";
             var content = "";
             for (var i = 0; i < attributeCount; i++) {
-                attribute = element.attributes[i];
-                content = HTMLDB.__evaluateHTMLDBExpression(attribute.value, tableElementId);
-                element.setAttribute(attribute.name, content);
+                attributeName = element.HTMLDBInitials.attributes[i].name;
+                attributeValue = element.HTMLDBInitials.attributes[i].value;
+                content = HTMLDB.__evaluateHTMLDBExpression(attributeValue, tableElementId);
+                element.setAttribute(attributeName, content);
             }
         }
 
@@ -713,45 +666,18 @@ var HTMLDB = {
             }
         }
     },
-    "__renderFormElement": function(element) {
-        if (!element) {
-            return false;
-        }
-
-        var tableElementId = HTMLDB.__exploreHTMLDBTable(element);
-
-        if ((element.HTMLDBInitials !== undefined)
-        		&& (element.HTMLDBInitials.attributes !== undefined)) {
-            var attributeCount = element.HTMLDBInitials.attributes.length;
-            var attribute = null;
-            var content = "";
-            for (var i = 0; i < attributeCount; i++) {
-                attribute = element.attributes[i];
-                content = HTMLDB.__evaluateHTMLDBExpression(attribute.value, tableElementId);
-                element.setAttribute(attribute.name, content);
-            }
-        }
-
-        var childrenCount = element.children.length;
-        var children = null;
-
-        for (var i = 0; i < childrenCount; i++) {
-            children = element.children[i];
-            HTMLDB.__renderFormElement(children);
-        }
-
-        if (0 == childrenCount) {
-            if ((element.HTMLDBInitials !== undefined)
-            		&& (element.HTMLDBInitials.value !== undefined)) {
-                content = HTMLDB.__evaluateHTMLDBExpression(element.HTMLDBInitials.value, tableElementId);
-                HTMLDB.__setInputValue(element, content);
-            } else {
-            	if (HTMLDB.__hasHTMLDBParameter(element, "value")) {
-                	HTMLDB.__setInputValue(element,
-                			HTMLDB.__getHTMLDBParameter(element, "value"));
-            	}
-            }
-        }
+    "__renderFormElement": function(form) {
+    	var inputs = form.querySelectorAll(".htmldb-field");
+    	var inputCount = inputs.length;
+    	var input = null;
+    	var valueTemplate = "";
+    	var tableElementId = HTMLDB.__exploreHTMLDBTable(form);
+    	for (var i = 0; i < inputCount; i++) {
+    		input = inputs[i];
+    		valueTemplate = HTMLDB.__getHTMLDBParameter(input, "value");
+			HTMLDB.__setInputValue(input,
+					HTMLDB.__evaluateHTMLDBExpression(valueTemplate, tableElementId));
+    	}
     },
 	"__initializeHTMLDBRefreshButtons": function () {
         var buttonElements = document.body.querySelectorAll(".htmldb-button-refresh");
@@ -765,6 +691,22 @@ var HTMLDB = {
 			} else if (buttonElement.attachEvent) {
 	            buttonElement.attachEvent("onclick", HTMLDB.__doRefreshButtonClick);
 	        }
+	    }
+	},
+	"__initializeHTMLDBEditButtons": function(tableElement) {
+        var buttons = document.body.querySelectorAll(".htmldb-button-edit");
+        var buttonCount = buttons.length;
+        var button = null;
+
+        for (var i = 0; i < buttonCount; i++) {
+        	button = buttons[i];
+            if (HTMLDB.__getHTMLDBParameter(button, "table") == tableElement.id) {
+				if (button.addEventListener) {
+					button.addEventListener("click", HTMLDB.__doEditButtonClick, true);
+				} else if (button.attachEvent) {
+		            button.attachEvent("onclick", HTMLDB.__doEditButtonClick);
+		        }
+            }
 	    }
 	},
 	"__initializeReadQueue": function() {
@@ -1588,6 +1530,18 @@ var HTMLDB = {
 	},
 	"__doRefreshButtonClick":function() {
 		HTMLDB.__initializeReadQueue();
+	},
+	"__doEditButtonClick":function(event) {
+		var tableElement = document.getElementById(HTMLDB.__getHTMLDBParameter(event.target, "table"));
+
+		if (!tableElement) {
+        	throw(new Error("Edit button HTMLDB table not found."));
+			return false;
+		}
+
+		HTMLDB.setTableActiveId(
+				tableElement,
+				HTMLDB.__getHTMLDBParameter(event.target, "edit-id"));
 	},
 	"__doWriterIframeLoad":function(p1) {
 		elDIV = p1.target.parentNode.parentNode;

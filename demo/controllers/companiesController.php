@@ -51,18 +51,21 @@ class companiesController {
 		$this->list[0]['company_name'] = 'Sanpark Bilişim ve Tasarım Ltd.Şti.';
 		$this->list[0]['score'] = 100.0;
 		$this->list[0]['personal'] = 0;
+		$this->list[0]['company_type'] = 1;
 
 		$this->list[1]['id'] = 2;
 		$this->list[1]['active'] = 0;
 		$this->list[1]['company_name'] = 'Pyronome Teknoloji A.Ş.';
 		$this->list[1]['score'] = 98.80;
 		$this->list[1]['personal'] = 1;
+		$this->list[1]['company_type'] = 2;
 
 		$this->list[2]['id'] = 3;
 		$this->list[2]['active'] = 1;
 		$this->list[2]['company_name'] = 'Aydınlı İnşaat Ltd.Şti.';
 		$this->list[2]['score'] = 100;
 		$this->list[2]['personal'] = 0;
+		$this->list[2]['company_type'] = 1;
 
 		$this->columns = array();
 		$this->columns[] = 'id';
@@ -70,6 +73,7 @@ class companiesController {
 		$this->columns[] = 'company_name';
 		$this->columns[] = 'score';
 		$this->columns[] = 'personal';
+		$this->columns[] = 'company_type';
 
 		includeView($this, 'htmldblist');
 		return;

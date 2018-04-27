@@ -24,7 +24,7 @@
 		<p data-htmldb-content="{{company_name}}"></p>
 	</div>
 	<hr>
-	<form id="companyForm" class="htmldb-form" data-htmldb-table="companiesHTMLDB">
+	<form id="companyForm" class="htmldb-form" data-htmldb-table="activeCompaniesHTMLDB">
 		<table cellspacing="2" cellpadding="5" border="1">
 			<thead>
 				<tr>
@@ -58,11 +58,11 @@
 					<td>
 						<select id="input2"
 						class="htmldb-field"
-						data-htmldb-field="company_type_id"
+						data-htmldb-field="company_type"
 						data-htmldb-option-table="companyTypesHTMLDB"
 						data-htmldb-option-value="{{id}}"
 						data-htmldb-option-title="{{name}}"
-						data-htmldb-value="{{company_type_id}}"></select>
+						data-htmldb-value="{{company_type}}"></select>
 					</td>
 				</tr>
 				<tr>
@@ -102,7 +102,7 @@
 	<button type="button"
 	class="htmldb-button-edit"
 	data-htmldb-edit-id="{{id}}"
-	data-htmldb-form="companyForm">Edit</button>
+	data-htmldb-table="activeCompaniesHTMLDB">Edit</button>
 
 	</th>
 	</tr>
@@ -136,7 +136,7 @@ data-htmldb-priority=""></div>
 <div id="activeCompaniesHTMLDB"
 class="htmldb-table"
 data-htmldb-table="companiesHTMLDB"
-data-htmldb-filter="active/eq/1"
+data-htmldb-filter="active/eq/0"
 data-htmldb-readonly="0"
 data-htmldb-writeonly="0"
 data-htmldb-priority=""></div>
