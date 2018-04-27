@@ -1,3 +1,4 @@
+/*! < ())) > HTMLDB.js - v1.0.0 | https://github.com/htmldbjs/htmldbjs/ | MIT license */
 var HTMLDB = {
 	"__readQueue": [],
 	"__readingQueue": [],
