@@ -37,16 +37,14 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td><input id="input1"
+					<td>
+						<input id="input1"
 						type="hidden"
 						class="htmldb-field"
 						data-htmldb-field="id"
 						data-htmldb-value="{{id}}"
 						value="">
-					</td>
-				</tr>
-				<tr>
-					<td><input id="input2"
+						<input id="input2"
 						type="text"
 						class="htmldb-field"
 						data-htmldb-field="company_name"
