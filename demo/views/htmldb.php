@@ -21,7 +21,7 @@
 	data-htmldb-table="">Refresh</button>
 	<hr>
 	<div class="divPanel htmldb-section" data-htmldb-table="activeCompaniesHTMLDB">
-		<p data-htmldb-content="{{ID}}">{{ID}}</p>
+		<p data-htmldb-content="{{company_name}}"></p>
 	</div>
 	<hr>
 	<form id="companyForm" class="htmldb-form" data-htmldb-table="companiesHTMLDB">
@@ -136,7 +136,7 @@ data-htmldb-priority=""></div>
 <div id="activeCompaniesHTMLDB"
 class="htmldb-table"
 data-htmldb-table="companiesHTMLDB"
-data-htmldb-filter="active/eq/0"
+data-htmldb-filter="active/eq/1"
 data-htmldb-readonly="0"
 data-htmldb-writeonly="0"
 data-htmldb-priority=""></div>

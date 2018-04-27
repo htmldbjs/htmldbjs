@@ -7,6 +7,7 @@ var HTMLDB = {
 		HTMLDB.__initializeHTMLDBTemplates();
 		HTMLDB.__initializeHTMLDBButtons();
 		HTMLDB.__initializeHTMLDBSections();
+		HTMLDB.__initializeHTMLDBForms();
 		HTMLDB.__initializeReadQueue();
 	},
 	"stop":function(tableElementId) {
@@ -433,10 +434,26 @@ var HTMLDB = {
 		}
 	},
 	"__renderSections": function (tableElement) {
-
+        var sections = document.body.querySelectorAll(".htmldb-section");
+        var sectionCount = sections.length;
+        var section = null;
+        for (var i = 0; i < sectionCount; i++) {
+            section = sections[i];
+            if (HTMLDB.__getHTMLDBParameter(section, "table") == tableElement.id) {
+            	HTMLDB.__renderSectionElement(section);
+            }
+        }
 	},
 	"__renderForms": function (tableElement) {
-
+        var forms = document.body.querySelectorAll(".htmldb-form");
+        var formCount = forms.length;
+        var form = null;
+        for (var i = 0; i < formCount; i++) {
+            form = forms[i];
+            if (HTMLDB.__getHTMLDBParameter(form, "table") == tableElement.id) {
+            	HTMLDB.__renderFormElement(form);
+            }
+        }
 	},
 	"getColumnNames":function(p1, p2) {
 		var elTHead = document.getElementById(p1 + "_reader_thead");
@@ -584,7 +601,7 @@ var HTMLDB = {
 
         for (var i = 0; i < childrenCount; i++) {
             children = element.children[i];
-            Backend.storeSectionElementTemplates(children);
+            HTMLDB.__storeSectionElementTemplates(children);
         }
 
         if (0 == childrenCount) {
@@ -600,11 +617,141 @@ var HTMLDB = {
             element.HTMLDBInitials = undefined;
         }
     },
-    "__renderSectionElements": function(tableElement) {
+	"__initializeHTMLDBForms": function() {
+        var forms = document.body.querySelectorAll(".htmldb-form");
+        var formCount = forms.length;
+        for (var i = 0; i < formCount; i++) {
+            HTMLDB.__storeFormElementTemplates(forms[i]);
+        }
+	},
+    "__storeFormElementTemplates": function(element) {
+        if (!element) {
+            return false;
+        }
 
+        element.HTMLDBInitials = {
+            "attributes":[],
+            "value":""
+        };
+
+        var attributeCount = element.attributes.length;
+        var attribute = null;
+
+        for (var i = 0; i < attributeCount; i++) {
+
+            attribute = element.attributes[i];
+            if (attribute.value.indexOf("{{") != -1) {
+                element.HTMLDBInitials.attributes.push(
+                        {"name":attribute.name, "value":attribute.value});
+            }
+
+        }
+
+        if (0 == element.HTMLDBInitials.attributes.length) {
+            element.HTMLDBInitials.attributes = undefined;
+        }
+
+        var childrenCount = element.children.length;
+        var children = null;
+        var value = "";
+
+        for (var i = 0; i < childrenCount; i++) {
+            children = element.children[i];
+            HTMLDB.__storeFormElementTemplates(children);
+        }
+
+        if (0 == childrenCount) {
+        	value = HTMLDB.__getInputValue(element);
+            if (value.indexOf("{{") != -1) {
+                element.HTMLDBInitials.value = value;
+            } else {
+                element.HTMLDBInitials.value = undefined;
+            }
+        }
+
+        if ((undefined === element.HTMLDBInitials.attributes)
+                && (undefined === element.HTMLDBInitials.content)) {
+            element.HTMLDBInitials = undefined;
+        }
     },
     "__renderSectionElement": function(element) {
+        if (!element) {
+            return false;
+        }
 
+        var tableElementId = HTMLDB.__exploreHTMLDBTable(element);
+
+        if ((element.HTMLDBInitials !== undefined)
+        		&& (element.HTMLDBInitials.attributes !== undefined)) {
+            var attributeCount = element.HTMLDBInitials.attributes.length;
+            var attribute = null;
+            var content = "";
+            for (var i = 0; i < attributeCount; i++) {
+                attribute = element.attributes[i];
+                content = HTMLDB.__evaluateHTMLDBExpression(attribute.value, tableElementId);
+                element.setAttribute(attribute.name, content);
+            }
+        }
+
+        var childrenCount = element.children.length;
+        var children = null;
+
+        for (var i = 0; i < childrenCount; i++) {
+            children = element.children[i];
+            HTMLDB.__renderSectionElement(children);
+        }
+
+        if (0 == childrenCount) {
+            if ((element.HTMLDBInitials !== undefined)
+            		&& (element.HTMLDBInitials.content !== undefined)) {
+                content = HTMLDB.__evaluateHTMLDBExpression(element.HTMLDBInitials.content, tableElementId);
+                element.innerHTML = content;
+            } else {
+            	if (HTMLDB.__hasHTMLDBParameter(element, "content")) {
+            		element.innerHTML = HTMLDB.__getHTMLDBParameter(element, "content");
+            	}
+            }
+        }
+    },
+    "__renderFormElement": function(element) {
+        if (!element) {
+            return false;
+        }
+
+        var tableElementId = HTMLDB.__exploreHTMLDBTable(element);
+
+        if ((element.HTMLDBInitials !== undefined)
+        		&& (element.HTMLDBInitials.attributes !== undefined)) {
+            var attributeCount = element.HTMLDBInitials.attributes.length;
+            var attribute = null;
+            var content = "";
+            for (var i = 0; i < attributeCount; i++) {
+                attribute = element.attributes[i];
+                content = HTMLDB.__evaluateHTMLDBExpression(attribute.value, tableElementId);
+                element.setAttribute(attribute.name, content);
+            }
+        }
+
+        var childrenCount = element.children.length;
+        var children = null;
+
+        for (var i = 0; i < childrenCount; i++) {
+            children = element.children[i];
+            HTMLDB.__renderFormElement(children);
+        }
+
+        if (0 == childrenCount) {
+            if ((element.HTMLDBInitials !== undefined)
+            		&& (element.HTMLDBInitials.value !== undefined)) {
+                content = HTMLDB.__evaluateHTMLDBExpression(element.HTMLDBInitials.value, tableElementId);
+                HTMLDB.__setInputValue(element, content);
+            } else {
+            	if (HTMLDB.__hasHTMLDBParameter(element, "value")) {
+                	HTMLDB.__setInputValue(element,
+                			HTMLDB.__getHTMLDBParameter(element, "value"));
+            	}
+            }
+        }
     },
 	"__initializeHTMLDBRefreshButtons": function () {
         var buttonElements = document.body.querySelectorAll(".htmldb-button-refresh");
@@ -896,6 +1043,17 @@ var HTMLDB = {
 			return element.getAttribute(parameter);
 		} else {
 			return "";
+		}
+	},
+	"__hasHTMLDBParameter": function (element, parameter) {
+		if (element.getAttribute("data-htmldb-" + parameter)) {
+			return true;
+		} else if (element.getAttribute("htmldb-" + parameter)) {
+			return true;
+		} else if (element.getAttribute(parameter)) {
+			return true;
+		} else {
+			return false;
 		}
 	},
 	"__validateHTMLDBTableDefinition": function (element) {
@@ -1351,7 +1509,7 @@ var HTMLDB = {
 
         return prefix + token0 + token1 + token2;
     },
-    "__evaluateHTMLDBExpression": function(expression) {
+    "__evaluateHTMLDBExpression": function(expression, tableElementId) {
 		var tokens = String(expression).split("{{");
 		var subTokens = null;
 		var content = "";
@@ -1387,14 +1545,15 @@ var HTMLDB = {
 				column = subTokens[0];
 			}
 
-			if (foreignTableId == tableElementId) {
-				foreignTableId = "";
+			if ((tableElementId !== undefined)
+					&& ("" == foreignTableId)) {
+				foreignTableId = tableElementId;
 			}
 
 			if (foreignTableId != "") {
 				value = HTMLDB.getTableFieldActiveValue(foreignTableId, column);
 			} else {
-				value = ("{{" + content + "}}");
+				value = ("{{" + content);
 			}
 
 			text = String(content).substr(position + 2);
@@ -1410,6 +1569,18 @@ var HTMLDB = {
 		}
 
 		return returnValue;
+    },
+    "__exploreHTMLDBTable": function(element) {
+    	var exit = false;
+    	var parent = HTMLDB.__getHTMLDBParameter(element, "table");
+    	while (!exit && ("" == parent)) {
+    		element = element.parentNode;
+    		parent = HTMLDB.__getHTMLDBParameter(element, "table");
+    		if ("body" == element.tagName.toLowerCase()) {
+    			exit = true;
+    		}
+    	}
+    	return parent;
     },
 	"__doReaderIframeLoad":function(p1) {
 		HTMLDB.__doirlc(p1, false);
@@ -1450,6 +1621,64 @@ var HTMLDB = {
 
 		if (elDIV.doHTMLDBValidate) {
 			elDIV.doHTMLDBValidate(p1, strResponse);
+		}
+	},
+	"__getInputValue":function(input) {
+		var inputs = null;
+		var inputCount = 0;
+		var tagName = "";
+		var inputType = "";
+
+		tagName = String(input.tagName).toLowerCase();
+		inputType = String(input.getAttribute("type")).toLowerCase();
+
+		switch (tagName) {
+			case "input":
+				if ("checkbox" == inputType) {
+					return (input.checked ? 1 : 0);
+				} else if ("radio" == inputType) {
+					return ((input.checked) ? input.value : "");
+				} else {
+					return input.value;
+				}
+			break;
+
+			case "textarea":
+				return input.value;
+			break;
+			case "select":
+				if (-1 == input.selectedIndex) {
+					return "";
+				} else {
+					return (input.value || input.options[input.selectedIndex].value);
+				}
+			break;
+		}
+
+		return "";
+	},
+	"__setInputValue": function(input, value) {
+		var tagName = String(input.tagName).toLowerCase();
+		var inputType = String(input.getAttribute("type")).toLowerCase();
+
+		switch (tagName) {
+			case "input":
+				if ("checkbox" == inputType) {
+					input.checked = ("1" == value);
+				} else if ("radio" == inputType) {
+					if (input.value == value) {
+						input.checked = true;
+					}
+				} else {
+					input.value = value;
+				}
+			break;
+			case "textarea":
+				input.innerHTML = value;
+			break;
+			case "select":
+				input.value = value;
+			break;
 		}
 	},
 	"__doirlc":function(p1, p2) {
