@@ -120,6 +120,7 @@
 <option value="7"><?php echo __('Advisor'); ?></option>
 <option value="8"><?php echo __('Leader'); ?></option>
 <option value="9"><?php echo __('Crew'); ?></option>
+<option value="10"><?php echo __('Personel User'); ?></option>
                                     </select>
                                 </div>
 								<div class="col l12 m12 s12 " id="divcompany">

@@ -57,6 +57,21 @@ function initializeHTMLDB() {
     });
 
     HTMLDB.initialize({
+        elementID:"divCompanyTypeHTMLDBReader",
+        readURL:(URLPrefix + "company/readcompanytype"),
+        readAllURL:(URLPrefix + "company/readcompanytype"),
+        validateURL:"",
+        writeURL:"",
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:null,
+        onRead:null,
+        onWrite:null,
+        onRender:doCompanyTypeHTMLDBReaderRender,
+        onRenderAll:doCompanyTypeHTMLDBReaderRender
+    });
+
+    HTMLDB.initialize({
         elementID:"divSessionHTMLDB",
         readURL:(URLPrefix + "companies/readsession"),
         readAllURL:(URLPrefix + "companies/readsession"),
@@ -72,6 +87,22 @@ function initializeHTMLDB() {
     });
 
 }
+function doCompanyTypeHTMLDBReaderRender() {
+    setHTMLDBFieldSelects("divCompanyTypeHTMLDBReader");
+}
 function doCompanyHTMLDBReaderRender() {
+    $(".tdEditObject").off("click").on("click", function() {
+        doTDEditObjectClick(this);
+    });
+
 	document.getElementById("divLoader").style.display = "none";
+}
+function doTDEditObjectClick(sender) {
+    if (!sender) {
+        return;
+    }
+    
+    var URLPrefix = document.body.getAttribute("data-url-prefix");
+    var companyId = sender.parentNode.getAttribute("data-object-id");
+    window.location = (URLPrefix + "company/" + companyId);
 }

@@ -39,25 +39,25 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col l2 m2 s12">
+                            <div class="col l3 m3 s12">
                                 <label><?php echo __('Denetim Türü'); ?></label>
                                 <div class="input-field">
                                     <p class="HTMLDBFieldContent" data-htmldb-source="divAuditHTMLDBReader" data-htmldb-field="audit_type_idDisplayText">&nbsp;</p>
                                 </div>
                             </div>
-                            <div class="col l2 m2 s12">
+                            <div class="col l3 m3 s12">
                                 <label><?php echo __('Denetim Durumu'); ?></label>
                                 <div class="input-field">
                                     <p class="HTMLDBFieldContent" data-htmldb-source="divAuditHTMLDBReader" data-htmldb-field="audit_state_idDisplayText">&nbsp;</p>
                                 </div>
                             </div>
-                            <div class="col l2 m2 s12">
+                            <div class="col l6 m6 s12">
                                 <label><?php echo __('Denetim Skoru'); ?></label>
                                 <div class="input-field">
-                                    <p class="HTMLDBFieldContent" data-htmldb-source="divAuditHTMLDBReader" data-htmldb-field="score">&nbsp;</p>
+                                    <p id="pScore" class="HTMLDBFieldContent" data-htmldb-source="divAuditHTMLDBReader" data-htmldb-field="score">&nbsp;</p>
                                 </div>
                             </div>
-                            <div class="col l6 m6 s12">
+                            <div class="col l6 m6 s12" style="display:none;">
                                 <label><?php echo __('Notlar'); ?></label>
                                 <div class="input-field">
                                     <p class="HTMLDBFieldContent" data-htmldb-source="divAuditHTMLDBReader" data-htmldb-field="notes">&nbsp;</p>
@@ -67,6 +67,7 @@
                     </div>
                     <div class="card-action">
                         <button id="buttonEdit" type="button" name="buttonEdit" data-htmldb-field="id" data-htmldb-attribute="data-htmldb-row-id" data-htmldb-dialog="divAuditDialog" data-htmldb-source="divAuditHTMLDBReader" data-htmldb-row-id="" class="buttonAction HTMLDBAction HTMLDBEdit HTMLDBFieldAttribute waves-effect waves-dark cyan-text text-darken-1 btn white"><i class="ion-edit col s12"></i> <?php echo __('UPDATE'); ?></button>
+                        <button id="buttonDownloadPhotos" type="button" name="buttonDownloadPhotos" class=" waves-effect waves-dark cyan-text text-darken-1 btn white"><i class="ion-android-download col s12"></i> Fotoğrafları İndir</button>
                     </div>
                 </div>
             </div>
@@ -77,12 +78,12 @@
                             <span class="card-title activator grey-text text-darken-4">Denetim Adımları</span>
                             <button id="buttonAddAuditStep" name="buttonAddAuditStep" class="waves-effect white-text btn right cyan darken-1 HTMLDBAction HTMLDBAdd" type="button" data-htmldb-dialog="divAddAuditStepDialog" data-htmldb-source="divAuditStepHTMLDBReader" data-htmldb-row-id="0"><i class="ion-plus"></i> YENİ ADIM</button>
                             <ul id="ulAuditStepCategory" class="tabs tabs-fixed-width center-align z-depth-1">
-                                <li class="tab"><a id="aAuditStepCategoryAll" class="active" data-index="0" href="JavaScript:void(0);">TÜMÜ</a></li>
-                                <li class="tab"><a class="" data-index="1" href="JavaScript:void(0);">AYIKLA</a></li>
-                                <li class="tab"><a class="" data-index="2" href="JavaScript:void(0);">YERLEŞTİR</a></li>
-                                <li class="tab"><a class="" data-index="3" href="JavaScript:void(0);">PARLAT</a></li>
-                                <li class="tab"><a class="" data-index="4" href="JavaScript:void(0);">ALIŞTIR</a></li>
-                                <li class="tab"><a class="" data-index="5" href="JavaScript:void(0);">KALICI KIL</a></li>
+                                <li class="tab"><a id="aAuditStepCategoryAll" class="active" data-index="0" href="JavaScript:void(0);">TÜMÜ <span id="spanAllCompletedCount"></span></a></li>
+                                <li class="tab"><a class="" data-index="1" href="JavaScript:void(0);">AYIKLA <span id="spanStep1CompletedCount"></span></a></li>
+                                <li class="tab"><a class="" data-index="2" href="JavaScript:void(0);">YERLEŞTİR <span id="spanStep2CompletedCount"></span></a></li>
+                                <li class="tab"><a class="" data-index="3" href="JavaScript:void(0);">PARLAT <span id="spanStep3CompletedCount"></span></a></li>
+                                <li class="tab"><a class="" data-index="4" href="JavaScript:void(0);">ALIŞTIR <span id="spanStep4CompletedCount"></span></a></li>
+                                <li class="tab"><a class="" data-index="5" href="JavaScript:void(0);">KALICI KIL <span id="spanStep5CompletedCount"></span></a></li>
                             </ul>
                             <div id="audit_step1_list">
                                 <table id="tableAuditStep1List" class="tableList tableAuditStepList highlight" data-related-table-id="tableGhostObjectList">
@@ -120,7 +121,8 @@
                                                         class="sorting sorting-asc blue-text text-darken-4"><i
                                                         class="ion-arrow-up-b"></i></span></button>
                                                 </th>
-                                                <th></th>
+                                                <th style="width: 50px;"></th>
+                                                <th style="width: 50px;"></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbodyAuditStep1List"></tbody>
@@ -162,7 +164,8 @@
                                                         class="sorting sorting-asc blue-text text-darken-4"><i
                                                         class="ion-arrow-up-b"></i></span></button>
                                                 </th>
-                                                <th></th>
+                                                <th style="width: 50px;"></th>
+                                                <th style="width: 50px;"></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbodyAuditStep2List"></tbody>
@@ -204,7 +207,8 @@
                                                         class="sorting sorting-asc blue-text text-darken-4"><i
                                                         class="ion-arrow-up-b"></i></span></button>
                                                 </th>
-                                                <th></th>
+                                                <th style="width: 50px;"></th>
+                                                <th style="width: 50px;"></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbodyAuditStep3List"></tbody>
@@ -246,7 +250,8 @@
                                                         class="sorting sorting-asc blue-text text-darken-4"><i
                                                         class="ion-arrow-up-b"></i></span></button>
                                                 </th>
-                                                <th></th>
+                                                <th style="width: 50px;"></th>
+                                                <th style="width: 50px;"></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbodyAuditStep4List"></tbody>
@@ -288,7 +293,8 @@
                                                         class="sorting sorting-asc blue-text text-darken-4"><i
                                                         class="ion-arrow-up-b"></i></span></button>
                                                 </th>
-                                                <th></th>
+                                                <th style="width: 50px;"></th>
+                                                <th style="width: 50px;"></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbodyAuditStep5List"></tbody>
@@ -304,6 +310,8 @@
 <?php includeView($controller, 'edit.audit.dialog'); ?>
 <?php includeView($controller, 'add.auditstep.dialog'); ?>
 <?php includeView($controller, 'edit.auditstep.dialog'); ?>
+<?php includeView($controller, 'add.stepphoto.dialog'); ?>
+<?php includeView($controller, 'upload.stepphoto.dialog'); ?>
 <div id="divErrorDialog" class="divDialogContent divAlertDialog divErrorDialog">
     <div class="divContentWrapper level3">
         <div class="divDialogContentContainer">
@@ -337,18 +345,19 @@
     </div>
 </div>
 <div class="divHiddenElements">
-    <div id="divAuditStateHTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
-    <div id="divAuditStepCategoryHTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
-    <div id="divAuditStepTypeHTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
-    <div id="divAuditHTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
+    <div id="divAuditStateHTMLDBReader" class=""></div>
+    <div id="divAuditStepCategoryHTMLDBReader" class=""></div>
+    <div id="divAuditStepTypeHTMLDBReader" class=""></div>
+    <div id="divAuditHTMLDBReader" class=""></div>
     <div id="divAuditHTMLDBWriter" class="HTMLDBAction HTMLDBLoopWriter" data-htmldb-reader="divAuditHTMLDBReader"></div>
-    <div id="divAuditStepHTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
+    <div id="divAuditStepHTMLDBReader" class=""></div>
     <div id="divAuditStepHTMLDBWriter" class="HTMLDBAction HTMLDBLoopWriter" data-htmldb-reader="divAuditStepHTMLDBReader"></div>
-    <div id="divAuditStep1HTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
-    <div id="divAuditStep2HTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
-    <div id="divAuditStep3HTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
-    <div id="divAuditStep4HTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
-    <div id="divAuditStep5HTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
+    <div id="divAuditStepYesHTMLDBWriter" class="HTMLDBAction HTMLDBLoopWriter" data-htmldb-reader=""></div>
+    <div id="divAuditStep1HTMLDBReader" class=""></div>
+    <div id="divAuditStep2HTMLDBReader" class=""></div>
+    <div id="divAuditStep3HTMLDBReader" class=""></div>
+    <div id="divAuditStep4HTMLDBReader" class=""></div>
+    <div id="divAuditStep5HTMLDBReader" class=""></div>
     <table>
         <tbody id="tbodyAuditStep1ListTemplate">
             <tr class="tr#divAuditStep1HTMLDBReader.id">
@@ -356,8 +365,13 @@
                 <td>#divAuditStep1HTMLDBReader.index</td>
                 <td><span>#divAuditStep1HTMLDBReader.step_action</span><br><span class="spanNote red-text text-darken-4">#divAuditStep1HTMLDBReader.audit_note</span></td>
                 <td class="center" nowrap="nowrap">
-                    <button id="buttonSatisfiedYes#divAuditStep1HTMLDBReader.id" type="button" data-value="1" class="btn buttonSatisfied buttonSatisfiedYes btn-flat waves-effect waves-light buttonSatisfiedYes#divAuditStep1HTMLDBReader.yes" data-row-id="#divAuditStep1HTMLDBReader.id">E</button>
+                    <button id="buttonSatisfiedYes#divAuditStep1HTMLDBReader.id" data-audit-type="#divAuditStep1HTMLDBReader.audit_step_type_id" type="button" data-value="1" class="btn buttonSatisfied buttonSatisfiedYes btn-flat waves-effect waves-light buttonSatisfiedYes#divAuditStep1HTMLDBReader.yes" data-row-id="#divAuditStep1HTMLDBReader.id">E</button>
                     <button id="buttonSatisfiedNo#divAuditStep1HTMLDBReader.id" type="button" data-value="0" class="btn buttonSatisfied buttonSatisfiedNo btn-flat waves-effect waves-light buttonSatisfiedNo#divAuditStep1HTMLDBReader.no" data-row-id="#divAuditStep1HTMLDBReader.id">H</button>
+                </td>
+                <td>
+                    <button type="button" data-row-id="#divAuditStep1HTMLDBReader.id" class="buttonAddStepPhoto buttonTableListAction buttonEditObject right" data-dialog-id="divStepPhotoDialog">
+                        <i class="ion-images"><span class="spanIMGCount" id="spanIMGCount#divAuditStep1HTMLDBReader.id"></span></i>
+                    </button>
                 </td>
                 <td>
                     <button type="button" data-htmldb-row-id="#divAuditStep1HTMLDBReader.id" class="buttonEditAuditStep buttonTableListAction buttonEditObject right HTMLDBAction HTMLDBEdit" data-htmldb-source="divAuditStepHTMLDBReader" data-htmldb-dialog="divEditAuditStepDialog">
@@ -374,8 +388,13 @@
                 <td>#divAuditStep2HTMLDBReader.index</td>
                 <td><span>#divAuditStep2HTMLDBReader.step_action</span><br><span class="spanNote red-text text-darken-4">#divAuditStep2HTMLDBReader.audit_note</span></td>
                 <td class="center" nowrap="nowrap">
-                    <button id="buttonSatisfiedYes#divAuditStep2HTMLDBReader.id" type="button" data-value="1" class="btn buttonSatisfied buttonSatisfiedYes btn-flat waves-effect waves-light buttonSatisfiedYes#divAuditStep2HTMLDBReader.yes" data-row-id="#divAuditStep2HTMLDBReader.id">E</button>
+                    <button id="buttonSatisfiedYes#divAuditStep2HTMLDBReader.id" data-audit-type="#divAuditStep2HTMLDBReader.audit_step_type_id" type="button" data-value="1" class="btn buttonSatisfied buttonSatisfiedYes btn-flat waves-effect waves-light buttonSatisfiedYes#divAuditStep2HTMLDBReader.yes" data-row-id="#divAuditStep2HTMLDBReader.id">E</button>
                     <button id="buttonSatisfiedNo#divAuditStep2HTMLDBReader.id" type="button" data-value="0" class="btn buttonSatisfied buttonSatisfiedNo btn-flat waves-effect waves-light buttonSatisfiedNo#divAuditStep2HTMLDBReader.no" data-row-id="#divAuditStep2HTMLDBReader.id">H</button>
+                </td>
+                <td>
+                    <button type="button" data-row-id="#divAuditStep2HTMLDBReader.id" class="buttonAddStepPhoto buttonTableListAction buttonEditObject right" data-dialog-id="divStepPhotoDialog">
+                        <i class="ion-images"><span class="spanIMGCount" id="spanIMGCount#divAuditStep2HTMLDBReader.id"></span></i>
+                    </button>
                 </td>
                 <td>
                     <button type="button" data-htmldb-row-id="#divAuditStep2HTMLDBReader.id" class="buttonEditAuditStep buttonTableListAction buttonEditObject right HTMLDBAction HTMLDBEdit" data-htmldb-source="divAuditStepHTMLDBReader" data-htmldb-dialog="divEditAuditStepDialog">
@@ -392,8 +411,13 @@
                 <td>#divAuditStep3HTMLDBReader.index</td>
                 <td><span>#divAuditStep3HTMLDBReader.step_action</span><br><span class="spanNote red-text text-darken-4">#divAuditStep3HTMLDBReader.audit_note</span></td>
                 <td class="center" nowrap="nowrap">
-                    <button id="buttonSatisfiedYes#divAuditStep3HTMLDBReader.id" type="button" data-value="1" class="btn buttonSatisfied buttonSatisfiedYes btn-flat waves-effect waves-light buttonSatisfiedYes#divAuditStep3HTMLDBReader.yes" data-row-id="#divAuditStep3HTMLDBReader.id">E</button>
+                    <button id="buttonSatisfiedYes#divAuditStep3HTMLDBReader.id" data-audit-type="#divAuditStep3HTMLDBReader.audit_step_type_id" type="button" data-value="1" class="btn buttonSatisfied buttonSatisfiedYes btn-flat waves-effect waves-light buttonSatisfiedYes#divAuditStep3HTMLDBReader.yes" data-row-id="#divAuditStep3HTMLDBReader.id">E</button>
                     <button id="buttonSatisfiedNo#divAuditStep3HTMLDBReader.id" type="button" data-value="0" class="btn buttonSatisfied buttonSatisfiedNo btn-flat waves-effect waves-light buttonSatisfiedNo#divAuditStep3HTMLDBReader.no" data-row-id="#divAuditStep3HTMLDBReader.id">H</button>
+                </td>
+                <td>
+                    <button type="button" data-row-id="#divAuditStep3HTMLDBReader.id" class="buttonAddStepPhoto buttonTableListAction buttonEditObject right" data-dialog-id="divStepPhotoDialog">
+                        <i class="ion-images"><span class="spanIMGCount" id="spanIMGCount#divAuditStep3HTMLDBReader.id"></span></i>
+                    </button>
                 </td>
                 <td>
                     <button type="button" data-htmldb-row-id="#divAuditStep3HTMLDBReader.id" class="buttonEditAuditStep buttonTableListAction buttonEditObject right HTMLDBAction HTMLDBEdit" data-htmldb-source="divAuditStepHTMLDBReader" data-htmldb-dialog="divEditAuditStepDialog">
@@ -410,8 +434,13 @@
                 <td>#divAuditStep4HTMLDBReader.index</td>
                 <td><span>#divAuditStep4HTMLDBReader.step_action</span><br><span class="spanNote red-text text-darken-4">#divAuditStep4HTMLDBReader.audit_note</span></td>
                 <td class="center" nowrap="nowrap">
-                    <button id="buttonSatisfiedYes#divAuditStep4HTMLDBReader.id" type="button" data-value="1" class="btn buttonSatisfied buttonSatisfiedYes btn-flat waves-effect waves-light buttonSatisfiedYes#divAuditStep4HTMLDBReader.yes" data-row-id="#divAuditStep4HTMLDBReader.id">E</button>
+                    <button id="buttonSatisfiedYes#divAuditStep4HTMLDBReader.id" data-audit-type="#divAuditStep4HTMLDBReader.audit_step_type_id" type="button" data-value="1" class="btn buttonSatisfied buttonSatisfiedYes btn-flat waves-effect waves-light buttonSatisfiedYes#divAuditStep4HTMLDBReader.yes" data-row-id="#divAuditStep4HTMLDBReader.id">E</button>
                     <button id="buttonSatisfiedNo#divAuditStep4HTMLDBReader.id" type="button" data-value="0" class="btn buttonSatisfied buttonSatisfiedNo btn-flat waves-effect waves-light buttonSatisfiedNo#divAuditStep4HTMLDBReader.no" data-row-id="#divAuditStep4HTMLDBReader.id">H</button>
+                </td>
+                <td>
+                    <button type="button" data-row-id="#divAuditStep4HTMLDBReader.id" class="buttonAddStepPhoto buttonTableListAction buttonEditObject right" data-dialog-id="divStepPhotoDialog">
+                        <i class="ion-images"><span class="spanIMGCount" id="spanIMGCount#divAuditStep4HTMLDBReader.id"></span></i>
+                    </button>
                 </td>
                 <td>
                     <button type="button" data-htmldb-row-id="#divAuditStep4HTMLDBReader.id" class="buttonEditAuditStep buttonTableListAction buttonEditObject right HTMLDBAction HTMLDBEdit" data-htmldb-source="divAuditStepHTMLDBReader" data-htmldb-dialog="divEditAuditStepDialog">
@@ -428,8 +457,13 @@
                 <td>#divAuditStep5HTMLDBReader.index</td>
                 <td><span>#divAuditStep5HTMLDBReader.step_action</span><br><span class="spanNote red-text text-darken-4">#divAuditStep5HTMLDBReader.audit_note</span></td>
                 <td class="center" nowrap="nowrap">
-                    <button id="buttonSatisfiedYes#divAuditStep5HTMLDBReader.id" type="button" data-value="1" class="btn buttonSatisfied buttonSatisfiedYes btn-flat waves-effect waves-light buttonSatisfiedYes#divAuditStep5HTMLDBReader.yes" data-row-id="#divAuditStep5HTMLDBReader.id">E</button>
+                    <button id="buttonSatisfiedYes#divAuditStep5HTMLDBReader.id" data-audit-type="#divAuditStep5HTMLDBReader.audit_step_type_id" type="button" data-value="1" class="btn buttonSatisfied buttonSatisfiedYes btn-flat waves-effect waves-light buttonSatisfiedYes#divAuditStep5HTMLDBReader.yes" data-row-id="#divAuditStep5HTMLDBReader.id">E</button>
                     <button id="buttonSatisfiedNo#divAuditStep5HTMLDBReader.id" type="button" data-value="0" class="btn buttonSatisfied buttonSatisfiedNo btn-flat waves-effect waves-light buttonSatisfiedNo#divAuditStep5HTMLDBReader.no" data-row-id="#divAuditStep5HTMLDBReader.id">H</button>
+                </td>
+                <td>
+                    <button type="button" data-row-id="#divAuditStep5HTMLDBReader.id" class="buttonAddStepPhoto buttonTableListAction buttonEditObject right" data-dialog-id="divStepPhotoDialog">
+                        <i class="ion-images"><span class="spanIMGCount" id="spanIMGCount#divAuditStep5HTMLDBReader.id"></span></i>
+                    </button>
                 </td>
                 <td>
                     <button type="button" data-htmldb-row-id="#divAuditStep5HTMLDBReader.id" class="buttonEditAuditStep buttonTableListAction buttonEditObject right HTMLDBAction HTMLDBEdit" data-htmldb-source="divAuditStepHTMLDBReader" data-htmldb-dialog="divEditAuditStepDialog">
@@ -439,9 +473,12 @@
             </tr>
         </tbody>
     </table>
+    <form id="formCreateZip" name="formCreateZip" method="post" target="iframeFormCreateZip" action="<?php echo $_SPRIT['URL_PREFIX']; ?>audit/formcreatezip"></form>
+    <iframe id="iframeFormCreateZip" name="iframeFormCreateZip" class="iframeFormPOST"></iframe>
 </div>
 <script src="assets/js/global.js"></script>
 <script src="assets/js/htmldb_helpers.js"></script>
 <script src="assets/js/audit.js"></script>
+<script src="assets/js/uploadstepphoto.js"></script>
 </body>
 </html>

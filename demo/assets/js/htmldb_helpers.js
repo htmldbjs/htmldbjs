@@ -112,16 +112,23 @@ function resetHTMLDBWriterLoops() {
     			continue;
     		}
 
+    		if ($("tr.updating", document.getElementById(element.id + "_tbody")).length > 0) {
+    			continue;
+    		}
+
+    		$("tr", document.getElementById(element.id + "_tbody")).addClass("updating");
+
     		HTMLDB.write(element.id, false, function (DIVId, response) {
-
-    			document.getElementById(DIVId + "_tbody").innerHTML = "";
-    			if (document.getElementById(DIVId).getAttribute("data-htmldb-reader")) {
-    				clearHTMLDBTableContents(document.getElementById(DIVId).getAttribute("data-htmldb-reader"));
-    				HTMLDB.read(document.getElementById(DIVId).getAttribute("data-htmldb-reader"), true);
-    			} else if (document.getElementById(DIVId).getAttribute("data-htmldb-redirect")) {
-    				window.location.href = document.getElementById(DIVId).getAttribute("data-htmldb-redirect");
+    			$("tr.updating", document.getElementById(DIVId + "_tbody")).detach();
+    			// If there is a record to be written, write them first...
+    			if (0 == document.getElementById(element.id + "_tbody").children.length) {
+	    			if (document.getElementById(DIVId).getAttribute("data-htmldb-reader")) {
+	    				clearHTMLDBTableContents(document.getElementById(DIVId).getAttribute("data-htmldb-reader"));
+	    				HTMLDB.read(document.getElementById(DIVId).getAttribute("data-htmldb-reader"), true);
+	    			} else if (document.getElementById(DIVId).getAttribute("data-htmldb-redirect")) {
+	    				window.location.href = document.getElementById(DIVId).getAttribute("data-htmldb-redirect");
+	    			}
     			}
-
     		});
 
     	}
@@ -306,6 +313,7 @@ function doHTMLDBActionSave(sender) {
 	var rowId = sender.getAttribute("data-htmldb-row-id");
 	var targetHTMLDB = sender.getAttribute("data-htmldb-target");
 	var dialogId = sender.getAttribute("data-htmldb-dialog");
+	var loaderId = sender.getAttribute("data-htmldb-loader");
 
 	var elements = $("#" + dialogId + " .HTMLDBFieldValue");
 	var elementCount = elements.length;
@@ -328,6 +336,10 @@ function doHTMLDBActionSave(sender) {
 		if (responseObject.errorCount > 0) {
 			showErrorDialog(responseObject.lastError);
 		} else {
+			if (loaderId != "") {
+				$("#" + loaderId).velocity("fadeIn", 300);
+			}
+
 			HTMLDB.insert(targetHTMLDB, object);
 			hideDialog(dialogId);
 		}

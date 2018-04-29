@@ -34,7 +34,6 @@
                         
 <th><button type="button" class="buttonTableColumn"><?php echo __('Company Name'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
 <th><button type="button" class="buttonTableColumn"><?php echo __('Score'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
-<th><button type="button" class="buttonTableColumn"><?php echo __('Personal Company'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
 <th><button type="button" class="buttonTableColumn"><?php echo __('Consultant'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
                         <th></th>
                     </tr>
@@ -67,7 +66,6 @@
                                     
 <th><button type="button" class="buttonTableColumn"><?php echo __('Company Name'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
 <th><button type="button" class="buttonTableColumn"><?php echo __('Score'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
-<th><button type="button" class="buttonTableColumn"><?php echo __('Personal Company'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
 <th><button type="button" class="buttonTableColumn"><?php echo __('Consultant'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
                                     <th></th>
                                 </tr>
@@ -101,111 +99,81 @@
                                         <input id="company_name" name="company_name" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
                                     </div>
                                 </div>
+	<div class="col l12 m12 s12 " id="divtype">
+                                    <label for="type"><?php echo __('Company Type'); ?> </label>
+                                    <select class="selectSelectizeStandard" id="type" style="width: 100%" name="type"  data-min-selection="2" data-max-selection="2">
+                                    	<option value=""><?php echo __('Please Select'); ?></option>
+                                    	<option value="1"><?php echo __('Standart'); ?></option>
+<option value="2"><?php echo __('Bireysel'); ?></option>
+<option value="3"><?php echo __('Kurumsal'); ?></option>
+                                    </select>
+                                </div>
 	<div class="col l12 m12 s12 " id="divscore">
 	                                    <label for="score"><?php echo __('Score'); ?> </label>
 	                                    <div class="input-field">
 		                                    <input id="score" name="score" type="text" class="blue-text text-darken-4" placeholder="" min="" max="" value="" >
 	                                    </div>
                                     </div>
-	<div class="col l12 m12 s12 " id="divpersonal">
-                                    <p>
-                                        <label class="checkbox2" for="personal">
-                                        <input id="personal" name="personal" type="checkbox" value="1" >
-                                        <span class="outer">
-                                            <span class="inner"></span>
-                                        </span><?php echo __('Personal Company'); ?> </label>
-                                    </p>
-                                </div>
 								<div class="col l12 m12 s12 " id="divconsultant">
 									<label for="consultant"><?php echo __('Consultant'); ?>  </label>
 									<select class="selectClassSelection" id="consultant" style="width: 100%" name="consultant" data-min-selection="2" data-max-selection="2">
 										<option value=""><?php echo __('Please Select'); ?></option>
 									</select>
 								</div>
-	<div class="col l12 m12 s12 " id="divsponsor_firstname">
-                                    <label for="sponsor_firstname"><?php echo __('Sponsor First Name'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="sponsor_firstname" name="sponsor_firstname" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divsponsor_lastname">
-                                    <label for="sponsor_lastname"><?php echo __('Sponsor Last Name'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="sponsor_lastname" name="sponsor_lastname" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divsponsor_email">
-                                    <label for="sponsor_email"><?php echo __('Sponsor E-mail'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="sponsor_email" name="sponsor_email" type="email" class="blue-text text-darken-4" placeholder="" value="" >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divcoordinator_firstname">
-                                    <label for="coordinator_firstname"><?php echo __('Coordinator First Name'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="coordinator_firstname" name="coordinator_firstname" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divcoordinator_lastname">
-                                    <label for="coordinator_lastname"><?php echo __('Coordinator Last Name'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="coordinator_lastname" name="coordinator_lastname" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divcoordinator_email">
-                                    <label for="coordinator_email"><?php echo __('Coordinator E-mail'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="coordinator_email" name="coordinator_email" type="email" class="blue-text text-darken-4" placeholder="" value="" >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divhse_responsible">
-                                    <label for="hse_responsible"><?php echo __('HSE Responsible'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="hse_responsible" name="hse_responsible" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divhr_responsible">
-                                    <label for="hr_responsible"><?php echo __('HR Responsible'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="hr_responsible" name="hr_responsible" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divplanning_responsible">
-                                    <label for="planning_responsible"><?php echo __('Planning Responsible'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="planning_responsible" name="planning_responsible" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divmaintenance_responsible">
-                                    <label for="maintenance_responsible"><?php echo __('Maintenance Responsible'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="maintenance_responsible" name="maintenance_responsible" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divquality_responsible">
-                                    <label for="quality_responsible"><?php echo __('Quality Responsible'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="quality_responsible" name="quality_responsible" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divpropagation_champion_firstname">
-                                    <label for="propagation_champion_firstname"><?php echo __('Propagation Champion First Name'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="propagation_champion_firstname" name="propagation_champion_firstname" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divpropagation_champion_lastname">
-                                    <label for="propagation_champion_lastname"><?php echo __('Propagation Champion Last Name'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="propagation_champion_lastname" name="propagation_champion_lastname" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divpropagation_champion_email">
-                                    <label for="propagation_champion_email"><?php echo __('Propagation Champion Email'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="propagation_champion_email" name="propagation_champion_email" type="email" class="blue-text text-darken-4" placeholder="" value="" >
-                                    </div>
-                                </div>
+								<div class="col l12 m12 s12 " id="divsponsor_id">
+									<label for="sponsor_id"><?php echo __('Sponsor'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="sponsor_id" style="width: 100%" name="sponsor_id" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
+								<div class="col l12 m12 s12 " id="divcoordinator_id">
+									<label for="coordinator_id"><?php echo __('Coordinator'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="coordinator_id" style="width: 100%" name="coordinator_id" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
+								<div class="col l12 m12 s12 " id="divpropagation_champion_id">
+									<label for="propagation_champion_id"><?php echo __('Propagation Champion'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="propagation_champion_id" style="width: 100%" name="propagation_champion_id" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
+								<div class="col l12 m12 s12 " id="divhse_responsible_id">
+									<label for="hse_responsible_id"><?php echo __('HSE Responsible'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="hse_responsible_id" style="width: 100%" name="hse_responsible_id" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
+								<div class="col l12 m12 s12 " id="divhr_responsible_id">
+									<label for="hr_responsible_id"><?php echo __('HR Responsible'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="hr_responsible_id" style="width: 100%" name="hr_responsible_id" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
+								<div class="col l12 m12 s12 " id="divplanning_responsible_id">
+									<label for="planning_responsible_id"><?php echo __('Planning Responsible'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="planning_responsible_id" style="width: 100%" name="planning_responsible_id" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
+								<div class="col l12 m12 s12 " id="divmaintenance_responsible_id">
+									<label for="maintenance_responsible_id"><?php echo __('Maintenance Responsible'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="maintenance_responsible_id" style="width: 100%" name="maintenance_responsible_id" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
+								<div class="col l12 m12 s12 " id="divquality_responsible_id">
+									<label for="quality_responsible_id"><?php echo __('Quality Responsible'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="quality_responsible_id" style="width: 100%" name="quality_responsible_id" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
+								<div class="col l12 m12 s12 " id="divcreated_by">
+									<label for="created_by"><?php echo __('Created By'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="created_by" style="width: 100%" name="created_by" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
                             </div>
                             <div class="row">
                                 <div class="input-field">
@@ -270,6 +238,15 @@
             <div id="divCompanyHTMLDB" class="divHTMLDB"></div>
             <div id="divCompanyTableHTMLDB" class="divHTMLDB"></div>
             <div id="divconsultantPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divsponsor_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divcoordinator_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divpropagation_champion_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divhse_responsible_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divhr_responsible_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divplanning_responsible_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divmaintenance_responsible_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divquality_responsible_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divcreated_byPropertyOptionsHTMLDB" class="divHTMLDB"></div>
             <div id="divSessionHTMLDB" class="divHTMLDB"></div>
             <table>
                 <tbody id="tbodyGhostObjectListTemplate">
@@ -287,7 +264,6 @@
 <td>#divCompanyTableHTMLDB.column0</td>
 <td>#divCompanyTableHTMLDB.column1</td>
 <td>#divCompanyTableHTMLDB.column2</td>
-<td>#divCompanyTableHTMLDB.column3</td>
                         <td>
                             <button data-object-id="#divCompanyTableHTMLDB.id" class="buttonTableListAction buttonDeleteObject right" type="button">
                                 <i class="ion-android-delete"></i>
@@ -315,7 +291,6 @@
 <td>#divCompanyTableHTMLDB.column0</td>
 <td>#divCompanyTableHTMLDB.column1</td>
 <td>#divCompanyTableHTMLDB.column2</td>
-<td>#divCompanyTableHTMLDB.column3</td>
                         <td>
                             <button data-object-id="#divCompanyTableHTMLDB.id" class="buttonTableListAction buttonDeleteObject right" type="button">
                                 <i class="ion-android-delete"></i>

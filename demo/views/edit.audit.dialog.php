@@ -25,7 +25,7 @@
                                         <option value=""><?php echo __('Please Select'); ?></option>
                                     </select>
                                 </div>
-                                <div class="col s12">
+                                <div class="col s12" style="display:none;">
                                     <label for="auditNotes"><?php echo __('Notlar'); ?>  </label>
 									<textarea id="auditNotes" name="auditNotes" class="HTMLDBFieldValue materialize-textarea blue-text text-darken-4" data-htmldb-source="divAuditHTMLDBReader" data-htmldb-field="notes" placeholder=""></textarea>
                                 </div>

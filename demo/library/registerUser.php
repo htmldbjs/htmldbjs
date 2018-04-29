@@ -3,7 +3,7 @@
  * registerUser - creates session for the user
  * specified by email address.
  *
- * @param emailAddress [String][in]: Email address
+ * @param email [String][in]: Email address
  * of the user to be registered
  * @param registerCookie [bool][in]: Also write cookie or not
  *
@@ -19,19 +19,19 @@ if (strtolower(basename($_SERVER['PHP_SELF']))
 } // if (strtolower(basename($_SERVER['PHP_SELF']))
 // END: Deny direct access
 
-function registerUser($emailAddress, $registerCookie = false) {
+function registerUser($email, $registerCookie = false) {
 
-    assert($emailAddress != '') or die();
+    assert($email != '') or die();
     assert(isset($_SESSION)) or die();
         
-    $_SESSION['strUserHash'] = crypt(($emailAddress), session_id());
-    $_SESSION['strUserName'] = $emailAddress;
+    $_SESSION['strUserHash'] = crypt(($email), session_id());
+    $_SESSION['strUserName'] = $email;
     $_SESSION['strLoginHash'] = md5(md5(sha1(time())));
     
     includeModel('User');
 
     $objUserList = new User();
-    $objUserList->addFilter('emailAddress', '==', $emailAddress);
+    $objUserList->addFilter('email', '==', $email);
     $objUserList->addFilter('deleted', '==', 0);
     $objUserList->addFilter('enabled', '==', 1);
     $objUserList->bufferSize = 1;
@@ -51,14 +51,14 @@ function registerUser($emailAddress, $registerCookie = false) {
 
         $strCookiePrefix = md5(md5(sha1($_SERVER['SERVER_NAME'])));
 
-        if ($emailAddress != '') {
+        if ($email != '') {
 
             if ($objUserList->listCount > 0) {
 
                 $objUser = $objUserList->list[0];
 
-                $strUserName = $emailAddress;
-                $strUserHash = crypt($objUser->id, $emailAddress);
+                $strUserName = $email;
+                $strUserHash = crypt($objUser->id, $email);
 
                 setcookie(($strCookiePrefix . 'strUserCookieName'),
                         $strUserName,
@@ -69,7 +69,7 @@ function registerUser($emailAddress, $registerCookie = false) {
 
             } // if ($objUserList->listCount > 0) {
 
-        } // if ($emailAddress != '') {
+        } // if ($email != '') {
 
     } // if ($registerCookie) {
 

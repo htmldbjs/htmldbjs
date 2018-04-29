@@ -132,7 +132,7 @@
 	<div class="col l12 m12 s12 " id="divscore">
 	                                    <label for="score"><?php echo __('Score'); ?> </label>
 	                                    <div class="input-field">
-		                                    <input id="score" name="score" type="text" class="blue-text text-darken-4" placeholder="" min="" max="" value="" >
+		                                    <input id="score" name="score" type="number" class="blue-text text-darken-4" placeholder="" min="" max="" value="" >
 	                                    </div>
                                     </div>
 	<div class="col l12 m12 s12 " id="divnotes">
@@ -141,6 +141,12 @@
 		                                    <textarea id="notes" name="notes" class="materialize-textarea blue-text text-darken-4" placeholder="" style="height:0px;overflow-y:hidden;" ></textarea>
 	                                    </div>
                                     </div>
+								<div class="col l12 m12 s12 " id="divcreated_by">
+									<label for="created_by"><?php echo __('Created By'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="created_by" style="width: 100%" name="created_by" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
                             </div>
                             <div class="row">
                                 <div class="input-field">
@@ -207,6 +213,7 @@
             <div id="divunit_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
             <div id="divaudit_type_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
             <div id="divaudit_state_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divcreated_byPropertyOptionsHTMLDB" class="divHTMLDB"></div>
             <div id="divSessionHTMLDB" class="divHTMLDB"></div>
             <table>
                 <tbody id="tbodyGhostObjectListTemplate">

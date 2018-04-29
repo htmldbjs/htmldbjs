@@ -23,128 +23,16 @@
                                     </div>
                                 </div>
                                 <div class="col s12">
+                                    <label for="type"><?php echo __('Firma Türü'); ?> </label>
+                                    <select class="selectClassSelection HTMLDBFieldValue HTMLDBFieldSelect" id="type" style="width: 100%" name="type" data-htmldb-option-source="divCompanyTypeHTMLDBReader" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="type">>
+                                        <option value=""><?php echo __('Lütfen Seçiniz'); ?></option>
+                                    </select>
+                                </div>
+                                <div class="col s12" id="consultantContainer">
                                     <label for="consultant"><?php echo __('Danışman'); ?>  </label>
                                     <select class="selectClassSelection HTMLDBFieldValue HTMLDBFieldSelect" data-htmldb-option-source="divConsultantHTMLDBReader" id="companyConsultant" style="width: 100%" name="companyConsultant" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="consultant">
                                         <option value=""><?php echo __('Please Select'); ?></option>
                                     </select>
-                                </div>
-                                <div class="col s12">
-                                    <p>
-                                        <label class="checkbox2" for="companyPersonal">
-                                        <input id="companyPersonal" name="companyPersonal" value="1" type="checkbox" data-htmldb-field="personal" data-htmldb-source="divCompanyHTMLDBReader" class="HTMLDBFieldValue">
-                                        <span class="outer">
-                                            <span class="inner"></span>
-                                        </span>Bireysel</label>
-                                    </p>
-                                </div>
-                                <div class="sh-element sh-companyPersonal-false">
-                                    <div class="col s12"><h5 class="blue-text text-darken-4">Sponsor</h5></div>
-                                    <div class="col l6 m6 s12">
-                                        <label for="name"><?php echo __('Ad'); ?></label>
-                                        <div class="input-field">
-                                            <input id="companySponsorFirstName" name="companySponsorFirstName" type="text" value="" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="sponsor_firstname" class="HTMLDBFieldValue">
-                                        </div>
-                                    </div>
-                                    <div class="col l6 m6 s12">
-                                        <label for="name"><?php echo __('Soyad'); ?></label>
-                                        <div class="input-field">
-                                            <input id="companySponsorLastName" name="companySponsorLastName" type="text" value="" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="sponsor_lastname" class="HTMLDBFieldValue">
-                                        </div>
-                                    </div>
-                                    <div class="col l6 m6 s12">
-                                        <label for="name"><?php echo __('E-posta'); ?></label>
-                                        <div class="input-field">
-                                            <input id="companySponsorEmail" name="companySponsorEmail" type="text" value="" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="sponsor_email" class="HTMLDBFieldValue">
-                                        </div>
-                                    </div>
-                                    <div class="col l6 m6 s12">
-                                        <label for="name"><?php echo __('Şifre'); ?></label>
-                                        <div class="input-field">
-                                            <input id="companySponsorPassword" name="companySponsorPassword" type="password" data-htmldb-source="divCompanyHTMLDBReader" value="" data-htmldb-field="sponsor_password" class="HTMLDBFieldValue">
-                                        </div>
-                                    </div>
-                                    <div class="col s12"><h5 class="blue-text text-darken-4">Koordinatör</h5></div>
-                                    <div class="col l6 m6 s12">
-                                        <label for="name"><?php echo __('Ad'); ?></label>
-                                        <div class="input-field">
-                                            <input id="companyCoordinatorFirstName" name="companyCoordinatorFirstName" type="text" data-htmldb-source="divCompanyHTMLDBReader" value="" data-htmldb-field="coordinator_firstname" class="HTMLDBFieldValue">
-                                        </div>
-                                    </div>
-                                    <div class="col l6 m6 s12">
-                                        <label for="name"><?php echo __('Soyad'); ?></label>
-                                        <div class="input-field">
-                                            <input id="companyCoordinatorLastName" name="companyCoordinatorLastName" type="text" data-htmldb-source="divCompanyHTMLDBReader" value="" data-htmldb-field="coordinator_lastname" class="HTMLDBFieldValue">
-                                        </div>
-                                    </div>
-                                    <div class="col l6 m6 s12">
-                                        <label for="name"><?php echo __('E-posta'); ?></label>
-                                        <div class="input-field">
-                                            <input id="companyCoordinatorEmail" name="companyCoordinatorEmail" type="text" value="" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="coordinator_email" class="HTMLDBFieldValue">
-                                        </div>
-                                    </div>
-                                    <div class="col l6 m6 s12">
-                                        <label for="name"><?php echo __('Şifre'); ?></label>
-                                        <div class="input-field">
-                                            <input id="companyCoordinatorPassword" name="companyCoordinatorPassword" type="password" value="" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="coordinator_password" class="HTMLDBFieldValue">
-                                        </div>
-                                    </div>
-                                    <div class="col s12"><h5 class="blue-text text-darken-4">Yayılım Şampiyonu</h5></div>
-                                    <div class="col l6 m6 s12">
-                                        <label for="name"><?php echo __('Ad'); ?></label>
-                                        <div class="input-field">
-                                            <input id="companyPropagationChampionFirstName" name="companyPropagationChampionFirstName" type="text" data-htmldb-source="divCompanyHTMLDBReader" value="" data-htmldb-field="propagation_champion_firstname" class="HTMLDBFieldValue">
-                                        </div>
-                                    </div>
-                                    <div class="col l6 m6 s12">
-                                        <label for="name"><?php echo __('Soyad'); ?></label>
-                                        <div class="input-field">
-                                            <input id="companyPropagationChampionLastName" name="companyPropagationChampionLastName" type="text" data-htmldb-source="divCompanyHTMLDBReader" value="" data-htmldb-field="propagation_champion_lastname" class="HTMLDBFieldValue">
-                                        </div>
-                                    </div>
-                                    <div class="col l6 m6 s12">
-                                        <label for="name"><?php echo __('E-posta'); ?></label>
-                                        <div class="input-field">
-                                            <input id="companyPropagationChampionEmail" name="companyPropagationChampionEmail" type="text" value="" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="propagation_champion_email" class="HTMLDBFieldValue">
-                                        </div>
-                                    </div>
-                                    <div class="col l6 m6 s12">
-                                        <label for="name"><?php echo __('Şifre'); ?></label>
-                                        <div class="input-field">
-                                            <input id="companyPropagationChampionPassword" name="companyPropagationChampionPassword" type="password" value="" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="propagation_champion_password" class="HTMLDBFieldValue">
-                                        </div>
-                                    </div>
-
-                                    <div class="col s12"><h5 class="blue-text text-darken-4">Bölüm Temsilcileri</h5></div>
-                                    <div class="col l6 m6 s12">
-                                        <label for="name"><?php echo __('İSG Temsilcisi'); ?></label>
-                                        <div class="input-field">
-                                            <input id="companyHSEResponsible" name="companyHSEResponsible" type="text" value="" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="hse_responsible" class="HTMLDBFieldValue">
-                                        </div>
-                                    </div>
-                                    <div class="col l6 m6 s12">
-                                        <label for="name"><?php echo __('İK Temsilcisi'); ?></label>
-                                        <div class="input-field">
-                                            <input id="companyHRResponsible" name="companyHRResponsible" type="text" value="" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="hr_responsible" class="HTMLDBFieldValue">
-                                        </div>
-                                    </div>
-                                    <div class="col l6 m6 s12">
-                                        <label for="name"><?php echo __('Planlama Temsilcisi'); ?></label>
-                                        <div class="input-field">
-                                            <input id="companyPlanningResponsible" name="companyPlanningResponsible" type="text" value="" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="planning_responsible" class="HTMLDBFieldValue">
-                                        </div>
-                                    </div>
-                                    <div class="col l6 m6 s12">
-                                        <label for="name"><?php echo __('Bakım Temsilcisi'); ?></label>
-                                        <div class="input-field">
-                                            <input id="companyMaintenanceResponsible" name="companyMaintenanceResponsible" type="text" value="" data-htmldb-field="maintenance_responsible" data-htmldb-source="divCompanyHTMLDBReader" class="HTMLDBFieldValue">
-                                        </div>
-                                    </div>
-                                    <div class="col l6 m6 s12">
-                                        <label for="name"><?php echo __('Kalite Temsilcisi'); ?></label>
-                                        <div class="input-field">
-                                            <input id="companyQualityResponsible" name="companyQualityResponsible" type="text" value="" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="quality_responsible" class="HTMLDBFieldValue">
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </form>

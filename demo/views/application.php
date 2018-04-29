@@ -37,7 +37,11 @@
                                     <a href="#" class="aUnitNameLink blue-text text-darken-4"><p class="HTMLDBFieldContent" data-htmldb-source="divApplicationHTMLDBReader" data-htmldb-field="unit_idDisplayText">&nbsp;</p></a>
                                 </div>
                             </div>
+
                         </div>
+                    </div>
+                    <div class="card-action">
+                        <button id="buttonDownloadPhotos" type="button" name="buttonDownloadPhotos" class=" waves-effect waves-dark cyan-text text-darken-1 btn white"><i class="ion-android-download col s12"></i> Fotoğrafları İndir</button>
                     </div>
                 </div>
             </div>
@@ -82,8 +86,17 @@
                                                     class="sorting sorting-asc blue-text text-darken-4"><i
                                                     class="ion-arrow-up-b"></i></span></button>
                                             </th>
-                                            <th></th>
-                                            <th></th>
+                                            <th>
+                                                <button type="button" class="buttonTableColumn buttonTableColumn1"
+                                                data-column-index="1">
+                                                Gerçekleştirme Tarihi&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i
+                                                    class="ion-arrow-down-b"></i></span><span
+                                                    class="sorting sorting-asc blue-text text-darken-4"><i
+                                                    class="ion-arrow-up-b"></i></span></button>
+                                            </th>
+                                            <th style="width: 50px;"></th>
+                                            <th style="width: 50px;"></th>
+                                            <th style="width: 50px;"></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbodyApplicationTask1List"></tbody>
@@ -116,8 +129,17 @@
                                                     class="sorting sorting-asc blue-text text-darken-4"><i
                                                     class="ion-arrow-up-b"></i></span></button>
                                             </th>
-                                            <th></th>
-                                            <th></th>
+                                            <th>
+                                                <button type="button" class="buttonTableColumn buttonTableColumn1"
+                                                data-column-index="1">
+                                                Gerçekleştirme Tarihi&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i
+                                                    class="ion-arrow-down-b"></i></span><span
+                                                    class="sorting sorting-asc blue-text text-darken-4"><i
+                                                    class="ion-arrow-up-b"></i></span></button>
+                                            </th>
+                                            <th style="width: 50px;"></th>
+                                            <th style="width: 50px;"></th>
+                                            <th style="width: 50px;"></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbodyApplicationTask2List"></tbody>
@@ -150,8 +172,17 @@
                                                     class="sorting sorting-asc blue-text text-darken-4"><i
                                                     class="ion-arrow-up-b"></i></span></button>
                                             </th>
-                                            <th></th>
-                                            <th></th>
+                                            <th>
+                                                <button type="button" class="buttonTableColumn buttonTableColumn1"
+                                                data-column-index="1">
+                                                Gerçekleştirme Tarihi&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i
+                                                    class="ion-arrow-down-b"></i></span><span
+                                                    class="sorting sorting-asc blue-text text-darken-4"><i
+                                                    class="ion-arrow-up-b"></i></span></button>
+                                            </th>
+                                            <th style="width: 50px;"></th>
+                                            <th style="width: 50px;"></th>
+                                            <th style="width: 50px;"></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbodyApplicationTask3List"></tbody>
@@ -184,8 +215,17 @@
                                                     class="sorting sorting-asc blue-text text-darken-4"><i
                                                     class="ion-arrow-up-b"></i></span></button>
                                             </th>
-                                            <th></th>
-                                            <th></th>
+                                            <th>
+                                                <button type="button" class="buttonTableColumn buttonTableColumn1"
+                                                data-column-index="1">
+                                                Gerçekleştirme Tarihi&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i
+                                                    class="ion-arrow-down-b"></i></span><span
+                                                    class="sorting sorting-asc blue-text text-darken-4"><i
+                                                    class="ion-arrow-up-b"></i></span></button>
+                                            </th>
+                                            <th style="width: 50px;"></th>
+                                            <th style="width: 50px;"></th>
+                                            <th style="width: 50px;"></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbodyApplicationTask4List"></tbody>
@@ -218,8 +258,17 @@
                                                     class="sorting sorting-asc blue-text text-darken-4"><i
                                                     class="ion-arrow-up-b"></i></span></button>
                                             </th>
-                                            <th></th>
-                                            <th></th>
+                                            <th>
+                                                <button type="button" class="buttonTableColumn buttonTableColumn1"
+                                                data-column-index="1">
+                                                Gerçekleştirme Tarihi&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i
+                                                    class="ion-arrow-down-b"></i></span><span
+                                                    class="sorting sorting-asc blue-text text-darken-4"><i
+                                                    class="ion-arrow-up-b"></i></span></button>
+                                            </th>
+                                            <th style="width: 50px;"></th>
+                                            <th style="width: 50px;"></th>
+                                            <th style="width: 50px;"></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbodyApplicationTask5List"></tbody>
@@ -252,8 +301,17 @@
                                                     class="sorting sorting-asc blue-text text-darken-4"><i
                                                     class="ion-arrow-up-b"></i></span></button>
                                             </th>
-                                            <th></th>
-                                            <th></th>
+                                            <th>
+                                                <button type="button" class="buttonTableColumn buttonTableColumn1"
+                                                data-column-index="1">
+                                                Gerçekleştirme Tarihi&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i
+                                                    class="ion-arrow-down-b"></i></span><span
+                                                    class="sorting sorting-asc blue-text text-darken-4"><i
+                                                    class="ion-arrow-up-b"></i></span></button>
+                                            </th>
+                                            <th style="width: 50px;"></th>
+                                            <th style="width: 50px;"></th>
+                                            <th style="width: 50px;"></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbodyApplicationTask6List"></tbody>
@@ -271,6 +329,9 @@
 <?php includeView($controller, 'edit.applicationsubtasks.dialog'); ?>
 <?php includeView($controller, 'add.applicationsubtask.dialog'); ?>
 <?php includeView($controller, 'edit.applicationsubtask.dialog'); ?>
+<?php includeView($controller, 'add.taskphoto.dialog'); ?>
+<?php includeView($controller, 'add.subtaskphoto.dialog'); ?>
+<?php includeView($controller, 'upload.taskphoto.dialog'); ?>
 <div id="divErrorDialog" class="divDialogContent divAlertDialog divErrorDialog">
     <div class="divContentWrapper level3">
         <div class="divDialogContentContainer">
@@ -304,30 +365,36 @@
     </div>
 </div>
 <div class="divHiddenElements">
-    <div id="divApplicationTaskCrewHTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
-    <div id="divApplicationTaskStateHTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
-    <div id="divApplicationTaskCategoryHTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
-    <div id="divApplicationHTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
+    <div id="divApplicationTaskCrewHTMLDBReader" class=""></div>
+    <div id="divApplicationTaskStateHTMLDBReader" class=""></div>
+    <div id="divApplicationTaskCategoryHTMLDBReader" class=""></div>
+    <div id="divApplicationHTMLDBReader" class=""></div>
     <div id="divApplicationHTMLDBWriter" class="HTMLDBAction HTMLDBLoopWriter" data-htmldb-reader="divApplicationHTMLDBReader"></div>
-    <div id="divApplicationTaskHTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
+    <div id="divApplicationTaskHTMLDBReader" class=""></div>
     <div id="divApplicationTaskHTMLDBWriter" class="HTMLDBAction HTMLDBLoopWriter" data-htmldb-reader="divApplicationTaskHTMLDBReader"></div>
-    <div id="divApplicationSubTaskHTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
+    <div id="divApplicationSubTaskHTMLDBReader" class=""></div>
     <div id="divApplicationSubTaskHTMLDBWriter" class="HTMLDBAction HTMLDBLoopWriter" data-htmldb-reader="divApplicationSubTaskHTMLDBReader"></div>
-    <div id="divApplicationTask1HTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
-    <div id="divApplicationTask2HTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
-    <div id="divApplicationTask3HTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
-    <div id="divApplicationTask4HTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
-    <div id="divApplicationTask5HTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
-    <div id="divApplicationTask6HTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
+    <div id="divApplicationTask1HTMLDBReader" class=""></div>
+    <div id="divApplicationTask2HTMLDBReader" class=""></div>
+    <div id="divApplicationTask3HTMLDBReader" class=""></div>
+    <div id="divApplicationTask4HTMLDBReader" class=""></div>
+    <div id="divApplicationTask5HTMLDBReader" class=""></div>
+    <div id="divApplicationTask6HTMLDBReader" class=""></div>
     <table>
         <tbody id="tbodyApplicationTask1ListTemplate">
             <tr class="tr#divApplicationTask1HTMLDBReader.id">
                 <td>#divApplicationTask1HTMLDBReader.application_task_code</td>
                 <td><span>#divApplicationTask1HTMLDBReader.task_action</span><br><span class="spanNote red-text text-darken-4">#divApplicationTask1HTMLDBReader.description</span></td>
                 <td>#divApplicationTask1HTMLDBReader.application_task_state_idDisplayText</td>
+                <td><span class="hideTaskActualDate showTaskActualDate#divApplicationTask1HTMLDBReader.application_task_state_id">#divApplicationTask1HTMLDBReader.actual_date</span></td>
                 <td>
                     <button type="button" data-htmldb-row-id="#divApplicationTask1HTMLDBReader.id" class="buttonEditApplicationTask buttonTableListAction buttonEditObject right HTMLDBAction HTMLDBEdit" data-htmldb-source="divApplicationTaskHTMLDBReader" data-htmldb-dialog="divEditApplicationTaskDialog">
                         <i class="ion-android-search"></i>
+                    </button>
+                </td>
+                <td>
+                    <button type="button" data-row-id="#divApplicationTask1HTMLDBReader.id" class="buttonAddTaskPhoto buttonTableListAction buttonEditObject right" data-dialog-id="divPhotoDialogTask">
+                        <i class="ion-images"><span class="spanIMGCount" id="spanTaskIMGCount#divApplicationTask1HTMLDBReader.id"></span></i>
                     </button>
                 </td>
                 <td>
@@ -344,9 +411,15 @@
                 <td>#divApplicationTask2HTMLDBReader.application_task_code</td>
                 <td><span>#divApplicationTask2HTMLDBReader.task_action</span><br><span class="spanNote red-text text-darken-4">#divApplicationTask2HTMLDBReader.description</span></td>
                 <td>#divApplicationTask2HTMLDBReader.application_task_state_idDisplayText</td>
+                <td><span class="hideTaskActualDate showTaskActualDate#divApplicationTask2HTMLDBReader.application_task_state_id">#divApplicationTask2HTMLDBReader.actual_date</span></td>
                 <td>
                     <button type="button" data-htmldb-row-id="#divApplicationTask2HTMLDBReader.id" class="buttonEditApplicationTask buttonTableListAction buttonEditObject right HTMLDBAction HTMLDBEdit" data-htmldb-source="divApplicationTaskHTMLDBReader" data-htmldb-dialog="divEditApplicationTaskDialog">
                         <i class="ion-android-search"></i>
+                    </button>
+                </td>
+                <td>
+                    <button type="button" data-row-id="#divApplicationTask2HTMLDBReader.id" class="buttonAddTaskPhoto buttonTableListAction buttonEditObject right" data-dialog-id="divPhotoDialogTask">
+                        <i class="ion-images"><span class="spanIMGCount" id="spanTaskIMGCount#divApplicationTask2HTMLDBReader.id"></span></i>
                     </button>
                 </td>
                 <td>
@@ -363,9 +436,15 @@
                 <td>#divApplicationTask3HTMLDBReader.application_task_code</td>
                 <td><span>#divApplicationTask3HTMLDBReader.task_action</span><br><span class="spanNote red-text text-darken-4">#divApplicationTask3HTMLDBReader.description</span></td>
                 <td>#divApplicationTask3HTMLDBReader.application_task_state_idDisplayText</td>
+                <td><span class="hideTaskActualDate showTaskActualDate#divApplicationTask3HTMLDBReader.application_task_state_id">#divApplicationTask3HTMLDBReader.actual_date</span></td>
                 <td>
                     <button type="button" data-htmldb-row-id="#divApplicationTask3HTMLDBReader.id" class="buttonEditApplicationTask buttonTableListAction buttonEditObject right HTMLDBAction HTMLDBEdit" data-htmldb-source="divApplicationTaskHTMLDBReader" data-htmldb-dialog="divEditApplicationTaskDialog">
                         <i class="ion-android-search"></i>
+                    </button>
+                </td>
+                <td>
+                    <button type="button" data-row-id="#divApplicationTask3HTMLDBReader.id" class="buttonAddTaskPhoto buttonTableListAction buttonEditObject right" data-dialog-id="divPhotoDialogTask">
+                        <i class="ion-images"><span class="spanIMGCount" id="spanTaskIMGCount#divApplicationTask3HTMLDBReader.id"></span></i>
                     </button>
                 </td>
                 <td>
@@ -382,9 +461,15 @@
                 <td>#divApplicationTask4HTMLDBReader.application_task_code</td>
                 <td><span>#divApplicationTask4HTMLDBReader.task_action</span><br><span class="spanNote red-text text-darken-4">#divApplicationTask4HTMLDBReader.description</span></td>
                 <td>#divApplicationTask4HTMLDBReader.application_task_state_idDisplayText</td>
+                <td><span class="hideTaskActualDate showTaskActualDate#divApplicationTask4HTMLDBReader.application_task_state_id">#divApplicationTask4HTMLDBReader.actual_date</span></td>
                 <td>
                     <button type="button" data-htmldb-row-id="#divApplicationTask4HTMLDBReader.id" class="buttonEditApplicationTask buttonTableListAction buttonEditObject right HTMLDBAction HTMLDBEdit" data-htmldb-source="divApplicationTaskHTMLDBReader" data-htmldb-dialog="divEditApplicationTaskDialog">
                         <i class="ion-android-search"></i>
+                    </button>
+                </td>
+                <td>
+                    <button type="button" data-row-id="#divApplicationTask4HTMLDBReader.id" class="buttonAddTaskPhoto buttonTableListAction buttonEditObject right" data-dialog-id="divPhotoDialogTask">
+                        <i class="ion-images"><span class="spanIMGCount" id="spanTaskIMGCount#divApplicationTask4HTMLDBReader.id"></span></i>
                     </button>
                 </td>
                 <td>
@@ -401,9 +486,15 @@
                 <td>#divApplicationTask5HTMLDBReader.application_task_code</td>
                 <td><span>#divApplicationTask5HTMLDBReader.task_action</span><br><span class="spanNote red-text text-darken-4">#divApplicationTask5HTMLDBReader.description</span></td>
                 <td>#divApplicationTask5HTMLDBReader.application_task_state_idDisplayText</td>
+                <td><span class="hideTaskActualDate showTaskActualDate#divApplicationTask5HTMLDBReader.application_task_state_id">#divApplicationTask5HTMLDBReader.actual_date</span></td>
                 <td>
                     <button type="button" data-htmldb-row-id="#divApplicationTask5HTMLDBReader.id" class="buttonEditApplicationTask buttonTableListAction buttonEditObject right HTMLDBAction HTMLDBEdit" data-htmldb-source="divApplicationTaskHTMLDBReader" data-htmldb-dialog="divEditApplicationTaskDialog">
                         <i class="ion-android-search"></i>
+                    </button>
+                </td>
+                <td>
+                    <button type="button" data-row-id="#divApplicationTask5HTMLDBReader.id" class="buttonAddTaskPhoto buttonTableListAction buttonEditObject right" data-dialog-id="divPhotoDialogTask">
+                        <i class="ion-images"><span class="spanIMGCount" id="spanTaskIMGCount#divApplicationTask5HTMLDBReader.id"></span></i>
                     </button>
                 </td>
                 <td>
@@ -420,9 +511,15 @@
                 <td>#divApplicationTask6HTMLDBReader.application_task_code</td>
                 <td><span>#divApplicationTask6HTMLDBReader.task_action</span><br><span class="spanNote red-text text-darken-4">#divApplicationTask6HTMLDBReader.description</span></td>
                 <td>#divApplicationTask6HTMLDBReader.application_task_state_idDisplayText</td>
+                <td><span class="hideTaskActualDate showTaskActualDate#divApplicationTask6HTMLDBReader.application_task_state_id">#divApplicationTask6HTMLDBReader.actual_date</span></td>
                 <td>
                     <button type="button" data-htmldb-row-id="#divApplicationTask6HTMLDBReader.id" class="buttonEditApplicationTask buttonTableListAction buttonEditObject right HTMLDBAction HTMLDBEdit" data-htmldb-source="divApplicationTaskHTMLDBReader" data-htmldb-dialog="divEditApplicationTaskDialog">
                         <i class="ion-android-search"></i>
+                    </button>
+                </td>
+                <td>
+                    <button type="button" data-row-id="#divApplicationTask6HTMLDBReader.id" class="buttonAddTaskPhoto buttonTableListAction buttonEditObject right" data-dialog-id="divPhotoDialogTask">
+                        <i class="ion-images"><span class="spanIMGCount" id="spanTaskIMGCount#divApplicationTask6HTMLDBReader.id"></span></i>
                     </button>
                 </td>
                 <td>
@@ -437,6 +534,12 @@
         <tbody id="tbodyApplicationSubTaskListTemplate">
             <tr class="tr#divApplicationSubTaskHTMLDBReader.id">
                 <td>#divApplicationSubTaskHTMLDBReader.title</td>
+                <td><span class="hideTaskActualDate showTaskActualDate#divApplicationSubTaskHTMLDBReader.application_task_state_id">#divApplicationSubTaskHTMLDBReader.actual_date</span></td>
+                <td>
+                    <button type="button" data-row-id="#divApplicationSubTaskHTMLDBReader.id" class="buttonAddSubTaskPhoto buttonTableListAction buttonEditObject right" data-dialog-id="divPhotoDialogSubTask">
+                        <i class="ion-images"><span class="spanIMGCount" id="spanSubTaskIMGCount#divApplicationSubTaskHTMLDBReader.id"></span></i>
+                    </button>
+                </td>
                 <td>
                     <button type="button" data-htmldb-row-id="#divApplicationSubTaskHTMLDBReader.id" class="buttonEditApplicationTask buttonTableListAction buttonEditObject right HTMLDBAction HTMLDBEdit" data-htmldb-source="divApplicationSubTaskHTMLDBReader" data-htmldb-dialog="divEditApplicationSubTaskDialog">
                         <i class="ion-android-search"></i>
@@ -445,9 +548,12 @@
             </tr>
         </tbody>
     </table>
+    <form id="formCreateZip" name="formCreateZip" method="post" target="iframeFormCreateZip" action="<?php echo $_SPRIT['URL_PREFIX']; ?>application/formcreatezip"></form>
+    <iframe id="iframeFormCreateZip" name="iframeFormCreateZip" class="iframeFormPOST"></iframe>
 </div>
 <script src="assets/js/global.js"></script>
 <script src="assets/js/htmldb_helpers.js"></script>
 <script src="assets/js/application.js"></script>
+<script src="assets/js/uploadtaskphoto.js"></script>
 </body>
 </html>

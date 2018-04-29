@@ -102,10 +102,14 @@ class companyController {
 		includeModel('Company');
 
 		$listObject = new Company();
+		$listObject->beginBulkOperation();
 		$listObject->bufferSize = 1;
 		$listObject->page = 0;
 		$listObject->addFilter('deleted','==', false);
 		$listObject->addFilter('id','==', $id);
+		if (10 == $this->user->user_type) {
+			$listObject->addFilter('created_by','==', $this->user->id);
+		}
 		$listObject->find();
 
 		$objectCount = $listObject->listCount;
@@ -118,58 +122,61 @@ class companyController {
 
 		if (!$noData) {
 
+			includeLibrary('getAllCachedObjects');
+			$consultans = getAllCachedObjects('User');
+
 			for ($i = 0; $i < $objectCount; $i++) {
 
 				$object = $listObject->list[$i];
 				$this->list[$index]['id'] = $object->id;
 				$this->list[$index]['company_name'] = $object->company_name;
 				$this->list[$index]['score'] = $object->score;
-				$this->list[$index]['personal'] = $object->personal;
-				$this->list[$index]['consultant'] = $object->consultant;
-				$this->list[$index]['consultantDisplayText']
-						= $object->getForeignDisplayText('consultant');
-				$this->list[$index]['sponsor_firstname'] = $object->sponsor_firstname;
-				$this->list[$index]['sponsor_lastname'] = $object->sponsor_lastname;
-				$this->list[$index]['sponsor_email'] = $object->sponsor_email;
-				$this->list[$index]['coordinator_firstname'] = $object->coordinator_firstname;
-				$this->list[$index]['coordinator_lastname'] = $object->coordinator_lastname;
-				$this->list[$index]['coordinator_email'] = $object->coordinator_email;
-				$this->list[$index]['hse_responsible'] = $object->hse_responsible;
-				$this->list[$index]['hr_responsible'] = $object->hr_responsible;
-				$this->list[$index]['planning_responsible'] = $object->planning_responsible;
-				$this->list[$index]['maintenance_responsible'] = $object->maintenance_responsible;
-				$this->list[$index]['quality_responsible'] = $object->quality_responsible;
-				$this->list[$index]['propagation_champion_firstname'] = $object->propagation_champion_firstname;
-				$this->list[$index]['propagation_champion_lastname'] = $object->propagation_champion_lastname;
-				$this->list[$index]['propagation_champion_email'] = $object->propagation_champion_email;
+				$this->list[$index]['type'] = $object->type;
+				$optionTitles = $object->getOptionTitles('type');
+				$this->list[$index]['typeDisplayText'] = $optionTitles[$object->type];
 
+				$this->list[$index]['consultant'] = $object->consultant;
+				$this->list[$index]['consultantDisplayText'] = '';
+				if (isset($consultans[$object->consultant])) {
+					$this->list[$index]['consultantDisplayText']
+							= $consultans[$object->consultant]['firstname']
+							. ' '
+							. $consultans[$object->consultant]['lastname'];
+				} // if (isset($consultans[$object->consultant])) {
+
+				$this->list[$index]['sponsor_id'] = $object->sponsor_id;
+				$this->list[$index]['coordinator_id'] = $object->coordinator_id;
+				$this->list[$index]['hse_responsible_id'] = $object->hse_responsible_id;
+				$this->list[$index]['hr_responsible_id'] = $object->hr_responsible_id;
+				$this->list[$index]['planning_responsible_id'] = $object->planning_responsible_id;
+				$this->list[$index]['maintenance_responsible_id'] = $object->maintenance_responsible_id;
+				$this->list[$index]['quality_responsible_id'] = $object->quality_responsible_id;
+				$this->list[$index]['propagation_champion_id'] = $object->propagation_champion_id;
+				
 				$index++;
 
 			} // for ($i = 0; $i < $objectCount; $i++) {
 
 		} // if (!$noData) {
+		
+		$listObject->endBulkOperation();
 
 		$this->columns = array();
 		$this->columns[] = 'id';
 		$this->columns[] = 'company_name';
 		$this->columns[] = 'score';
-		$this->columns[] = 'personal';
+		$this->columns[] = 'type';
+		$this->columns[] = 'typeDisplayText';
 		$this->columns[] = 'consultant';
 		$this->columns[] = 'consultantDisplayText';
-		$this->columns[] = 'sponsor_firstname';
-		$this->columns[] = 'sponsor_lastname';
-		$this->columns[] = 'sponsor_email';
-		$this->columns[] = 'coordinator_firstname';
-		$this->columns[] = 'coordinator_lastname';
-		$this->columns[] = 'coordinator_email';
-		$this->columns[] = 'hse_responsible';
-		$this->columns[] = 'hr_responsible';
-		$this->columns[] = 'planning_responsible';
-		$this->columns[] = 'maintenance_responsible';
-		$this->columns[] = 'quality_responsible';
-		$this->columns[] = 'propagation_champion_firstname';
-		$this->columns[] = 'propagation_champion_lastname';
-		$this->columns[] = 'propagation_champion_email';
+		$this->columns[] = 'sponsor_id';
+		$this->columns[] = 'coordinator_id';
+		$this->columns[] = 'hse_responsible_id';
+		$this->columns[] = 'hr_responsible_id';
+		$this->columns[] = 'planning_responsible_id';
+		$this->columns[] = 'maintenance_responsible_id';
+		$this->columns[] = 'quality_responsible_id';
+		$this->columns[] = 'propagation_champion_id';
 
 		includeView($this, 'htmldblist.gz');
 		return;
@@ -199,7 +206,7 @@ class companyController {
 
 			$this->lastError .= __('Lütfen firma adını belirtiniz.');
 
-		} // if ('' == $newCrewMember->firstname) {
+		} // if ('' == $newCompany->company_name) {
 
 		if (0 == $this->errorCount) {
 
@@ -235,8 +242,10 @@ class companyController {
 
 		includeModel('Company');
 		$company = new Company();
+		$company->beginBulkOperation();
 		$company->request($_REQUEST, ('inputfield0'));
 		$company->update();
+		$company->endBulkOperation();
 
 		$_SESSION[sha1('companyController') . 'last'] = $company->id;
 
@@ -262,6 +271,7 @@ class companyController {
 		includeModel('Company');
 
 		$object = new Company();
+		$object->beginBulkOperation();
 		$object->page = 0;
 		$object->bufferSize = 2500;
 
@@ -271,11 +281,14 @@ class companyController {
 		
 		$object->findForeignList($propertyName);
 		$this->list = $object->getForeignListColumns();
+
+		$object->endBulkOperation();
+
 		$this->columns = array();
 		$this->columns[] = 'id';
 		$this->columns[] = 'column0';
 
-		includeView($this, 'spritpanel/htmldblist.gz');
+		includeView($this, 'htmldblist.gz');
 		return;
 
 	}
@@ -305,12 +318,13 @@ class companyController {
 		includeModel('Unit');
 
 		$listObject = new Unit();
+		$listObject->beginBulkOperation();
 		$listObject->bufferSize = 100;
 		$listObject->page = $sessionParameters['page'];
 		$listObject->addFilter('deleted','==', false);
 		$listObject->addFilter('company_id','==', $companyId);
 		$listObject->addSearchText($searchText);
-		$listObject->sortByColumn($sortingColumn, $sortingAscending);
+		$listObject->sortByProperty('lastUpdate', false);
 		$listObject->find();
 
 		$_SESSION[sha1(__FILE__) . 'pageCount'] = $listObject->getPageCount();
@@ -330,46 +344,33 @@ class companyController {
 				$object = $listObject->list[$i];
 				$this->list[$index]['id'] = $object->id;
 				$this->list[$index]['company_id'] = $object->company_id;
-				$this->list[$index]['company_idDisplayText']
-						= $object->getForeignDisplayText('company_id');
 				$this->list[$index]['name'] = $object->name;
-				$this->list[$index]['process_owner_firstname'] = $object->process_owner_firstname;
-				$this->list[$index]['process_owner_lastname'] = $object->process_owner_lastname;
-				$this->list[$index]['process_owner_email'] = $object->process_owner_email;
-				$this->list[$index]['champion_firstname'] = $object->champion_firstname;
-				$this->list[$index]['champion_lastname'] = $object->champion_lastname;
-				$this->list[$index]['champion_email'] = $object->champion_email;
-				$this->list[$index]['advisor_firstname'] = $object->advisor_firstname;
-				$this->list[$index]['advisor_lastname'] = $object->advisor_lastname;
-				$this->list[$index]['advisor_email'] = $object->advisor_email;
-				$this->list[$index]['leader_firstname'] = $object->leader_firstname;
-				$this->list[$index]['leader_lastname'] = $object->leader_lastname;
-				$this->list[$index]['leader_email'] = $object->leader_email;
+				$this->list[$index]['process_owner_id'] = $object->process_owner_id;				
+				$this->list[$index]['champion_id'] = $object->champion_id;				
+				$this->list[$index]['advisor_id'] = $object->advisor_id;				
+				$this->list[$index]['leader1_id'] = $object->leader1_id;				
+				$this->list[$index]['leader2_id'] = $object->leader2_id;				
+				$this->list[$index]['leader3_id'] = $object->leader3_id;				
 				$index++;
 
 			} // for ($i = 0; $i < $objectCount; $i++) {
 
 		} // if ($noData) {
+		
+		$listObject->endBulkOperation();
 
 		$this->columns = array();
 		$this->columns[] = 'id';
 		$this->columns[] = 'company_id';
-		$this->columns[] = 'company_idDisplayText';
 		$this->columns[] = 'name';
-		$this->columns[] = 'process_owner_firstname';
-		$this->columns[] = 'process_owner_lastname';
-		$this->columns[] = 'process_owner_email';
-		$this->columns[] = 'champion_firstname';
-		$this->columns[] = 'champion_lastname';
-		$this->columns[] = 'champion_email';
-		$this->columns[] = 'advisor_firstname';
-		$this->columns[] = 'advisor_lastname';
-		$this->columns[] = 'advisor_email';
-		$this->columns[] = 'leader_firstname';
-		$this->columns[] = 'leader_lastname';
-		$this->columns[] = 'leader_email';
+		$this->columns[] = 'process_owner_id';
+		$this->columns[] = 'champion_id';
+		$this->columns[] = 'advisor_id';
+		$this->columns[] = 'leader1_id';
+		$this->columns[] = 'leader2_id';
+		$this->columns[] = 'leader3_id';
 
-		includeView($this, 'spritpanel/htmldblist.gz');
+		includeView($this, 'htmldblist.gz');
 		return;
 
 	}
@@ -432,6 +433,7 @@ class companyController {
 		includeModel('Unit');
 
 		$object = new Unit();
+		$object->beginBulkOperation();
 
 		while (isset($_REQUEST['inputaction' . $index])) {
 
@@ -440,7 +442,7 @@ class companyController {
 			switch ($_REQUEST['inputaction' . $index]) {
 				case 'inserted':
 				case 'updated':
-
+					$object->created_by = $this->user->id;
 					$object->lastUpdate = intval(time());
 					$object->update();
 
@@ -462,7 +464,179 @@ class companyController {
 			$index++;
 
 		} // while (isset($_REQUEST['inputaction' . $index])) {
+		
+		$object->endBulkOperation();
 
+	}
+
+	public function readcrew($parameters = NULL) {
+
+		$this->parameters = $parameters;
+
+		$noData = false;
+		$companyId = 0;
+
+		if (isset($this->parameters[0])) {
+			if ('nodata' == strtolower($this->parameters[0])) {
+				$noData = true;
+			} // if ('nodata' == strtolower($this->parameters[0])) {
+		} // if (isset($this->parameters[0])) {
+
+		if (isset($this->parameters[0])) {
+			$companyId = intval($this->parameters[0]);
+		} // if (isset($this->parameters[0])) {
+
+		$sessionParameters = $this->getSessionParameters();
+		$sortingColumn = intval($sessionParameters['sortingColumn']);
+		$sortingAscending = intval($sessionParameters['sortingASC']);
+		$searchText = $sessionParameters['searchText'];
+
+		includeModel('Crew');
+
+		$listObject = new Crew();
+		$listObject->beginBulkOperation();
+		$listObject->bufferSize = 100;
+		$listObject->page = $sessionParameters['page'];
+		$listObject->addFilter('deleted','==', false);
+		$listObject->addFilter('company_id','==', $companyId);
+		$listObject->addSearchText($searchText);
+		$listObject->find();
+
+		$_SESSION[sha1(__FILE__) . 'pageCount'] = $listObject->getPageCount();
+
+		$objectCount = $listObject->listCount;
+		
+		$object = NULL;
+
+		$index = 0;
+
+		$this->list = array();
+		
+		includeLibrary('getCrewTypeText');
+		includeLibrary('getAllCachedObjects');
+		$units = getAllCachedObjects('Unit');
+
+		for ($i = 0; $i < $objectCount; $i++) {
+
+			$object = $listObject->list[$i];
+			$this->list[$index]['id'] = $object->id;
+			$this->list[$index]['enabled'] = $object->enabled;
+			$this->list[$index]['company_id'] = $object->company_id;
+			$this->list[$index]['unit_id'] = $object->unit_id;
+			$this->list[$index]['name'] = $object->name;
+			$this->list[$index]['email'] = $object->email;
+			$this->list[$index]['type'] = $object->type;
+			$this->list[$index]['typeDisplayText'] = getCrewTypeText($object->type);
+			$index++;
+
+		} // for ($i = 0; $i < $objectCount; $i++) {			
+		
+		$listObject->endBulkOperation();
+
+		$this->columns = array();
+		$this->columns[] = 'id';
+		$this->columns[] = 'enabled';
+		$this->columns[] = 'company_id';
+		$this->columns[] = 'unit_id';
+		$this->columns[] = 'name';
+		$this->columns[] = 'email';
+		$this->columns[] = 'type';
+		$this->columns[] = 'typeDisplayText';
+
+		includeView($this, 'htmldblist.gz');
+		return;
+
+	}
+
+	public function validatecrew($parameters = NULL, $silent = false) {
+
+		global $_SPRIT;
+
+		$this->errorCount = 0;
+		$this->lastError = '';
+		$this->lastError = '';
+
+		$this->parameters = $parameters;
+
+		includeModel('Crew');
+		$newCrew = new Crew();
+		$newCrew->request($_REQUEST, ('inputfield0'));
+
+		if ('' == $newCrew->name) {
+
+			$this->errorCount++;
+			if ($this->lastError != '') {
+				$this->lastError .= '<br>';
+			} // if ($this->lastError != '') {
+
+			$this->lastError .= __('Lütfen isim belirtiniz.');
+
+		} // if ('' == $newCrewMember->name) {
+
+		if (0 == $this->errorCount) {
+
+			$this->lastMessage = '';
+
+			if (!$silent) {
+				includeView($this, 'success.json');
+			} // if (!$silent) {
+
+			return true;
+
+		} else {
+
+			$this->errorCount++;
+			
+			if (!$silent) {
+				includeView($this, 'error.json');
+			} // if (!$silent) {
+
+			return false;
+
+		} // if (0 == $this->errorCount) {
+
+	}
+
+	public function writecrew($parameters = NULL) {
+
+		$this->parameters = $parameters;
+
+		$index = 0;
+
+		includeModel('Crew');
+
+		$object = new Crew();
+		$object->beginBulkOperation();
+
+		while (isset($_REQUEST['inputaction' . $index])) {
+
+			$object->request($_REQUEST, ('inputfield' . $index));
+
+			switch ($_REQUEST['inputaction' . $index]) {
+				case 'inserted':
+				case 'updated':
+
+						$object->lastUpdate = intval(time());
+						$object->update();				
+
+				break;
+
+				case 'deleted':
+
+					if ($object->id > 0) {
+
+						$object->delete();
+
+					} // if ($id > 0) {
+
+				break;
+			} // switch ($_REQUEST['inputaction' . $index]) {
+
+			$index++;
+
+		} // while (isset($_REQUEST['inputaction' . $index])) {
+		
+		$object->endBulkOperation();
 	}
 
 	public function readsession($parameters = NULL) {
@@ -482,7 +656,7 @@ class companyController {
 		$this->columns[] = 'pageCount';
 		$this->columns[] = 'companystate_idSearchText';
 
-		includeView($this, 'spritpanel/htmldblist.gz');
+		includeView($this, 'htmldblist.gz');
 		return;
 
 	}
@@ -556,6 +730,487 @@ class companyController {
 				: '');
 		return $sessionParameters;
 
+	}
+
+	public function readcompanytype() {
+		$this->list = array();
+		$this->list[0]['id'] = 1;
+		$this->list[0]['column0'] = 'Standart';
+		$this->list[1]['id'] = 2;
+		$this->list[1]['column0'] = 'Bireysel';
+		$this->list[2]['id'] = 3;
+		$this->list[2]['column0'] = 'Kurumsal';
+
+		$this->columns = array();
+		$this->columns[] = 'id';
+		$this->columns[] = 'column0';
+
+		includeView($this, 'htmldblist.gz');
+		return;
+	}
+
+	
+	public function readcrewtype() {
+		$this->list = array();
+
+		$this->list[0]['id'] = 1;
+		$this->list[0]['column0'] = 'Sponsor';
+		$this->list[1]['id'] = 2;
+		$this->list[1]['column0'] = 'Koordinatör';
+		$this->list[2]['id'] = 8;
+		$this->list[2]['column0'] = 'Yayılım Şampiyonu';
+		$this->list[3]['id'] = 3;
+		$this->list[3]['column0'] = 'İSG Temsilcisi';
+		$this->list[4]['id'] = 4;
+		$this->list[4]['column0'] = 'İK Temsilcisi';
+		$this->list[5]['id'] = 5;
+		$this->list[5]['column0'] = 'Planlama Temsilcisi';
+		$this->list[6]['id'] = 6;
+		$this->list[6]['column0'] = 'Bakım Temsilcisi';
+		$this->list[7]['id'] = 7;
+		$this->list[7]['column0'] = 'Kalite Temsilcisi';
+		
+
+		$this->columns = array();
+		$this->columns[] = 'id';
+		$this->columns[] = 'column0';
+
+		includeView($this, 'htmldblist.gz');
+		return;
+	}
+	
+	public function readaudittype($parameters = NULL) {
+
+		$this->parameters = $parameters;
+
+		includeModel('AuditType');
+
+		$listObject = new AuditType();
+		$listObject->beginBulkOperation();
+		$listObject->bufferSize = 0;
+		$listObject->page = 0;
+		$listObject->addFilter('deleted','==', false);
+		$listObject->addFilter('enabled','==', true);
+		$listObject->sortByProperty('index');
+		$listObject->find();
+
+		$objectCount = $listObject->listCount;
+		
+		$object = NULL;
+
+		$index = 0;
+
+		$this->list = array();
+
+		for ($i = 0; $i < $objectCount; $i++) {
+
+			$object = $listObject->list[$i];
+			$this->list[$index]['id'] = $object->id;
+			$this->list[$index]['column0'] = $object->name;
+			$index++;
+
+		} // for ($i = 0; $i < $objectCount; $i++) {			
+		
+		$listObject->endBulkOperation();
+
+		$this->columns = array();
+		$this->columns[] = 'id';
+		$this->columns[] = 'column0';
+
+		includeView($this, 'htmldblist.gz');
+		return;
+
+	}
+
+	public function readaudit($parameters = NULL) {
+		$this->parameters = $parameters;
+
+		$noData = false;
+		$companyId = 0;
+		$unitIds = array();
+
+		if (isset($this->parameters[0])) {
+			if ('nodata' == strtolower($this->parameters[0])) {
+				$noData = true;
+			} // if ('nodata' == strtolower($this->parameters[0])) {
+		} // if (isset($this->parameters[0])) {
+
+		if (isset($this->parameters[0])) {
+			$companyId = intval($this->parameters[0]);
+
+			includeModel('Unit');
+			$UnitList = new Unit();
+			$UnitList->beginBulkOperation();
+			$UnitList->bufferSize = 0;
+			$UnitList->page = 0;
+			$UnitList->addFilter('deleted','==', false);
+			$UnitList->addFilter('company_id','==', $companyId);
+			$UnitList->find();
+
+			$unitCount = $UnitList->listCount;
+
+			$Unit = NULL;
+
+			for ($i = 0; $i < $unitCount; $i++) {
+				$Unit = $UnitList->list[$i];
+				$unitIds[] = $Unit->id;
+			} // for ($i = 0; $i < $objectCount; $i++) {
+
+			$UnitList->endBulkOperation();
+		} // if (isset($this->parameters[0])) {
+
+		$sessionParameters = $this->getSessionParameters();
+		$sortingColumn = intval($sessionParameters['sortingColumn']);
+		$sortingAscending = intval($sessionParameters['sortingASC']);
+		$searchText = $sessionParameters['searchText'];
+
+		includeModel('Audit');
+
+		$listObject = new Audit();
+		$listObject->beginBulkOperation();
+		$listObject->bufferSize = 100;
+		$listObject->page = $sessionParameters['page'];
+		$listObject->addFilter('deleted','==', false);
+		$listObject->addFilter('unit_id','==', $unitIds);
+		$listObject->addSearchText($searchText);
+		$listObject->sortByProperty('lastUpdate', false);
+		$listObject->find();
+
+		$_SESSION[sha1(__FILE__) . 'pageCount'] = $listObject->getPageCount();
+
+		$objectCount = $listObject->listCount;
+		
+		$object = NULL;
+
+		$index = 0;
+
+		$this->list = array();
+
+		includeLibrary('getAllCachedObjects');
+		$units = getAllCachedObjects('Unit');
+		$auditTypes = getAllCachedObjects('AuditType');
+		$auditStates = getAllCachedObjects('AuditState');
+
+		for ($i = 0; $i < $objectCount; $i++) {
+
+			$object = $listObject->list[$i];
+			$this->list[$index]['id'] = $object->id;
+			$this->list[$index]['audit_date'] = date('Y-m-d', $object->audit_date);
+			$this->list[$index]['audit_code'] = $object->audit_code;
+			$this->list[$index]['unit_id'] = $object->unit_id;
+
+			$this->list[$index]['unit_idDisplayText'] = '';
+			if (isset($units[$object->unit_id])) {
+				$this->list[$index]['unit_idDisplayText']
+						= $units[$object->unit_id]['name'];
+			} // if (isset($units[$object->unit_id])) {
+
+			$this->list[$index]['audit_type_id'] = $object->audit_type_id;
+
+			$this->list[$index]['audit_type_idDisplayText'] = '';
+			$this->list[$index]['audit_type_idDisplayText'] = '';
+			if (isset($auditTypes[$object->audit_type_id])) {
+				$this->list[$index]['audit_type_idDisplayText']
+						= $auditTypes[$object->audit_type_id]['name'];
+			} // if (isset($auditTypes[$object->audit_type_id])) {
+
+			$this->list[$index]['audit_state_id'] = $object->audit_state_id;
+
+			$this->list[$index]['audit_state_idDisplayText'] = '';
+			if (isset($auditStates[$object->audit_state_id])) {
+				$this->list[$index]['audit_state_idDisplayText']
+						= $auditStates[$object->audit_state_id]['name'];
+			} // if (isset($auditStates[$object->audit_state_id])) {
+
+			$this->list[$index]['score'] = $object->score;
+			$this->list[$index]['notes'] = $object->notes;
+			$index++;
+
+		} // for ($i = 0; $i < $objectCount; $i++) {			
+		
+		$listObject->endBulkOperation();
+
+		$this->columns = array();
+		$this->columns[] = 'id';
+		$this->columns[] = 'audit_date';
+		$this->columns[] = 'audit_code';
+		$this->columns[] = 'unit_id';
+		$this->columns[] = 'unit_idDisplayText';
+		$this->columns[] = 'audit_type_id';
+		$this->columns[] = 'audit_type_idDisplayText';
+		$this->columns[] = 'audit_state_id';
+		$this->columns[] = 'audit_state_idDisplayText';
+		$this->columns[] = 'score';
+		$this->columns[] = 'notes';
+
+		includeView($this, 'htmldblist.gz');
+		return;
+
+	}
+
+	public function readapplication($parameters = NULL) {
+
+		$this->parameters = $parameters;
+
+		$noData = false;
+		$companyId = 0;
+		$unitIds = array();
+
+		if (isset($this->parameters[0])) {
+			if ('nodata' == strtolower($this->parameters[0])) {
+				$noData = true;
+			} // if ('nodata' == strtolower($this->parameters[0])) {
+		} // if (isset($this->parameters[0])) {
+
+		if (isset($this->parameters[0])) {
+			$companyId = intval($this->parameters[0]);
+
+			includeModel('Unit');
+			$UnitList = new Unit();
+			$UnitList->beginBulkOperation();
+			$UnitList->bufferSize = 0;
+			$UnitList->page = 0;
+			$UnitList->addFilter('deleted','==', false);
+			$UnitList->addFilter('company_id','==', $companyId);
+			$UnitList->find();
+
+			$unitCount = $UnitList->listCount;
+
+			$Unit = NULL;
+
+			for ($i = 0; $i < $unitCount; $i++) {
+				$Unit = $UnitList->list[$i];
+				$unitIds[] = $Unit->id;
+			} // for ($i = 0; $i < $objectCount; $i++) {
+
+			$UnitList->endBulkOperation();
+		} // if (isset($this->parameters[0])) {
+
+		$sessionParameters = $this->getSessionParameters();
+		$sortingColumn = intval($sessionParameters['sortingColumn']);
+		$sortingAscending = intval($sessionParameters['sortingASC']);
+		$searchText = $sessionParameters['searchText'];
+
+		includeModel('Application');
+
+		$listObject = new Application();
+		$listObject->beginBulkOperation();
+		$listObject->bufferSize = 100;
+		$listObject->page = $sessionParameters['page'];
+		$listObject->addFilter('deleted','==', false);
+		$listObject->addFilter('unit_id','==', $unitIds);
+		$listObject->addSearchText($searchText);
+		$listObject->sortByProperty('lastUpdate', false);
+		$listObject->find();
+
+		$_SESSION[sha1(__FILE__) . 'pageCount'] = $listObject->getPageCount();
+
+		$objectCount = $listObject->listCount;
+		
+		$object = NULL;
+
+		$index = 0;
+
+		$this->list = array();
+
+		if (!$noData) {
+
+			includeLibrary('getAllCachedObjects');
+			$units = getAllCachedObjects('Unit');
+
+			for ($i = 0; $i < $objectCount; $i++) {
+
+				$object = $listObject->list[$i];
+				$this->list[$index]['id'] = $object->id;
+				$this->list[$index]['application_date'] = date('Y-m-d', $object->application_date);
+				$this->list[$index]['application_code'] = $object->application_code;
+				$this->list[$index]['unit_id'] = $object->unit_id;
+
+				$this->list[$index]['unit_idDisplayText'] = '';
+				if (isset($units[$object->unit_id])) {
+					$this->list[$index]['unit_idDisplayText'] = $units[$object->unit_id]['name'];
+				} // if (isset($units[$object->unit_id])) {
+
+				$this->list[$index]['notes'] = $object->notes;
+				$index++;
+
+			} // for ($i = 0; $i < $objectCount; $i++) {
+
+		} // if (!$noData) {
+		
+		$listObject->endBulkOperation();
+
+		$this->columns = array();
+		$this->columns[] = 'id';
+		$this->columns[] = 'application_date';
+		$this->columns[] = 'application_code';
+		$this->columns[] = 'unit_id';
+		$this->columns[] = 'unit_idDisplayText';
+		$this->columns[] = 'notes';
+
+		includeView($this, 'htmldblist.gz');
+		return;
+
+	}
+
+	public function readunitforaudit($parameters = NULL) {
+
+		$this->parameters = $parameters;
+
+		$noData = false;
+		$companyId = 0;
+
+		if (isset($this->parameters[0])) {
+			if ('nodata' == strtolower($this->parameters[0])) {
+				$noData = true;
+			} // if ('nodata' == strtolower($this->parameters[0])) {
+		} // if (isset($this->parameters[0])) {
+
+		if (isset($this->parameters[0])) {
+			$companyId = intval($this->parameters[0]);
+		} // if (isset($this->parameters[0])) {
+
+		$sessionParameters = $this->getSessionParameters();
+		$sortingColumn = intval($sessionParameters['sortingColumn']);
+		$sortingAscending = intval($sessionParameters['sortingASC']);
+		$searchText = $sessionParameters['searchText'];
+
+		includeModel('Unit');
+
+		$listObject = new Unit();
+		$listObject->beginBulkOperation();
+		$listObject->bufferSize = 100;
+		$listObject->page = $sessionParameters['page'];
+		$listObject->addFilter('deleted','==', false);
+		$listObject->addFilter('company_id','==', $companyId);
+		$listObject->addSearchText($searchText);
+		$listObject->find();
+
+		$_SESSION[sha1(__FILE__) . 'pageCount'] = $listObject->getPageCount();
+
+		$objectCount = $listObject->listCount;
+		
+		$object = NULL;
+
+		$index = 0;
+
+		$this->list = array();
+
+		if (!$noData) {
+
+			for ($i = 0; $i < $objectCount; $i++) {
+
+				$object = $listObject->list[$i];
+				$this->list[$index]['id'] = $object->id;
+				$this->list[$index]['column0'] = $object->name;			
+				$index++;
+
+			} // for ($i = 0; $i < $objectCount; $i++) {
+
+		} // if ($noData) {
+		
+		$listObject->endBulkOperation();
+
+		$this->columns = array();
+		$this->columns[] = 'id';
+		$this->columns[] = 'column0';
+
+		includeView($this, 'htmldblist.gz');
+		return;
+
+	}
+
+	public function readunitforapplication($parameters = NULL) {
+
+		$this->parameters = $parameters;
+
+		$noData = false;
+		$companyId = 0;
+
+		if (isset($this->parameters[0])) {
+			if ('nodata' == strtolower($this->parameters[0])) {
+				$noData = true;
+			} // if ('nodata' == strtolower($this->parameters[0])) {
+		} // if (isset($this->parameters[0])) {
+
+		if (isset($this->parameters[0])) {
+			$companyId = intval($this->parameters[0]);
+		} // if (isset($this->parameters[0])) {
+
+		$sessionParameters = $this->getSessionParameters();
+		$sortingColumn = intval($sessionParameters['sortingColumn']);
+		$sortingAscending = intval($sessionParameters['sortingASC']);
+		$searchText = $sessionParameters['searchText'];
+
+		includeModel('Unit');
+
+		$listObject = new Unit();
+		$listObject->beginBulkOperation();
+		$listObject->bufferSize = 100;
+		$listObject->page = $sessionParameters['page'];
+		$listObject->addFilter('deleted','==', false);
+		$listObject->addFilter('company_id','==', $companyId);
+		$listObject->addSearchText($searchText);
+		$listObject->find();
+
+		$_SESSION[sha1(__FILE__) . 'pageCount'] = $listObject->getPageCount();
+
+		$objectCount = $listObject->listCount;
+		
+		$object = NULL;
+
+		$index = 0;
+
+		$this->list = array();
+
+		if (!$noData) {
+
+			for ($i = 0; $i < $objectCount; $i++) {
+
+				$object = $listObject->list[$i];
+
+				if ($this->hasUnitAnyApplication($object->id)) {
+					continue;
+				}
+
+				$this->list[$index]['id'] = $object->id;
+				$this->list[$index]['column0'] = $object->name;			
+				$index++;
+
+			} // for ($i = 0; $i < $objectCount; $i++) {
+
+		} // if ($noData) {
+		
+		$listObject->endBulkOperation();
+		
+		$this->columns = array();
+		$this->columns[] = 'id';
+		$this->columns[] = 'column0';
+
+		includeView($this, 'htmldblist.gz');
+		return;
+
+	}
+
+	public function hasUnitAnyApplication($unitId) {
+		includeModel('Application');
+		$listObject = new Application();
+		$listObject->beginBulkOperation();
+		$listObject->bufferSize = 1;
+		$listObject->page = 0;
+		$listObject->addFilter('deleted','==', false);
+		$listObject->addFilter('unit_id','==', $unitId);
+		$listObject->find();
+
+		$listObject->endBulkOperation();
+
+		$objectCount = $listObject->listCount;
+		
+		if (0 == $objectCount) {
+			return false;
+		} // if (0 == $objectCount) {
+
+		return true;
 	}
 
 }

@@ -36,12 +36,26 @@ class homeController {
     
     private function reset() {
 
+		includeLibrary('recallUser');
+		$this->user = recallUser();
+
+		if (NULL == $this->user) {
+
+			includeLibrary('redirectToPage');
+			redirectToPage('login');
+			return false;
+
+		} // if ((NULL == $this->user)
+
+		$this->userFirstName = $this->user->firstname;
+		$this->userLastName = $this->user->lastname;
+		$this->userEmail = $this->user->email;
 	}
 		
 	public function index($parameters = NULL, $strMethod = '') {
 
 		$this->parameters = $parameters;
-		includeView($this, 'htmldb');
+		includeView($this, 'home');
 
 	}
 

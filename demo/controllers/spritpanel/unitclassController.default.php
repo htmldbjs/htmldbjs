@@ -115,18 +115,27 @@ class unitclassController {
 			$this->list[$index]['company_idDisplayText']
 					= $object->getForeignDisplayText('company_id');
 			$this->list[$index]['name'] = $object->name;
-			$this->list[$index]['process_owner_firstname'] = $object->process_owner_firstname;
-			$this->list[$index]['process_owner_lastname'] = $object->process_owner_lastname;
-			$this->list[$index]['process_owner_email'] = $object->process_owner_email;
-			$this->list[$index]['champion_firstname'] = $object->champion_firstname;
-			$this->list[$index]['champion_lastname'] = $object->champion_lastname;
-			$this->list[$index]['champion_email'] = $object->champion_email;
-			$this->list[$index]['advisor_firstname'] = $object->advisor_firstname;
-			$this->list[$index]['advisor_lastname'] = $object->advisor_lastname;
-			$this->list[$index]['advisor_email'] = $object->advisor_email;
-			$this->list[$index]['leader_firstname'] = $object->leader_firstname;
-			$this->list[$index]['leader_lastname'] = $object->leader_lastname;
-			$this->list[$index]['leader_email'] = $object->leader_email;
+			$this->list[$index]['process_owner_id'] = $object->process_owner_id;
+			$this->list[$index]['process_owner_idDisplayText']
+					= $object->getForeignDisplayText('process_owner_id');
+			$this->list[$index]['champion_id'] = $object->champion_id;
+			$this->list[$index]['champion_idDisplayText']
+					= $object->getForeignDisplayText('champion_id');
+			$this->list[$index]['advisor_id'] = $object->advisor_id;
+			$this->list[$index]['advisor_idDisplayText']
+					= $object->getForeignDisplayText('advisor_id');
+			$this->list[$index]['leader1_id'] = $object->leader1_id;
+			$this->list[$index]['leader1_idDisplayText']
+					= $object->getForeignDisplayText('leader1_id');
+			$this->list[$index]['leader2_id'] = $object->leader2_id;
+			$this->list[$index]['leader2_idDisplayText']
+					= $object->getForeignDisplayText('leader2_id');
+			$this->list[$index]['leader3_id'] = $object->leader3_id;
+			$this->list[$index]['leader3_idDisplayText']
+					= $object->getForeignDisplayText('leader3_id');
+			$this->list[$index]['created_by'] = $object->created_by;
+			$this->list[$index]['created_byDisplayText']
+					= $object->getForeignDisplayText('created_by');
 			$index++;
 
 		} // for ($i = 0; $i < $objectCount; $i++) {			
@@ -136,18 +145,20 @@ class unitclassController {
 		$this->columns[] = 'company_id';
 		$this->columns[] = 'company_idDisplayText';
 		$this->columns[] = 'name';
-		$this->columns[] = 'process_owner_firstname';
-		$this->columns[] = 'process_owner_lastname';
-		$this->columns[] = 'process_owner_email';
-		$this->columns[] = 'champion_firstname';
-		$this->columns[] = 'champion_lastname';
-		$this->columns[] = 'champion_email';
-		$this->columns[] = 'advisor_firstname';
-		$this->columns[] = 'advisor_lastname';
-		$this->columns[] = 'advisor_email';
-		$this->columns[] = 'leader_firstname';
-		$this->columns[] = 'leader_lastname';
-		$this->columns[] = 'leader_email';
+		$this->columns[] = 'process_owner_id';
+		$this->columns[] = 'process_owner_idDisplayText';
+		$this->columns[] = 'champion_id';
+		$this->columns[] = 'champion_idDisplayText';
+		$this->columns[] = 'advisor_id';
+		$this->columns[] = 'advisor_idDisplayText';
+		$this->columns[] = 'leader1_id';
+		$this->columns[] = 'leader1_idDisplayText';
+		$this->columns[] = 'leader2_id';
+		$this->columns[] = 'leader2_idDisplayText';
+		$this->columns[] = 'leader3_id';
+		$this->columns[] = 'leader3_idDisplayText';
+		$this->columns[] = 'created_by';
+		$this->columns[] = 'created_byDisplayText';
 
 		includeView($this, 'spritpanel/htmldblist.gz');
 		return;
@@ -331,7 +342,7 @@ class unitclassController {
 		$this->columns[] = 'sortingASC';
 		$this->columns[] = 'page';
 		$this->columns[] = 'pageCount';
-		$this->columns[] = 'company_idSearchText';
+		$this->columns[] = 'created_bySearchText';
 
 		includeView($this, 'spritpanel/htmldblist.gz');
 		return;
@@ -369,10 +380,10 @@ class unitclassController {
 					: $sessionParameters['page'];
 			$_SESSION[sha1(__FILE__) . 'page'] = $page;
 
-			$company_idSearchText = isset($_REQUEST['inputfield0company_idSearchText'])
-					? htmlspecialchars($_REQUEST['inputfield0company_idSearchText'])
-					: $sessionParameters['company_idSearchText'];
-			$_SESSION[sha1(__FILE__) . 'company_idSearchText'] = $company_idSearchText;
+			$created_bySearchText = isset($_REQUEST['inputfield0created_bySearchText'])
+					? htmlspecialchars($_REQUEST['inputfield0created_bySearchText'])
+					: $sessionParameters['created_bySearchText'];
+			$_SESSION[sha1(__FILE__) . 'created_bySearchText'] = $created_bySearchText;
 
 		} // if (isset($_REQUEST['inputaction' . $index])) {
 
@@ -404,6 +415,34 @@ class unitclassController {
 		$sessionParameters['company_idSearchText']
 				= (isset($_SESSION[sha1(__FILE__) . 'company_idSearchText'])
 				? $_SESSION[sha1(__FILE__) . 'company_idSearchText']
+				: '');
+		$sessionParameters['process_owner_idSearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'process_owner_idSearchText'])
+				? $_SESSION[sha1(__FILE__) . 'process_owner_idSearchText']
+				: '');
+		$sessionParameters['champion_idSearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'champion_idSearchText'])
+				? $_SESSION[sha1(__FILE__) . 'champion_idSearchText']
+				: '');
+		$sessionParameters['advisor_idSearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'advisor_idSearchText'])
+				? $_SESSION[sha1(__FILE__) . 'advisor_idSearchText']
+				: '');
+		$sessionParameters['leader1_idSearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'leader1_idSearchText'])
+				? $_SESSION[sha1(__FILE__) . 'leader1_idSearchText']
+				: '');
+		$sessionParameters['leader2_idSearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'leader2_idSearchText'])
+				? $_SESSION[sha1(__FILE__) . 'leader2_idSearchText']
+				: '');
+		$sessionParameters['leader3_idSearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'leader3_idSearchText'])
+				? $_SESSION[sha1(__FILE__) . 'leader3_idSearchText']
+				: '');
+		$sessionParameters['created_bySearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'created_bySearchText'])
+				? $_SESSION[sha1(__FILE__) . 'created_bySearchText']
 				: '');
 		return $sessionParameters;
 

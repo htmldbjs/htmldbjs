@@ -22,6 +22,10 @@ function initializePage() {
         doAuditStepCategoryLinkClick(this);
     });
 
+    $("#buttonDownloadPhotos").off("click").on("click", function () {
+        doDownloadPhotosButtonClick(this);
+    });
+
     doAuditStepCategoryLinkClick(document.getElementById("aAuditStepCategoryAll"));
 
 }
@@ -40,6 +44,20 @@ function confirmExit() {
         }
 
 	}
+
+    elements = $(".HTMLDBAction.HTMLDBLoopWriter");
+    elementCount = elements.length;
+    element = null;
+
+    for (var i = 0; i < elementCount; i++) {
+
+        element = elements[i];
+
+        if (document.getElementById(element.id + "_tbody").innerHTML != "") {
+            return false;
+        }
+
+    }
 
 }
 function extractAuditId() {
@@ -142,21 +160,6 @@ function initializeHTMLDB() {
     });
 
     HTMLDB.initialize({
-        elementID:"divAuditHTMLDBReader",
-        readURL:(URLPrefix + "audit/read/" + auditId),
-        readAllURL:(URLPrefix + "audit/read/" + auditId),
-        validateURL:"",
-        writeURL:"",
-        autoRefresh:0,
-        renderElements:[],
-        onReadAll:doAuditHTMLDBReaderRead,
-        onRead:doAuditHTMLDBReaderRead,
-        onWrite:null,
-        onRender:null,
-        onRenderAll:null
-    });
-
-    HTMLDB.initialize({
         elementID:"divAuditStepHTMLDBWriter",
         readURL:(URLPrefix + "audit/readauditstep/nodata"),
         readAllURL:(URLPrefix + "audit/readauditstep/nodata"),
@@ -166,6 +169,36 @@ function initializeHTMLDB() {
         renderElements:[],
         onReadAll:null,
         onRead:null,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+    HTMLDB.initialize({
+        elementID:"divAuditStepYesHTMLDBWriter",
+        readURL:(URLPrefix + "audit/readauditstep/nodata"),
+        readAllURL:(URLPrefix + "audit/readauditstep/nodata"),
+        validateURL:(URLPrefix + "audit/validateauditstep"),
+        writeURL:(URLPrefix + "audit/writeauditstep"),
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:null,
+        onRead:null,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+    HTMLDB.initialize({
+        elementID:"divAuditHTMLDBReader",
+        readURL:(URLPrefix + "audit/read/" + auditId),
+        readAllURL:(URLPrefix + "audit/read/" + auditId),
+        validateURL:"",
+        writeURL:"",
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doAuditHTMLDBReaderRead,
+        onRead:doAuditHTMLDBReaderRead,
         onWrite:null,
         onRender:null,
         onRenderAll:null
@@ -284,8 +317,10 @@ function doAuditStateHTMLDBReaderRead() {
     setHTMLDBFieldSelects("divAuditStateHTMLDBReader");
 }
 function doAuditHTMLDBReaderRead() {
+    if ("" == document.getElementById("divAuditHTMLDBReader_tbody").innerHTML) {
+        window.location = (document.body.getAttribute("data-url-prefix") + "home");
+    }
 
-	document.getElementById("divLoader").style.display = "none";
 	setHTMLDBFieldContents("divAuditHTMLDBReader");
     setHTMLDBFieldValues("divAuditHTMLDBReader");
 	setHTMLDBFieldAttributes("divAuditHTMLDBReader");
@@ -316,6 +351,79 @@ function doAuditHTMLDBReaderRead() {
 function doAuditStep1HTMLDBReaderRender() {
     initializeHTMLDBHelpers();
     initializeSatisfiedButtons();
+
+    $(".buttonAddStepPhoto").off("click").on("click", function() {
+        doAddStepPhotoButtonClick(this);
+    });
+
+    calculateCompletedStepCount();
+    
+    renderIMGCounts();
+
+    var exit = false;
+    for (var i = 1; ((i <= 5) && (!exit)); i++) {
+
+        if ("" == document.getElementById("tbodyAuditStep" + i + "List").innerHTML) {
+            exit = true;
+        }
+
+    }
+
+    if (!exit) {
+        document.getElementById("divLoader").style.display = "none";
+    }
+
+}
+function calculateCompletedStepCount() {
+    var totalCount = 0;
+    var totalCompletedCount = 0;
+    var auditStepCount = 0;
+    var auditStepCompletedCount = 0;
+
+    for (var i = 1; i < 6; i++) {
+        elTBODY = document.getElementById("tbodyAuditStep" + i + "List");
+        
+        arrSatisfiedBUTTON = $(".buttonSatisfied", elTBODY);
+        auditStepCount = ((arrSatisfiedBUTTON.length) / 2);
+
+        arrCompletedSatisfiedBUTTON = $(".buttonSatisfiedYes1,.buttonSatisfiedNo1", elTBODY);
+        auditStepCompletedCount = arrCompletedSatisfiedBUTTON.length;
+        
+        document.getElementById("spanStep" + i + "CompletedCount").innerHTML = ("(" 
+                + auditStepCompletedCount
+                + "/"
+                + auditStepCount
+                + ")");
+
+        totalCount += auditStepCount;
+        totalCompletedCount += auditStepCompletedCount;
+    }
+
+    document.getElementById("spanAllCompletedCount").innerHTML = ("(" 
+                + totalCompletedCount
+                + "/"
+                + totalCount
+                + ")");
+}
+function renderIMGCounts() {
+    for (var s = 1; s < 6; s++) {
+        strHTMLDBDIVID = "divAuditStep" + s + "HTMLDBReader";
+        elTBODY = document.getElementById("divAuditStep" + s + "HTMLDBReader_tbody");
+        
+        arrHTMLDBTR = $("tr", elTBODY);
+        trCount = arrHTMLDBTR.length;
+
+        for (var i = 0; i < trCount; i++) {
+            rowId = arrHTMLDBTR[i].getAttribute("data-row-id");
+            object = HTMLDB.get(strHTMLDBDIVID, rowId);
+            if ("" != object["photos"]) {                
+                spanIMGCount = (object["photos"].match(/media\//g) || []).length;
+                elSPAN = document.getElementById("spanIMGCount" + rowId);
+                elSPAN.innerHTML = spanIMGCount;
+                elSPAN.parentNode.style.color = "#2e7d32";
+            }
+        }
+    }
 }
 function initializeSatisfiedButtons() {
 
@@ -340,22 +448,15 @@ function doSatisfiedYesButtonClick(sender) {
     object["yes"] = 1;
     object["no"] = 0;
 
-    HTMLDB.insert("divAuditStepHTMLDBWriter", object);
-    document.getElementById("divAuditStepHTMLDBWriter").setAttribute("data-htmldb-reader", "");
-    HTMLDB.write("divAuditStepHTMLDBWriter", true, function () {
-
-        document.getElementById("divAuditStepHTMLDBWriter_tbody").innerHTML = "";
-        document.getElementById("divAuditStepHTMLDBWriter").setAttribute(
-                "data-htmldb-reader",
-                "divAuditStepHTMLDBReader");
-
-    });
+    HTMLDB.insert("divAuditStepYesHTMLDBWriter", object);
 
     $("#buttonSatisfiedNo" + rowId).removeClass("buttonSatisfiedNo1");
     $("#buttonSatisfiedNo" + rowId).addClass("buttonSatisfiedNo0");
     $("#buttonSatisfiedYes" + rowId).removeClass("buttonSatisfiedYes0");
     $("#buttonSatisfiedYes" + rowId).addClass("buttonSatisfiedYes1");
 
+    calculateCompletedStepCount();
+    calculateAuditScore();
 }
 function doSatisfiedNoButtonClick(sender) {
 
@@ -371,12 +472,22 @@ function doSatisfiedNoButtonClick(sender) {
 
     HTMLDB.insert("divAuditStepHTMLDBWriter", object);
     document.getElementById("divAuditStepHTMLDBWriter").setAttribute("data-htmldb-reader", "");
-    HTMLDB.write("divAuditStepHTMLDBWriter", true, function () {
+    $("#divLoader").velocity("fadeIn", 300);
 
-        document.getElementById("divAuditStepHTMLDBWriter_tbody").innerHTML = "";
+    $("tr", document.getElementById("divAuditStepHTMLDBWriter_tbody")).addClass("updating");
+
+    HTMLDB.write("divAuditStepHTMLDBWriter", false, function () {
+
+        document.getElementById("divLoader").style.display = "none";
+
+        $("tr.updating", document.getElementById("divAuditStepHTMLDBWriter_tbody")).detach();
+
         document.getElementById("divAuditStepHTMLDBWriter").setAttribute(
                 "data-htmldb-reader",
                 "divAuditStepHTMLDBReader");
+
+        elTR = sender.parentNode.parentNode;
+        $(".buttonEditAuditStep", elTR).first().click();
 
     });
 
@@ -384,6 +495,51 @@ function doSatisfiedNoButtonClick(sender) {
     $("#buttonSatisfiedYes" + rowId).addClass("buttonSatisfiedYes0");
     $("#buttonSatisfiedNo" + rowId).removeClass("buttonSatisfiedNo0");
     $("#buttonSatisfiedNo" + rowId).addClass("buttonSatisfiedNo1");
+    
+    calculateCompletedStepCount();
+    calculateAuditScore();
+}
+function calculateAuditScore() {
+    arrCompletedSatisfiedYesBUTTON = $(".buttonSatisfiedYes1");
+    buttonCount = arrCompletedSatisfiedYesBUTTON.length;
+    
+    var whitetypeCount = 0;
+    var yellowtypeCount = 0;
+    var redtypeCount = 0;
+
+    for (var i = 0; i < buttonCount; i++) {
+        audittype = arrCompletedSatisfiedYesBUTTON[i].getAttribute("data-audit-type");
+        
+        if (1 == audittype) {
+            whitetypeCount++;
+        } else if(2 == audittype) {
+            yellowtypeCount++;
+        } else if (3 == audittype) {
+            redtypeCount++;
+        }
+    }
+    
+    whiteScore = (whitetypeCount * 0.8);
+    yellowScore = (yellowtypeCount * 2.7);
+    redScore = (redtypeCount * 2.44);
+    totalScore = (whiteScore + yellowScore + redScore);
+
+    var rowId = document.getElementById("buttonEdit").getAttribute("data-htmldb-row-id");
+    var object = HTMLDB.get("divAuditHTMLDBReader", rowId);
+    object["score"] = totalScore;
+    object["audit_state_id"] = 2;
+    
+    document.getElementById("pScore").innerHTML = Number(totalScore).toFixed(2);
+
+    HTMLDB.insert("divAuditHTMLDBWriter", object);
+    document.getElementById("divAuditHTMLDBWriter").setAttribute("data-htmldb-reader", "");
+    HTMLDB.write("divAuditHTMLDBWriter", false, function () {
+
+        document.getElementById("divAuditHTMLDBWriter_tbody").innerHTML = "";
+        document.getElementById("divAuditHTMLDBWriter").setAttribute(
+                "data-htmldb-reader",
+                "divAuditHTMLDBReader");
+    });
 
 }
 function doAuditStepCategoryHTMLDBReaderRead() {
@@ -409,4 +565,7 @@ function doAuditStepHTMLDBReaderRead() {
     document.getElementById("divAuditStep5HTMLDBReader_tbody").innerHTML = "";
     HTMLDB.read("divAuditStep5HTMLDBReader", true);
 
+}
+function doDownloadPhotosButtonClick(sender) {
+    document.getElementById("formCreateZip").submit();
 }

@@ -61,6 +61,21 @@ function initializeHTMLDB() {
 
     var URLPrefix = document.body.getAttribute("data-url-prefix");
     var unitId = extractUnitId();
+    
+    HTMLDB.initialize({
+        elementID:"divCrewTypeHTMLDBReader",
+        readURL:(URLPrefix + "unit/readcrewtype"),
+        readAllURL:(URLPrefix + "unit/readcrewtype"),
+        validateURL:"",
+        writeURL:"",
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:null,
+        onRead:null,
+        onWrite:null,
+        onRender:doCrewTypeHTMLDBReaderRender,
+        onRenderAll:doCrewTypeHTMLDBReaderRender
+    });
 
     HTMLDB.initialize({
         elementID:"divAuditTypeHTMLDBReader",
@@ -108,6 +123,21 @@ function initializeHTMLDB() {
     });
 
     HTMLDB.initialize({
+        elementID:"divUnitCrewHTMLDBWriter",
+        readURL:(URLPrefix + "unit/readunitcrew/nodata"),
+        readAllURL:(URLPrefix + "unit/readunitcrew/nodata"),
+        validateURL:(URLPrefix + "unit/validatecrew"),
+        writeURL:(URLPrefix + "unit/writecrew"),
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:null,
+        onRead:null,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+    HTMLDB.initialize({
         elementID:"divCrewHTMLDBWriter",
         readURL:(URLPrefix + "unit/readcrew/nodata"),
         readAllURL:(URLPrefix + "unit/readcrew/nodata"),
@@ -138,6 +168,24 @@ function initializeHTMLDB() {
         onWrite:null,
         onRender:doCrewHTMLDBReaderRender,
         onRenderAll:doCrewHTMLDBReaderRender
+    });
+
+    HTMLDB.initialize({
+        elementID:"divUnitCrewHTMLDBReader",
+        readURL:(URLPrefix + "unit/readunitcrew/" + unitId),
+        readAllURL:(URLPrefix + "unit/readunitcrew/" + unitId),
+        validateURL:"",
+        writeURL:"",
+        autoRefresh:0,
+        renderElements:[{
+            templateElementID:"tbodyUnitCrewListTemplate",
+            targetElementID:"tbodyUnitCrewList"
+        }],
+        onReadAll:null,
+        onRead:null,
+        onWrite:null,
+        onRender:doUnitCrewHTMLDBReaderRender,
+        onRenderAll:doUnitCrewHTMLDBReaderRender
     });
 
     HTMLDB.initialize({
@@ -195,17 +243,17 @@ function initializeHTMLDB() {
         validateURL:"",
         writeURL:"",
         autoRefresh:0,
-        renderElements:[{
-            templateElementID:"tbodyApplicationListTemplate",
-            targetElementID:"tbodyApplicationList"
-        }],
-        onReadAll:null,
-        onRead:null,
+        renderElements:[],
+        onReadAll:doApplicationHTMLDBReaderRead,
+        onRead:doApplicationHTMLDBReaderRead,
         onWrite:null,
-        onRender:doApplicationHTMLDBReaderRender,
-        onRenderAll:doApplicationHTMLDBReaderRender
+        onRender:null,
+        onRenderAll:null
     });
 
+}
+function doCrewTypeHTMLDBReaderRender() {
+    setHTMLDBFieldSelects("divCrewTypeHTMLDBReader");    
 }
 function doAddApplicationButtonClick(sender) {
 
@@ -222,6 +270,12 @@ function doAuditTypeHTMLDBReaderRead() {
     setHTMLDBFieldSelects("divAuditTypeHTMLDBReader");
 }
 function doUnitHTMLDBReaderRead() {
+    if ("" == document.getElementById("divUnitHTMLDBReader_tbody").innerHTML) {
+        window.location = (document.body.getAttribute("data-url-prefix") + "home");
+    }
+
+    unitId = extractUnitId();
+    objUnit = HTMLDB.get("divUnitHTMLDBReader", unitId);
 
 	document.getElementById("divLoader").style.display = "none";
 	setHTMLDBFieldContents("divUnitHTMLDBReader");
@@ -234,10 +288,15 @@ function doUnitHTMLDBReaderRead() {
             + document.getElementById("spanCompanyId").innerHTML));
 
     document.getElementById("crewUnitId").value
-            = extractUnitId();
+            = unitId;
     document.getElementById("crewUnitId").setAttribute(
             "data-reset-value",
             document.getElementById("crewUnitId").value);
+    document.getElementById("unit_crewUnitId").value
+            = unitId;
+    document.getElementById("unit_crewUnitId").setAttribute(
+            "data-reset-value",
+            document.getElementById("unit_crewUnitId").value);
 
     document.getElementById("auditUnitId").value
             = document.getElementById("crewUnitId").value;
@@ -246,7 +305,6 @@ function doUnitHTMLDBReaderRead() {
             document.getElementById("crewUnitId").value);
 
     initializeHTMLDBHelpers();
-
 }
 function doCrewHTMLDBReaderRender() {
 
@@ -258,7 +316,20 @@ function doCrewHTMLDBReaderRender() {
     initializeHTMLDBHelpers();
 
 }
+function doUnitCrewHTMLDBReaderRender() {
+
+    document.getElementById("divLoader").style.display = "none";
+    setHTMLDBFieldContents("divUnitCrewHTMLDBReader");
+    setHTMLDBFieldValues("divUnitCrewHTMLDBReader");
+    setHTMLDBFieldAttributes("divUnitCrewHTMLDBReader");
+
+    initializeHTMLDBHelpers();
+
+}
 function doAuditHTMLDBReaderRender() {
+    $(".tdEditObject").off("click").on("click", function() {
+        doTDEditObjectClick(this);
+    });
 
     document.getElementById("divLoader").style.display = "none";
     setHTMLDBFieldContents("divAuditHTMLDBReader");
@@ -268,13 +339,38 @@ function doAuditHTMLDBReaderRender() {
     initializeHTMLDBHelpers();
 
 }
-function doApplicationHTMLDBReaderRender() {
+function doApplicationHTMLDBReaderRead() {
 
     document.getElementById("divLoader").style.display = "none";
-    setHTMLDBFieldContents("divApplicationHTMLDBReader");
+    
+    var arrTR = $("#divApplicationHTMLDBReader_tbody > tr");
+    var TRLength = arrTR.length;
+
+    if (0 == TRLength) {
+        $("#showApplication").off("click").on("click", function() {
+            doAddApplicationButtonClick(this);
+        });
+    } else {
+        var URLPrefix = document.body.getAttribute("data-url-prefix");
+        var rowId = arrTR[0].getAttribute("data-row-id");
+        $("#showApplication").off("click").on("click", function() {
+            window.location = (URLPrefix + "application/" + rowId);
+        });
+    }
+    
+    /*setHTMLDBFieldContents("divApplicationHTMLDBReader");
     setHTMLDBFieldValues("divApplicationHTMLDBReader");
     setHTMLDBFieldAttributes("divApplicationHTMLDBReader");
 
-    initializeHTMLDBHelpers();
+    initializeHTMLDBHelpers();*/
 
+}
+function doTDEditObjectClick(sender) {
+    if (!sender) {
+        return;
+    }
+    
+    var URLPrefix = document.body.getAttribute("data-url-prefix");
+    var auditId = sender.parentNode.getAttribute("data-object-id");
+    window.location = (URLPrefix + "audit/" + auditId);
 }

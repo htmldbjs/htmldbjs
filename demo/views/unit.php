@@ -7,7 +7,7 @@
         <ul class="tabs tabs-fixed-width center-align z-depth-1">
             <li class="tab"><a class="active" href="#sectionDetails">DETAYLAR</a></li>
             <li class="tab"><a class="" href="#sectionAudits">DENETİMLER</a></li>
-            <li class="tab"><a class="" href="#sectionApplications">UYGULAMALAR</a></li>
+            <li class="tab"><a id="showApplication" href="javasript:void(0);">UYGULAMA</a></li>
         </ul>
     </div>
 </div>
@@ -37,90 +37,6 @@
                                 </div>
                             </div>
                         </div>
-                        <span class="card-title activator grey-text text-darken-4">Süreç Sahibi</span>
-                        <div class="row">
-                            <div class="col l3 m3 s12">
-                                <label><?php echo __('Ad'); ?></label>
-                                <div class="input-field">
-                                    <p class="HTMLDBFieldContent" data-htmldb-source="divUnitHTMLDBReader" data-htmldb-field="process_owner_firstname">&nbsp;</p>
-                                </div>
-                            </div>
-                            <div class="col l3 m3 s12">
-                                <label><?php echo __('Soyad'); ?></label>
-                                <div class="input-field">
-                                    <p class="HTMLDBFieldContent" data-htmldb-source="divUnitHTMLDBReader" data-htmldb-field="process_owner_lastname">&nbsp;</p>
-                                </div>
-                            </div>
-                            <div class="col l6 m6 s12">
-                                <label><?php echo __('E-posta'); ?></label>
-                                <div class="input-field">
-                                    <p class="HTMLDBFieldContent" data-htmldb-source="divUnitHTMLDBReader" data-htmldb-field="process_owner_email">&nbsp;</p>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="card-title activator grey-text text-darken-4">Şampiyon</span>
-                        <div class="row">
-                            <div class="col l3 m3 s12">
-                                <label><?php echo __('Ad'); ?></label>
-                                <div class="input-field">
-                                    <p class="HTMLDBFieldContent" data-htmldb-source="divUnitHTMLDBReader" data-htmldb-field="champion_firstname">&nbsp;</p>
-                                </div>
-                            </div>
-                            <div class="col l3 m3 s12">
-                                <label><?php echo __('Soyad'); ?></label>
-                                <div class="input-field">
-                                    <p class="HTMLDBFieldContent" data-htmldb-source="divUnitHTMLDBReader" data-htmldb-field="champion_lastname">&nbsp;</p>
-                                </div>
-                            </div>
-                            <div class="col l6 m6 s12">
-                                <label><?php echo __('E-posta'); ?></label>
-                                <div class="input-field">
-                                    <p class="HTMLDBFieldContent" data-htmldb-source="divUnitHTMLDBReader" data-htmldb-field="champion_email">&nbsp;</p>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="card-title activator grey-text text-darken-4">Rehber</span>
-                        <div class="row">
-                            <div class="col l3 m3 s12">
-                                <label><?php echo __('Ad'); ?></label>
-                                <div class="input-field">
-                                    <p class="HTMLDBFieldContent" data-htmldb-source="divUnitHTMLDBReader" data-htmldb-field="advisor_firstname">&nbsp;</p>
-                                </div>
-                            </div>
-                            <div class="col l3 m3 s12">
-                                <label><?php echo __('Soyad'); ?></label>
-                                <div class="input-field">
-                                    <p class="HTMLDBFieldContent" data-htmldb-source="divUnitHTMLDBReader" data-htmldb-field="advisor_lastname">&nbsp;</p>
-                                </div>
-                            </div>
-                            <div class="col l6 m6 s12">
-                                <label><?php echo __('E-posta'); ?></label>
-                                <div class="input-field">
-                                    <p class="HTMLDBFieldContent" data-htmldb-source="divUnitHTMLDBReader" data-htmldb-field="advisor_email">&nbsp;</p>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="card-title activator grey-text text-darken-4">Alan Lideri</span>
-                        <div class="row">
-                            <div class="col l3 m3 s12">
-                                <label><?php echo __('Ad'); ?></label>
-                                <div class="input-field">
-                                    <p class="HTMLDBFieldContent" data-htmldb-source="divUnitHTMLDBReader" data-htmldb-field="leader_firstname">&nbsp;</p>
-                                </div>
-                            </div>
-                            <div class="col l3 m3 s12">
-                                <label><?php echo __('Soyad'); ?></label>
-                                <div class="input-field">
-                                    <p class="HTMLDBFieldContent" data-htmldb-source="divUnitHTMLDBReader" data-htmldb-field="leader_lastname">&nbsp;</p>
-                                </div>
-                            </div>
-                            <div class="col l6 m6 s12">
-                                <label><?php echo __('E-posta'); ?></label>
-                                <div class="input-field">
-                                    <p class="HTMLDBFieldContent" data-htmldb-source="divUnitHTMLDBReader" data-htmldb-field="leader_email">&nbsp;</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="card-action">
                         <button id="buttonEdit" type="button" name="buttonEdit" data-htmldb-field="id" data-htmldb-attribute="data-htmldb-row-id" data-htmldb-dialog="divUnitDialog" data-htmldb-source="divUnitHTMLDBReader" data-htmldb-row-id="" class="buttonAction HTMLDBAction HTMLDBEdit HTMLDBFieldAttribute waves-effect waves-dark cyan-text text-darken-1 btn white"><i class="ion-edit col s12"></i> <?php echo __('UPDATE'); ?></button>
@@ -131,14 +47,14 @@
                 <div class="card-stacked">
                     <div class="card-content">
                         <div class="row">
-                            <span class="card-title activator grey-text text-darken-4">Ekip Üyeleri</span>
-                            <button class="waves-effect white-text btn right cyan darken-1 HTMLDBAction HTMLDBAdd" type="button" data-htmldb-dialog="divCrewDialog" data-htmldb-source="divCrewHTMLDBReader" data-htmldb-row-id="0"><i class="ion-plus"></i> YENİ ÜYE</button>
+                            <span class="card-title activator grey-text text-darken-4">Alan Temsilcileri</span>
+                            <button class="waves-effect white-text btn right cyan darken-1 HTMLDBAction HTMLDBAdd" type="button" data-htmldb-dialog="divUnitCrewDialog" data-htmldb-source="divUnitCrewHTMLDBReader" data-htmldb-row-id="0"><i class="ion-plus"></i> YENİ TEMSİLCİ</button>
                             <table id="tableObjectList" class="tableList highlight" data-related-table-id="tableGhostObjectList">
                                 <thead>
                                     <tr>
                                         <th class="center" style="width: 40px;">
-                                            <label class="checkbox2 left-align" for="bSelectObjects">
-                                                <input class="" id="bSelectObjects" name="bSelectObjects" value="1"
+                                            <label class="checkbox2 left-align" for="bSelectUnitCrews">
+                                                <input class="" id="bSelectUnitCrews" name="bSelectUnitCrews" value="1"
                                                 type="checkbox">
                                                 <span class="outer">
                                                     <span class="inner"></span>
@@ -152,23 +68,75 @@
                                             class="ion-arrow-down-b"></i></span><span
                                             class="sorting sorting-asc blue-text text-darken-4"></span></button>
                                         </th>
+                                        <th></th>
                                         <th>
                                             <button type="button" class="buttonTableColumn buttonTableColumn1"
                                             data-column-index="1">
-                                            Ad / Soyad&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i
+                                            Ad Soyad&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i
+                                            class="ion-arrow-down-b"></i></span><span
+                                            class="sorting sorting-asc blue-text text-darken-4"><i
+                                            class="ion-arrow-up-b"></i></span></button>
+                                        </th>
+                                        <th>
+                                            <button type="button" class="buttonTableColumn buttonTableColumn1"
+                                            data-column-index="1">
+                                            E-posta&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i
+                                            class="ion-arrow-down-b"></i></span><span
+                                            class="sorting sorting-asc blue-text text-darken-4"><i
+                                            class="ion-arrow-up-b"></i></span></button>
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyUnitCrewList"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card horizontal grey lighten-3">
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <div class="row">
+                            <span class="card-title activator grey-text text-darken-4">Ekip Üyeleri</span>
+                            <button class="waves-effect white-text btn right cyan darken-1 HTMLDBAction HTMLDBAdd" type="button" data-htmldb-dialog="divCrewDialog" data-htmldb-source="divCrewHTMLDBReader" data-htmldb-row-id="0"><i class="ion-plus"></i> YENİ ÜYE</button>
+                            <table id="tableObjectList" class="tableList highlight" data-related-table-id="tableGhostObjectList">
+                                <thead>
+                                    <tr>
+                                        <th class="center" style="width: 40px;">
+                                            <label class="checkbox2 left-align" for="bSelectCrews">
+                                                <input class="" id="bSelectCrews" name="bSelectCrews" value="1"
+                                                type="checkbox">
+                                                <span class="outer">
+                                                    <span class="inner"></span>
+                                                </span>
+                                            </label>
+                                        </th>
+                                        <th>
+                                            <button type="button" class="buttonTableColumn buttonTableColumn0 sorting-asc"
+                                            data-column-index="0">ID&nbsp;<span
+                                            class="sorting sorting-desc blue-text text-darken-4"><i
+                                            class="ion-arrow-down-b"></i></span><span
+                                            class="sorting sorting-asc blue-text text-darken-4"></span></button>
+                                        </th>
+                                        <th></th>
+                                        <th>
+                                            <button type="button" class="buttonTableColumn buttonTableColumn1"
+                                            data-column-index="1">
+                                                Ad Soyad&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i
                                                 class="ion-arrow-down-b"></i></span><span
                                                 class="sorting sorting-asc blue-text text-darken-4"><i
                                                 class="ion-arrow-up-b"></i></span></button>
-                                            </th>
-                                            <th>
-                                                <button type="button" class="buttonTableColumn buttonTableColumn1"
+                                        </th>
+                                        <th>
+                                            <button type="button" class="buttonTableColumn buttonTableColumn1"
                                                 data-column-index="1">
                                                 E-posta&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i
                                                     class="ion-arrow-down-b"></i></span><span
                                                     class="sorting sorting-asc blue-text text-darken-4"><i
                                                     class="ion-arrow-up-b"></i></span></button>
-                                                </th>
-                                                <th></th>
+                                        </th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbodyCrewList"></tbody>
@@ -193,8 +161,8 @@
                                 <thead>
                                     <tr>
                                         <th class="center" style="width: 40px;">
-                                            <label class="checkbox2 left-align" for="bSelectObjects">
-                                                <input class="" id="bSelectObjects" name="bSelectObjects" value="1"
+                                            <label class="checkbox2 left-align" for="bSelectAudits">
+                                                <input class="" id="bSelectAudits" name="bSelectAudits" value="1"
                                                 type="checkbox">
                                                 <span class="outer">
                                                     <span class="inner"></span>
@@ -265,58 +233,8 @@
         </form>
     </div>
 </section>
-<section id="sectionApplications" class="sectionContent">
-    <div class="col s12">
-        <form id="formApplications" name="formApplications">
-            <div class="card horizontal grey lighten-3">
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <div class="row">
-                            <span class="card-title activator grey-text text-darken-4">Uygulamalar</span>
-                            <button id="buttonAddApplication" name="buttonAddApplication" class="waves-effect white-text btn right cyan darken-1" type="button"><i class="ion-plus"></i> YENİ UYGULAMA</button>
-                            <table id="tableObjectList" class="tableList highlight" data-related-table-id="tableGhostObjectList">
-                                <thead>
-                                    <tr>
-                                        <th class="center" style="width: 40px;">
-                                            <label class="checkbox2 left-align" for="bSelectObjects">
-                                                <input class="" id="bSelectObjects" name="bSelectObjects" value="1"
-                                                type="checkbox">
-                                                <span class="outer">
-                                                    <span class="inner"></span>
-                                                </span>
-                                            </label>
-                                        </th>
-                                        <th>
-                                            <button type="button" class="buttonTableColumn buttonTableColumn0 sorting-asc"
-                                            data-column-index="0">ID&nbsp;<span
-                                            class="sorting sorting-desc blue-text text-darken-4"><i
-                                            class="ion-arrow-down-b"></i></span><span
-                                            class="sorting sorting-asc blue-text text-darken-4"></span></button>
-                                        </th>
-                                        <th>
-                                            <button type="button" class="buttonTableColumn buttonTableColumn1"
-                                            data-column-index="1">
-                                            Tarih&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i
-                                                class="ion-arrow-down-b"></i></span><span
-                                                class="sorting sorting-asc blue-text text-darken-4"><i
-                                                class="ion-arrow-up-b"></i></span></button>
-                                        </th>
-                                        <th>
-                                            <button type="button" class="buttonTableColumn buttonTableColumn1" data-column-index="1">Uygulama Kodu&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button>
-                                        </th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbodyApplicationList"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</section>
 <?php includeView($controller, 'edit.unit.dialog'); ?>
+<?php includeView($controller, 'edit.unitcrew.dialog'); ?>
 <?php includeView($controller, 'edit.crew.dialog'); ?>
 <?php includeView($controller, 'add.audit.dialog'); ?>
 <div id="divErrorDialog" class="divDialogContent divAlertDialog divErrorDialog">
@@ -352,28 +270,32 @@
     </div>
 </div>
 <div class="divHiddenElements">
-    <div id="divAuditTypeHTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
-    <div id="divUnitHTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
+    <div id="divAuditTypeHTMLDBReader"></div>
+    <div id="divUnitHTMLDBReader"></div>
     <div id="divUnitHTMLDBWriter" class="HTMLDBAction HTMLDBLoopWriter" data-htmldb-reader="divUnitHTMLDBReader"></div>
-    <div id="divCrewHTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
+    <div id="divCrewTypeHTMLDBReader"></div>
+    <div id="divUnitCrewHTMLDBWriter" class="HTMLDBAction HTMLDBLoopWriter" data-htmldb-reader="divUnitCrewHTMLDBReader"></div>
+    <div id="divUnitCrewHTMLDBReader"></div>
+    <div id="divCrewHTMLDBReader"></div>
     <div id="divCrewHTMLDBWriter" class="HTMLDBAction HTMLDBLoopWriter" data-htmldb-reader="divCrewHTMLDBReader"></div>
-    <div id="divAuditHTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
+    <div id="divAuditHTMLDBReader"></div>
     <div id="divAuditHTMLDBWriter" class="HTMLDBAction HTMLDBLoopWriter" data-htmldb-redirect="<?php echo $_SPRIT['URL_PREFIX']; ?>audit/last"></div>
-    <div id="divApplicationHTMLDBReader" class="HTMLDBAction HTMLDBLoopReader"></div>
+    <div id="divApplicationHTMLDBReader"></div>
     <div id="divApplicationHTMLDBWriter" class="HTMLDBAction HTMLDBLoopWriter" data-htmldb-redirect="<?php echo $_SPRIT['URL_PREFIX']; ?>application/last"></div>
     <table>
         <tbody id="tbodyCrewListTemplate">
             <tr class="tr#divCrewHTMLDBReader.id">
                 <td class="center">
-                    <label class="checkbox2 left-align" for="bSelectObject#divCrewHTMLDBReader.id">
-                        <input data-object-id="#divCrewHTMLDBReader.id" class="bSelectObject" id="bSelectObject#divCrewHTMLDBReader.id" name="bSelectObject#divCrewHTMLDBReader.id" value="1" type="checkbox">
+                    <label class="checkbox2 left-align" for="bSelectCrew#divCrewHTMLDBReader.id">
+                        <input data-object-id="#divCrewHTMLDBReader.id" class="bSelectCrew" id="bSelectCrew#divCrewHTMLDBReader.id" name="bSelectCrew#divCrewHTMLDBReader.id" value="1" type="checkbox">
                         <span class="outer">
                             <span class="inner"></span>
                         </span>
                     </label>
                 </td>
                 <td>#divCrewHTMLDBReader.id</td>
-                <td>#divCrewHTMLDBReader.firstname&nbsp;#divCrewHTMLDBReader.lastname</td>
+                <td>#divCrewHTMLDBReader.typeDisplayText</td>
+                <td>#divCrewHTMLDBReader.name</td>
                 <td>#divCrewHTMLDBReader.email</td>
                 <td>
                     <button type="button" data-htmldb-row-id="#divCrewHTMLDBReader.id" class="buttonTableListAction buttonEditObject right HTMLDBAction HTMLDBEdit" data-htmldb-source="divCrewHTMLDBReader" data-htmldb-dialog="divCrewDialog">
@@ -385,21 +307,21 @@
     </table>
     <table>
         <tbody id="tbodyAuditListTemplate">
-            <tr class="tr#divAuditHTMLDBReader.id">
+            <tr class="tr#divAuditHTMLDBReader.id" data-object-id="#divAuditHTMLDBReader.id">
                 <td class="center">
-                    <label class="checkbox2 left-align" for="bSelectObject#divAuditHTMLDBReader.id">
-                        <input data-object-id="#divAuditHTMLDBReader.id" class="bSelectObject" id="bSelectObject#divAuditHTMLDBReader.id" name="bSelectObject#divAuditHTMLDBReader.id" value="1" type="checkbox">
+                    <label class="checkbox2 left-align" for="bSelectAudit#divAuditHTMLDBReader.id">
+                        <input data-object-id="#divAuditHTMLDBReader.id" class="bSelectAudit" id="bSelectAudit#divAuditHTMLDBReader.id" name="bSelectAudit#divAuditHTMLDBReader.id" value="1" type="checkbox">
                         <span class="outer">
                             <span class="inner"></span>
                         </span>
                     </label>
                 </td>
-                <td>#divAuditHTMLDBReader.id</td>
-                <td>#divAuditHTMLDBReader.audit_date</td>
-                <td>#divAuditHTMLDBReader.audit_code</td>
-                <td>#divAuditHTMLDBReader.audit_type_idDisplayText</td>
-                <td>#divAuditHTMLDBReader.audit_state_idDisplayText</td>
-                <td>#divAuditHTMLDBReader.score</td>
+                <td class="tdEditObject">#divAuditHTMLDBReader.id</td>
+                <td class="tdEditObject">#divAuditHTMLDBReader.audit_date</td>
+                <td class="tdEditObject">#divAuditHTMLDBReader.audit_code</td>
+                <td class="tdEditObject">#divAuditHTMLDBReader.audit_type_idDisplayText</td>
+                <td class="tdEditObject">#divAuditHTMLDBReader.audit_state_idDisplayText</td>
+                <td class="tdEditObject">#divAuditHTMLDBReader.score</td>
                 <td>
                     <a href="<?php echo $_SPRIT['URL_PREFIX']; ?>audit/#divAuditHTMLDBReader.id" data-htmldb-row-id="#divAuditHTMLDBReader.id" class="buttonTableListAction buttonEditObject right" data-htmldb-source="divAuditHTMLDBReader">
                         <i class="ion-android-search"></i>
@@ -409,23 +331,24 @@
         </tbody>
     </table>
     <table>
-        <tbody id="tbodyApplicationListTemplate">
-            <tr class="tr#divApplicationHTMLDBReader.id">
+        <tbody id="tbodyUnitCrewListTemplate">
+            <tr class="tr#divUnitCrewHTMLDBReader.id">
                 <td class="center">
-                    <label class="checkbox2 left-align" for="bSelectObject#divApplicationHTMLDBReader.id">
-                        <input data-object-id="#divApplicationHTMLDBReader.id" class="bSelectObject" id="bSelectObject#divApplicationHTMLDBReader.id" name="bSelectObject#divApplicationHTMLDBReader.id" value="1" type="checkbox">
+                    <label class="checkbox2 left-align" for="bSelectCrew#divUnitCrewHTMLDBReader.id">
+                        <input data-object-id="#divUnitCrewHTMLDBReader.id" class="bSelectCrew" id="bSelectCrew#divUnitCrewHTMLDBReader.id" name="bSelectCrew#divUnitCrewHTMLDBReader.id" value="1" type="checkbox">
                         <span class="outer">
                             <span class="inner"></span>
                         </span>
                     </label>
                 </td>
-                <td>#divApplicationHTMLDBReader.id</td>
-                <td>#divApplicationHTMLDBReader.application_date</td>
-                <td>#divApplicationHTMLDBReader.application_code</td>
+                <td>#divUnitCrewHTMLDBReader.id</td>
+                <td>#divUnitCrewHTMLDBReader.typeDisplayText</td>
+                <td>#divUnitCrewHTMLDBReader.name</td>
+                <td>#divUnitCrewHTMLDBReader.email</td>
                 <td>
-                    <a href="<?php echo $_SPRIT['URL_PREFIX']; ?>application/#divApplicationHTMLDBReader.id" data-htmldb-row-id="#divApplicationHTMLDBReader.id" class="buttonTableListAction buttonEditObject right" data-htmldb-source="divApplicationHTMLDBReader">
-                        <i class="ion-android-search"></i>
-                    </a>
+                    <button type="button" data-htmldb-row-id="#divUnitCrewHTMLDBReader.id" class="buttonTableListAction buttonEditObject right HTMLDBAction HTMLDBEdit" data-htmldb-source="divUnitCrewHTMLDBReader" data-htmldb-dialog="divUnitCrewDialog">
+                        <i class="ion-android-create"></i>
+                    </button>
                 </td>
             </tr>
         </tbody>

@@ -72,11 +72,14 @@ class auditsController {
 		includeModel('Audit');
 
 		$listObject = new Audit();
+		$listObject->beginBulkOperation();
 		$listObject->bufferSize = 100;
 		$listObject->page = $sessionParameters['page'];
 		$listObject->addFilter('deleted','==', false);
+		if (10 == $this->user->user_type) {
+			$listObject->addFilter('created_by','==', $this->user->id);
+		}
 		$listObject->addSearchText($searchText);
-		$listObject->sortByColumn($sortingColumn, $sortingAscending);
 		$listObject->find();
 
 		$_SESSION[sha1(__FILE__) . 'pageCount'] = $listObject->getPageCount();
@@ -89,6 +92,11 @@ class auditsController {
 
 		$this->list = array();
 
+		includeLibrary('getAllCachedObjects');
+		$units = getAllCachedObjects('Unit');
+		$auditTypes = getAllCachedObjects('AuditType');
+		$auditStates = getAllCachedObjects('AuditState');
+
 		for ($i = 0; $i < $objectCount; $i++) {
 
 			$object = $listObject->list[$i];
@@ -96,20 +104,34 @@ class auditsController {
 			$this->list[$index]['audit_date'] = date('Y-m-d', $object->audit_date);
 			$this->list[$index]['audit_code'] = $object->audit_code;
 			$this->list[$index]['unit_id'] = $object->unit_id;
-			$this->list[$index]['unit_idDisplayText']
-					= $object->getForeignDisplayText('unit_id');
+
+			$this->list[$index]['unit_idDisplayText'] = '';
+			if (isset($units[$object->unit_id])) {
+				$this->list[$index]['unit_idDisplayText'] = $units[$object->unit_id]['name'];
+			} // if (isset($units[$object->unit_id])) {
+
 			$this->list[$index]['audit_type_id'] = $object->audit_type_id;
-			$this->list[$index]['audit_type_idDisplayText']
-					= $object->getForeignDisplayText('audit_type_id');
+
+			$this->list[$index]['audit_type_idDisplayText'] = '';
+			if (isset($auditTypes[$object->audit_type_id])) {
+				$this->list[$index]['audit_type_idDisplayText'] = $auditTypes[$object->audit_type_id]['name'];
+			} // if (isset($auditTypes[$object->audit_type_id])) {
+
 			$this->list[$index]['audit_state_id'] = $object->audit_state_id;
-			$this->list[$index]['audit_state_idDisplayText']
-					= $object->getForeignDisplayText('audit_state_id');
+
+			$this->list[$index]['audit_state_idDisplayText'] = '';
+			if (isset($auditStates[$object->audit_state_id])) {
+				$this->list[$index]['audit_state_idDisplayText'] = $auditStates[$object->audit_state_id]['name'];
+			} // if (isset($auditStates[$object->audit_state_id])) {
+
 			$this->list[$index]['score'] = $object->score;
 			$this->list[$index]['notes'] = $object->notes;
 			$index++;
 
 		} // for ($i = 0; $i < $objectCount; $i++) {			
-
+		
+		$listObject->endBulkOperation();
+		
 		$this->columns = array();
 		$this->columns[] = 'id';
 		$this->columns[] = 'audit_date';
@@ -180,6 +202,7 @@ class auditsController {
 		includeModel('Audit');
 
 		$object = new Audit();
+		$object->beginBulkOperation();
 
 		while (isset($_REQUEST['inputaction' . $index])) {
 
@@ -200,6 +223,7 @@ class auditsController {
 				case 'inserted':
 
 						$object->creationDate = intval(time());
+						$object->created_by = $this->user->id;
 						$object->insert();
 
 				break;
@@ -218,7 +242,8 @@ class auditsController {
 			$index++;
 
 		} // while (isset($_REQUEST['inputaction' . $index])) {
-
+		
+		$object->endBulkOperation();
 	}
 	
 	public function readpropertyoptions($parameters = NULL) {
@@ -241,6 +266,7 @@ class auditsController {
 		includeModel('Audit');
 
 		$object = new Audit();
+		$object->beginBulkOperation();
 		$object->page = 0;
 		$object->bufferSize = 2500;
 
@@ -250,6 +276,8 @@ class auditsController {
 		
 		$object->findForeignList($propertyName);
 		$this->list = $object->getForeignListColumns();
+		$object->endBulkOperation();
+
 		$this->columns = array();
 		$this->columns[] = 'id';
 		$this->columns[] = 'column0';

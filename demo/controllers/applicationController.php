@@ -107,10 +107,14 @@ class applicationController {
 		includeModel('Application');
 
 		$listObject = new Application();
+		$listObject->beginBulkOperation();
 		$listObject->bufferSize = 1;
 		$listObject->page = 0;
 		$listObject->addFilter('deleted','==', false);
 		$listObject->addFilter('id','==', $id);
+		if (10 == $this->user->user_type) {
+			$listObject->addFilter('created_by','==', $this->user->id);
+		}
 		$listObject->find();
 
 		$objectCount = $listObject->listCount;
@@ -126,22 +130,31 @@ class applicationController {
 
 		if (!$noData) {
 
+			includeLibrary('getAllCachedObjects');
+			$companies = getAllCachedObjects('Company');
+			$units = getAllCachedObjects('Unit');
+
 			for ($i = 0; $i < $objectCount; $i++) {
 
 				$object = $listObject->list[$i];
 				$this->list[$index]['id'] = $object->id;
 				$this->list[$index]['application_date'] = date('Y-m-d', $object->application_date);
 				$this->list[$index]['application_code'] = $object->application_code;
+				$this->setMediaPath($object->application_code);
 				$this->list[$index]['unit_id'] = $object->unit_id;
-				$this->list[$index]['unit_idDisplayText']
-						= $object->getForeignDisplayText('unit_id');
+
+				$this->list[$index]['unit_idDisplayText'] = '';
+				if (isset($units[$object->unit_id])) {
+					$this->list[$index]['unit_idDisplayText'] = $units[$object->unit_id]['name'];			
+				} // if (isset($units[$object->unit_id])) {
 
 				$unit->id = $object->unit_id;
 				$unit->revert();
-
 				$this->list[$index]['company_id'] = $unit->company_id;
-				$this->list[$index]['company_idDisplayText']
-						= $unit->getForeignDisplayText('company_id');
+				$this->list[$index]['company_idDisplayText'] = '';
+				if (isset($companies[$unit->company_id])) {
+					$this->list[$index]['company_idDisplayText'] = $companies[$unit->company_id]['company_name'];
+				} // if (isset($companies[$unit->company_id])) {
 
 				$this->list[$index]['notes'] = $object->notes;
 				$index++;
@@ -149,6 +162,8 @@ class applicationController {
 			} // for ($i = 0; $i < $objectCount; $i++) {
 
 		} // if (!$noData) {
+
+		$listObject->endBulkOperation();
 
 		$this->columns = array();
 		$this->columns[] = 'id';
@@ -211,11 +226,15 @@ class applicationController {
 				$object->application_date = time();
 				$object->application_code = $this->generateApplicationCode($object);
 				$object->notes = '';
+				$object->created_by = $this->user->id;
 				$copySteps = true;
+
+				$this->createMediaDirectory($object->application_code);
 
 			} else {
 
 				$object->lastUpdate = time();
+				$object->created_by = $this->user->id;
 				$copySteps = false;
 
 			} // if (0 == $object->id) {
@@ -260,6 +279,7 @@ class applicationController {
 		includeModel('ApplicationTask');
 
 		$listObject = new ApplicationTask();
+		$listObject->beginBulkOperation();
 		$listObject->bufferSize = 0;
 		$listObject->page = 0;
 		$listObject->addFilter('deleted','==', false);
@@ -285,29 +305,45 @@ class applicationController {
 
 		if (!$noData) {
 
+			includeLibrary('getAllCachedObjects');
+			$applications = getAllCachedObjects('Application');
+			$applicationTaskCategory = getAllCachedObjects('applicationTaskCategory');
+			$applicationTaskStates = getAllCachedObjects('ApplicationTaskState');
+
 			for ($i = 0; $i < $objectCount; $i++) {
 
 				$object = $listObject->list[$i];
 				$this->list[$index]['id'] = $object->id;
 				$this->list[$index]['application_id'] = $object->application_id;
-				$this->list[$index]['application_idDisplayText']
-						= $object->getForeignDisplayText('application_id');
+
+				$this->list[$index]['application_idDisplayText'] = '';
+				if (isset($applications[$object->application_id])) {
+					$this->list[$index]['application_idDisplayText'] = $applications[$object->application_id]['application_code'];
+				} // if (isset($applications[$object->application_id])) {
+
 				$this->list[$index]['application_task_code'] = $object->application_task_code;
 				$this->list[$index]['application_task_category_id'] = $object->application_task_category_id;
-				$this->list[$index]['application_task_category_idDisplayText']
-						= $object->getForeignDisplayText('application_task_category_id');
+				$this->list[$index]['application_task_category_idDisplayText'] = '';
+				if (isset($applicationTaskCategory[$object->application_task_category_id])) {
+					$this->list[$index]['application_task_category_idDisplayText']
+							= $applicationTaskCategory[$object->application_task_category_id]['name'];
+				} // if (isset($applicationTaskCategory[$object->application_task_category_id])) {
+
 				$this->list[$index]['description'] = $object->description;
 				$this->list[$index]['photos'] = $object->photos;
 				$this->list[$index]['task_action'] = $object->task_action;
 				$this->list[$index]['responsible'] = $object->responsible;
-				$this->list[$index]['responsibleDisplayText']
-						= $object->getForeignDisplayText('responsible');
 				$this->list[$index]['start_date'] = date('Y-m-d', $object->start_date);
 				$this->list[$index]['target_date'] = date('Y-m-d', $object->target_date);
 				$this->list[$index]['actual_date'] = date('Y-m-d', $object->actual_date);
 				$this->list[$index]['application_task_state_id'] = $object->application_task_state_id;
-				$this->list[$index]['application_task_state_idDisplayText']
-						= $object->getForeignDisplayText('application_task_state_id');
+
+				$this->list[$index]['application_task_state_idDisplayText'] = '';
+				if (isset($applicationTaskStates[$object->application_task_state_id])) {
+					$this->list[$index]['application_task_state_idDisplayText']
+							= $applicationTaskStates[$object->application_task_state_id]['name'];
+				} // if (isset($applicationTaskStates[$object->application_task_state_id])) {
+
 				$this->list[$index]['notes'] = $object->notes;
 
 				$durationInDays = intval((time() - $object->start_date) / 86400);
@@ -317,7 +353,9 @@ class applicationController {
 			} // for ($i = 0; $i < $objectCount; $i++) {
 
 		} // if (!$noData) {
-
+		
+		$listObject->endBulkOperation();
+		
 		$this->columns = array();
 		$this->columns[] = 'id';
 		$this->columns[] = 'application_id';
@@ -329,7 +367,6 @@ class applicationController {
 		$this->columns[] = 'photos';
 		$this->columns[] = 'task_action';
 		$this->columns[] = 'responsible';
-		$this->columns[] = 'responsibleDisplayText';
 		$this->columns[] = 'start_date';
 		$this->columns[] = 'target_date';
 		$this->columns[] = 'actual_date';
@@ -355,7 +392,7 @@ class applicationController {
 		$newApplicationTask = new ApplicationTask();
 		$newApplicationTask->request($_REQUEST, ('inputfield0'));
 
-		if ('' == $newApplicationTask->description) {
+		if ((0 == $newApplicationTask->id) && ('' == $newApplicationTask->description)) {
 
 			$this->errorCount++;
 			if ($this->lastError != '') {
@@ -364,7 +401,7 @@ class applicationController {
 
 			$this->lastError .= __('Lütfen açıklama belirtiniz.');
 
-		} // if ('' == $newApplicationTask->firstname) {
+		} // if ((0 == $newApplicationTask->id) && ('' == $newApplicationTask->description)) {
 
 		if ('' == $newApplicationTask->task_action) {
 
@@ -375,7 +412,7 @@ class applicationController {
 
 			$this->lastError .= __('Lütfen yapılacak aksiyonu belirtiniz.');
 
-		} // if ('' == $newApplicationTask->firstname) {
+		} // if ('' == $newApplicationTask->task_action) {
 
 		if (0 == $this->errorCount) {
 
@@ -414,6 +451,7 @@ class applicationController {
 		includeModel('ApplicationTask');
 
 		$object = new ApplicationTask();
+		$object->beginBulkOperation();
 
 		while (isset($_REQUEST['inputaction' . $index])) {
 
@@ -423,6 +461,8 @@ class applicationController {
 			$index++;
 
 		} // while (isset($_REQUEST['inputaction' . $index])) {
+
+		$object->endBulkOperation();
 
 	}
 
@@ -446,6 +486,7 @@ class applicationController {
 		includeModel('ApplicationSubTask');
 
 		$listObject = new ApplicationSubTask();
+		$listObject->beginBulkOperation();
 		$listObject->bufferSize = 0;
 		$listObject->page = 0;
 		$listObject->addFilter('deleted','==', false);
@@ -464,44 +505,48 @@ class applicationController {
 
 		if (!$noData) {
 
+			includeLibrary('getAllCachedObjects');
+			$applicationTaskStates = getAllCachedObjects('ApplicationTaskState');
+
 			for ($i = 0; $i < $objectCount; $i++) {
 
 				$object = $listObject->list[$i];
 				$this->list[$index]['id'] = $object->id;
 				$this->list[$index]['application_task_id'] = $object->application_task_id;
-				$this->list[$index]['application_task_idDisplayText']
-						= $object->getForeignDisplayText('application_task_id');
 				$this->list[$index]['application_sub_task_code'] = $object->application_sub_task_code;
 				$this->list[$index]['title'] = $object->title;
 				$this->list[$index]['description'] = $object->description;
 				$this->list[$index]['photos'] = $object->photos;
 				$this->list[$index]['sub_task_action'] = $object->sub_task_action;
 				$this->list[$index]['responsible'] = $object->responsible;
-				$this->list[$index]['responsibleDisplayText']
-						= $object->getForeignDisplayText('responsible');
 				$this->list[$index]['start_date'] = date('Y-m-d', $object->start_date);
 				$this->list[$index]['target_date'] = date('Y-m-d', $object->target_date);
 				$this->list[$index]['actual_date'] = date('Y-m-d', $object->actual_date);
 				$this->list[$index]['application_task_state_id'] = $object->application_task_state_id;
-				$this->list[$index]['application_task_state_idDisplayText']
-						= $object->getForeignDisplayText('application_task_state_id');
+
+				$this->list[$index]['application_task_state_idDisplayText'] = '';
+				if (isset($applicationTaskStates[$object->application_task_state_id])) {
+					$this->list[$index]['application_task_state_idDisplayText']
+							= $applicationTaskStates[$object->application_task_state_id]['name'];
+				} // if (isset($applicationTaskStates[$object->application_task_state_id])) {
+
 				$index++;
 
 			} // for ($i = 0; $i < $objectCount; $i++) {
 
 		} // if (!$noData) {
+			
+		$listObject->endBulkOperation();
 
 		$this->columns = array();
 		$this->columns[] = 'id';
 		$this->columns[] = 'application_task_id';
-		$this->columns[] = 'application_task_idDisplayText';
 		$this->columns[] = 'application_sub_task_code';
 		$this->columns[] = 'title';
 		$this->columns[] = 'description';
 		$this->columns[] = 'photos';
 		$this->columns[] = 'sub_task_action';
 		$this->columns[] = 'responsible';
-		$this->columns[] = 'responsibleDisplayText';
 		$this->columns[] = 'start_date';
 		$this->columns[] = 'target_date';
 		$this->columns[] = 'actual_date';
@@ -534,7 +579,7 @@ class applicationController {
 
 			$this->lastError .= __('Lütfen alt adım için başlık belirtiniz.');
 
-		} // if ('' == $newApplicationSubTask->firstname) {
+		} // if ('' == $newApplicationSubTask->title) {
 
 		if (0 == $this->errorCount) {
 
@@ -573,6 +618,7 @@ class applicationController {
 		includeModel('ApplicationSubTask');
 
 		$object = new ApplicationSubTask();
+		$object->beginBulkOperation();
 
 		while (isset($_REQUEST['inputaction' . $index])) {
 
@@ -582,7 +628,8 @@ class applicationController {
 			$index++;
 
 		} // while (isset($_REQUEST['inputaction' . $index])) {
-
+		
+		$object->endBulkOperation();
 	}
 
 	public function readcrew($parameters = NULL) {
@@ -602,34 +649,86 @@ class applicationController {
 
 		includeModel('Application');
 		$application = new Application($applicationId);
-
+		
+		includeModel('Unit');
+		$Unit = new Unit($application->unit_id);
+		$unitId = $Unit->id;
+		$companyId = $Unit->company_id;
+		
 		includeModel('Crew');
+		includeLibrary('getCrewTypeText');
+
+		$index = 0;
+		$this->list = array();
 
 		$listObject = new Crew();
+		$listObject->beginBulkOperation();
 		$listObject->bufferSize = 0;
 		$listObject->page = 0;
 		$listObject->addFilter('deleted','==', false);
-		$listObject->addFilter('unit_id','==', $application->unit_id);
-		$listObject->sortByProperty('firstname');
-		$listObject->sortByProperty('lastname');
+		$listObject->addFilter('company_id','==', $companyId);
+		$listObject->addFilter('type','<', 9);
+		$listObject->sortByProperty('name');
 		$listObject->find();
 
 		$objectCount = $listObject->listCount;
 		
 		$object = NULL;
 
-		$index = 0;
-
-		$this->list = array();
-
 		for ($i = 0; $i < $objectCount; $i++) {
-
 			$object = $listObject->list[$i];
 			$this->list[$index]['id'] = $object->id;
-			$this->list[$index]['column0'] = ($object->firstname . ' ' . $object->lastname);
+			$this->list[$index]['column0'] = ($object->name . ' (' . getCrewTypeText($object->type) . ')');
 			$index++;
-
 		} // for ($i = 0; $i < $objectCount; $i++) {			
+
+		$listObject->endBulkOperation();
+
+		$listObject = new Crew();
+		$listObject->beginBulkOperation();
+		$listObject->bufferSize = 0;
+		$listObject->page = 0;
+		$listObject->addFilter('deleted','==', false);
+		$listObject->addFilter('unit_id','==', $unitId);
+		$listObject->addFilter('type','!=', 15);
+		$listObject->sortByProperty('name');
+		$listObject->find();
+
+		$objectCount = $listObject->listCount;
+		
+		$object = NULL;
+
+		for ($i = 0; $i < $objectCount; $i++) {
+			$object = $listObject->list[$i];
+			$this->list[$index]['id'] = $object->id;
+			$this->list[$index]['column0'] = ($object->name . ' (' . getCrewTypeText($object->type) . ')');
+			$index++;
+		} // for ($i = 0; $i < $objectCount; $i++) {			
+
+		$listObject->endBulkOperation();
+		
+		$listObject = new Crew();
+		$listObject->beginBulkOperation();
+		$listObject->bufferSize = 0;
+		$listObject->page = 0;
+		$listObject->addFilter('deleted','==', false);
+		$listObject->addFilter('unit_id','==', $unitId);
+		$listObject->addFilter('type','==', 15);
+		$listObject->sortByProperty('name');
+		$listObject->find();
+
+		$objectCount = $listObject->listCount;
+		
+		$object = NULL;
+
+		for ($i = 0; $i < $objectCount; $i++) {
+			$object = $listObject->list[$i];
+			$this->list[$index]['id'] = $object->id;
+			$this->list[$index]['column0'] = ($object->name . ' (' . getCrewTypeText($object->type) . ')');
+			$index++;
+		} // for ($i = 0; $i < $objectCount; $i++) {			
+
+		$listObject->endBulkOperation();
 
 		$this->columns = array();
 		$this->columns[] = 'id';
@@ -660,6 +759,7 @@ class applicationController {
 		includeModel('Application');
 
 		$object = new Application();
+		$object->beginBulkOperation();
 		$object->page = 0;
 		$object->bufferSize = 2500;
 
@@ -672,6 +772,8 @@ class applicationController {
 		$this->columns = array();
 		$this->columns[] = 'id';
 		$this->columns[] = 'column0';
+
+		$object->endBulkOperation();
 
 		includeView($this, 'spritpanel/htmldblist.gz');
 		return;
@@ -698,6 +800,7 @@ class applicationController {
 		includeModel('ApplicationTask');
 
 		$object = new ApplicationTask();
+		$object->beginBulkOperation();
 		$object->page = 0;
 		$object->bufferSize = 2500;
 
@@ -707,6 +810,9 @@ class applicationController {
 		
 		$object->findForeignList($propertyName);
 		$this->list = $object->getForeignListColumns();
+
+		$object->endBulkOperation();
+
 		$this->columns = array();
 		$this->columns[] = 'id';
 		$this->columns[] = 'column0';
@@ -736,6 +842,7 @@ class applicationController {
 		includeModel('ApplicationSubTask');
 
 		$object = new ApplicationSubTask();
+		$object->beginBulkOperation();
 		$object->page = 0;
 		$object->bufferSize = 2500;
 
@@ -745,6 +852,9 @@ class applicationController {
 		
 		$object->findForeignList($propertyName);
 		$this->list = $object->getForeignListColumns();
+
+		$object->endBulkOperation();
+
 		$this->columns = array();
 		$this->columns[] = 'id';
 		$this->columns[] = 'column0';
@@ -859,18 +969,21 @@ class applicationController {
 
 			includeModel('Unit');
 			$unit = new Unit($applicationUnitId);
+			$unit->beginBulkOperation();
 			$applicationCompanyId = $unit->company_id;
+			$unit->endBulkOperation();
 
 			includeModel('Application');
 			$applicationList = new Application();
+			$applicationList->beginBulkOperation();
 			$applicationList->bufferSize = 1;
 			$applicationList->page = 0;
 			$applicationList->addFilter('deleted', '==', false);
 			$applicationList->addFilter('unit_id', '==', $applicationUnitId);
 			$applicationList->find();
-
+			$applicationList->endBulkOperation();
 			$unitApplicationCount = $applicationList->getPageCount();
-
+		
 			$unitApplicationCount++;
 
 			return ('AP'
@@ -890,6 +1003,7 @@ class applicationController {
 		includeModel('ApplicationTaskDirectory');
 
 		$objectList = new ApplicationTaskDirectory();
+		$objectList->beginBulkOperation();
 		$objectList->bufferSize = 0;
 		$objectList->page = 0;
 		$objectList->addFilter('deleted', '==', false);
@@ -912,7 +1026,76 @@ class applicationController {
 			$applicationTask->update();
 
 		} // for ($i = 0; $i < $count; $i++) {
+		$objectList->endBulkOperation();
+	}
 
+	public function setMediaPath($application_code) {
+		$directoryPath = 'media/' . sha1($application_code);
+
+		if (!(file_exists(DIR . '/' . $directoryPath))) {
+			$this->createMediaDirectory($application_code);
+		} else {
+			$_SESSION['applicationControllerMediaPath'] = sha1($application_code);
+		}
+	}
+
+	public function createMediaDirectory($application_code) {
+		$directoryPath = 'media/' . sha1($application_code);
+
+		includeLibrary('openFTPConnection');
+		openFTPConnection();
+		includeLibrary('createFTPDirectory');
+		createFTPDirectory($directoryPath);
+		includeLibrary('closeFTPConnection');
+		closeFTPConnection();
+
+		$_SESSION['applicationControllerMediaPath'] = sha1($application_code);
+	}
+
+	public function formcreatezip() {
+		$archive_file_name= $_SESSION['applicationControllerMediaPath'] . '.zip';
+
+		$zip = new ZipArchive();
+
+	    if ($zip->open($archive_file_name, ZIPARCHIVE::CREATE )!==TRUE) {
+	        exit("cannot open <$archive_file_name>\n");
+	    }
+
+		$dir = ('./media/' . $_SESSION['applicationControllerMediaPath'] . '/');
+
+		if (is_dir($dir)){
+			if ($dh = opendir($dir)){
+				while (($file = readdir($dh)) !== false){
+					if (is_file($dir.$file)) {
+						if($file != '' && $file != '.' && $file != '..'){
+							$zip->addFile($dir.$file,$file);
+						}
+					}else{
+						if(is_dir($dir.$file) ){
+							if($file != '' && $file != '.' && $file != '..'){
+								$zip->addEmptyDir($dir.$file);
+
+								$folder = $dir.$file.'/';
+
+								$this->createZip($zip,$folder);
+							}
+						}
+					}
+				}
+				closedir($dh);
+			}
+		}
+
+		$zip->close();
+
+		header("Content-type: application/zip"); 
+		header("Content-Disposition: attachment; filename=$archive_file_name");
+		header("Content-length: " . filesize($archive_file_name));
+		header("Pragma: no-cache"); 
+		header("Expires: 1"); 
+		readfile("$archive_file_name");
+		unlink("$archive_file_name");
+		exit;
 	}
 
 

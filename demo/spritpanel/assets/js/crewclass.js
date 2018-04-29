@@ -133,6 +133,22 @@ function initializeHTMLDB() {
     });
 
     HTMLDB.initialize({
+        elementID:"divcompany_idPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "crewclass/readpropertyoptions/company_id"),
+        readAllURL:(URLPrefix + "crewclass/readpropertyoptions/company_id"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+
+    HTMLDB.initialize({
         elementID:"divunit_idPropertyOptionsHTMLDB",
         readURL:(URLPrefix + "crewclass/readpropertyoptions/unit_id"),
         readAllURL:(URLPrefix + "crewclass/readpropertyoptions/unit_id"),
@@ -827,7 +843,9 @@ function loadObject(id) {
     resetForm(document.getElementById("formObject"));
     document.getElementById("id").value = 0;
     
+	document.getElementById("company_id").selectize.setValue(0);
 	document.getElementById("unit_id").selectize.setValue(0);
+	document.getElementById("type").selectize.setValue(0);
 
     // Initialize Variable Values
     var arrClassProperties = HTMLDB.getColumnNames("divCrewHTMLDB");
@@ -838,6 +856,11 @@ function loadObject(id) {
     if (elTR) {
 
         objObject = HTMLDB.get("divCrewHTMLDB", id);
+		if (parseInt(objObject["company_id"]) > 0) {
+			document.getElementById("company_id").selectize.addOption(
+					{value: objObject["company_id"],
+					text: objObject["company_idDisplayText"]});
+		}
 		if (parseInt(objObject["unit_id"]) > 0) {
 			document.getElementById("unit_id").selectize.addOption(
 					{value: objObject["unit_id"],

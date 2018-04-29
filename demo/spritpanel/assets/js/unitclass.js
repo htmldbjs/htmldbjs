@@ -147,6 +147,118 @@ function initializeHTMLDB() {
         onRenderAll:null
     });
 
+
+    HTMLDB.initialize({
+        elementID:"divprocess_owner_idPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "unitclass/readpropertyoptions/process_owner_id"),
+        readAllURL:(URLPrefix + "unitclass/readpropertyoptions/process_owner_id"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+
+    HTMLDB.initialize({
+        elementID:"divchampion_idPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "unitclass/readpropertyoptions/champion_id"),
+        readAllURL:(URLPrefix + "unitclass/readpropertyoptions/champion_id"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+
+    HTMLDB.initialize({
+        elementID:"divadvisor_idPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "unitclass/readpropertyoptions/advisor_id"),
+        readAllURL:(URLPrefix + "unitclass/readpropertyoptions/advisor_id"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+
+    HTMLDB.initialize({
+        elementID:"divleader1_idPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "unitclass/readpropertyoptions/leader1_id"),
+        readAllURL:(URLPrefix + "unitclass/readpropertyoptions/leader1_id"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+
+    HTMLDB.initialize({
+        elementID:"divleader2_idPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "unitclass/readpropertyoptions/leader2_id"),
+        readAllURL:(URLPrefix + "unitclass/readpropertyoptions/leader2_id"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+
+    HTMLDB.initialize({
+        elementID:"divleader3_idPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "unitclass/readpropertyoptions/leader3_id"),
+        readAllURL:(URLPrefix + "unitclass/readpropertyoptions/leader3_id"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+
+    HTMLDB.initialize({
+        elementID:"divcreated_byPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "unitclass/readpropertyoptions/created_by"),
+        readAllURL:(URLPrefix + "unitclass/readpropertyoptions/created_by"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
 }
 function doHTMLDBSessionReadAll() {
     var sessionObject = HTMLDB.get("divSessionHTMLDB", 1);
@@ -828,6 +940,13 @@ function loadObject(id) {
     document.getElementById("id").value = 0;
     
 	document.getElementById("company_id").selectize.setValue(0);
+	document.getElementById("process_owner_id").selectize.setValue(0);
+	document.getElementById("champion_id").selectize.setValue(0);
+	document.getElementById("advisor_id").selectize.setValue(0);
+	document.getElementById("leader1_id").selectize.setValue(0);
+	document.getElementById("leader2_id").selectize.setValue(0);
+	document.getElementById("leader3_id").selectize.setValue(0);
+	document.getElementById("created_by").selectize.setValue(0);
 
     // Initialize Variable Values
     var arrClassProperties = HTMLDB.getColumnNames("divUnitHTMLDB");
@@ -842,6 +961,41 @@ function loadObject(id) {
 			document.getElementById("company_id").selectize.addOption(
 					{value: objObject["company_id"],
 					text: objObject["company_idDisplayText"]});
+		}
+		if (parseInt(objObject["process_owner_id"]) > 0) {
+			document.getElementById("process_owner_id").selectize.addOption(
+					{value: objObject["process_owner_id"],
+					text: objObject["process_owner_idDisplayText"]});
+		}
+		if (parseInt(objObject["champion_id"]) > 0) {
+			document.getElementById("champion_id").selectize.addOption(
+					{value: objObject["champion_id"],
+					text: objObject["champion_idDisplayText"]});
+		}
+		if (parseInt(objObject["advisor_id"]) > 0) {
+			document.getElementById("advisor_id").selectize.addOption(
+					{value: objObject["advisor_id"],
+					text: objObject["advisor_idDisplayText"]});
+		}
+		if (parseInt(objObject["leader1_id"]) > 0) {
+			document.getElementById("leader1_id").selectize.addOption(
+					{value: objObject["leader1_id"],
+					text: objObject["leader1_idDisplayText"]});
+		}
+		if (parseInt(objObject["leader2_id"]) > 0) {
+			document.getElementById("leader2_id").selectize.addOption(
+					{value: objObject["leader2_id"],
+					text: objObject["leader2_idDisplayText"]});
+		}
+		if (parseInt(objObject["leader3_id"]) > 0) {
+			document.getElementById("leader3_id").selectize.addOption(
+					{value: objObject["leader3_id"],
+					text: objObject["leader3_idDisplayText"]});
+		}
+		if (parseInt(objObject["created_by"]) > 0) {
+			document.getElementById("created_by").selectize.addOption(
+					{value: objObject["created_by"],
+					text: objObject["created_byDisplayText"]});
 		}
         for (var i = 0; i < lClassPropertyCount; i++) {
             setInputValue(arrClassProperties[i], objObject[arrClassProperties[i]]);

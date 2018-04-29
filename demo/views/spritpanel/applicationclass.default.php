@@ -117,6 +117,12 @@
 		                                    <textarea id="notes" name="notes" class="materialize-textarea blue-text text-darken-4" placeholder="" style="height:0px;overflow-y:hidden;" ></textarea>
 	                                    </div>
                                     </div>
+								<div class="col l12 m12 s12 " id="divcreated_by">
+									<label for="created_by"><?php echo __('Created By'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="created_by" style="width: 100%" name="created_by" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
                             </div>
                             <div class="row">
                                 <div class="input-field">
@@ -181,6 +187,7 @@
             <div id="divApplicationHTMLDB" class="divHTMLDB"></div>
             <div id="divApplicationTableHTMLDB" class="divHTMLDB"></div>
             <div id="divunit_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divcreated_byPropertyOptionsHTMLDB" class="divHTMLDB"></div>
             <div id="divSessionHTMLDB" class="divHTMLDB"></div>
             <table>
                 <tbody id="tbodyGhostObjectListTemplate">

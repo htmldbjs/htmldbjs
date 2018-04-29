@@ -36,46 +36,108 @@ class companiesController {
     
     private function reset() {
 
+		includeLibrary('recallUser');
+		$this->user = recallUser();
+
+		if (NULL == $this->user) {
+
+			includeLibrary('redirectToPage');
+			redirectToPage('login');
+			return false;
+
+		} // if ((NULL == $this->user)
+
+		$this->userFirstName = $this->user->firstname;
+		$this->userLastName = $this->user->lastname;
+		$this->userEmail = $this->user->email;
 	}
 		
 	public function index($parameters = NULL, $strMethod = '') {
+
 		$this->parameters = $parameters;
+        includeView($this, 'companies');
+
 	}
 
 	public function read($parameters = NULL) {
 
 		$this->parameters = $parameters;
 
-		$this->list[0]['id'] = 1;
-		$this->list[0]['active'] = 0;
-		$this->list[0]['company_name'] = 'Sanpark Bilişim ve Tasarım Ltd.Şti.';
-		$this->list[0]['score'] = 100.0;
-		$this->list[0]['personal'] = 0;
-		$this->list[0]['company_type'] = 1;
+		$noData = false;
 
-		$this->list[1]['id'] = 2;
-		$this->list[1]['active'] = 0;
-		$this->list[1]['company_name'] = 'Pyronome Teknoloji A.Ş.';
-		$this->list[1]['score'] = 98.80;
-		$this->list[1]['personal'] = 1;
-		$this->list[1]['company_type'] = 2;
+		if (isset($this->parameters[0])) {
+			if ('nodata' == strtolower($this->parameters[0])) {
+				$noData = true;
+			} // if ('nodata' == strtolower($this->parameters[0])) {
+		} // if (isset($this->parameters[0])) {
 
-		$this->list[2]['id'] = 3;
-		$this->list[2]['active'] = 1;
-		$this->list[2]['company_name'] = 'Aydınlı İnşaat Ltd.Şti.';
-		$this->list[2]['score'] = 100;
-		$this->list[2]['personal'] = 0;
-		$this->list[2]['company_type'] = 1;
+		$sessionParameters = $this->getSessionParameters();
+		$sortingColumn = intval($sessionParameters['sortingColumn']);
+		$sortingAscending = intval($sessionParameters['sortingASC']);
+		$searchText = $sessionParameters['searchText'];
 
+		includeModel('Company');
+
+		$listObject = new Company();
+		$listObject->beginBulkOperation();
+		$listObject->bufferSize = 100;
+		$listObject->page = $sessionParameters['page'];
+		$listObject->addFilter('deleted','==', false);
+		if (10 == $this->user->user_type) {
+			$listObject->addFilter('created_by','==', $this->user->id);
+		}
+		$listObject->find();
+
+		$_SESSION[sha1(__FILE__) . 'pageCount'] = $listObject->getPageCount();
+
+		$objectCount = $listObject->listCount;
+		
+		$object = NULL;
+
+		$index = 0;
+
+		$this->list = array();
+
+		if (!$noData) {
+
+			includeLibrary('getAllCachedObjects');
+			$consultans = getAllCachedObjects('User');
+
+			for ($i = 0; $i < $objectCount; $i++) {
+
+				$object = $listObject->list[$i];
+				$this->list[$index]['id'] = $object->id;
+				$this->list[$index]['company_name'] = $object->company_name;
+				$this->list[$index]['score'] = $object->score;
+				$optionTitles = $object->getOptionTitles('type');
+				$this->list[$index]['type'] = $optionTitles[$object->type];
+				$this->list[$index]['consultant'] = $object->consultant;
+				$this->list[$index]['consultantDisplayText'] = '';
+
+				if (isset($consultans[$object->consultant])) {
+					$this->list[$index]['consultantDisplayText']
+							= $consultans[$object->consultant]['firstname']
+							. ' '
+							. $consultans[$object->consultant]['lastname'];
+				} // if (isset($consultans[$object->consultant])) {
+					
+				$index++;
+
+			} // for ($i = 0; $i < $objectCount; $i++) {
+
+		} // if (!$noData) {
+		
+		$listObject->endBulkOperation();
+		
 		$this->columns = array();
 		$this->columns[] = 'id';
-		$this->columns[] = 'active';
 		$this->columns[] = 'company_name';
 		$this->columns[] = 'score';
-		$this->columns[] = 'personal';
-		$this->columns[] = 'company_type';
+		$this->columns[] = 'type';
+		$this->columns[] = 'consultant';
+		$this->columns[] = 'consultantDisplayText';
 
-		includeView($this, 'htmldblist');
+		includeView($this, 'htmldblist.gz');
 		return;
 
 	}
@@ -103,7 +165,7 @@ class companiesController {
 
 			$this->lastError .= __('Lütfen firma adını belirtiniz.');
 
-		} // if ('' == $newCrewMember->firstname) {
+		} // if ('' == $newCompany->company_name) {
 
 		if (0 == $this->errorCount) {
 
@@ -139,8 +201,11 @@ class companiesController {
 
 		includeModel('Company');
 		$company = new Company();
+		$company->beginBulkOperation();
 		$company->request($_REQUEST, ('inputfield0'));
+		$company->created_by = $this->user->id;
 		$company->update();
+		$company->endBulkOperation();
 
 		$_SESSION[sha1('companyController') . 'last'] = $company->id;
 

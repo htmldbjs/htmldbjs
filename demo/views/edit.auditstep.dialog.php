@@ -29,7 +29,7 @@
 								class="buttonCloseDialog waves-effect waves-light btn-large white blue-text text-darken-4 col s12"><?php echo __('İPTAL'); ?></button>
 							</div>
 							<div class="col s6">
-								<button id="buttonSaveEditedAuditStep" data-htmldb-row-id="" data-htmldb-target="divAuditStepHTMLDBWriter" data-htmldb-dialog="divEditAuditStepDialog" data-htmldb-field="id" data-htmldb-attribute="data-htmldb-row-id" data-htmldb-source="divAuditStepHTMLDBReader" name="buttonSaveEditedAuditStep" type="button" data-default-text="<?php echo __('KAYDET'); ?>" data-loading-text="<?php echo __('KAYDEDİLİYOR...'); ?>" class="waves-effect waves-light btn-large blue darken-4 col s12 HTMLDBFieldAttribute HTMLDBAction HTMLDBSave"><?php echo __('KAYDET'); ?></button>
+								<button id="buttonSaveEditedAuditStep" data-htmldb-row-id="" data-htmldb-target="divAuditStepHTMLDBWriter" data-htmldb-dialog="divEditAuditStepDialog" data-htmldb-field="id" data-htmldb-attribute="data-htmldb-row-id" data-htmldb-loader="divLoader" data-htmldb-source="divAuditStepHTMLDBReader" name="buttonSaveEditedAuditStep" type="button" data-default-text="<?php echo __('KAYDET'); ?>" data-loading-text="<?php echo __('KAYDEDİLİYOR...'); ?>" class="waves-effect waves-light btn-large blue darken-4 col s12 HTMLDBFieldAttribute HTMLDBAction HTMLDBSave"><?php echo __('KAYDET'); ?></button>
 							</div>
 						</div>
 					</div>

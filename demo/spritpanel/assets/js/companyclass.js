@@ -147,6 +147,150 @@ function initializeHTMLDB() {
         onRenderAll:null
     });
 
+
+    HTMLDB.initialize({
+        elementID:"divsponsor_idPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "companyclass/readpropertyoptions/sponsor_id"),
+        readAllURL:(URLPrefix + "companyclass/readpropertyoptions/sponsor_id"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+
+    HTMLDB.initialize({
+        elementID:"divcoordinator_idPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "companyclass/readpropertyoptions/coordinator_id"),
+        readAllURL:(URLPrefix + "companyclass/readpropertyoptions/coordinator_id"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+
+    HTMLDB.initialize({
+        elementID:"divpropagation_champion_idPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "companyclass/readpropertyoptions/propagation_champion_id"),
+        readAllURL:(URLPrefix + "companyclass/readpropertyoptions/propagation_champion_id"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+
+    HTMLDB.initialize({
+        elementID:"divhse_responsible_idPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "companyclass/readpropertyoptions/hse_responsible_id"),
+        readAllURL:(URLPrefix + "companyclass/readpropertyoptions/hse_responsible_id"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+
+    HTMLDB.initialize({
+        elementID:"divhr_responsible_idPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "companyclass/readpropertyoptions/hr_responsible_id"),
+        readAllURL:(URLPrefix + "companyclass/readpropertyoptions/hr_responsible_id"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+
+    HTMLDB.initialize({
+        elementID:"divplanning_responsible_idPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "companyclass/readpropertyoptions/planning_responsible_id"),
+        readAllURL:(URLPrefix + "companyclass/readpropertyoptions/planning_responsible_id"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+
+    HTMLDB.initialize({
+        elementID:"divmaintenance_responsible_idPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "companyclass/readpropertyoptions/maintenance_responsible_id"),
+        readAllURL:(URLPrefix + "companyclass/readpropertyoptions/maintenance_responsible_id"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+
+    HTMLDB.initialize({
+        elementID:"divquality_responsible_idPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "companyclass/readpropertyoptions/quality_responsible_id"),
+        readAllURL:(URLPrefix + "companyclass/readpropertyoptions/quality_responsible_id"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
+
+    HTMLDB.initialize({
+        elementID:"divcreated_byPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "companyclass/readpropertyoptions/created_by"),
+        readAllURL:(URLPrefix + "companyclass/readpropertyoptions/created_by"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
 }
 function doHTMLDBSessionReadAll() {
     var sessionObject = HTMLDB.get("divSessionHTMLDB", 1);
@@ -827,7 +971,17 @@ function loadObject(id) {
     resetForm(document.getElementById("formObject"));
     document.getElementById("id").value = 0;
     
+	document.getElementById("type").selectize.setValue(0);
 	document.getElementById("consultant").selectize.setValue(0);
+	document.getElementById("sponsor_id").selectize.setValue(0);
+	document.getElementById("coordinator_id").selectize.setValue(0);
+	document.getElementById("propagation_champion_id").selectize.setValue(0);
+	document.getElementById("hse_responsible_id").selectize.setValue(0);
+	document.getElementById("hr_responsible_id").selectize.setValue(0);
+	document.getElementById("planning_responsible_id").selectize.setValue(0);
+	document.getElementById("maintenance_responsible_id").selectize.setValue(0);
+	document.getElementById("quality_responsible_id").selectize.setValue(0);
+	document.getElementById("created_by").selectize.setValue(0);
 
     // Initialize Variable Values
     var arrClassProperties = HTMLDB.getColumnNames("divCompanyHTMLDB");
@@ -842,6 +996,51 @@ function loadObject(id) {
 			document.getElementById("consultant").selectize.addOption(
 					{value: objObject["consultant"],
 					text: objObject["consultantDisplayText"]});
+		}
+		if (parseInt(objObject["sponsor_id"]) > 0) {
+			document.getElementById("sponsor_id").selectize.addOption(
+					{value: objObject["sponsor_id"],
+					text: objObject["sponsor_idDisplayText"]});
+		}
+		if (parseInt(objObject["coordinator_id"]) > 0) {
+			document.getElementById("coordinator_id").selectize.addOption(
+					{value: objObject["coordinator_id"],
+					text: objObject["coordinator_idDisplayText"]});
+		}
+		if (parseInt(objObject["propagation_champion_id"]) > 0) {
+			document.getElementById("propagation_champion_id").selectize.addOption(
+					{value: objObject["propagation_champion_id"],
+					text: objObject["propagation_champion_idDisplayText"]});
+		}
+		if (parseInt(objObject["hse_responsible_id"]) > 0) {
+			document.getElementById("hse_responsible_id").selectize.addOption(
+					{value: objObject["hse_responsible_id"],
+					text: objObject["hse_responsible_idDisplayText"]});
+		}
+		if (parseInt(objObject["hr_responsible_id"]) > 0) {
+			document.getElementById("hr_responsible_id").selectize.addOption(
+					{value: objObject["hr_responsible_id"],
+					text: objObject["hr_responsible_idDisplayText"]});
+		}
+		if (parseInt(objObject["planning_responsible_id"]) > 0) {
+			document.getElementById("planning_responsible_id").selectize.addOption(
+					{value: objObject["planning_responsible_id"],
+					text: objObject["planning_responsible_idDisplayText"]});
+		}
+		if (parseInt(objObject["maintenance_responsible_id"]) > 0) {
+			document.getElementById("maintenance_responsible_id").selectize.addOption(
+					{value: objObject["maintenance_responsible_id"],
+					text: objObject["maintenance_responsible_idDisplayText"]});
+		}
+		if (parseInt(objObject["quality_responsible_id"]) > 0) {
+			document.getElementById("quality_responsible_id").selectize.addOption(
+					{value: objObject["quality_responsible_id"],
+					text: objObject["quality_responsible_idDisplayText"]});
+		}
+		if (parseInt(objObject["created_by"]) > 0) {
+			document.getElementById("created_by").selectize.addOption(
+					{value: objObject["created_by"],
+					text: objObject["created_byDisplayText"]});
 		}
         for (var i = 0; i < lClassPropertyCount; i++) {
             setInputValue(arrClassProperties[i], objObject[arrClassProperties[i]]);

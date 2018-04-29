@@ -124,6 +124,9 @@ class auditclassController {
 					= $object->getForeignDisplayText('audit_state_id');
 			$this->list[$index]['score'] = $object->score;
 			$this->list[$index]['notes'] = $object->notes;
+			$this->list[$index]['created_by'] = $object->created_by;
+			$this->list[$index]['created_byDisplayText']
+					= $object->getForeignDisplayText('created_by');
 			$index++;
 
 		} // for ($i = 0; $i < $objectCount; $i++) {			
@@ -140,6 +143,8 @@ class auditclassController {
 		$this->columns[] = 'audit_state_idDisplayText';
 		$this->columns[] = 'score';
 		$this->columns[] = 'notes';
+		$this->columns[] = 'created_by';
+		$this->columns[] = 'created_byDisplayText';
 
 		includeView($this, 'spritpanel/htmldblist.gz');
 		return;
@@ -327,7 +332,7 @@ class auditclassController {
 		$this->columns[] = 'sortingASC';
 		$this->columns[] = 'page';
 		$this->columns[] = 'pageCount';
-		$this->columns[] = 'audit_state_idSearchText';
+		$this->columns[] = 'created_bySearchText';
 
 		includeView($this, 'spritpanel/htmldblist.gz');
 		return;
@@ -365,10 +370,10 @@ class auditclassController {
 					: $sessionParameters['page'];
 			$_SESSION[sha1(__FILE__) . 'page'] = $page;
 
-			$audit_state_idSearchText = isset($_REQUEST['inputfield0audit_state_idSearchText'])
-					? htmlspecialchars($_REQUEST['inputfield0audit_state_idSearchText'])
-					: $sessionParameters['audit_state_idSearchText'];
-			$_SESSION[sha1(__FILE__) . 'audit_state_idSearchText'] = $audit_state_idSearchText;
+			$created_bySearchText = isset($_REQUEST['inputfield0created_bySearchText'])
+					? htmlspecialchars($_REQUEST['inputfield0created_bySearchText'])
+					: $sessionParameters['created_bySearchText'];
+			$_SESSION[sha1(__FILE__) . 'created_bySearchText'] = $created_bySearchText;
 
 		} // if (isset($_REQUEST['inputaction' . $index])) {
 
@@ -408,6 +413,10 @@ class auditclassController {
 		$sessionParameters['audit_state_idSearchText']
 				= (isset($_SESSION[sha1(__FILE__) . 'audit_state_idSearchText'])
 				? $_SESSION[sha1(__FILE__) . 'audit_state_idSearchText']
+				: '');
+		$sessionParameters['created_bySearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'created_bySearchText'])
+				? $_SESSION[sha1(__FILE__) . 'created_bySearchText']
 				: '');
 		return $sessionParameters;
 

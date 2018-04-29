@@ -17,12 +17,26 @@ $_SPRIT['LANGUAGE']['Unit'] = 'Unit';
 $_SPRIT['LANGUAGE']['UnitList'] = 'UnitList';
 
 
-$_SPRIT['LANGUAGE']['Firm'] = 'Firm';
+$_SPRIT['LANGUAGE']['Name'] = 'Name';
+$_SPRIT['LANGUAGE']['Company'] = 'Company';
+
+$_SPRIT['LANGUAGE']['Company'] = 'Company';
+
 $_SPRIT['LANGUAGE']['Name'] = 'Name';
 
-$_SPRIT['LANGUAGE']['Firm'] = 'Firm';
+$_SPRIT['LANGUAGE']['Process Owner'] = 'Process Owner';
 
-$_SPRIT['LANGUAGE']['Name'] = 'Name';
+$_SPRIT['LANGUAGE']['Champion'] = 'Champion';
+
+$_SPRIT['LANGUAGE']['Advisor'] = 'Advisor';
+
+$_SPRIT['LANGUAGE']['Leader 1'] = 'Leader 1';
+
+$_SPRIT['LANGUAGE']['Leader 2'] = 'Leader 2';
+
+$_SPRIT['LANGUAGE']['Leader 3'] = 'Leader 3';
+
+$_SPRIT['LANGUAGE']['Created By'] = 'Created By';
 
 
 

@@ -12,13 +12,19 @@
             <div class="divContentPanel z-depth-1 white">
                 <form id="formCompany" name="formCompany" method="post" class="form-horizontal">
                     <div class="row">
-                        <div class="row">
-                            <div class="col s12">
-                                <label for="name"><?php echo __('Firma'); ?></label>
-                                <div class="input-field">
-                                    <input id="name" name="name" type="text" value="" class="HTMLDBFieldValue" data-htmldb-field="company_name">
-                                </div>
+                        <div class="col s12">
+                            <label for="name"><?php echo __('Firma'); ?></label>
+                            <div class="input-field">
+                                <input id="name" name="name" type="text" value="" class="HTMLDBFieldValue" data-htmldb-field="company_name">
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <label for="type"><?php echo __('Firma Türü'); ?> </label>
+                            <select class="selectClassSelection HTMLDBFieldValue HTMLDBFieldSelect" id="type" style="width: 100%" name="type" data-htmldb-option-source="divCompanyTypeHTMLDBReader" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="type">>
+                                <option value=""><?php echo __('Lütfen Seçiniz'); ?></option>
+                            </select>
                         </div>
                     </div>
                     <div class="row">

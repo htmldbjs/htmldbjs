@@ -22,6 +22,10 @@ function initializePage() {
         doApplicationTaskCategoryLinkClick(this);
     });
 
+    $("#buttonDownloadPhotos").off("click").on("click", function () {
+        doDownloadPhotosButtonClick(this);
+    });
+
 }
 function confirmExit() {
 
@@ -344,14 +348,16 @@ function initializeHTMLDB() {
         onRender:doApplicationTask1HTMLDBReaderRender,
         onRenderAll:doApplicationTask1HTMLDBReaderRender
     });
-
+    
 }
 function doApplicationStateHTMLDBReaderRead() {
     setHTMLDBFieldSelects("divApplicationStateHTMLDBReader");
 }
 function doApplicationHTMLDBReaderRead() {
+    if ("" == document.getElementById("divApplicationHTMLDBReader_tbody").innerHTML) {
+        window.location = (document.body.getAttribute("data-url-prefix") + "home");
+    }
 
-	document.getElementById("divLoader").style.display = "none";
 	setHTMLDBFieldContents("divApplicationHTMLDBReader");
     setHTMLDBFieldValues("divApplicationHTMLDBReader");
 	setHTMLDBFieldAttributes("divApplicationHTMLDBReader");
@@ -385,7 +391,46 @@ function doApplicationTask1HTMLDBReaderRender() {
     $(".buttonEditApplicationSubTask").off("click").on("click", function () {
         doEditApplicationSubTaskButtonClick(this);
     });
+    
+    $(".buttonAddTaskPhoto").off("click").on("click", function() {
+        doAddTaskPhotoButtonClick(this);
+    });
 
+    renderTaskIMGCounts();
+
+    var exit = false;
+    for (var i = 1; ((i <= 6) && (!exit)); i++) {
+
+        if ("" == document.getElementById("tbodyApplicationTask" + i + "List").innerHTML) {
+            exit = true;
+        }
+
+    }
+
+    if (!exit) {
+        document.getElementById("divLoader").style.display = "none";
+    }
+
+}
+function renderTaskIMGCounts() {
+    for (var s = 1; s < 7; s++) {
+        strHTMLDBDIVID = "divApplicationTask" + s + "HTMLDBReader";
+        elTBODY = document.getElementById("divApplicationTask" + s + "HTMLDBReader_tbody");
+        
+        arrHTMLDBTR = $("tr", elTBODY);
+        trCount = arrHTMLDBTR.length;
+
+        for (var i = 0; i < trCount; i++) {
+            rowId = arrHTMLDBTR[i].getAttribute("data-row-id");
+            object = HTMLDB.get(strHTMLDBDIVID, rowId);
+            if ("" != object["photos"]) {                
+                spanIMGCount = (object["photos"].match(/media\//g) || []).length;
+                elSPAN = document.getElementById("spanTaskIMGCount" + rowId);
+                elSPAN.innerHTML = spanIMGCount;
+                elSPAN.parentNode.style.color = "#2e7d32";
+            }
+        }
+    }
 }
 function doSatisfiedYesButtonClick(sender) {
 
@@ -474,4 +519,31 @@ function doApplicationTaskHTMLDBReaderRead() {
 }
 function doApplicationSubTaskHTMLDBReaderRender() {
     initializeHTMLDBHelpers();
+
+    $(".buttonAddSubTaskPhoto").off("click").on("click", function() {
+        doAddSubTaskPhotoButtonClick(this);
+    });
+
+    renderSubTaskIMGCounts();
+}
+function renderSubTaskIMGCounts() {
+    strHTMLDBDIVID = "divApplicationSubTaskHTMLDBReader";
+    elTBODY = document.getElementById("divApplicationSubTaskHTMLDBReader_tbody");
+    
+    arrHTMLDBTR = $("tr", elTBODY);
+    trCount = arrHTMLDBTR.length;
+
+    for (var i = 0; i < trCount; i++) {
+        rowId = arrHTMLDBTR[i].getAttribute("data-row-id");
+        object = HTMLDB.get(strHTMLDBDIVID, rowId);
+        if ("" != object["photos"]) {                
+            spanIMGCount = (object["photos"].match(/media\//g) || []).length;
+            elSPAN = document.getElementById("spanSubTaskIMGCount" + rowId);
+            elSPAN.innerHTML = spanIMGCount;
+            elSPAN.parentNode.style.color = "#2e7d32";
+        }
+    }
+}
+function doDownloadPhotosButtonClick(sender) {
+    document.getElementById("formCreateZip").submit();
 }

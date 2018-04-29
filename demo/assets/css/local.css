@@ -152,6 +152,17 @@ textarea.materialize-textarea {
 .divSuccessCard {
     display: none;
 }
+.divLoader {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+}
+.divLoader.active {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
 .divLoader.divDialogContent {
     display: block;
     z-index: 1000;
@@ -925,7 +936,7 @@ div.col td .checkbox2 {
   margin-bottom: 20px;
 }
 .divDropzonePanel {
-    margin-bottom: 0px;
+    margin-bottom: 20px;
 }
 .divDropzone {
     border: 4px dotted #eceff1;
@@ -1323,4 +1334,34 @@ div.col td .checkbox2 {
 .tableApplicationTaskList .spanNote,
 .tableAuditStepList .spanNote {
     font-weight: bold;
+}
+.tdEditObject {
+    cursor: pointer;
+}
+.spanIMGCount {
+    position: relative;
+    top: -55px;
+    left: 17px;
+    font-size: 15px;
+    font-weight: 500; 
+}
+.hideTaskActualDate {
+    display: none;
+}
+.showTaskActualDate5 {
+    display: block;
+}
+.buttonEditCrew {
+    color: #00acc1;
+    font-size: 20px;
+    line-height: 40px;
+    box-sizing: border-box;
+    outline: 0px;
+    cursor: pointer;
+    background: none;
+    width: 40px;
+    height: 40px;
+    border: none;
+    transition: 0.3s;
+    vertical-align: text-bottom;
 }

@@ -112,12 +112,15 @@ class crewclassController {
 			$object = $listObject->list[$i];
 			$this->list[$index]['id'] = $object->id;
 			$this->list[$index]['enabled'] = $object->enabled;
+			$this->list[$index]['company_id'] = $object->company_id;
+			$this->list[$index]['company_idDisplayText']
+					= $object->getForeignDisplayText('company_id');
 			$this->list[$index]['unit_id'] = $object->unit_id;
 			$this->list[$index]['unit_idDisplayText']
 					= $object->getForeignDisplayText('unit_id');
-			$this->list[$index]['firstname'] = $object->firstname;
-			$this->list[$index]['lastname'] = $object->lastname;
+			$this->list[$index]['name'] = $object->name;
 			$this->list[$index]['email'] = $object->email;
+			$this->list[$index]['type'] = $object->type;
 			$index++;
 
 		} // for ($i = 0; $i < $objectCount; $i++) {			
@@ -125,11 +128,13 @@ class crewclassController {
 		$this->columns = array();
 		$this->columns[] = 'id';
 		$this->columns[] = 'enabled';
+		$this->columns[] = 'company_id';
+		$this->columns[] = 'company_idDisplayText';
 		$this->columns[] = 'unit_id';
 		$this->columns[] = 'unit_idDisplayText';
-		$this->columns[] = 'firstname';
-		$this->columns[] = 'lastname';
+		$this->columns[] = 'name';
 		$this->columns[] = 'email';
+		$this->columns[] = 'type';
 
 		includeView($this, 'spritpanel/htmldblist.gz');
 		return;
@@ -257,6 +262,7 @@ class crewclassController {
 		$this->columns[] = 'column2';
 		$this->columns[] = 'column3';
 		$this->columns[] = 'column4';
+		$this->columns[] = 'column5';
 
 		includeView($this, 'spritpanel/htmldblist.gz');
 		return;
@@ -386,6 +392,10 @@ class crewclassController {
 				= (isset($_SESSION[sha1(__FILE__) . 'pageCount'])
 				? $_SESSION[sha1(__FILE__) . 'pageCount']
 				: 0);
+		$sessionParameters['company_idSearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'company_idSearchText'])
+				? $_SESSION[sha1(__FILE__) . 'company_idSearchText']
+				: '');
 		$sessionParameters['unit_idSearchText']
 				= (isset($_SESSION[sha1(__FILE__) . 'unit_idSearchText'])
 				? $_SESSION[sha1(__FILE__) . 'unit_idSearchText']

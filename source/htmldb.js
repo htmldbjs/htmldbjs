@@ -2,22 +2,25 @@
 var HTMLDB = {
 	"__readQueue": [],
 	"__readingQueue": [],
-	"initialize": function() {
+	"initialize": function () {
 		HTMLDB.__initializeHTMLDBTables();
 		HTMLDB.__initializeHTMLDBTemplates();
 		HTMLDB.__initializeHTMLDBButtons();
 		HTMLDB.__initializeHTMLDBSections();
 		HTMLDB.__initializeHTMLDBForms();
 		HTMLDB.__initializeReadQueue();
+
+		HTMLDB.__resetWriterLoop();
 	},
-	"stop":function(tableElementId) {
+	"stop": function (tableElementId) {
 		var tableElement = document.getElementById(tableElementId);
 		if (!tableElement) {
 			return;
 		}
 		tableElement.setAttribute("data-htmldb-loading", 0);
+		HTMLDB.__hideLoaders();
 	},
-	"read":function(tableElementId, functionDone) {
+	"read": function (tableElementId, functionDone) {
 		var tableElement = document.getElementById(tableElementId);
 		if (!tableElement) {
         	throw(new Error("HTMLDB table "
@@ -70,18 +73,15 @@ var HTMLDB = {
 		iframeHTMLDB.parentNode.replaceChild(iframeNewElement, iframeHTMLDB);
 		iframeHTMLDB = iframeNewElement;
 		tableElement.setAttribute("data-htmldb-loading", 1);
+		HTMLDB.__showLoader(tableElementId, "read");
 
 		var funcIframeLoadCallback = HTMLDB.__doReaderIframeLoad;
 
 		if (functionDone) {
 			funcIframeLoadCallback = function (evEvent) {
 				tableElement.setAttribute("data-htmldb-loading", 0);
+				HTMLDB.__hideLoader(tableElementId, "read");
 				HTMLDB.__doirlc(evEvent, true);
-				/*
-				HTMLDB.__removeIframeAndForm(tableElementId, iframeFormGUID);
-				HTMLDB.__removeFromReadingQueue(tableElementId);
-				HTMLDB.__processReadQueue();
-				*/
 				functionDone(tableElementId);
 			}
 		}
@@ -107,7 +107,7 @@ var HTMLDB = {
 			return false;
 		}
 	},
-	"validate":function(tableElementId, object, functionDone) {
+	"validate": function (tableElementId, object, functionDone) {
 		var tableElement = document.getElementById(tableElementId);
 		if (!tableElement) {
         	throw(new Error("HTMLDB table "
@@ -157,12 +157,14 @@ var HTMLDB = {
 		iframeHTMLDB = iframeNewElement;
 
 		tableElement.setAttribute("data-htmldb-loading", 1);
+		HTMLDB.__showLoader(tableElementId, "validate");
 
 		var funcIframeLoadCallback = HTMLDB.__doValidatorIframeLoad;
 
 		if (functionDone) {
 			funcIframeLoadCallback = function () {
 				tableElement.setAttribute("data-htmldb-loading", 0);
+				HTMLDB.__hideLoader(tableElementId, "validate");
 				iframeWindow = top.frames[tableElementId + "_iframe_" + iframeFormGUID];
 				var strResponse = "";
 				if (iframeWindow.document) {
@@ -181,8 +183,8 @@ var HTMLDB = {
 
         formHTMLDB.innerHTML = "";
 
-		var formContent = "<input class=\"htmldbaction\" type=\"hidden\" name=\""
-				+ "htmldbaction0"
+		var formContent = "<input class=\"htmldb_action\" type=\"hidden\" name=\""
+				+ "htmldb_action0"
 				+ "\" value=\""
 				+ ((0 == object.id) ? "inserted" : "updated")
 				+ "\" />";
@@ -191,8 +193,8 @@ var HTMLDB = {
 
 		for (var propertyName in object) {
         	if (object.hasOwnProperty(propertyName)) {
-				formContent += "<input class=\"htmldbfield\" type=\"hidden\" name=\""
-						+ "htmldbfield0_" + propertyName
+				formContent += "<input class=\"htmldb_row\" type=\"hidden\" name=\""
+						+ "htmldb_row0_" + propertyName
 				 		+ "\" value=\""
 						+ object[propertyName]
 						+ "\" />";
@@ -207,13 +209,13 @@ var HTMLDB = {
 		} catch(e) {
 		}
 	},
-	"write":function(p1, p2, functionDone) {
-		var elDIV = document.getElementById(p1);
+	"write": function (tableElementId, delayed, functionDone) {
+		var elDIV = document.getElementById(tableElementId);
 		if (!elDIV) {
 			return;
 		}
 
-		if (true === p2) {
+		if (true === delayed) {
 			// Delayed Write
 			clearTimeout(elDIV.tmWriteTimer);
 			lWriteDelay = parseInt(elDIV.getAttribute("data-write-delay"));
@@ -222,7 +224,7 @@ var HTMLDB = {
 			}
 			elDIV.tmWriteTimer = setTimeout(function () {
 				clearTimeout(elDIV.tmWriteTimer);
-				HTMLDB.write(p1, false, functionDone);
+				HTMLDB.write(tableElementId, false, functionDone);
 			}, lWriteDelay);
 			return;
 		}
@@ -240,39 +242,45 @@ var HTMLDB = {
 			return;
 		}
 
-		var iframeFormGUID = document.getElementById(p1 + "_iframe_container").children.length;
-		HTMLDB.__createNewIframeAndForm(p1, iframeFormGUID);
+		var iframeFormGUID = document.getElementById(tableElementId + "_iframe_container").children.length;
+		HTMLDB.__createNewIframeAndForm(tableElementId, iframeFormGUID);
 
-		var strTarget = (p1 + "_iframe_" + iframeFormGUID);
+		var strTarget = (tableElementId + "_iframe_" + iframeFormGUID);
 		if (!document.getElementById(strTarget)) {
 			return;
 		}
 
-		var tbodyHTMLDB = document.getElementById(p1 + "_reader_tbody");
+		var tbodyHTMLDB = document.getElementById(tableElementId + "_reader_tbody");
 		var arrTR = tbodyHTMLDB.children;
 		var arrTD = null;
 		var elTR = null;
 		var lTRCount = arrTR.length;
-		var formHTMLDB = document.getElementById(p1 + "_form_" + iframeFormGUID);
+		var formHTMLDB = document.getElementById(tableElementId + "_form_" + iframeFormGUID);
 		var iframeHTMLDB = document.getElementById(strTarget);
 		var iframeNewElement = iframeHTMLDB.cloneNode(true);
 		iframeHTMLDB.parentNode.replaceChild(iframeNewElement, iframeHTMLDB);
 		iframeHTMLDB = iframeNewElement;
 
 		elDIV.setAttribute("data-htmldb-loading", 1);
+		HTMLDB.__showLoader(tableElementId, "write");
 
 		var funcIframeLoadCallback = HTMLDB.__doWriterIframeLoad;
 
 		if (functionDone) {
 			funcIframeLoadCallback = function () {
 				elDIV.setAttribute("data-htmldb-loading", 0);
-				iframeWindow = top.frames[p1 + "_iframe_" + iframeFormGUID];
+				HTMLDB.__hideLoader(tableElementId, "write");
+				iframeWindow = top.frames[tableElementId + "_iframe_" + iframeFormGUID];
 				var strResponse = "";
 				if (iframeWindow.document) {
 					strResponse = String(iframeWindow.document.body.innerHTML).trim();
 				}
-				HTMLDB.__removeIframeAndForm(p1, iframeFormGUID);
-				functionDone(p1, strResponse);
+				HTMLDB.__removeIframeAndForm(tableElementId, iframeFormGUID);
+				functionDone(tableElementId, strResponse);
+				var redirectURL = HTMLDB.__getHTMLDBParameter(elDIV, "redirect");
+				if (redirectURL != "") {
+					window.location = redirectURL;
+				}
 			}
 		}
 
@@ -310,7 +318,7 @@ var HTMLDB = {
 		} catch(e) {
 		}
 	},
-	"get":function(p1, p2) {
+	"get": function (p1, p2) {
 		var elDIV = document.getElementById(p1);
 		if (!elDIV) {
 			return;
@@ -342,21 +350,21 @@ var HTMLDB = {
 
 		return JSON.parse(strJSON);
 	},
-	"insert":function(p1, p2, p3) {
-		var elDIV = document.getElementById(p1);
+	"insert": function (tableElementId, object, className) {
+		var elDIV = document.getElementById(tableElementId);
 		if (!elDIV) {
 			return;
 		}
 
-		if (undefined === p3) {
-			p3 = "";
+		if (undefined === className) {
+			className = "";
 		}
 
-		var tbodyHTMLDB = document.getElementById(p1 + "_reader_tbody");
+		var tbodyHTMLDB = document.getElementById(tableElementId + "_writer_tbody");
 		var lTRCount = tbodyHTMLDB.children.length;
 
 		var strTRContent = "<tr class=\"inserted"
-				+ ((p3!="") ? (" " + p3) : "")
+				+ ((className!="") ? (" " + className) : "")
 				+ "\" data-row-id=\"n"
 				+ lTRCount
 				+ "\" id=\""
@@ -364,12 +372,12 @@ var HTMLDB = {
 				+"_trn"
 				+ lTRCount
 				+"\">";
-		strTRContent += HTMLDB.__generateTDHTML(elDIV, "_writer", p2, ("n" + lTRCount));
+		strTRContent += HTMLDB.__generateTDHTML(elDIV, "_writer", object, ("n" + lTRCount));
     	strTRContent += "</tr>";
 
     	tbodyHTMLDB.innerHTML += strTRContent;
 	},
-	"update":function(p1, p2, p3, p4) {
+	"update": function (p1, p2, p3, p4) {
 		var elDIV = document.getElementById(p1);
 		if (!elDIV) {
 			return;
@@ -389,7 +397,7 @@ var HTMLDB = {
 			return;
 		}
 
-		var tbodyHTMLDB = document.getElementById(p1 + "_reader_tbody");
+		var tbodyHTMLDB = document.getElementById(p1 + "_writer_tbody");
 		strTRContent = HTMLDB.__generateTDHTML(elDIV, "_writer", p3, p2);
 
 		elTR.innerHTML = strTRContent;
@@ -397,7 +405,7 @@ var HTMLDB = {
 			elTR.className = "updated" + ((p4!="") ? (" " + p4) : "");
 		}
 	},
-	"delete":function(p1, p2, p3) {
+	"delete": function (p1, p2, p3) {
 		var elDIV = document.getElementById(p1);
 		if (!elDIV) {
 			return;
@@ -412,7 +420,7 @@ var HTMLDB = {
 			trDeleted.className = "deleted" + ((p3!="") ? (" " + p3) : "");
 		}
 	},
-	"render":function(tableElement, functionDone) {
+	"render": function (tableElement, functionDone) {
 		HTMLDB.__renderTemplates(tableElement);
 		HTMLDB.__renderSections(tableElement);
 		HTMLDB.__renderForms(tableElement);
@@ -421,6 +429,199 @@ var HTMLDB = {
 			functionDone();
 		} else if (tableElement.doHTMLDBRender) {
 			tableElement.doHTMLDBRender(tableElement);
+		}
+	},
+	"isLoading": function () {
+        var tableElements = document.body.querySelectorAll(".htmldb-table");
+        var tableElementCount = tableElements.length;
+        var tableElement = null;
+        for (var i = 0; i < tableElementCount; i++) {
+        	tableElement = tableElements[i];
+        	if (1 == parseInt(HTMLDB.__getHTMLDBParameter(tableElement, "loading"))) {
+        		return true;
+        	}
+        }
+        return false;
+	},
+	"isIdle": function () {
+		if (HTMLDB.isLoading()) {
+			return false;
+		}
+        var tableElements = document.body.querySelectorAll(".htmldb-table");
+        var tableElementCount = tableElements.length;
+        var tableElement = null;
+        for (var i = 0; i < tableElementCount; i++) {
+        	tableElement = tableElements[i];
+        	if (document.getElementById(tableElement.id + "_writer_tbody").children.length > 0) {
+        		return false;
+        	}
+        }
+        return true;
+	},
+	"getColumnNames": function (p1, p2) {
+		var elTHead = document.getElementById(p1 + "_reader_thead");
+		var arrTH = elTHead.children[0].children;
+		var elTH = null;
+		var lTHCount = arrTH.length;
+		var arrReturn = new Array();
+
+		for (var j = 0; j < lTHCount; j++) {
+			elTH = arrTH[j];			
+			arrReturn.push(elTH.innerHTML);
+		}
+
+		if (true === p2) {
+			arrReturn.sort();
+		}
+
+		return arrReturn;
+	},
+	"getTableFieldActiveValue": function (tableElementId, column) {
+		var tableElement = document.getElementById(tableElementId);
+
+		if (!tableElement) {
+        	throw(new Error("HTMLDB table "
+        			+ tableElementId
+        			+ " is referenced, but not found."));
+			return false;
+		}
+		var activeId = parseInt(HTMLDB.__getHTMLDBParameter(tableElement, "active-id"));
+
+		if (isNaN(activeId) || (activeId < 1)) {
+        	throw(new Error("HTMLDB table "
+        			+ tableElementId
+        			+ " is not active, or has no records."));
+			return false;
+		}
+		columnElementId = (tableElementId + "_reader_td" + activeId + column);
+		if (!document.getElementById(columnElementId)) {
+        	throw(new Error("HTMLDB table "
+        			+ tableElementId
+        			+ " column "
+        			+ column
+        			+ " not found."));
+			return false;
+		}
+		return document.getElementById(tableElementId + "_reader_td" + activeId + column).innerHTML;
+	},
+	"setActiveId": function (tableElement, id) {
+		tableElement.setAttribute("data-htmldb-active-id", id);
+		HTMLDB.render(tableElement);
+	},
+	"__resetWriterLoop": function () {
+	    var __HTMLDBWriterTimer = document.body.__HTMLDBWriterTimer;
+	    clearTimeout(__HTMLDBWriterTimer);
+	    __HTMLDBWriterTimer = setTimeout(function () {
+	    	HTMLDB.__writeTables();
+			HTMLDB.__resetWriterLoop();
+	    }, 2000);
+	    document.body.__HTMLDBWriterTimer = __HTMLDBWriterTimer;
+	},
+	"__writeTables": function () {
+    	var elements = document.body.querySelectorAll(".htmldb-table");
+    	var elementCount = elements.length;
+    	var element = null;
+    	var loading = false;
+    	var rows = null;
+    	var writerTable = null;
+    	for (var i = 0; i < elementCount; i++) {
+    		element = elements[i];
+    		if (1 == parseInt(HTMLDB.__getHTMLDBParameter(element, "readonly"))) {
+    			continue;
+    		}
+    		if (!document.getElementById(element.id + "_writer_tbody")) {
+    			continue;
+    		}
+    		loading = parseInt(HTMLDB.__getHTMLDBParameter(element, "loading"));
+    		if (loading > 0) {
+    			continue;
+    		}
+    		writerTable = document.getElementById(element.id + "_writer_tbody");
+    		if (0 == writerTable.children.length) {
+    			continue;
+    		}
+    		rows = writerTable.querySelectorAll("tr.updating");
+    		if (rows.length > 0) {
+    			continue;
+    		}
+    		HTMLDB.__markRows(writerTable, "updating");
+    		HTMLDB.write(element.id, false, function (tableElementId, response) {
+    			HTMLDB.__deleteMarkedRows(writerTable, "updating");
+    			// If there is a record to be written, write them first...
+    			if (0 == writerTable.children.length) {
+    				HTMLDB.__doTableWrite(element);
+    			} else {
+    				HTMLDB.__writeTables();
+    			}
+    		});
+    	}
+	},
+	"__doTableWrite": function (tableElement) {
+		if (1 == parseInt(HTMLDB.__getHTMLDBParameter(tableElement, "writeonly"))) {
+			return true;
+		}
+		var redirectURL = HTMLDB.__getHTMLDBParameter(tableElement, "redirect");
+		if (redirectURL != "") {
+			window.location.href = redirectURL;
+		}
+		document.getElementById(element.id + "_reader_tbody").innerHTML = "";
+		HTMLDB.__updateReadQueue(tableElement);
+	},
+	"__updateReadQueue": function (tableElement) {
+		if (HTMLDB.__isInReadQueue(tableElement)) {
+			return;
+		}
+		var tableIds = [];
+		var tableId = "";
+		var tableIdCount = 0;
+		var priority = 0;
+
+		tableIds.push(tableElement.id);
+
+		var childTableIds = HTMLDB.__extractChildTables();
+		if (childTableIds[tableElement.id] !== undefined) {
+			tableIds = tableIds.concat(childTableIds[tableElement.id]);
+		}
+
+		tableIdCount = tableIds.length;
+
+		for (var i = 0; i < tableIdCount; i++) {
+			tableId = tableIds[i];
+			priority = parseInt(HTMLDB.__getHTMLDBParameter(tableElement, "priority"));
+			if (undefined === HTMLDB.__readQueue[priority]) {
+				HTMLDB.__readQueue[priority] = [];
+			}
+			HTMLDB.__readQueue[priority][HTMLDB.__readQueue[priority].length] = tableId;
+		}
+		
+		HTMLDB.__processReadQueue();
+	},
+	"__isInReadQueue": function (tableElement) {
+		for (var tables in HTMLDB.__readQueue){
+		    if (tables.indexOf(tableElement.id) != -1) {
+		    	return true;
+		    }
+		}
+		return false;
+	},
+	"__markRows": function (parent, className) {
+		var rows = parent.children;
+		var rowCount = rows.length;
+		var row = null;
+		for (var i = 0; i < rowCount; i++) {
+			row = rows[i];
+			if (-1 == row.className.indexOf(className)) {
+				if (row.className != "") {
+					row.className += " ";
+				}
+				row.className += className;
+			}
+		}
+	},
+	"__deleteMarkedRows": function (parent, className) {
+		var elements = parent.getElementsByClassName(className);
+		while (elements.length > 0) {
+			parent.removeChild(elements[0]);
 		}
 	},
 	"__renderTemplates": function (tableElement) {
@@ -468,57 +669,7 @@ var HTMLDB = {
         }
         HTMLDB.__initializeHTMLDBEditButtons(tableElement);
 	},
-	"getColumnNames":function(p1, p2) {
-		var elTHead = document.getElementById(p1 + "_reader_thead");
-		var arrTH = elTHead.children[0].children;
-		var elTH = null;
-		var lTHCount = arrTH.length;
-		var arrReturn = new Array();
-
-		for (var j = 0; j < lTHCount; j++) {
-			elTH = arrTH[j];			
-			arrReturn.push(elTH.innerHTML);
-		}
-
-		if (true === p2) {
-			arrReturn.sort();
-		}
-
-		return arrReturn;
-	},
-	"getTableFieldActiveValue":function(tableElementId, column) {
-		var tableElement = document.getElementById(tableElementId);
-
-		if (!tableElement) {
-        	throw(new Error("HTMLDB table "
-        			+ tableElementId
-        			+ " is referenced, but not found."));
-			return false;
-		}
-		var activeId = parseInt(HTMLDB.__getHTMLDBParameter(tableElement, "active-id"));
-
-		if (isNaN(activeId) || (activeId < 1)) {
-        	throw(new Error("HTMLDB table "
-        			+ tableElementId
-        			+ " is not active, or has no records."));
-			return false;
-		}
-		columnElementId = (tableElementId + "_reader_td" + activeId + column);
-		if (!document.getElementById(columnElementId)) {
-        	throw(new Error("HTMLDB table "
-        			+ tableElementId
-        			+ " column "
-        			+ column
-        			+ " not found."));
-			return false;
-		}
-		return document.getElementById(tableElementId + "_reader_td" + activeId + column).innerHTML;
-	},
-	"setActiveId":function(tableElement, id) {
-		tableElement.setAttribute("data-htmldb-active-id", id);
-		HTMLDB.render(tableElement);
-	},
-	"__initializeHTMLDBTables": function() {
+	"__initializeHTMLDBTables": function () {
         var tableElements = document.body.querySelectorAll(".htmldb-table");
         var tableElementCount = tableElements.length;
         var tableElement = null;
@@ -555,7 +706,7 @@ var HTMLDB = {
         	tableElement.setAttribute("data-htmldb-priority", priority);
         }
 	},
-	"__initializeHTMLDBTemplates": function() {
+	"__initializeHTMLDBTemplates": function () {
         var templateElements = document.body.querySelectorAll(".htmldb-template");
         var templateElementCount = templateElements.length;
         var templateElement = null;
@@ -576,7 +727,7 @@ var HTMLDB = {
 			templateElement.renderFunction = new Function("tableElement", "rows", functionBody);
         }
 	},
-	"__initializeHTMLDBButtons": function() {
+	"__initializeHTMLDBButtons": function () {
 		HTMLDB.__initializeHTMLDBRefreshButtons();
 		HTMLDB.__initializeHTMLDBAddButtons();
 		HTMLDB.__initializeHTMLDBSaveButtons();
@@ -619,14 +770,14 @@ var HTMLDB = {
 			}
 		}
 	},
-	"__initializeHTMLDBSections": function() {
+	"__initializeHTMLDBSections": function () {
         var sections = document.body.querySelectorAll(".htmldb-section");
         var sectionCount = sections.length;
         for (var i = 0; i < sectionCount; i++) {
             HTMLDB.__storeSectionElementTemplates(sections[i]);
         }
 	},
-    "__storeSectionElementTemplates": function(element) {
+    "__storeSectionElementTemplates": function (element) {
         if (!element) {
             return false;
         }
@@ -674,10 +825,9 @@ var HTMLDB = {
             element.HTMLDBInitials = undefined;
         }
     },
-	"__initializeHTMLDBForms": function() {
-
+	"__initializeHTMLDBForms": function () {
 	},
-    "__renderSectionElement": function(element) {
+    "__renderSectionElement": function (element) {
         if (!element) {
             return false;
         }
@@ -718,7 +868,7 @@ var HTMLDB = {
             }
         }
     },
-    "__renderFormElement": function(form) {
+    "__renderFormElement": function (form) {
     	var inputs = form.querySelectorAll(".htmldb-field");
     	var inputCount = inputs.length;
     	var input = null;
@@ -773,7 +923,7 @@ var HTMLDB = {
 	        }
 	    }
 	},
-	"__initializeHTMLDBEditButtons": function(tableElement) {
+	"__initializeHTMLDBEditButtons": function (tableElement) {
         var buttons = document.body.querySelectorAll(".htmldb-button-edit");
         var buttonCount = buttons.length;
         var button = null;
@@ -789,14 +939,14 @@ var HTMLDB = {
             }
 	    }
 	},
-	"__initializeReadQueue": function() {
+	"__initializeReadQueue": function () {
         var tableElements = document.body.querySelectorAll(".htmldb-table");
         var tableElementCount = tableElements.length;
         var tableElement = null;
        	var priorities = [];
        	var priority = 0;
 
-        HTMLDB.__readQueue = [];
+        HTMLDB.__readQueue = null;
 
         for (var i = 0; i < tableElementCount; i++) {
         	tableElement = tableElements[i];
@@ -815,6 +965,7 @@ var HTMLDB = {
         }
 
         HTMLDB.__readQueue = priorities;
+
         HTMLDB.__processReadQueue();
 	},
 	"__readChildTable": function (tableElementId, functionDone) {
@@ -907,7 +1058,7 @@ var HTMLDB = {
 		tableElement.setAttribute("data-htmldb-active-id", activeId);
 		HTMLDB.render(tableElement);
 	},
-	"__convertRowToObject": function(tableElementId, row) {
+	"__convertRowToObject": function (tableElementId, row) {
 		var object = {};
 		var columns = row.children;
 		var columnCount = columns.length;
@@ -942,7 +1093,7 @@ var HTMLDB = {
 		}
 		return maxPriority;
 	},
-	"__processReadQueue": function() {
+	"__processReadQueue": function () {
 		if (undefined === HTMLDB.__readQueue) {
 			return;
 		}
@@ -951,6 +1102,9 @@ var HTMLDB = {
 			return;
 		}
 
+		if (!HTMLDB.isIdle()) {
+			return;
+		}
 		HTMLDB.__readingQueue = HTMLDB.__readQueue.shift();
 		readingQueueCount = HTMLDB.__readingQueue.length;
 		tableElementId = "";
@@ -1015,6 +1169,23 @@ var HTMLDB = {
         return parents;
 	},
 	"__extractChildTables": function () {
+		var parentTables = HTMLDB.__extractParentTables();
+		var childTables = [];
+		var parentTableCount = 0;
+		var i = 0;
+		var parent = "";
+		var child = "";
+		for (parent in parentTables) {
+			parentTableCount = parentTables[parent].length;
+			for (i = 0; i < parentTableCount; i++) {
+				if (undefined === childTables[parentTables[parent][i]]) {
+					childTables[parentTables[parent][i]] = [];
+				}
+				childTables[parentTables[parent][i]].push(parent);
+			}
+		}
+
+		return childTables;
 	},
 	"__extractHTMLDBExpressionTables": function (expression) {
 		var tokens = String(expression).split("{{");
@@ -1150,24 +1321,24 @@ var HTMLDB = {
 
 		element.innerHTML = tableHTML + iframeHTML + formHTML;
 	},
-	"__isLetter":function(text) {
+	"__isLetter": function (text) {
 		if (undefined == text) {
 			return false;
 		} else {
   			return ((text.length === 1) && text.match(/[a-z_]/i));
   		}
 	},
-	"__isNumeric":function(text) {
+	"__isNumeric": function (text) {
   		if (undefined == text) {
   			return false;
   		} else {
   			return ((text.length === 1) && text.match(/[0-9]/));
   		}
 	},
-	"__as":function(text) {
+	"__as": function (text) {
 		return (text + '').replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
 	},
-	"__generateTemplateRenderFunctionString": function(templateElement, tableElementId, targetElementId) {
+	"__generateTemplateRenderFunctionString": function (templateElement, tableElementId, targetElementId) {
 		var tableElement = document.getElementById(tableElementId);
 		var templateContent = templateElement.innerHTML;
 		var tokens = String(templateContent).split("{{");
@@ -1275,7 +1446,7 @@ var HTMLDB = {
 
 		return (functionHeader + functionBody);
 	},
-	"__generateChildTableFilterFunctionString": function(tableElement) {
+	"__generateChildTableFilterFunctionString": function (tableElement) {
 		var filter = HTMLDB.__getHTMLDBParameter(tableElement, "filter");
 		var tokens = String(filter).split("/");
 		var tokenCount = tokens.length;
@@ -1373,7 +1544,7 @@ var HTMLDB = {
 		functionBody += "return success;"
 		return functionBody;
 	},
-	"__ss":function(p1) {
+	"__ss": function (p1) {
 		return (p1 + '').replace(/\\(.?)/g, function(s, n1) {
 	        switch (n1) {
 	            case '\\':
@@ -1387,7 +1558,7 @@ var HTMLDB = {
 			}
     	});
 	},
-	"__ejs":function(p1) {
+	"__ejs": function (p1) {
 		return p1.replace(/\n/g, "\\n")
 				.replace(/\"/g, '&quot;')
 				.replace(/\r/g, "\\r")
@@ -1396,7 +1567,7 @@ var HTMLDB = {
 				.replace(/\f/g, "\\f")
 				.replace(/\\/g, "\\");
 	},
-	"__createNewIframeAndForm":function(htmldbId, guid) {
+	"__createNewIframeAndForm": function (htmldbId, guid) {
 		var iframeContainer = document.getElementById(htmldbId + "_iframe_container");
 		var formContainer = document.getElementById(htmldbId + "_form_container");
 		var iframe = null;
@@ -1420,7 +1591,7 @@ var HTMLDB = {
 		form.setAttribute("data-htmldb-id", htmldbId);
 		formContainer.appendChild(form);
 	},
-	"__removeIframeAndForm":function(htmldbId, guid) {
+	"__removeIframeAndForm": function (htmldbId, guid) {
 		var elDIV = document.getElementById(htmldbId);
 		var iframeContainer = document.getElementById(htmldbId + "_iframe_container");
 		var formContainer = document.getElementById(htmldbId + "_form_container");
@@ -1444,7 +1615,7 @@ var HTMLDB = {
 			}
 		}, 10000);
 	},
-	"__generateTDHTML":function(tableElement, prefix, object, id) {
+	"__generateTDHTML": function (tableElement, prefix, object, id) {
 		var strReturn = "";
 		for (var strPropertyName in object) {
         	if (object.hasOwnProperty(strPropertyName)) {
@@ -1461,7 +1632,7 @@ var HTMLDB = {
     	}
     	return strReturn;
 	},
-	"__generateFormHTML":function(tableElement, iframeFormGUID, row) {
+	"__generateFormHTML": function (tableElement, iframeFormGUID, row) {
 		var form = document.getElementById(tableElement.id + "_form_" + iframeFormGUID);
 		var index = 0;
 		var inputAction = "";
@@ -1510,7 +1681,7 @@ var HTMLDB = {
 
 		form.innerHTML += formContent;
 	},
-    "__generateGUID": function(prefix) {
+    "__generateGUID": function (prefix) {
         var now = new Date();
         var token0 = String(now.getUTCFullYear())
                 + String((now.getUTCMonth() + 1))
@@ -1531,7 +1702,7 @@ var HTMLDB = {
 
         return prefix + token0 + token1 + token2;
     },
-    "__evaluateHTMLDBExpression": function(expression, tableElementId) {
+    "__evaluateHTMLDBExpression": function (expression, tableElementId) {
 		var tokens = String(expression).split("{{");
 		var subTokens = null;
 		var content = "";
@@ -1592,7 +1763,7 @@ var HTMLDB = {
 
 		return returnValue;
     },
-    "__exploreHTMLDBTable": function(element) {
+    "__exploreHTMLDBTable": function (element) {
     	var exit = false;
     	var parent = HTMLDB.__getHTMLDBParameter(element, "table");
     	while (!exit && ("" == parent)) {
@@ -1612,7 +1783,7 @@ var HTMLDB = {
 
     	return parentElement;
     },
-    "__exploreHTMLDBForm": function(element) {
+    "__exploreHTMLDBForm": function (element) {
     	var exit = false;
     	if (element.className.indexOf("htmldb-form") != -1) {
     		return element;
@@ -1631,14 +1802,14 @@ var HTMLDB = {
     		return element;
     	}
     },
-	"__doReaderIframeLoad":function(p1) {
+	"__doReaderIframeLoad":function (p1) {
 		HTMLDB.__doirlc(p1, false);
 		HTMLDB.render(p1.target.parentNode.parentNode);
 	},
-	"__doRefreshButtonClick":function() {
+	"__doRefreshButtonClick": function () {
 		HTMLDB.__initializeReadQueue();
 	},
-	"__doAddButtonClick": function(event) {
+	"__doAddButtonClick": function (event) {
 		var formElement = document.getElementById(HTMLDB.__getHTMLDBParameter(event.target, "form"));
 		if (!formElement) {
         	throw(new Error("Add button HTMLDB form not found."));
@@ -1646,7 +1817,7 @@ var HTMLDB = {
 		}
 		HTMLDB.__resetForm(formElement);
 	},
-	"__doSaveButtonClick":function(event) {
+	"__doSaveButtonClick": function (event) {
 		var formId = HTMLDB.__getHTMLDBParameter(event.target, "form");
 		var form = null;
 
@@ -1679,15 +1850,109 @@ var HTMLDB = {
 		}
 
 		HTMLDB.validate(tableElementId, object, function (DIVId, response) {
-			var responseObject = JSON.parse(String(response).trim());
+			var responseObject = null;
+			try {
+				responseObject = JSON.parse(response);
+			} catch(e) {
+	        	throw(new Error("HTMLDB table "
+	        			+ DIVId
+	        			+ " could not be validated: Not valid JSON format"));
+				return false;
+			}
 			if (responseObject.errorCount > 0) {
 				HTMLDB.__showError(tableElementId, responseObject.lastError);
 			} else {
-				HTMLDB.insert(tableElementId + "_writer", object);
+				HTMLDB.__showMessage(tableElementId, responseObject.lastMessage);
+				HTMLDB.insert(tableElementId, object);
 			}
 		});
 	},
-	"__showError":function(tableElementId, errorText) {
+	"__showLoader": function (tableElementId, type) {
+		var tableElement = document.getElementById(tableElementId);
+		var loader = HTMLDB.__getHTMLDBParameter(tableElement, (type + "-loader"));
+		if ("" == loader) {
+			loader = HTMLDB.__getHTMLDBParameter(tableElement, "loader");
+		}
+		if ("" == loader) {
+			return;
+		}
+		var loaderElement = document.getElementById(loader);
+		if (loaderElement.depth === undefined) {
+			loaderElement.depth = 0;
+		}
+		loaderElement.depth += 1;
+		var className = "";
+		if (1 == loaderElement.depth) {
+			className = loaderElement.className;
+			className = (" " + className + " ");
+			if (-1 == className.indexOf(" active ")) {
+				loaderElement.className += " active";
+			}
+		}
+	},
+	"__hideLoader": function (tableElementId, type) {
+		var tableElement = document.getElementById(tableElementId);
+		var loader = HTMLDB.__getHTMLDBParameter(tableElement, (type + "-loader"));
+		if ("" == loader) {
+			loader = HTMLDB.__getHTMLDBParameter(tableElement, "loader");
+		}
+		if ("" == loader) {
+			return;
+		}
+		var loaderElement = document.getElementById(loader);
+		if (loaderElement.depth === undefined) {
+			loaderElement.depth = 0;
+		} else {
+			loaderElement.depth -= 1;
+		}
+		if (loaderElement.depth < 0) {
+			loaderElement.depth = 0;
+			return;
+		}
+
+		if (0 == loaderElement.depth) {
+    		loaderElement.className = String(loaderElement.className.replace(/\bactive\b/g, "")).trim();
+		}
+	},
+	"__hideLoaders": function () {
+        var tableElements = document.body.querySelectorAll(".htmldb-table");
+        var tableElementCount = tableElements.length;
+        var tableElement = null;
+        var loader = "";
+        var loaderElement = null;
+        for (var i = 0; i < tableElementCount; i++) {
+        	tableElement = tableElements[i];
+        	loader = HTMLDB.__getHTMLDBParameter(tableElement, ("read-loader"));
+        	if (loader != "") {
+        		loaderElement = document.getElementById(loader);
+        		loaderElement.depth = 0;
+        		HTMLDB.__hideLoader(tableElement.id, "read");
+        	}
+			loader = HTMLDB.__getHTMLDBParameter(tableElement, ("write-loader"));
+        	if (loader != "") {
+        		loaderElement = document.getElementById(loader);
+        		loaderElement.depth = 0;
+        		HTMLDB.__hideLoader(tableElement.id, "write");
+        	}
+			loader = HTMLDB.__getHTMLDBParameter(tableElement, ("validate-loader"));
+        	if (loader != "") {
+        		loaderElement = document.getElementById(loader);
+        		loaderElement.depth = 0;
+        		HTMLDB.__hideLoader(tableElement.id, "validate");
+        	}
+			loader = HTMLDB.__getHTMLDBParameter(tableElement, ("loader"));
+        	if (loader != "") {
+        		loaderElement = document.getElementById(loader);
+        		loaderElement.depth = 0;
+        		HTMLDB.__hideLoader(tableElement.id, "");
+        	}
+		}
+	},
+	"__showError": function (tableElementId, errorText) {
+		if ("" == errorText) {
+			return;
+		}
+		var tableElement = document.getElementById(tableElementId);
 		var containers = document.body.querySelectorAll(".htmldb-error");
 		var containerCount = containers.length;
 		var container = null;
@@ -1695,24 +1960,48 @@ var HTMLDB = {
 			container = containers[i];
 			if (HTMLDB.__getHTMLDBParameter(container, "table") == tableElementId) {
 				container.innerHTML = errorText;
+				container.dispatchEvent(new CustomEvent("error", {
+					detail: {"tableElementId":tableElementId,"errorText":errorText}
+				}));
 			}
 		}
+		tableElement.dispatchEvent(new CustomEvent("error",
+				{detail:{"errorText":errorText}}));
 	},
-	"__doEditButtonClick":function(event) {
+	"__showMessage": function (tableElementId, messageText) {
+		if ("" == messageText) {
+			return;
+		}
+		var tableElement = document.getElementById(tableElementId);
+		var containers = document.body.querySelectorAll(".htmldb-message");
+		var containerCount = containers.length;
+		var container = null;
+		for (var i = 0; i < containerCount; i++) {
+			container = containers[i];
+			if (HTMLDB.__getHTMLDBParameter(container, "table") == tableElementId) {
+				container.innerHTML = messageText;
+				container.dispatchEvent(new CustomEvent("message", {
+					detail: {"tableElementId":tableElementId,"messageText":messageText}
+				}));
+			}
+		}
+		tableElement.dispatchEvent(new CustomEvent("message",
+				{detail:{"messageText":messageText}}));
+	},
+	"__doEditButtonClick": function (event) {
 		var tableElement = document.getElementById(HTMLDB.__getHTMLDBParameter(event.target, "table"));
-
 		if (!tableElement) {
         	throw(new Error("Edit button HTMLDB table not found."));
 			return false;
 		}
-
 		HTMLDB.setActiveId(
 				tableElement,
 				HTMLDB.__getHTMLDBParameter(event.target, "edit-id"));
 	},
-	"__doWriterIframeLoad":function(p1) {
+	"__doWriterIframeLoad": function (p1) {
 		elDIV = p1.target.parentNode.parentNode;
 		elDIV.setAttribute("data-htmldb-loading", 0);
+		HTMLDB.__hideLoader(elDIV.id, "write");
 		iframeWindow = top.frames[p1.target.id];
 		var strResponse = "";
 		if (iframeWindow.document) {
@@ -1727,9 +2016,10 @@ var HTMLDB = {
 			elDIV.doHTMLDBWrite(elDIV, strResponse);
 		}
 	},
-	"__doValidatorIframeLoad":function(p1) {
+	"__doValidatorIframeLoad": function (p1) {
 		elDIV = p1.target.parentNode.parentNode;
 		elDIV.setAttribute("data-htmldb-loading", 0);
+		HTMLDB.__hideLoader(elDIV.id, "validate");
 		iframeWindow = top.frames[p1.target.id];
 		var strResponse = "";
 		if (iframeWindow.document) {
@@ -1744,7 +2034,7 @@ var HTMLDB = {
 			elDIV.doHTMLDBValidate(p1, strResponse);
 		}
 	},
-	"__getInputValue":function(input) {
+	"__getInputValue": function (input) {
 		var inputs = null;
 		var inputCount = 0;
 		var tagName = "";
@@ -1778,7 +2068,7 @@ var HTMLDB = {
 
 		return "";
 	},
-	"__setInputValue": function(input, value) {
+	"__setInputValue": function (input, value) {
 		var tagName = String(input.tagName).toLowerCase();
 		var inputType = String(input.getAttribute("type")).toLowerCase();
 
@@ -1802,7 +2092,7 @@ var HTMLDB = {
 			break;
 		}
 	},
-	"__doirlc":function(p1, p2) {
+	"__doirlc": function (p1, p2) {
 		var iframeHTMLDB = p1.target;
 		var elDIV = iframeHTMLDB.parentNode.parentNode;
 		var strHTMLDBDIVID = iframeHTMLDB.parentNode.parentNode.id;
@@ -1888,6 +2178,7 @@ var HTMLDB = {
 		}
 
 		elDIV.setAttribute("data-htmldb-loading", 0);
+		HTMLDB.__hideLoader(tableElementId, "read");
 
 		setTimeout(function () {
 			HTMLDB.__removeFromReadingQueue(elDIV.id);
@@ -1896,3 +2187,16 @@ var HTMLDB = {
 	}
 }
 HTMLDB.initialize();
+(function () {
+	if (typeof window.CustomEvent === "function") {
+		return false;
+	}
+	function CustomEvent(event, params) {
+		params = (params || { bubbles: false, cancelable: false, detail:  undefined });
+		var evt = document.createEvent("CustomEvent");
+		evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+		return evt;
+	}
+	CustomEvent.prototype = window.Event.prototype;
+	window.CustomEvent = CustomEvent;
+})();

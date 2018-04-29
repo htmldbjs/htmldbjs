@@ -21,17 +21,19 @@ class loginController {
     public $lastMessage = '';
 	
 	public function __construct() {
-
 		loadLanguageFile($this->controller);
 		$this->reset();
-
 	}
 	
 	private function reset() {
+		includeLibrary('recallUser');
+		$this->user = recallUser();
 
-		includeLibrary('clearUserSession');
-		clearUserSession();
-
+		if (NULL != $this->user) {
+			includeLibrary('redirectToPage');
+			redirectToPage('home');
+			return false;
+		} // if ((NULL == $this->user)
 	}
 	
 	public function index($parameters = NULL, $strMethod = '') {
@@ -43,8 +45,21 @@ class loginController {
 		includeView($this, 'login');
 
 	}
-	
-	public function formlogin($parameters = NULL) {
+
+	public function read($parameters = NULL) {
+
+		$this->list = array();
+
+		$this->columns = array();
+		$this->columns[] = 'id';
+		$this->columns[] = 'email_address';
+		$this->columns[] = 'password';
+
+		includeView($this, 'htmldblist');
+
+	}
+
+	public function validate($parameters = NULL, $silent = false) {
 
 		global $_SPRIT;
 		$this->parameters = $parameters;
@@ -53,12 +68,12 @@ class loginController {
 		$this->lastError = '';
 		$this->lastMessage = '';
 
-		$loginEmail = isset($_REQUEST['loginEmail'])
-					? htmlspecialchars($_REQUEST['loginEmail'])
+		$loginEmail = isset($_REQUEST['htmldb_row0_email_address'])
+					? htmlspecialchars($_REQUEST['htmldb_row0_email_address'])
 					: '';
 
-		$loginPassword = isset($_REQUEST['loginPassword'])
-					? htmlspecialchars($_REQUEST['loginPassword'])
+		$loginPassword = isset($_REQUEST['htmldb_row0_password'])
+					? htmlspecialchars($_REQUEST['htmldb_row0_password'])
 					: '';
 
 		$landingPage = 'home';
@@ -66,8 +81,9 @@ class loginController {
 		includeModel('User');
 
 		$objUserList = new User();
+		$objUserList->beginBulkOperation();
 		$objUserList->addFilter('deleted', '==', false);
-		$objUserList->addFilter('emailAddress', '==', $loginEmail);
+		$objUserList->addFilter('email', '==', $loginEmail);
 		$objUserList->addFilter('enabled', '==', '1');
 		$objUserList->bufferSize = 1;
 		$objUserList->page = 0;
@@ -92,6 +108,8 @@ class loginController {
             } // if ($user->verifyPassword($loginPassword)) {
 
         } // if ($objUserList->listCount > 0) {
+		
+		$objUserList->endBulkOperation();
 
         sleep(2);
         $this->lastMessage = '';
@@ -102,56 +120,9 @@ class loginController {
 
 	}
 
-	public function formforgotpassword($parameters = NULL) {
-
-		$this->parameters = $parameters;
-				
-		$strEmail = isset($_REQUEST['strForgotPasswordEmail'])
-				? htmlspecialchars($_REQUEST['strForgotPasswordEmail'])
-				: '';
-		
-		$this->errorCount = 0;
-		$this->lastError = '';
-		$this->lastMessage = '';
-
-		if ('' == $strEmail) {
-	        sleep(2);
-	        $this->lastMessage = '';
-	        $this->errorCount = 1;
-	        $this->lastError = __('Please specify your email address.');
-	        includeView($this, 'error.json');
-	        return false;
-		} // if ('' == $strEmail) {
-
-		includeModel('User');
-
-		$objUserList = new User();
-		$objUserList->addFilter('emailAddress', '==', $strEmail);
-		$objUserList->addFilter('deleted', '==', false);
-		$objUserList->addFilter('active', '==', '1');
-		$objUserList->bufferSize = 1;
-		$objUserList->find();
-			   
-		if (0 == $objUserList->listCount) {
-	        sleep(2);
-	        $this->lastMessage = '';
-	        $this->errorCount = 1;
-	        $this->lastError = __('Your email address is not recognized. Please check your email address and try again.');
-	        includeView($this, 'error.json');
-	        return false;
-		} // if (0 == $objUserList->listCount) {
-
-		$objUser = $objUserList->list[0];
-
-		includeLibrary('resetUserPassword');
-		resetUserPassword($objUser);
-
-		$this->errorCount = 0;
-		$this->lastError = '';
-		$this->lastMessage = __('Your new password was sent to your email.');
-	    includeView($this, 'success.json');
-		return true;
+	public function write($parameters = NULL) {
 
 	}
+
 }
 ?>

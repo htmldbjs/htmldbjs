@@ -3,7 +3,7 @@
 		<div class="divDialogContentContainer">
 			<header class="headerHero z-depth-1 blue darken-4">
 				<div class="divHeaderInfo">
-					<h3 class="blue-text text-darken-4"><?php echo __('Alt Adım Bilgileri'); ?></h3>
+					<h3 class="blue-text text-darken-4"><?php echo __('Alt Aksiyon Bilgileri'); ?></h3>
 				</div>
 				<button class="buttonCloseDialog right btn-icon-only waves-effect waves-light btn-flat"
 				data-container-dialog="divProfileDialog"><i class="ion-android-close blue-text text-darken-4"></i></button>
@@ -21,6 +21,12 @@
 										<input id="addApplicationSubTaskTitle" name="addApplicationSubTaskTitle" type="text" value="" data-htmldb-source="divApplicationSubTaskHTMLDBReader" data-htmldb-field="title" class="HTMLDBFieldValue">
 									</div>
 								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+                                    <label for="addApplicationTaskDescription"><?php echo __('Açıklama'); ?>  </label>
+									<textarea id="addApplicationTaskDescription" name="addApplicationStepDescription" class="HTMLDBFieldValue materialize-textarea blue-text text-darken-4" data-htmldb-source="divApplicationSubTaskHTMLDBReader" data-htmldb-field="description" placeholder="" style="min-height: 100px;"></textarea>
+                                </div>
 							</div>
 							<div class="row">
 								<div class="col s12">

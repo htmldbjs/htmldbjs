@@ -179,6 +179,22 @@ function initializeHTMLDB() {
         onRenderAll:null
     });
 
+
+    HTMLDB.initialize({
+        elementID:"divcreated_byPropertyOptionsHTMLDB",
+        readURL:(URLPrefix + "auditclass/readpropertyoptions/created_by"),
+        readAllURL:(URLPrefix + "auditclass/readpropertyoptions/created_by"),
+        writeURL:"",
+        writeDelay:1000,
+        autoRefresh:0,
+        renderElements:[],
+        onReadAll:doPropertyOptionsHTMLDBRead,
+        onRead:doPropertyOptionsHTMLDBRead,
+        onWrite:null,
+        onRender:null,
+        onRenderAll:null
+    });
+
 }
 function doHTMLDBSessionReadAll() {
     var sessionObject = HTMLDB.get("divSessionHTMLDB", 1);
@@ -862,6 +878,7 @@ function loadObject(id) {
 	document.getElementById("unit_id").selectize.setValue(0);
 	document.getElementById("audit_type_id").selectize.setValue(0);
 	document.getElementById("audit_state_id").selectize.setValue(0);
+	document.getElementById("created_by").selectize.setValue(0);
 
     // Initialize Variable Values
     var arrClassProperties = HTMLDB.getColumnNames("divAuditHTMLDB");
@@ -886,6 +903,11 @@ function loadObject(id) {
 			document.getElementById("audit_state_id").selectize.addOption(
 					{value: objObject["audit_state_id"],
 					text: objObject["audit_state_idDisplayText"]});
+		}
+		if (parseInt(objObject["created_by"]) > 0) {
+			document.getElementById("created_by").selectize.addOption(
+					{value: objObject["created_by"],
+					text: objObject["created_byDisplayText"]});
 		}
         for (var i = 0; i < lClassPropertyCount; i++) {
             setInputValue(arrClassProperties[i], objObject[arrClassProperties[i]]);

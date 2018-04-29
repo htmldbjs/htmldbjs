@@ -33,10 +33,11 @@
                         <th><button type="button" class="buttonTableColumn buttonTableColumn0" data-column-index="0">ID&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
                         
 <th><button type="button" class="buttonTableColumn"><?php echo __('Enabled'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
+<th><button type="button" class="buttonTableColumn"><?php echo __('Company'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
 <th><button type="button" class="buttonTableColumn"><?php echo __('Unit'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
-<th><button type="button" class="buttonTableColumn"><?php echo __('First Name'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
-<th><button type="button" class="buttonTableColumn"><?php echo __('Last Name'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
+<th><button type="button" class="buttonTableColumn"><?php echo __('Name'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
 <th><button type="button" class="buttonTableColumn"><?php echo __('E-mail'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
+<th><button type="button" class="buttonTableColumn"><?php echo __('Type'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -67,10 +68,11 @@
                                     <th><button type="button" class="buttonTableColumn buttonTableColumn0" data-column-index="0">ID&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
                                     
 <th><button type="button" class="buttonTableColumn"><?php echo __('Enabled'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
+<th><button type="button" class="buttonTableColumn"><?php echo __('Company'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
 <th><button type="button" class="buttonTableColumn"><?php echo __('Unit'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
-<th><button type="button" class="buttonTableColumn"><?php echo __('First Name'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
-<th><button type="button" class="buttonTableColumn"><?php echo __('Last Name'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
+<th><button type="button" class="buttonTableColumn"><?php echo __('Name'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
 <th><button type="button" class="buttonTableColumn"><?php echo __('E-mail'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
+<th><button type="button" class="buttonTableColumn"><?php echo __('Type'); ?>&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i class="ion-arrow-down-b"></i></span><span class="sorting sorting-asc blue-text text-darken-4"><i class="ion-arrow-up-b"></i></span></button></th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -105,22 +107,22 @@
                                         </label>
                                     </div>
                                 </div>
+								<div class="col l12 m12 s12 " id="divcompany_id">
+									<label for="company_id"><?php echo __('Company'); ?>  </label>
+									<select class="selectClassSelection" id="company_id" style="width: 100%" name="company_id" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
 								<div class="col l12 m12 s12 " id="divunit_id">
 									<label for="unit_id"><?php echo __('Unit'); ?>  </label>
 									<select class="selectClassSelection" id="unit_id" style="width: 100%" name="unit_id" data-min-selection="2" data-max-selection="2">
 										<option value=""><?php echo __('Please Select'); ?></option>
 									</select>
 								</div>
-	<div class="col l12 m12 s12 " id="divfirstname">
-                                    <label for="firstname"><?php echo __('First Name'); ?> </label>
+	<div class="col l12 m12 s12 " id="divname">
+                                    <label for="name"><?php echo __('Name'); ?> </label>
                                     <div class="input-field">
-                                        <input id="firstname" name="firstname" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divlastname">
-                                    <label for="lastname"><?php echo __('Last Name'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="lastname" name="lastname" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
+                                        <input id="name" name="name" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
                                     </div>
                                 </div>
 	<div class="col l12 m12 s12 " id="divemail">
@@ -128,6 +130,27 @@
                                     <div class="input-field">
                                         <input id="email" name="email" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
                                     </div>
+                                </div>
+	<div class="col l12 m12 s12 " id="divtype">
+                                    <label for="type"><?php echo __('Type'); ?> </label>
+                                    <select class="selectSelectizeStandard" id="type" style="width: 100%" name="type"  data-min-selection="2" data-max-selection="2">
+                                    	<option value=""><?php echo __('Please Select'); ?></option>
+                                    	<option value="1"><?php echo __('Sponsor'); ?></option>
+<option value="2"><?php echo __('Coordinator'); ?></option>
+<option value="3"><?php echo __('HSE Responsible'); ?></option>
+<option value="4"><?php echo __('HR Responsible'); ?></option>
+<option value="5"><?php echo __('Planning Responsible'); ?></option>
+<option value="6"><?php echo __('Maintenance Responsible'); ?></option>
+<option value="7"><?php echo __('Quality Responsible'); ?></option>
+<option value="8"><?php echo __('Propagation Champion'); ?></option>
+<option value="9"><?php echo __('Process Owner'); ?></option>
+<option value="10"><?php echo __('Champion'); ?></option>
+<option value="11"><?php echo __('Advisor'); ?></option>
+<option value="12"><?php echo __('Leader 1'); ?></option>
+<option value="13"><?php echo __('Leader 2'); ?></option>
+<option value="14"><?php echo __('Leader 3'); ?></option>
+<option value="15"><?php echo __('Crew'); ?></option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
@@ -192,6 +215,7 @@
         <div class="divHiddenElements">
             <div id="divCrewHTMLDB" class="divHTMLDB"></div>
             <div id="divCrewTableHTMLDB" class="divHTMLDB"></div>
+            <div id="divcompany_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
             <div id="divunit_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
             <div id="divSessionHTMLDB" class="divHTMLDB"></div>
             <table>
@@ -212,6 +236,7 @@
 <td>#divCrewTableHTMLDB.column2</td>
 <td>#divCrewTableHTMLDB.column3</td>
 <td>#divCrewTableHTMLDB.column4</td>
+<td>#divCrewTableHTMLDB.column5</td>
                         <td>
                             <button data-object-id="#divCrewTableHTMLDB.id" class="buttonTableListAction buttonDeleteObject right" type="button">
                                 <i class="ion-android-delete"></i>
@@ -241,6 +266,7 @@
 <td>#divCrewTableHTMLDB.column2</td>
 <td>#divCrewTableHTMLDB.column3</td>
 <td>#divCrewTableHTMLDB.column4</td>
+<td>#divCrewTableHTMLDB.column5</td>
                         <td>
                             <button data-object-id="#divCrewTableHTMLDB.id" class="buttonTableListAction buttonDeleteObject right" type="button">
                                 <i class="ion-android-delete"></i>

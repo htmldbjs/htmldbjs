@@ -56,6 +56,7 @@ class auditController {
 	public function index($parameters = NULL, $strMethod = '') {
 
 		$this->parameters = $parameters;
+
         includeView($this, 'audit');
 
 	}
@@ -102,10 +103,14 @@ class auditController {
 		includeModel('Audit');
 
 		$listObject = new Audit();
+		$listObject->beginBulkOperation();
 		$listObject->bufferSize = 1;
 		$listObject->page = 0;
 		$listObject->addFilter('deleted','==', false);
 		$listObject->addFilter('id','==', $id);
+		if (10 == $this->user->user_type) {
+			$listObject->addFilter('created_by','==', $this->user->id);
+		}
 		$listObject->find();
 
 		$objectCount = $listObject->listCount;
@@ -121,29 +126,49 @@ class auditController {
 
 		if (!$noData) {
 
+			includeLibrary('getAllCachedObjects');
+			$units = getAllCachedObjects('Unit');
+			$companies = getAllCachedObjects('Company');
+			$auditTypes = getAllCachedObjects('AuditType');
+			$auditStates = getAllCachedObjects('AuditState');
+
 			for ($i = 0; $i < $objectCount; $i++) {
 
 				$object = $listObject->list[$i];
 				$this->list[$index]['id'] = $object->id;
 				$this->list[$index]['audit_date'] = date('Y-m-d', $object->audit_date);
 				$this->list[$index]['audit_code'] = $object->audit_code;
+				$this->setMediaPath($object->audit_code);
 				$this->list[$index]['unit_id'] = $object->unit_id;
-				$this->list[$index]['unit_idDisplayText']
-						= $object->getForeignDisplayText('unit_id');
+
+				$this->list[$index]['unit_idDisplayText'] = '';
+				if (isset($units[$object->unit_id])) {
+					$this->list[$index]['unit_idDisplayText'] = $units[$object->unit_id]['name'];
+				} // if (isset($units[$object->unit_id])) {
 
 				$unit->id = $object->unit_id;
 				$unit->revert();
 
 				$this->list[$index]['company_id'] = $unit->company_id;
-				$this->list[$index]['company_idDisplayText']
-						= $unit->getForeignDisplayText('company_id');
+				$this->list[$index]['company_idDisplayText'] = '';
+				if (isset($companies[$unit->company_id])) {
+					$this->list[$index]['company_idDisplayText'] = $companies[$unit->company_id]['company_name'];
+				} // if (isset($companies[$object->company_id])) {
 
 				$this->list[$index]['audit_type_id'] = $object->audit_type_id;
-				$this->list[$index]['audit_type_idDisplayText']
-						= $object->getForeignDisplayText('audit_type_id');
+
+				$this->list[$index]['audit_type_idDisplayText'] = '';
+				if (isset($auditTypes[$object->audit_type_id])) {
+					$this->list[$index]['audit_type_idDisplayText'] = $auditTypes[$object->audit_type_id]['name'];
+				} // if (isset($auditTypes[$object->audit_type_id])) {
+
 				$this->list[$index]['audit_state_id'] = $object->audit_state_id;
-				$this->list[$index]['audit_state_idDisplayText']
-						= $object->getForeignDisplayText('audit_state_id');
+
+				$this->list[$index]['audit_state_idDisplayText'] = '';
+				if (isset($auditStates[$object->audit_state_id])) {
+					$this->list[$index]['audit_state_idDisplayText'] = $auditStates[$object->audit_state_id]['name'];
+				} // if (isset($auditStates[$object->audit_state_id])) {
+
 				$this->list[$index]['score'] = $object->score;
 				$this->list[$index]['notes'] = $object->notes;
 				$index++;
@@ -151,6 +176,8 @@ class auditController {
 			} // for ($i = 0; $i < $objectCount; $i++) {
 
 		} // if (!$noData) {
+		
+		$listObject->endBulkOperation();
 
 		$this->columns = array();
 		$this->columns[] = 'id';
@@ -203,10 +230,9 @@ class auditController {
 		includeModel('Audit');
 
 		$object = new Audit();
+		$object->beginBulkOperation();
 
 		$copySteps = false;
-
-		$object->beginBulkOperation();
 
 		while (isset($_REQUEST['inputaction' . $index])) {
 
@@ -220,11 +246,13 @@ class auditController {
 				$object->audit_state_id = 1;
 				$object->score = 0;
 				$object->notes = '';
+				$object->created_by = $this->user->id;
 
 				$copySteps = true;
 
+				$this->createMediaDirectory($object->audit_code);
 			} else {
-
+				$object->created_by = $this->user->id;
 				$object->lastUpdate = time();
 				$copySteps = false;
 
@@ -270,6 +298,7 @@ class auditController {
 		includeModel('AuditStep');
 
 		$listObject = new AuditStep();
+		$listObject->beginBulkOperation();
 		$listObject->bufferSize = 0;
 		$listObject->page = 0;
 		$listObject->addFilter('deleted','==', false);
@@ -292,19 +321,30 @@ class auditController {
 
 		if (!$noData) {
 
+			includeLibrary('getAllCachedObjects');
+			$auditStepCategories = getAllCachedObjects('AuditStepCategory');
+			$auditStepTypes = getAllCachedObjects('AuditStepType');
+
 			for ($i = 0; $i < $objectCount; $i++) {
 
 				$object = $listObject->list[$i];
 				$this->list[$index]['id'] = $object->id;
 				$this->list[$index]['audit_id'] = $object->audit_id;
-				$this->list[$index]['audit_idDisplayText']
-						= $object->getForeignDisplayText('audit_id');
+
 				$this->list[$index]['audit_step_category_id'] = $object->audit_step_category_id;
-				$this->list[$index]['audit_step_category_idDisplayText']
-						= $object->getForeignDisplayText('audit_step_category_id');
+				$this->list[$index]['audit_step_category_idDisplayText'] = '';
+				if (isset($auditStepCategories[$object->audit_step_category_id])) {
+					$this->list[$index]['audit_step_category_idDisplayText']
+							= $auditStepCategories[$object->audit_step_category_id]['name'];
+				} // if (isset($auditStepCategories[$object->audit_step_category_id])) {
+
 				$this->list[$index]['audit_step_type_id'] = $object->audit_step_type_id;
-				$this->list[$index]['audit_step_type_idDisplayText']
-						= $object->getForeignDisplayText('audit_step_type_id');
+				$this->list[$index]['audit_step_type_idDisplayText'] = '';
+				if (isset($auditStepTypes[$object->audit_step_type_id])) {
+					$this->list[$index]['audit_step_type_idDisplayText']
+							= $auditStepTypes[$object->audit_step_type_id]['name'];
+				} // if (isset($auditStepTypes[$object->audit_step_type_id])) {
+
 				$this->list[$index]['index'] = $object->index;
 				$this->list[$index]['step_action'] = $object->step_action;
 				$this->list[$index]['yes'] = $object->yes;
@@ -318,10 +358,11 @@ class auditController {
 
 		} // if (!$noData) {
 
+		$listObject->endBulkOperation();
+
 		$this->columns = array();
 		$this->columns[] = 'id';
 		$this->columns[] = 'audit_id';
-		$this->columns[] = 'audit_idDisplayText';
 		$this->columns[] = 'audit_step_category_id';
 		$this->columns[] = 'audit_step_category_idDisplayText';
 		$this->columns[] = 'audit_step_type_id';
@@ -359,7 +400,18 @@ class auditController {
 
 			$this->lastError .= __('Lütfen alan adını belirtiniz.');
 
-		} // if ('' == $newCrewMember->firstname) {
+		} // if ('' == $newAuditStep->step_action) {
+
+		if ($newAuditStep->no && ('' == $newAuditStep->audit_note)) {
+
+			$this->errorCount++;
+			if ($this->lastError != '') {
+				$this->lastError .= '<br>';
+			} // if ($this->lastError != '') {
+
+			$this->lastError .= __('Lütfen açıklama belirtiniz.');
+
+		} // if ('' == $newAuditStep->step_action) {
 
 		if (0 == $this->errorCount) {
 
@@ -398,6 +450,7 @@ class auditController {
 		includeModel('AuditStep');
 
 		$object = new AuditStep();
+		$object->beginBulkOperation();
 
 		while (isset($_REQUEST['inputaction' . $index])) {
 
@@ -407,7 +460,8 @@ class auditController {
 			$index++;
 
 		} // while (isset($_REQUEST['inputaction' . $index])) {
-
+		
+		$object->endBulkOperation();
 	}
 
 	public function readpropertyoptions($parameters = NULL) {
@@ -430,6 +484,7 @@ class auditController {
 		includeModel('Audit');
 
 		$object = new Audit();
+		$object->beginBulkOperation();
 		$object->page = 0;
 		$object->bufferSize = 2500;
 
@@ -439,6 +494,8 @@ class auditController {
 		
 		$object->findForeignList($propertyName);
 		$this->list = $object->getForeignListColumns();
+		$object->endBulkOperation();
+
 		$this->columns = array();
 		$this->columns[] = 'id';
 		$this->columns[] = 'column0';
@@ -468,6 +525,7 @@ class auditController {
 		includeModel('AuditStep');
 
 		$object = new AuditStep();
+		$object->beginBulkOperation();
 		$object->page = 0;
 		$object->bufferSize = 2500;
 
@@ -477,6 +535,8 @@ class auditController {
 		
 		$object->findForeignList($propertyName);
 		$this->list = $object->getForeignListColumns();
+		$object->endBulkOperation();
+
 		$this->columns = array();
 		$this->columns[] = 'id';
 		$this->columns[] = 'column0';
@@ -599,15 +659,19 @@ class auditController {
 
 			includeModel('Unit');
 			$unit = new Unit($auditUnitId);
+			$unit->beginBulkOperation();
 			$auditCompanyId = $unit->company_id;
+			$unit->endBulkOperation();
 
 			includeModel('Audit');
 			$auditList = new Audit();
+			$auditList->beginBulkOperation();
 			$auditList->bufferSize = 1;
 			$auditList->page = 0;
 			$auditList->addFilter('deleted', '==', false);
 			$auditList->addFilter('unit_id', '==', $auditUnitId);
 			$auditList->find();
+			$auditList->endBulkOperation();
 
 			$unitAuditCount = $auditList->getPageCount();
 
@@ -630,6 +694,7 @@ class auditController {
 		includeModel('AuditStepDirectory');
 
 		$objectList = new AuditStepDirectory();
+		$objectList->beginBulkOperation();
 		$objectList->bufferSize = 0;
 		$objectList->page = 0;
 		$objectList->addFilter('deleted', '==', false);
@@ -649,8 +714,76 @@ class auditController {
 			$auditStep->update();
 
 		} // for ($i = 0; $i < $count; $i++) {
+		
+		$objectList->endBulkOperation();
+	}
+	
+	public function setMediaPath($audit_code) {
+		$directoryPath = 'media/' . sha1($audit_code);
 
+		if (!(file_exists(DIR . '/' . $directoryPath))) {
+			$this->createMediaDirectory($audit_code);
+		} else {
+			$_SESSION['auditControllerMediaPath'] = sha1($audit_code);
+		}
 	}
 
+	public function createMediaDirectory($audit_code) {
+		$directoryPath = 'media/' . sha1($audit_code);
+
+		includeLibrary('openFTPConnection');
+		openFTPConnection();
+		includeLibrary('createFTPDirectory');
+		createFTPDirectory($directoryPath);
+		includeLibrary('closeFTPConnection');
+		closeFTPConnection();
+
+		$_SESSION['auditControllerMediaPath'] = sha1($audit_code);
+	}
+	public function formcreatezip() {
+		$archive_file_name= $_SESSION['auditControllerMediaPath'] . '.zip';
+
+		$zip = new ZipArchive();
+
+	    if ($zip->open($archive_file_name, ZIPARCHIVE::CREATE )!==TRUE) {
+	        exit("cannot open <$archive_file_name>\n");
+	    }
+
+		$dir = ('./media/' . $_SESSION['auditControllerMediaPath'] . '/');
+
+		if (is_dir($dir)){
+			if ($dh = opendir($dir)){
+				while (($file = readdir($dh)) !== false){
+					if (is_file($dir.$file)) {
+						if($file != '' && $file != '.' && $file != '..'){
+							$zip->addFile($dir.$file,$file);
+						}
+					}else{
+						if(is_dir($dir.$file) ){
+							if($file != '' && $file != '.' && $file != '..'){
+								$zip->addEmptyDir($dir.$file);
+
+								$folder = $dir.$file.'/';
+
+								$this->createZip($zip,$folder);
+							}
+						}
+					}
+				}
+				closedir($dh);
+			}
+		}
+
+		$zip->close();
+
+		header("Content-type: application/zip"); 
+		header("Content-Disposition: attachment; filename=$archive_file_name");
+		header("Content-length: " . filesize($archive_file_name));
+		header("Pragma: no-cache"); 
+		header("Expires: 1"); 
+		readfile("$archive_file_name");
+		unlink("$archive_file_name");
+		exit;
+	}
 }
 ?>

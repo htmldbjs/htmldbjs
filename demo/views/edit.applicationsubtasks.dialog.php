@@ -3,7 +3,7 @@
 		<div class="divDialogContentContainer">
 			<header class="headerHero z-depth-1 blue darken-4">
 				<div class="divHeaderInfo">
-					<h3 class="blue-text text-darken-4"><?php echo __('Alt Adımlar'); ?></h3>
+					<h3 class="blue-text text-darken-4"><?php echo __('Alt Aksiyonlar'); ?></h3>
 				</div>
 				<button class="buttonCloseDialog right btn-icon-only waves-effect waves-light btn-flat"
 				data-container-dialog="divProfileDialog"><i class="ion-android-close blue-text text-darken-4"></i></button>
@@ -11,7 +11,7 @@
 			<div class="divContentPanel z-depth-1 white">
 				<div class="row">
                 	<div class="col s12">
-                        <button id="buttonAddApplicationSubTask" name="buttonAddApplicationSubTask" class="waves-effect white-text btn right cyan darken-1 HTMLDBAction HTMLDBAdd" type="button" data-htmldb-dialog="divAddApplicationSubTaskDialog" data-htmldb-source="divApplicationSubTaskHTMLDBReader" data-htmldb-row-id="0"><i class="ion-plus"></i> YENİ ADIM</button>
+                        <button id="buttonAddApplicationSubTask" name="buttonAddApplicationSubTask" class="waves-effect white-text btn right cyan darken-1 HTMLDBAction HTMLDBAdd" type="button" data-htmldb-dialog="divAddApplicationSubTaskDialog" data-htmldb-source="divApplicationSubTaskHTMLDBReader" data-htmldb-row-id="0"><i class="ion-plus"></i> YENİ AKSİYON</button>
                     </div>
                 </div>
 	            <div>
@@ -26,7 +26,16 @@
 	                                    class="sorting sorting-asc blue-text text-darken-4"><i
 	                                    class="ion-arrow-up-b"></i></span></button>
 	                            </th>
-	                            <th></th>
+	                            <th>
+	                                <button type="button" class="buttonTableColumn buttonTableColumn2"
+	                                data-column-index="1">
+	                                Gerçekleştirme Tarihi&nbsp;<span class="sorting sorting-desc blue-text text-darken-4"><i
+	                                    class="ion-arrow-down-b"></i></span><span
+	                                    class="sorting sorting-asc blue-text text-darken-4"><i
+	                                    class="ion-arrow-up-b"></i></span></button>
+	                            </th>
+	                            <th style="width: 50px;"></th>
+	                            <th style="width: 50px;"></th>
 	                        </tr>
 	                    </thead>
 	                    <tbody id="tbodyApplicationSubTaskList"></tbody>

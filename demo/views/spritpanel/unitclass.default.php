@@ -103,78 +103,48 @@
                                         <input id="name" name="name" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
                                     </div>
                                 </div>
-	<div class="col l12 m12 s12 " id="divprocess_owner_firstname">
-                                    <label for="process_owner_firstname"><?php echo __('Process Owner First Name'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="process_owner_firstname" name="process_owner_firstname" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divprocess_owner_lastname">
-                                    <label for="process_owner_lastname"><?php echo __('Process Owner Last Name'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="process_owner_lastname" name="process_owner_lastname" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divprocess_owner_email">
-                                    <label for="process_owner_email"><?php echo __('Process Owner E-mail'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="process_owner_email" name="process_owner_email" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divchampion_firstname">
-                                    <label for="champion_firstname"><?php echo __('Champion First Name'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="champion_firstname" name="champion_firstname" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divchampion_lastname">
-                                    <label for="champion_lastname"><?php echo __('Champion Last Name'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="champion_lastname" name="champion_lastname" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divchampion_email">
-                                    <label for="champion_email"><?php echo __('Champion E-mail'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="champion_email" name="champion_email" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divadvisor_firstname">
-                                    <label for="advisor_firstname"><?php echo __('Advisor First Name'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="advisor_firstname" name="advisor_firstname" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divadvisor_lastname">
-                                    <label for="advisor_lastname"><?php echo __('Advisor Last Name'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="advisor_lastname" name="advisor_lastname" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divadvisor_email">
-                                    <label for="advisor_email"><?php echo __('Advisor E-mail'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="advisor_email" name="advisor_email" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divleader_firstname">
-                                    <label for="leader_firstname"><?php echo __('Leader First Name'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="leader_firstname" name="leader_firstname" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divleader_lastname">
-                                    <label for="leader_lastname"><?php echo __('Leader Last Name'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="leader_lastname" name="leader_lastname" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
-	<div class="col l12 m12 s12 " id="divleader_email">
-                                    <label for="leader_email"><?php echo __('Leader E-mail'); ?> </label>
-                                    <div class="input-field">
-                                        <input id="leader_email" name="leader_email" type="text" class="blue-text text-darken-4" placeholder="" value=""  >
-                                    </div>
-                                </div>
+								<div class="col l12 m12 s12 " id="divprocess_owner_id">
+									<label for="process_owner_id"><?php echo __('Process Owner'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="process_owner_id" style="width: 100%" name="process_owner_id" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
+								<div class="col l12 m12 s12 " id="divchampion_id">
+									<label for="champion_id"><?php echo __('Champion'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="champion_id" style="width: 100%" name="champion_id" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
+								<div class="col l12 m12 s12 " id="divadvisor_id">
+									<label for="advisor_id"><?php echo __('Advisor'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="advisor_id" style="width: 100%" name="advisor_id" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
+								<div class="col l12 m12 s12 " id="divleader1_id">
+									<label for="leader1_id"><?php echo __('Leader 1'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="leader1_id" style="width: 100%" name="leader1_id" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
+								<div class="col l12 m12 s12 " id="divleader2_id">
+									<label for="leader2_id"><?php echo __('Leader 2'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="leader2_id" style="width: 100%" name="leader2_id" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
+								<div class="col l12 m12 s12 " id="divleader3_id">
+									<label for="leader3_id"><?php echo __('Leader 3'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="leader3_id" style="width: 100%" name="leader3_id" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
+								<div class="col l12 m12 s12 " id="divcreated_by">
+									<label for="created_by"><?php echo __('Created By'); ?>  <i class="ion-locked"></i></label>
+									<select class="selectClassSelection" id="created_by" style="width: 100%" name="created_by" disabled="disabled" data-min-selection="2" data-max-selection="2">
+										<option value=""><?php echo __('Please Select'); ?></option>
+									</select>
+								</div>
                             </div>
                             <div class="row">
                                 <div class="input-field">
@@ -239,6 +209,13 @@
             <div id="divUnitHTMLDB" class="divHTMLDB"></div>
             <div id="divUnitTableHTMLDB" class="divHTMLDB"></div>
             <div id="divcompany_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divprocess_owner_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divchampion_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divadvisor_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divleader1_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divleader2_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divleader3_idPropertyOptionsHTMLDB" class="divHTMLDB"></div>
+            <div id="divcreated_byPropertyOptionsHTMLDB" class="divHTMLDB"></div>
             <div id="divSessionHTMLDB" class="divHTMLDB"></div>
             <table>
                 <tbody id="tbodyGhostObjectListTemplate">

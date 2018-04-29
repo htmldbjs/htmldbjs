@@ -42,20 +42,22 @@ $_SPRIT['LANGUAGE'] = array(
 );
 
 
-$_SPRIT['LANGUAGE']['Admin'] = 'Admin';
-$_SPRIT['LANGUAGE']['Firm'] = 'Firm';
-$_SPRIT['LANGUAGE']['Coordinator'] = 'Coordinator';
 $_SPRIT['LANGUAGE']['Unit'] = 'Unit';
-$_SPRIT['LANGUAGE']['Champion'] = 'Champion';
-$_SPRIT['LANGUAGE']['CrewMember'] = 'CrewMember';
-$_SPRIT['LANGUAGE']['Checklist'] = 'Checklist';
-$_SPRIT['LANGUAGE']['StepType'] = 'StepType';
-$_SPRIT['LANGUAGE']['StepState'] = 'StepState';
-$_SPRIT['LANGUAGE']['MainStep'] = 'MainStep';
-$_SPRIT['LANGUAGE']['Action'] = 'Action';
-$_SPRIT['LANGUAGE']['FirmState'] = 'FirmState';
 $_SPRIT['LANGUAGE']['Crew'] = 'Crew';
-$_SPRIT['LANGUAGE']['Step'] = 'Step';
-$_SPRIT['LANGUAGE']['ActionState'] = 'ActionState';
+$_SPRIT['LANGUAGE']['User'] = 'User';
+$_SPRIT['LANGUAGE']['ApplicationTaskDirectory'] = 'ApplicationTaskDirectory';
+$_SPRIT['LANGUAGE']['Company'] = 'Company';
+$_SPRIT['LANGUAGE']['Audit'] = 'Audit';
+$_SPRIT['LANGUAGE']['AuditType'] = 'AuditType';
+$_SPRIT['LANGUAGE']['AuditState'] = 'AuditState';
+$_SPRIT['LANGUAGE']['AuditStepCategory'] = 'AuditStepCategory';
+$_SPRIT['LANGUAGE']['AuditStepType'] = 'AuditStepType';
+$_SPRIT['LANGUAGE']['AuditStep'] = 'AuditStep';
+$_SPRIT['LANGUAGE']['AuditStepDirectory'] = 'AuditStepDirectory';
+$_SPRIT['LANGUAGE']['Application'] = 'Application';
+$_SPRIT['LANGUAGE']['ApplicationTask'] = 'ApplicationTask';
+$_SPRIT['LANGUAGE']['ApplicationTaskCategory'] = 'ApplicationTaskCategory';
+$_SPRIT['LANGUAGE']['ApplicationTaskState'] = 'ApplicationTaskState';
+$_SPRIT['LANGUAGE']['ApplicationSubTask'] = 'ApplicationSubTask';
 
 ?>

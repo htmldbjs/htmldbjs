@@ -112,25 +112,38 @@ class companyclassController {
 			$object = $listObject->list[$i];
 			$this->list[$index]['id'] = $object->id;
 			$this->list[$index]['company_name'] = $object->company_name;
+			$this->list[$index]['type'] = $object->type;
 			$this->list[$index]['score'] = $object->score;
-			$this->list[$index]['personal'] = $object->personal;
 			$this->list[$index]['consultant'] = $object->consultant;
 			$this->list[$index]['consultantDisplayText']
 					= $object->getForeignDisplayText('consultant');
-			$this->list[$index]['sponsor_firstname'] = $object->sponsor_firstname;
-			$this->list[$index]['sponsor_lastname'] = $object->sponsor_lastname;
-			$this->list[$index]['sponsor_email'] = $object->sponsor_email;
-			$this->list[$index]['coordinator_firstname'] = $object->coordinator_firstname;
-			$this->list[$index]['coordinator_lastname'] = $object->coordinator_lastname;
-			$this->list[$index]['coordinator_email'] = $object->coordinator_email;
-			$this->list[$index]['hse_responsible'] = $object->hse_responsible;
-			$this->list[$index]['hr_responsible'] = $object->hr_responsible;
-			$this->list[$index]['planning_responsible'] = $object->planning_responsible;
-			$this->list[$index]['maintenance_responsible'] = $object->maintenance_responsible;
-			$this->list[$index]['quality_responsible'] = $object->quality_responsible;
-			$this->list[$index]['propagation_champion_firstname'] = $object->propagation_champion_firstname;
-			$this->list[$index]['propagation_champion_lastname'] = $object->propagation_champion_lastname;
-			$this->list[$index]['propagation_champion_email'] = $object->propagation_champion_email;
+			$this->list[$index]['sponsor_id'] = $object->sponsor_id;
+			$this->list[$index]['sponsor_idDisplayText']
+					= $object->getForeignDisplayText('sponsor_id');
+			$this->list[$index]['coordinator_id'] = $object->coordinator_id;
+			$this->list[$index]['coordinator_idDisplayText']
+					= $object->getForeignDisplayText('coordinator_id');
+			$this->list[$index]['propagation_champion_id'] = $object->propagation_champion_id;
+			$this->list[$index]['propagation_champion_idDisplayText']
+					= $object->getForeignDisplayText('propagation_champion_id');
+			$this->list[$index]['hse_responsible_id'] = $object->hse_responsible_id;
+			$this->list[$index]['hse_responsible_idDisplayText']
+					= $object->getForeignDisplayText('hse_responsible_id');
+			$this->list[$index]['hr_responsible_id'] = $object->hr_responsible_id;
+			$this->list[$index]['hr_responsible_idDisplayText']
+					= $object->getForeignDisplayText('hr_responsible_id');
+			$this->list[$index]['planning_responsible_id'] = $object->planning_responsible_id;
+			$this->list[$index]['planning_responsible_idDisplayText']
+					= $object->getForeignDisplayText('planning_responsible_id');
+			$this->list[$index]['maintenance_responsible_id'] = $object->maintenance_responsible_id;
+			$this->list[$index]['maintenance_responsible_idDisplayText']
+					= $object->getForeignDisplayText('maintenance_responsible_id');
+			$this->list[$index]['quality_responsible_id'] = $object->quality_responsible_id;
+			$this->list[$index]['quality_responsible_idDisplayText']
+					= $object->getForeignDisplayText('quality_responsible_id');
+			$this->list[$index]['created_by'] = $object->created_by;
+			$this->list[$index]['created_byDisplayText']
+					= $object->getForeignDisplayText('created_by');
 			$index++;
 
 		} // for ($i = 0; $i < $objectCount; $i++) {			
@@ -138,24 +151,28 @@ class companyclassController {
 		$this->columns = array();
 		$this->columns[] = 'id';
 		$this->columns[] = 'company_name';
+		$this->columns[] = 'type';
 		$this->columns[] = 'score';
-		$this->columns[] = 'personal';
 		$this->columns[] = 'consultant';
 		$this->columns[] = 'consultantDisplayText';
-		$this->columns[] = 'sponsor_firstname';
-		$this->columns[] = 'sponsor_lastname';
-		$this->columns[] = 'sponsor_email';
-		$this->columns[] = 'coordinator_firstname';
-		$this->columns[] = 'coordinator_lastname';
-		$this->columns[] = 'coordinator_email';
-		$this->columns[] = 'hse_responsible';
-		$this->columns[] = 'hr_responsible';
-		$this->columns[] = 'planning_responsible';
-		$this->columns[] = 'maintenance_responsible';
-		$this->columns[] = 'quality_responsible';
-		$this->columns[] = 'propagation_champion_firstname';
-		$this->columns[] = 'propagation_champion_lastname';
-		$this->columns[] = 'propagation_champion_email';
+		$this->columns[] = 'sponsor_id';
+		$this->columns[] = 'sponsor_idDisplayText';
+		$this->columns[] = 'coordinator_id';
+		$this->columns[] = 'coordinator_idDisplayText';
+		$this->columns[] = 'propagation_champion_id';
+		$this->columns[] = 'propagation_champion_idDisplayText';
+		$this->columns[] = 'hse_responsible_id';
+		$this->columns[] = 'hse_responsible_idDisplayText';
+		$this->columns[] = 'hr_responsible_id';
+		$this->columns[] = 'hr_responsible_idDisplayText';
+		$this->columns[] = 'planning_responsible_id';
+		$this->columns[] = 'planning_responsible_idDisplayText';
+		$this->columns[] = 'maintenance_responsible_id';
+		$this->columns[] = 'maintenance_responsible_idDisplayText';
+		$this->columns[] = 'quality_responsible_id';
+		$this->columns[] = 'quality_responsible_idDisplayText';
+		$this->columns[] = 'created_by';
+		$this->columns[] = 'created_byDisplayText';
 
 		includeView($this, 'spritpanel/htmldblist.gz');
 		return;
@@ -281,7 +298,6 @@ class companyclassController {
 		$this->columns[] = 'column0';
 		$this->columns[] = 'column1';
 		$this->columns[] = 'column2';
-		$this->columns[] = 'column3';
 
 		includeView($this, 'spritpanel/htmldblist.gz');
 		return;
@@ -341,7 +357,7 @@ class companyclassController {
 		$this->columns[] = 'sortingASC';
 		$this->columns[] = 'page';
 		$this->columns[] = 'pageCount';
-		$this->columns[] = 'consultantSearchText';
+		$this->columns[] = 'created_bySearchText';
 
 		includeView($this, 'spritpanel/htmldblist.gz');
 		return;
@@ -379,10 +395,10 @@ class companyclassController {
 					: $sessionParameters['page'];
 			$_SESSION[sha1(__FILE__) . 'page'] = $page;
 
-			$consultantSearchText = isset($_REQUEST['inputfield0consultantSearchText'])
-					? htmlspecialchars($_REQUEST['inputfield0consultantSearchText'])
-					: $sessionParameters['consultantSearchText'];
-			$_SESSION[sha1(__FILE__) . 'consultantSearchText'] = $consultantSearchText;
+			$created_bySearchText = isset($_REQUEST['inputfield0created_bySearchText'])
+					? htmlspecialchars($_REQUEST['inputfield0created_bySearchText'])
+					: $sessionParameters['created_bySearchText'];
+			$_SESSION[sha1(__FILE__) . 'created_bySearchText'] = $created_bySearchText;
 
 		} // if (isset($_REQUEST['inputaction' . $index])) {
 
@@ -414,6 +430,42 @@ class companyclassController {
 		$sessionParameters['consultantSearchText']
 				= (isset($_SESSION[sha1(__FILE__) . 'consultantSearchText'])
 				? $_SESSION[sha1(__FILE__) . 'consultantSearchText']
+				: '');
+		$sessionParameters['sponsor_idSearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'sponsor_idSearchText'])
+				? $_SESSION[sha1(__FILE__) . 'sponsor_idSearchText']
+				: '');
+		$sessionParameters['coordinator_idSearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'coordinator_idSearchText'])
+				? $_SESSION[sha1(__FILE__) . 'coordinator_idSearchText']
+				: '');
+		$sessionParameters['propagation_champion_idSearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'propagation_champion_idSearchText'])
+				? $_SESSION[sha1(__FILE__) . 'propagation_champion_idSearchText']
+				: '');
+		$sessionParameters['hse_responsible_idSearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'hse_responsible_idSearchText'])
+				? $_SESSION[sha1(__FILE__) . 'hse_responsible_idSearchText']
+				: '');
+		$sessionParameters['hr_responsible_idSearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'hr_responsible_idSearchText'])
+				? $_SESSION[sha1(__FILE__) . 'hr_responsible_idSearchText']
+				: '');
+		$sessionParameters['planning_responsible_idSearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'planning_responsible_idSearchText'])
+				? $_SESSION[sha1(__FILE__) . 'planning_responsible_idSearchText']
+				: '');
+		$sessionParameters['maintenance_responsible_idSearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'maintenance_responsible_idSearchText'])
+				? $_SESSION[sha1(__FILE__) . 'maintenance_responsible_idSearchText']
+				: '');
+		$sessionParameters['quality_responsible_idSearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'quality_responsible_idSearchText'])
+				? $_SESSION[sha1(__FILE__) . 'quality_responsible_idSearchText']
+				: '');
+		$sessionParameters['created_bySearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'created_bySearchText'])
+				? $_SESSION[sha1(__FILE__) . 'created_bySearchText']
 				: '');
 		return $sessionParameters;
 

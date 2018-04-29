@@ -117,6 +117,9 @@ class applicationclassController {
 			$this->list[$index]['unit_idDisplayText']
 					= $object->getForeignDisplayText('unit_id');
 			$this->list[$index]['notes'] = $object->notes;
+			$this->list[$index]['created_by'] = $object->created_by;
+			$this->list[$index]['created_byDisplayText']
+					= $object->getForeignDisplayText('created_by');
 			$index++;
 
 		} // for ($i = 0; $i < $objectCount; $i++) {			
@@ -128,6 +131,8 @@ class applicationclassController {
 		$this->columns[] = 'unit_id';
 		$this->columns[] = 'unit_idDisplayText';
 		$this->columns[] = 'notes';
+		$this->columns[] = 'created_by';
+		$this->columns[] = 'created_byDisplayText';
 
 		includeView($this, 'spritpanel/htmldblist.gz');
 		return;
@@ -312,7 +317,7 @@ class applicationclassController {
 		$this->columns[] = 'sortingASC';
 		$this->columns[] = 'page';
 		$this->columns[] = 'pageCount';
-		$this->columns[] = 'unit_idSearchText';
+		$this->columns[] = 'created_bySearchText';
 
 		includeView($this, 'spritpanel/htmldblist.gz');
 		return;
@@ -350,10 +355,10 @@ class applicationclassController {
 					: $sessionParameters['page'];
 			$_SESSION[sha1(__FILE__) . 'page'] = $page;
 
-			$unit_idSearchText = isset($_REQUEST['inputfield0unit_idSearchText'])
-					? htmlspecialchars($_REQUEST['inputfield0unit_idSearchText'])
-					: $sessionParameters['unit_idSearchText'];
-			$_SESSION[sha1(__FILE__) . 'unit_idSearchText'] = $unit_idSearchText;
+			$created_bySearchText = isset($_REQUEST['inputfield0created_bySearchText'])
+					? htmlspecialchars($_REQUEST['inputfield0created_bySearchText'])
+					: $sessionParameters['created_bySearchText'];
+			$_SESSION[sha1(__FILE__) . 'created_bySearchText'] = $created_bySearchText;
 
 		} // if (isset($_REQUEST['inputaction' . $index])) {
 
@@ -385,6 +390,10 @@ class applicationclassController {
 		$sessionParameters['unit_idSearchText']
 				= (isset($_SESSION[sha1(__FILE__) . 'unit_idSearchText'])
 				? $_SESSION[sha1(__FILE__) . 'unit_idSearchText']
+				: '');
+		$sessionParameters['created_bySearchText']
+				= (isset($_SESSION[sha1(__FILE__) . 'created_bySearchText'])
+				? $_SESSION[sha1(__FILE__) . 'created_bySearchText']
 				: '');
 		return $sessionParameters;
 

@@ -61,6 +61,10 @@ if (file_exists(CNFDIR . '/FTP.php')) {
 	include(CNFDIR . '/FTP.php');
 } // if (file_exists(CNFDIR . '/FTP.php')) {
 
+if (file_exists(CNFDIR . '/Email.php')) {
+	include(CNFDIR . '/Email.php');
+} // if (file_exists(CNFDIR . '/Email.php')) {
+
 if (file_exists(CNFDIR . '/Settings.php')) {
 	include(CNFDIR . '/Settings.php');
 } // if (file_exists(CNFDIR . '/Settings.php')) {

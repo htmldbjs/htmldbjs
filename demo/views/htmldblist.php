@@ -46,6 +46,7 @@ for ($i = 0; $i < $lCount; $i++) {
 } // for ($i = 0; $i < $lCount; $i++) {
 
 $strContent .= ']}';
+$strContent = ($strContent);
 
 echo $strContent;
 ?>

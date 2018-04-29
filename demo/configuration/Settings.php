@@ -16,7 +16,7 @@ if (strtolower(basename($_SERVER['PHP_SELF']))
 $_SPRIT['DEBUG_MODE'] = '0';
 $_SPRIT['DEFAULT_PAGE'] = 'login';
 $_SPRIT['URL_PREFIX'] = 'index.php?u=';
-$_SPRIT['URL_DIRECTORY'] = '/spac/v1.0/sssss/source/';
+$_SPRIT['URL_DIRECTORY'] = '/htmldbjs/v1.0/htmldbjs/demo/';
 $_SPRIT['PROJECT_TITLE'] = 'SPAC 5S';
 $_SPRIT['DEFAULT_LANGUAGE'] = 'tr';
 $_SPRIT['TIMEZONE'] = 'Europe/Istanbul';
