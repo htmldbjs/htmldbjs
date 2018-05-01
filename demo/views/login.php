@@ -9,7 +9,7 @@
 					</div>
 				</header>
 				<div class="divContentPanel z-depth-1">
-					<form id="formLogin" name="formLogin" method="post" action="<?php echo $_SPRIT['URL_PREFIX']; ?>login/read" class="form-horizontal htmldb-form" data-htmldb-table="loginHTMLDB" target="iframePOST">
+					<form id="formLogin" name="formLogin" method="post" action="<?php echo $_SPRIT['URL_PREFIX']; ?>login/read" class="form-horizontal htmldb-form" data-htmldb-table="loginHTMLDB" onsubmit="return false;">
 						<input type="hidden" name="id" id="id" class="htmldb-field" data-htmldb-field="id" value="0">
 						<div class="row" style="margin-bottom: 40px;">
 							<div class="col s12">
@@ -41,7 +41,7 @@
 						<div class="row">
 							<div class="input-field">
 								<div class="col s12">
-									<button id="buttonSubmitLoginForm" name="buttonSubmitLoginForm" data-default-text="<?php echo __('GİRİŞ YAP'); ?>" data-loading-text="<?php echo __('GİRİŞ YAPILIYOR...'); ?>" type="button" class="waves-effect waves-light btn-large blue darken-4 col s12 htmldb-button-save" data-htmldb-table="loginHTMLDB"><?php echo __('GİRİŞ YAP'); ?></button>
+									<button id="buttonSubmitLoginForm" name="buttonSubmitLoginForm" data-default-text="<?php echo __('GİRİŞ YAP'); ?>" data-loading-text="<?php echo __('GİRİŞ YAPILIYOR...'); ?>" type="submit" class="waves-effect waves-light btn-large blue darken-4 col s12 htmldb-button-save" data-htmldb-table="loginHTMLDB"><?php echo __('GİRİŞ YAP'); ?></button>
 								</div>
 							</div>
 						</div>

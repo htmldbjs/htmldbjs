@@ -65,6 +65,10 @@ class my_profileController {
 		$this->parameters = $parameters;
 
 		$this->list = array();
+		$this->list[0]['id'] = 1;
+		$this->list[0]['firstname'] = $this->user->firstname;
+		$this->list[0]['lastname'] = $this->user->lastname;
+		$this->list[0]['email'] = $this->user->email;
 
 		$this->columns = array();
 		$this->columns[] = 'id';
@@ -72,7 +76,7 @@ class my_profileController {
 		$this->columns[] = 'lastname';
 		$this->columns[] = 'email';
 
-		includeView($this, 'htmldblist.gz');
+		includeView($this, 'htmldblist');
 		return;
 
 	}
@@ -89,7 +93,7 @@ class my_profileController {
 
 		includeModel('User');
 		$newUser = new User();
-		$newUser->request($_REQUEST, ('inputfield0'));
+		$newUser->request($_REQUEST, ('htmldb_row0_'));
 
 		if ('' == $newUser->firstname) {
 
@@ -200,7 +204,7 @@ class my_profileController {
 
 		if ($this->user != NULL) {
 			$currentUserId = $this->user->id;
-			$this->user->request($_REQUEST, 'inputfield0');
+			$this->user->request($_REQUEST, 'htmldb_row0_');
 			$this->user->id = $currentUserId;
 			$this->user->update();
 		} // if ($this->user != NULL) {
@@ -213,13 +217,18 @@ class my_profileController {
 
 		$this->list = array();
 
+		$this->list[0]['id'] = 1;
+		$this->list[0]['currentPassword'] = '';
+		$this->list[0]['newPassword'] = '';
+		$this->list[0]['newPassword2'] = '';
+
 		$this->columns = array();
 		$this->columns[] = 'id';
 		$this->columns[] = 'currentPassword';
 		$this->columns[] = 'newPassword';
 		$this->columns[] = 'newPassword2';
 
-		includeView($this, 'htmldblist.gz');
+		includeView($this, 'htmldblist');
 		return;
 
 	}
@@ -234,16 +243,16 @@ class my_profileController {
 
 		$this->parameters = $parameters;
 
-		$currentPassword = (isset($_REQUEST['inputfield0currentPassword'])
-				? htmlspecialchars($_REQUEST['inputfield0currentPassword'])
+		$currentPassword = (isset($_REQUEST['htmldb_row0_currentPassword'])
+				? htmlspecialchars($_REQUEST['htmldb_row0_currentPassword'])
 				: '');
 
-		$newPassword = (isset($_REQUEST['inputfield0newPassword'])
-				? htmlspecialchars($_REQUEST['inputfield0newPassword'])
+		$newPassword = (isset($_REQUEST['htmldb_row0_newPassword'])
+				? htmlspecialchars($_REQUEST['htmldb_row0_newPassword'])
 				: '');
 
-		$newPassword2 = (isset($_REQUEST['inputfield0newPassword2'])
-				? htmlspecialchars($_REQUEST['inputfield0newPassword2'])
+		$newPassword2 = (isset($_REQUEST['htmldb_row0_newPassword2'])
+				? htmlspecialchars($_REQUEST['htmldb_row0_newPassword2'])
 				: '');
 
 		if ('' == $currentPassword) {
@@ -337,8 +346,8 @@ class my_profileController {
 			return false;
 		} // if (!$this->validateprofile($parameters, true)) {
 
-		$newPassword = (isset($_REQUEST['inputfield0newPassword'])
-				? htmlspecialchars($_REQUEST['inputfield0newPassword'])
+		$newPassword = (isset($_REQUEST['htmldb_row0_newPassword'])
+				? htmlspecialchars($_REQUEST['htmldb_row0_newPassword'])
 				: '');
 
 		$currentUserId = 0;
