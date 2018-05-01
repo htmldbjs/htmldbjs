@@ -188,7 +188,7 @@
     </div>
 </div>
 <div class="divHiddenElements">
-    <div id="profileHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>my_profile/readprofile" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>my_profile/validateprofile" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>my_profile/writeprofile" data-htmldb-writeonly="1" data-htmldb-loader="divLoader"></div>
+    <div id="profileHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>my_profile/readprofile" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>my_profile/validateprofile" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>my_profile/writeprofile" data-htmldb-writeonly="1" data-htmldb-loader="divLoader" data-htmldb-redirect="<?php echo $_SPRIT['URL_PREFIX']; ?>my_profile"></div>
     <div id="passwordHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>my_profile/readpassword" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>my_profile/validatepassword" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>my_profile/writepassword" data-htmldb-writeonly="1" data-htmldb-loader="divLoader" data-htmldb-redirect="<?php echo $_SPRIT['URL_PREFIX']; ?>my_profile"></div>
 </div>
 <script src="assets/js/global.js"></script>

@@ -210,36 +210,45 @@ var HTMLDB = {
 		}
 	},
 	"write": function (tableElementId, delayed, functionDone) {
-		var elDIV = document.getElementById(tableElementId);
-		if (!elDIV) {
-			return;
+		var tableElement = document.getElementById(tableElementId);
+		if (!tableElement) {
+        	throw(new Error("HTMLDB table "
+        			+ tableElementId
+        			+ " will be readed, but not found."));
+			return false;
+		}
+
+		var loading = parseInt(tableElement.getAttribute("data-htmldb-loading"));
+
+		if (loading > 0) {
+        	throw(new Error("HTMLDB table "
+        			+ tableElementId
+        			+ " is loading right now."));
+			return false;
 		}
 
 		if (true === delayed) {
 			// Delayed Write
-			clearTimeout(elDIV.tmWriteTimer);
-			lWriteDelay = parseInt(elDIV.getAttribute("data-write-delay"));
+			clearTimeout(tableElement.tmWriteTimer);
+			lWriteDelay = parseInt(tableElement.getAttribute("data-write-delay"));
 			if (isNaN(lWriteDelay)) {
 				lWriteDelay = 2000;
 			}
-			elDIV.tmWriteTimer = setTimeout(function () {
-				clearTimeout(elDIV.tmWriteTimer);
+			tableElement.tmWriteTimer = setTimeout(function () {
+				clearTimeout(tableElement.tmWriteTimer);
 				HTMLDB.write(tableElementId, false, functionDone);
 			}, lWriteDelay);
 			return;
 		}
 
-		var bLoading = parseInt(elDIV.getAttribute("data-htmldb-loading"));
+		var writeURL = HTMLDB.getHTMLDBParameter(tableElement, "write-url");
+		writeURL = HTMLDB.evaluateHTMLDBExpression(writeURL);
 
-		if (bLoading > 0) {
-			return;
-		}
-
-		var strWriteURL = "";
-		strWriteURL = elDIV.getAttribute("data-htmldb-write-url");
-
-		if ("" == strWriteURL) {
-			return;
+		if ("" == writeURL) {
+        	throw(new Error("HTMLDB table "
+        			+ tableElementId
+        			+ " write URL attribute is empty."));
+			return false;
 		}
 
 		var iframeFormGUID = document.getElementById(tableElementId + "_iframe_container").children.length;
@@ -250,7 +259,7 @@ var HTMLDB = {
 			return;
 		}
 
-		var tbodyHTMLDB = document.getElementById(tableElementId + "_reader_tbody");
+		var tbodyHTMLDB = document.getElementById(tableElementId + "_writer_tbody");
 		var arrTR = tbodyHTMLDB.children;
 		var arrTD = null;
 		var elTR = null;
@@ -261,14 +270,14 @@ var HTMLDB = {
 		iframeHTMLDB.parentNode.replaceChild(iframeNewElement, iframeHTMLDB);
 		iframeHTMLDB = iframeNewElement;
 
-		elDIV.setAttribute("data-htmldb-loading", 1);
+		tableElement.setAttribute("data-htmldb-loading", 1);
 		HTMLDB.showLoader(tableElementId, "write");
 
 		var funcIframeLoadCallback = HTMLDB.doWriterIframeLoad;
 
 		if (functionDone) {
 			funcIframeLoadCallback = function () {
-				elDIV.setAttribute("data-htmldb-loading", 0);
+				tableElement.setAttribute("data-htmldb-loading", 0);
 				HTMLDB.hideLoader(tableElementId, "write");
 				iframeWindow = top.frames[tableElementId + "_iframe_" + iframeFormGUID];
 				var strResponse = "";
@@ -277,7 +286,7 @@ var HTMLDB = {
 				}
 				HTMLDB.removeIframeAndForm(tableElementId, iframeFormGUID);
 				functionDone(tableElementId, strResponse);
-				var redirectURL = HTMLDB.getHTMLDBParameter(elDIV, "redirect");
+				var redirectURL = HTMLDB.getHTMLDBParameter(tableElement, "redirect");
 				if (redirectURL != "") {
 					window.location = redirectURL;
 				}
@@ -302,7 +311,7 @@ var HTMLDB = {
         	if ((elTR.className.indexOf("updated") != -1)
         			|| (elTR.className.indexOf("inserted") != -1)
         			|| (elTR.className.indexOf("deleted") != -1)) {
-	        	HTMLDB.generateFormHTML(elDIV, iframeFormGUID, elTR);
+	        	HTMLDB.generateFormHTML(tableElement, iframeFormGUID, elTR);
 	        	
 	        	if (!functionDone) {
 	        		elTR.parentNode.removeChild(elTR);
@@ -311,7 +320,7 @@ var HTMLDB = {
         	}
         }
 
-        formHTMLDB.action = strWriteURL;
+        formHTMLDB.action = writeURL;
 
         try {
 			formHTMLDB.submit();
@@ -544,7 +553,6 @@ var HTMLDB = {
     		if (rows.length > 0) {
     			continue;
     		}
-
     		HTMLDB.markRows(writerTable, "updating");
     		HTMLDB.write(element.id, false, function (tableElementId, response) {
 	    		var writerTable = document.getElementById(tableElementId + "_writer_tbody");
@@ -1647,10 +1655,10 @@ var HTMLDB = {
 			inputAction = "inserted";
 		}
 
-		index = form.getElementsByClassName("inputaction").length;
+		index = form.getElementsByClassName("htmldb_action").length;
 
-		var formContent = "<input class=\"inputaction\" type=\"hidden\" name=\""
-				+ "inputaction" + index
+		var formContent = "<input class=\"htmldb_action\" type=\"hidden\" name=\""
+				+ "htmldb_action" + index
 				+ "\" value=\""
 				+ inputAction
 				+ "\" />";
@@ -1658,7 +1666,7 @@ var HTMLDB = {
 		var columns = HTMLDB.getColumnNames(tableElement.id, false);
 		var columnCount = columns.length;
 		var rowId = row.getAttribute("data-row-id");
-		var prefix = (tableElement.id + "_td" + rowId);
+		var prefix = (tableElement.id + "_writer_td" + rowId);
 		var fieldCount = row.children.length;
 		var values = {};
 		var value = "";
@@ -1674,8 +1682,8 @@ var HTMLDB = {
 
 			value = values[prefix + columns[i]];
 
-			formContent += "<input class=\"inputfield\" type=\"hidden\" name=\""
-					+ "inputfield" + index + columns[i]
+			formContent += "<input class=\"htmldb_row\" type=\"hidden\" name=\""
+					+ "htmldb_row" + index + "_" + columns[i]
  					+ "\" value=\""
 					+ HTMLDB.ejs(value)
 					+ "\" />";
