@@ -194,7 +194,7 @@ class auditController {
 		$this->columns[] = 'score';
 		$this->columns[] = 'notes';
 
-		includeView($this, 'htmldblist.gz');
+		includeView($this, 'htmldblist');
 		return;
 
 	}
@@ -234,9 +234,9 @@ class auditController {
 
 		$copySteps = false;
 
-		while (isset($_REQUEST['inputaction' . $index])) {
+		while (isset($_REQUEST['htmldb_action' . $index])) {
 
-			$object->request($_REQUEST, ('inputfield' . $index));
+			$object->request($_REQUEST, ('htmldb_row' . $index . '_'));
 
 			if (0 == $object->id) {
 
@@ -267,7 +267,7 @@ class auditController {
 
 			$index++;
 
-		} // while (isset($_REQUEST['inputaction' . $index])) {
+		} // while (isset($_REQUEST['htmldb_action' . $index])) {
 
 		$object->endBulkOperation();
 
@@ -374,7 +374,7 @@ class auditController {
 		$this->columns[] = 'audit_note';
 		$this->columns[] = 'photos';
 
-		includeView($this, 'htmldblist.gz');
+		includeView($this, 'htmldblist');
 		return;
 
 	}
@@ -389,7 +389,7 @@ class auditController {
 
 		includeModel('AuditStep');
 		$newAuditStep = new AuditStep();
-		$newAuditStep->request($_REQUEST, ('inputfield0'));
+		$newAuditStep->request($_REQUEST, ('htmldb_row0_'));
 
 		if ('' == $newAuditStep->step_action) {
 
@@ -452,14 +452,14 @@ class auditController {
 		$object = new AuditStep();
 		$object->beginBulkOperation();
 
-		while (isset($_REQUEST['inputaction' . $index])) {
+		while (isset($_REQUEST['htmldb_action' . $index])) {
 
-			$object->request($_REQUEST, ('inputfield' . $index));
+			$object->request($_REQUEST, ('htmldb_row' . $index . '_'));
 			$object->update();
 
 			$index++;
 
-		} // while (isset($_REQUEST['inputaction' . $index])) {
+		} // while (isset($_REQUEST['htmldb_action' . $index])) {
 		
 		$object->endBulkOperation();
 	}
@@ -500,7 +500,7 @@ class auditController {
 		$this->columns[] = 'id';
 		$this->columns[] = 'column0';
 
-		includeView($this, 'htmldblist.gz');
+		includeView($this, 'htmldblist');
 		return;
 
 	}
@@ -541,7 +541,7 @@ class auditController {
 		$this->columns[] = 'id';
 		$this->columns[] = 'column0';
 
-		includeView($this, 'htmldblist.gz');
+		includeView($this, 'htmldblist');
 		return;
 
 	}
@@ -563,7 +563,7 @@ class auditController {
 		$this->columns[] = 'pageCount';
 		$this->columns[] = 'audit_state_idSearchText';
 
-		includeView($this, 'spritpanel/htmldblist.gz');
+		includeView($this, 'spritpanel/htmldblist');
 		return;
 
 	}
@@ -576,35 +576,35 @@ class auditController {
 
 		$resetPage = false;
 
-		if (isset($_REQUEST['inputaction0'])
-				&& ('updated' == $_REQUEST['inputaction0'])) {
+		if (isset($_REQUEST['htmldb_action0'])
+				&& ('updated' == $_REQUEST['htmldb_action0'])) {
 
-			$searchText = isset($_REQUEST['inputfield0searchText'])
-					? htmlspecialchars($_REQUEST['inputfield0searchText'])
+			$searchText = isset($_REQUEST['htmldb_row0_searchText'])
+					? htmlspecialchars($_REQUEST['htmldb_row0_searchText'])
 					: $sessionParameters['searchText'];
 			$_SESSION[sha1(__FILE__) . 'searchText'] = $searchText;
 
-			$sortingColumn = isset($_REQUEST['inputfield0sortingColumn'])
-					? intval($_REQUEST['inputfield0sortingColumn'])
+			$sortingColumn = isset($_REQUEST['htmldb_row0_sortingColumn'])
+					? intval($_REQUEST['htmldb_row0_sortingColumn'])
 					: $sessionParameters['sortingColumn'];
 			$_SESSION[sha1(__FILE__) . 'sortingColumn'] = $sortingColumn;
 
-			$sortingASC = isset($_REQUEST['inputfield0sortingASC'])
-					? intval($_REQUEST['inputfield0sortingASC'])
+			$sortingASC = isset($_REQUEST['htmldb_row0_sortingASC'])
+					? intval($_REQUEST['htmldb_row0_sortingASC'])
 					: $sessionParameters['sortingASC'];
 			$_SESSION[sha1(__FILE__) . 'sortingASC'] = $sortingASC;
 
-			$page = isset($_REQUEST['inputfield0page'])
-					? intval($_REQUEST['inputfield0page'])
+			$page = isset($_REQUEST['htmldb_row0_page'])
+					? intval($_REQUEST['htmldb_row0_page'])
 					: $sessionParameters['page'];
 			$_SESSION[sha1(__FILE__) . 'page'] = $page;
 
-			$audit_state_idSearchText = isset($_REQUEST['inputfield0audit_state_idSearchText'])
-					? htmlspecialchars($_REQUEST['inputfield0audit_state_idSearchText'])
+			$audit_state_idSearchText = isset($_REQUEST['htmldb_row0_audit_state_idSearchText'])
+					? htmlspecialchars($_REQUEST['htmldb_row0_audit_state_idSearchText'])
 					: $sessionParameters['audit_state_idSearchText'];
 			$_SESSION[sha1(__FILE__) . 'audit_state_idSearchText'] = $audit_state_idSearchText;
 
-		} // if (isset($_REQUEST['inputaction' . $index])) {
+		} // if (isset($_REQUEST['htmldb_action' . $index])) {
 
 	}
 

@@ -9,7 +9,7 @@ var SpritPanelHTMLDB = {
 		}
 	},
 	"initializeHTMLDBEvents": function () {
-		$(".htmldb-table").on("error", function (event) {
+		$(".htmldb-table").on("htmldberror", function (event) {
 			SpritPanelHTMLDB.showError(event);
 		});
 
@@ -17,8 +17,16 @@ var SpritPanelHTMLDB = {
 			SpritPanelHTMLDB.showEditDialog(this, event);
 		});
 
-		$(".htmldb-button-save").on("save", function (event) {
+		$(".htmldb-button-save").on("htmldbsave", function (event) {
 			SpritPanelHTMLDB.doSave(this);
+		});
+
+		$(".htmldb-button-add").on("click", function (event) {
+			SpritPanelHTMLDB.showEditDialog(this, event);
+		});
+
+		$("select.htmldb-field").on("htmldbsetoptions", function (event) {
+			SpritPanelHTMLDB.renderSelectElement(this, event);
 		});
 	},
 	"showError": function (event) {
@@ -44,7 +52,7 @@ var SpritPanelHTMLDB = {
 		}
 
 		if ("" == HTMLDB.getHTMLDBParameter(button, "form")) {
-			throw(new Error("Edit button target form not specified."));
+			throw(new Error("Button target form not specified."));
 			return false;
 		}
 
@@ -52,7 +60,7 @@ var SpritPanelHTMLDB = {
 		var form = document.getElementById(formId);
 
 		if (!form) {
-			throw(new Error("Edit button target form " + formId + " not found."));
+			throw(new Error("Button target form " + formId + " not found."));
 			return false;
 		}
 
@@ -72,7 +80,7 @@ var SpritPanelHTMLDB = {
 		}
 
 		if (-1 == parent.className.indexOf("htmldb-dialog-edit")) {
-			throw(new Error("Edit button target form " + formId + " dialog not found."));
+			throw(new Error("Button target form " + form.getAttribute("id") + " dialog not found."));
 			return false;
 		}
 
@@ -85,6 +93,10 @@ var SpritPanelHTMLDB = {
 
 		var form = null;
 		var dialog = null;
+		var tableId = "";
+		var table = null;
+
+		$(sender).addClass("disabled");
 
 		form = SpritPanelHTMLDB.extractButtonForm(sender);
 
@@ -92,9 +104,66 @@ var SpritPanelHTMLDB = {
 			return false;
 		}
 
+		tableId = HTMLDB.getHTMLDBParameter(form, "table");
+
+		if ("" == tableId) {
+			return false;
+		}
+
+		table = document.getElementById(tableId);
+
+		if (HTMLDB.getHTMLDBParameter(table, "redirect") != "") {
+			return true;
+		}
+
+		$(sender).removeClass("disabled");
+
 		dialog = SpritPanelHTMLDB.extractFormDialog(form);
 
+		if (!dialog) {
+			return false;
+		}
+
 		hideDialog(dialog.id);
+	},
+	"renderSelectElement": function (sender, event) {
+		if (!sender) {
+			return false;
+		}
+
+        if (sender.selectize) {
+            sender.selectize.destroy();
+        }
+
+        if (sender.multiple) {
+
+            $(sender).selectize({
+	    		preload: false,
+                plugins: ["remove_button"],
+                create: true,
+                createFilter: function(input) {
+                    return false;
+                }
+            });
+
+            if ($(".selectize-input.items", sender.parentNode).hasClass('ui-sortable')) {
+                $(".selectize-input.items", sender.parentNode).sortable("destroy");
+            }
+
+            $(".selectize-input.items", sender.parentNode).sortable({
+                axis: "x",
+                opacity: 0.7,
+                placeholder: "item"
+            });
+
+        } else {
+
+	        $(sender).selectize({
+	    		preload: false,
+	    		create: false
+	        });
+
+        }
 	}
 }
 SpritPanelHTMLDB.initialize();

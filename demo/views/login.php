@@ -41,7 +41,7 @@
 						<div class="row">
 							<div class="input-field">
 								<div class="col s12">
-									<button id="buttonSubmitLoginForm" name="buttonSubmitLoginForm" data-default-text="<?php echo __('GİRİŞ YAP'); ?>" data-loading-text="<?php echo __('GİRİŞ YAPILIYOR...'); ?>" type="submit" class="waves-effect waves-light btn-large blue darken-4 col s12 htmldb-button-save" data-htmldb-table="loginHTMLDB"><?php echo __('GİRİŞ YAP'); ?></button>
+									<button id="buttonSubmitLoginForm" name="buttonSubmitLoginForm" data-default-text="<?php echo __('GİRİŞ YAP'); ?>" data-loading-text="<?php echo __('GİRİŞ YAPILIYOR...'); ?>" type="submit" class="waves-effect waves-light btn-large blue darken-4 col s12 htmldb-button-save" data-htmldb-form="formLogin"><?php echo __('GİRİŞ YAP'); ?></button>
 								</div>
 							</div>
 						</div>
@@ -136,10 +136,10 @@
 	        </div>
 	    </div>
 	</div>
-	<div id="loginHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>login/read" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>login/validate" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>login/write" data-htmldb-writeonly="1" data-htmldb-loader="divLoader" data-htmldb-redirect="<?php echo $_SPRIT['URL_PREFIX']; ?>home"></div>
-	<div id="forgotPasswordHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>forgotpassword/read" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>forgotpassword/validate" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>forgotpassword/write" data-htmldb-writeonly="1" data-htmldb-loader="divLoader"></div>
+	<div id="loginHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>login/read" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>login/validate" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>login/write" data-htmldb-write-only="1" data-htmldb-loader="divLoader" data-htmldb-redirect="<?php echo $_SPRIT['URL_PREFIX']; ?>home"></div>
+	<div id="forgotPasswordHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>forgotpassword/read" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>forgotpassword/validate" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>forgotpassword/write" data-htmldb-write-only="1" data-htmldb-loader="divLoader"></div>
 	<script type="text/javascript" src="assets/js/global.js"></script>
-	<script type="text/javascript" src="../source/htmldb.js"></script>
+	<script type="text/javascript" src="../src/htmldb.js"></script>
 	<script type="text/javascript" src="assets/js/spritpanel.htmldb.js"></script>
 	<script type="text/javascript" src="assets/js/login.js"></script>
 </body>

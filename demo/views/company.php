@@ -13,13 +13,13 @@
         </ul>
     </div>
 </div>
-<div class="divPageSubHeader">
+<div class="divPageSubHeader htmldb-section" data-htmldb-table="companyHTMLDB">
     <h2><a href="<?php echo $_SPRIT['URL_PREFIX']; ?>home">Anasayfa</a>&nbsp;<i class="ion-chevron-right"></i>&nbsp;<a href="<?php echo $_SPRIT['URL_PREFIX']; ?>companies">Firmalar</a></h2>
-    <h1 class="HTMLDBFieldContent" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="company_name">&nbsp;</h1>
+    <h1 data-htmldb-content="{{company_name}}">&nbsp;</h1>
 </div>
 <section id="sectionDetails" class="sectionContent">
     <div class="col s12 m7">
-        <form id="formDetails" name="formDetails">
+        <form id="formDetails" name="formDetails" class="htmldb-section" data-htmldb-table="companyHTMLDB">
             <div class="card horizontal grey lighten-3">
                 <div class="card-stacked">
                     <div class="card-content">
@@ -31,31 +31,31 @@
                             <div class="col l3 m3 s12">
                                 <label><?php echo __('Firma'); ?></label>
                                 <div class="input-field">
-                                    <p class="HTMLDBFieldContent" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="company_name">&nbsp;</p>
+                                    <p data-htmldb-content="{{company_name}}">&nbsp;</p>
                                 </div>
                             </div>
                             <div class="col l3 m3 s12">
                                 <label><?php echo __('Puan'); ?></label>
                                 <div class="input-field">
-                                    <p class="HTMLDBFieldContent" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="score">&nbsp;</p>
+                                    <p data-htmldb-content="{{score}}">&nbsp;</p>
                                 </div>
                             </div>
                             <div class="col l3 m3 s12">
                                 <label><?php echo __('Türü'); ?></label>
                                 <div class="input-field">
-                                    <p class="HTMLDBFieldContent" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="typeDisplayText">&nbsp;</p>
+                                    <p data-htmldb-content="{{typeDisplayText}}">&nbsp;</p>
                                 </div>
                             </div>
                             <div class="col l3 m3 s12">
                                 <label><?php echo __('Danışman'); ?></label>
                                 <div class="input-field">
-                                    <p class="HTMLDBFieldContent" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="consultantDisplayText">&nbsp;</p>
+                                    <p data-htmldb-content="{{consultantDisplayText}}">&nbsp;</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-action">
-                        <button id="buttonEdit" type="button" name="buttonEdit" data-htmldb-field="id" data-htmldb-attribute="data-htmldb-row-id" data-htmldb-dialog="divCompanyDialog" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-row-id="" class="buttonAction HTMLDBAction HTMLDBEdit HTMLDBFieldAttribute waves-effect waves-dark cyan-text text-darken-1 btn white"><i class="ion-edit col s12"></i> <?php echo __('UPDATE'); ?></button>
+                        <button id="buttonEdit" type="button" name="buttonEdit" data-htmldb-form="formCompany" class="buttonAction htmldb-button-edit waves-effect waves-dark cyan-text text-darken-1 btn white"><i class="ion-edit col s12"></i> <?php echo __('UPDATE'); ?></button>
                     </div>
                 </div>
             </div>
@@ -127,7 +127,7 @@
                     <div class="card-content">
                         <div class="row">
                             <span class="card-title activator grey-text text-darken-4">Alanlar</span>
-                            <button class="waves-effect white-text btn right cyan darken-1 HTMLDBAction HTMLDBAdd" type="button" data-htmldb-dialog="divUnitDialog" data-htmldb-source="divUnitHTMLDBReader" data-htmldb-row-id=""><i class="ion-plus"></i> YENİ ALAN</button>
+                            <button class="htmldb-button-add waves-effect white-text btn right cyan darken-1" type="button" data-htmldb-form="formUnit"><i class="ion-plus"></i> YENİ ALAN</button>
                             <table id="tableObjectList" class="tableList highlight"
                             data-related-table-id="tableGhostObjectList">
                             <thead>
@@ -180,7 +180,7 @@
                     <div class="card-content">
                         <div class="row">
                             <span class="card-title activator grey-text text-darken-4">Denetimler</span>
-                            <button class="waves-effect white-text btn right cyan darken-1 HTMLDBAction HTMLDBAdd" type="button" data-htmldb-dialog="divCompanyAuditDialog" data-htmldb-source="divAuditHTMLDBReader" data-htmldb-row-id="0"><i class="ion-plus"></i> YENİ DENETİM</button>
+                            <button class="htmldb-button-add waves-effect white-text btn right cyan darken-1" type="button" data-htmldb-form="formAudit"><i class="ion-plus"></i> YENİ DENETİM</button>
                             <table id="tableObjectList" class="tableList highlight" data-related-table-id="tableGhostObjectList">
                                 <thead>
                                     <tr>
@@ -345,7 +345,7 @@
     </div>
 </div>
 <div class="divLoaderNonBlocking"><img src="assets/img/loader-oval.svg" width="20" height="20" /><span class="blue-text text-darken-4">Loading</span></div>
-<div class="divDialogContent divLoader" id="divLoader" style="display: none;">
+<div class="divDialogContent divLoader" id="divLoader">
     <div class="divContentWrapper level4">
         <div class="divDialogContentContainer">
             <div class="row">
@@ -359,119 +359,105 @@
         </div>
     </div>
 </div>
-<div class="divHiddenElements">
-    <div id="divConsultantHTMLDBReader"></div>
-    <div id="divCompanyHTMLDBReader"></div>
-    <div id="divCompanyHTMLDBWriter" class="HTMLDBAction HTMLDBLoopWriter" data-htmldb-reader="divCompanyHTMLDBReader"></div>
-    <div id="divUnitForAuditHTMLDBReader"></div>
-    <div id="divUnitForApplicationHTMLDBReader"></div>
-    <div id="divUnitHTMLDBReader"></div>
-    <div id="divUnitHTMLDBWriter" class="HTMLDBAction HTMLDBLoopWriter" data-htmldb-redirect="<?php echo $_SPRIT['URL_PREFIX']; ?>unit/last"></div>
-    <table>
-        <tbody id="tbodyUnitListTemplate">
-            <tr class="trUnit#divUnitHTMLDBReader.id" data-object-id="#divUnitHTMLDBReader.id">
-                <td class="center">
-                    <label class="checkbox2 left-align" for="bSelectObject#divUnitHTMLDBReader.id">
-                        <input data-object-id="#divUnitHTMLDBReader.id" class="bSelectObject" id="bSelectObject#divUnitHTMLDBReader.id" name="bSelectObject#divUnitHTMLDBReader.id" value="1" type="checkbox">
-                        <span class="outer">
-                            <span class="inner"></span>
-                        </span>
-                    </label>
-                </td>
-                <td class="tdEditObject tdUnitEditObject">#divUnitHTMLDBReader.id</td>
-                <td class="tdEditObject tdUnitEditObject">#divUnitHTMLDBReader.name</td>
-                <td>
-                    <a data-object-id="#divUnitHTMLDBReader.id" class="buttonTableListAction buttonEditObject right" href="<?php echo $_SPRIT['URL_PREFIX']; ?>unit/#divUnitHTMLDBReader.id">
-                        <i class="ion-android-search"></i>
-                    </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div id="divCompanyTypeHTMLDBReader"></div>
-    <div id="divCrewTypeHTMLDBReader"></div>
-    <div id="divCrewHTMLDBReader"></div>
-    <div id="divCrewHTMLDBWriter" class="HTMLDBAction HTMLDBLoopWriter" data-htmldb-reader="divCrewHTMLDBReader"></div>
-    <table>
-        <tbody id="tbodyCrewListTemplate">
-            <tr class="trCrew#divCrewHTMLDBReader.id">
-                <td class="center">
-                    <label class="checkbox2 left-align" for="bSelectCrew#divCrewHTMLDBReader.id">
-                        <input data-object-id="#divCrewHTMLDBReader.id" class="bSelectCrew" id="bSelectCrew#divCrewHTMLDBReader.id" name="bSelectCrew#divCrewHTMLDBReader.id" value="1" type="checkbox">
-                        <span class="outer">
-                            <span class="inner"></span>
-                        </span>
-                    </label>
-                </td>
-                <td>#divCrewHTMLDBReader.id</td>
-                <td>#divCrewHTMLDBReader.typeDisplayText</td>
-                <td>#divCrewHTMLDBReader.name</td>
-                <td>#divCrewHTMLDBReader.email</td>
-                <td>
-                    <button type="button" data-htmldb-row-id="#divCrewHTMLDBReader.id" class="buttonTableListAction buttonEditObject right HTMLDBAction HTMLDBEdit" data-htmldb-source="divCrewHTMLDBReader" data-htmldb-dialog="divCompanyCrewDialog">
-                        <i class="ion-android-create"></i>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div id="divAuditTypeHTMLDBReader"></div>
-    <div id="divAuditHTMLDBReader"></div>
-    <div id="divAuditHTMLDBWriter" class="HTMLDBAction HTMLDBLoopWriter" data-htmldb-redirect="<?php echo $_SPRIT['URL_PREFIX']; ?>audit/last"></div>
-    <table>
-        <tbody id="tbodyAuditListTemplate">
-            <tr class="trAudit#divAuditHTMLDBReader.id" data-object-id="#divAuditHTMLDBReader.id">
-                <td class="center">
-                    <label class="checkbox2 left-align" for="bSelectAudit#divAuditHTMLDBReader.id">
-                        <input data-object-id="#divAuditHTMLDBReader.id" class="bSelectAudit" id="bSelectAudit#divAuditHTMLDBReader.id" name="bSelectAudit#divAuditHTMLDBReader.id" value="1" type="checkbox">
-                        <span class="outer">
-                            <span class="inner"></span>
-                        </span>
-                    </label>
-                </td>
-                <td class="tdEditObject tdAuditEditObject">#divAuditHTMLDBReader.id</td>
-                <td class="tdEditObject tdAuditEditObject">#divAuditHTMLDBReader.unit_idDisplayText</td>
-                <td class="tdEditObject tdAuditEditObject">#divAuditHTMLDBReader.audit_date</td>
-                <td class="tdEditObject tdAuditEditObject">#divAuditHTMLDBReader.audit_code</td>
-                <td class="tdEditObject tdAuditEditObject">#divAuditHTMLDBReader.audit_type_idDisplayText</td>
-                <td class="tdEditObject tdAuditEditObject">#divAuditHTMLDBReader.audit_state_idDisplayText</td>
-                <td class="tdEditObject tdAuditEditObject">#divAuditHTMLDBReader.score</td>
-                <td>
-                    <a href="<?php echo $_SPRIT['URL_PREFIX']; ?>audit/#divAuditHTMLDBReader.id" data-htmldb-row-id="#divAuditHTMLDBReader.id" class="buttonTableListAction buttonEditObject right" data-htmldb-source="divAuditHTMLDBReader">
-                        <i class="ion-android-search"></i>
-                    </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div id="divApplicationHTMLDBReader"></div>
-    <div id="divApplicationHTMLDBWriter" class="HTMLDBAction HTMLDBLoopWriter" data-htmldb-redirect="<?php echo $_SPRIT['URL_PREFIX']; ?>application/last"></div>
-    <table>
-        <tbody id="tbodyApplicationListTemplate">
-            <tr class="trApplication#divApplicationHTMLDBReader.id" data-object-id="#divApplicationHTMLDBReader.id">
-                <td class="center">
-                    <label class="checkbox2 left-align" for="bSelectObject#divApplicationHTMLDBReader.id">
-                        <input data-object-id="#divApplicationHTMLDBReader.id" class="bSelectObject" id="bSelectObject#divApplicationHTMLDBReader.id" name="bSelectObject#divApplicationHTMLDBReader.id" value="1" type="checkbox">
-                        <span class="outer">
-                            <span class="inner"></span>
-                        </span>
-                    </label>
-                </td>
-                <td class="tdEditObject tdApplicationEditObject">#divApplicationHTMLDBReader.id</td>
-                <td class="tdEditObject tdApplicationEditObject">#divApplicationHTMLDBReader.unit_idDisplayText</td>
-                <td class="tdEditObject tdApplicationEditObject">#divApplicationHTMLDBReader.application_date</td>
-                <td class="tdEditObject tdApplicationEditObject">#divApplicationHTMLDBReader.application_code</td>
-                <td>
-                    <a href="<?php echo $_SPRIT['URL_PREFIX']; ?>application/#divApplicationHTMLDBReader.id" data-htmldb-row-id="#divApplicationHTMLDBReader.id" class="buttonTableListAction buttonEditObject right" data-htmldb-source="divApplicationHTMLDBReader">
-                        <i class="ion-android-search"></i>
-                    </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<div id="consultantHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readpropertyoptions/consultant" data-htmldb-read-only="1" data-htmldb-priority="0" data-htmldb-loader="divLoader"></div>
+<div id="companyTypeHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readcompanytype" data-htmldb-read-only="1" data-htmldb-priority="0" data-htmldb-loader="divLoader"></div>
+<div id="crewTypeHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readcrewtype" data-htmldb-read-only="1" data-htmldb-priority="0" data-htmldb-loader="divLoader"></div>
+<div id="auditTypeHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readaudittype" data-htmldb-read-only="1" data-htmldb-priority="0" data-htmldb-loader="divLoader"></div>
+<div id="companyHTMLDB" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/read/{{$URL.-1}}" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/validate/{{$URL.-1}}" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/write/{{$URL.-1}}" class="htmldb-table" data-htmldb-priority="0" data-htmldb-loader="divLoader"></div>
+<div id="unitHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readunit/{{$URL.-1}}" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/validateunit/{{$URL.-1}}" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/writeunit/{{$URL.-1}}" data-htmldb-redirect="<?php echo $_SPRIT['URL_PREFIX']; ?>unit/last" data-htmldb-loader="divLoader"></div>
+<div id="crewHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readcrew/{{$URL.-1}}" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/validatecrew/{{$URL.-1}}" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/writecrew/{{$URL.-1}}" data-htmldb-loader="divLoader"></div>
+<div id="auditHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readaudit/{{$URL.-1}}" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>audit/validate" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>audit/write" data-htmldb-redirect="<?php echo $_SPRIT['URL_PREFIX']; ?>audit/last" data-htmldb-loader="divLoader"></div>
+<div id="applicationHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readapplication/{{$URL.-1}}" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/validateapplication/{{$URL.-1}}" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/writeapplication/{{$URL.-1}}" data-htmldb-redirect="<?php echo $_SPRIT['URL_PREFIX']; ?>application/last" data-htmldb-loader="divLoader"></div>
+<div id="unitForApplicationHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readunitforapplication/{{$URL.-1}}" data-htmldb-loader="divLoader"></div>
+<div id="unitForAuditHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readunitforaudit/{{$URL.-1}}" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readcompanytype" data-htmldb-loader="divLoader"></div>
+<script type="text/html" id="tbodyApplicationListTemplate" class="htmldb-template" data-htmldb-table="applicationHTMLDB" data-htmldb-template-target="tbodyApplicationList">
+    <tr class="trApplication{{id}}" data-object-id="{{id}}">
+        <td class="center">
+            <label class="checkbox2 left-align" for="bSelectObject{{id}}">
+                <input data-object-id="{{id}}" class="bSelectObject" id="bSelectObject{{id}}" name="bSelectObject{{id}}" value="1" type="checkbox">
+                <span class="outer">
+                    <span class="inner"></span>
+                </span>
+            </label>
+        </td>
+        <td class="tdEditObject tdApplicationEditObject">{{id}}</td>
+        <td class="tdEditObject tdApplicationEditObject">{{unit_idDisplayText}}</td>
+        <td class="tdEditObject tdApplicationEditObject">{{application_date}}</td>
+        <td class="tdEditObject tdApplicationEditObject">{{application_code}}</td>
+        <td>
+            <a href="<?php echo $_SPRIT['URL_PREFIX']; ?>application/{{id}}" data-htmldb-row-id="{{id}}" class="buttonTableListAction buttonEditObject right">
+                <i class="ion-android-search"></i>
+            </a>
+        </td>
+    </tr>
+</script>
+<script type="text/html" id="tbodyUnitListTemplate" class="htmldb-template" data-htmldb-table="unitHTMLDB" data-htmldb-template-target="tbodyUnitList">
+    <tr class="trUnit{{id}}" data-object-id="{{id}}">
+        <td class="center">
+            <label class="checkbox2 left-align" for="bSelectObject{{id}}">
+                <input data-object-id="{{id}}" class="bSelectObject" id="bSelectObject{{id}}" name="bSelectObject{{id}}" value="1" type="checkbox">
+                <span class="outer">
+                    <span class="inner"></span>
+                </span>
+            </label>
+        </td>
+        <td class="tdEditObject tdUnitEditObject">{{id}}</td>
+        <td class="tdEditObject tdUnitEditObject">{{name}}</td>
+        <td>
+            <a data-object-id="{{id}}" class="buttonTableListAction buttonEditObject right" href="<?php echo $_SPRIT['URL_PREFIX']; ?>unit/{{id}}">
+                <i class="ion-android-search"></i>
+            </a>
+        </td>
+    </tr>
+</script>
+<script type="text/html" id="tbodyCrewListTemplate" class="htmldb-template" data-htmldb-table="crewHTMLDB" data-htmldb-template-target="tbodyCrewList">
+    <tr class="trCrew{{id}}">
+        <td class="center">
+            <label class="checkbox2 left-align" for="bSelectCrew{{id}}">
+                <input data-object-id="{{id}}" class="bSelectCrew" id="bSelectCrew{{id}}" name="bSelectCrew{{id}}" value="1" type="checkbox">
+                <span class="outer">
+                    <span class="inner"></span>
+                </span>
+            </label>
+        </td>
+        <td>{{id}}</td>
+        <td>{{typeDisplayText}}</td>
+        <td>{{name}}</td>
+        <td>{{email}}</td>
+        <td>
+            <button type="button" data-htmldb-row-id="{{id}}" class="buttonTableListAction buttonEditObject right htmldb-button-edit" data-htmldb-table="crewHTMLDB">
+                <i class="ion-android-create"></i>
+            </button>
+        </td>
+    </tr>
+</script>
+<script type="text/html" id="tbodyAuditListTemplate" class="htmldb-template" data-htmldb-table="auditHTMLDB" data-htmldb-template-target="tbodyAuditList">
+    <tr class="trAudit{{id}}" data-object-id="{{id}}">
+        <td class="center">
+            <label class="checkbox2 left-align" for="bSelectAudit{{id}}">
+                <input data-object-id="{{id}}" class="bSelectAudit" id="bSelectAudit{{id}}" name="bSelectAudit{{id}}" value="1" type="checkbox">
+                <span class="outer">
+                    <span class="inner"></span>
+                </span>
+            </label>
+        </td>
+        <td class="tdEditObject tdAuditEditObject">{{id}}</td>
+        <td class="tdEditObject tdAuditEditObject">{{unit_idDisplayText}}</td>
+        <td class="tdEditObject tdAuditEditObject">{{audit_date}}</td>
+        <td class="tdEditObject tdAuditEditObject">{{audit_code}}</td>
+        <td class="tdEditObject tdAuditEditObject">{{audit_type_idDisplayText}}</td>
+        <td class="tdEditObject tdAuditEditObject">{{audit_state_idDisplayText}}</td>
+        <td class="tdEditObject tdAuditEditObject">{{score}}</td>
+        <td>
+            <a href="<?php echo $_SPRIT['URL_PREFIX']; ?>audit/{{id}}" data-htmldb-row-id="{{id}}" class="buttonTableListAction buttonEditObject right">
+                <i class="ion-android-search"></i>
+            </a>
+        </td>
+    </tr>
+</script>
 <script src="assets/js/global.js"></script>
-<script src="assets/js/htmldb_helpers.js"></script>
+<script src="../src/htmldb.js"></script>
+<script src="assets/js/spritpanel.htmldb.js"></script>
 <script src="assets/js/company.js"></script>
 </body>
 </html>

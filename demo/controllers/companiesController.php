@@ -137,7 +137,7 @@ class companiesController {
 		$this->columns[] = 'consultant';
 		$this->columns[] = 'consultantDisplayText';
 
-		includeView($this, 'htmldblist.gz');
+		includeView($this, 'htmldblist');
 		return;
 
 	}
@@ -154,7 +154,7 @@ class companiesController {
 
 		includeModel('Company');
 		$newCompany = new Company();
-		$newCompany->request($_REQUEST, ('inputfield0'));
+		$newCompany->request($_REQUEST, ('htmldb_row0_'));
 
 		if ('' == $newCompany->company_name) {
 
@@ -202,7 +202,7 @@ class companiesController {
 		includeModel('Company');
 		$company = new Company();
 		$company->beginBulkOperation();
-		$company->request($_REQUEST, ('inputfield0'));
+		$company->request($_REQUEST, ('htmldb_row0_'));
 		$company->created_by = $this->user->id;
 		$company->update();
 		$company->endBulkOperation();
@@ -228,7 +228,7 @@ class companiesController {
 		$this->columns[] = 'pageCount';
 		$this->columns[] = 'consultantSearchText';
 
-		includeView($this, 'spritpanel/htmldblist.gz');
+		includeView($this, 'htmldblist');
 		return;
 
 	}
@@ -244,28 +244,28 @@ class companiesController {
 		if (isset($_REQUEST['inputaction0'])
 				&& ('updated' == $_REQUEST['inputaction0'])) {
 
-			$searchText = isset($_REQUEST['inputfield0searchText'])
-					? htmlspecialchars($_REQUEST['inputfield0searchText'])
+			$searchText = isset($_REQUEST['htmldb_row0_searchText'])
+					? htmlspecialchars($_REQUEST['htmldb_row0_searchText'])
 					: $sessionParameters['searchText'];
 			$_SESSION[sha1(__FILE__) . 'searchText'] = $searchText;
 
-			$sortingColumn = isset($_REQUEST['inputfield0sortingColumn'])
-					? intval($_REQUEST['inputfield0sortingColumn'])
+			$sortingColumn = isset($_REQUEST['htmldb_row0_sortingColumn'])
+					? intval($_REQUEST['htmldb_row0_sortingColumn'])
 					: $sessionParameters['sortingColumn'];
 			$_SESSION[sha1(__FILE__) . 'sortingColumn'] = $sortingColumn;
 
-			$sortingASC = isset($_REQUEST['inputfield0sortingASC'])
-					? intval($_REQUEST['inputfield0sortingASC'])
+			$sortingASC = isset($_REQUEST['htmldb_row0_sortingASC'])
+					? intval($_REQUEST['htmldb_row0_sortingASC'])
 					: $sessionParameters['sortingASC'];
 			$_SESSION[sha1(__FILE__) . 'sortingASC'] = $sortingASC;
 
-			$page = isset($_REQUEST['inputfield0page'])
-					? intval($_REQUEST['inputfield0page'])
+			$page = isset($_REQUEST['htmldb_row0_page'])
+					? intval($_REQUEST['htmldb_row0_page'])
 					: $sessionParameters['page'];
 			$_SESSION[sha1(__FILE__) . 'page'] = $page;
 
-			$consultantSearchText = isset($_REQUEST['inputfield0consultantSearchText'])
-					? htmlspecialchars($_REQUEST['inputfield0consultantSearchText'])
+			$consultantSearchText = isset($_REQUEST['htmldb_row0_consultantSearchText'])
+					? htmlspecialchars($_REQUEST['htmldb_row0_consultantSearchText'])
 					: $sessionParameters['consultantSearchText'];
 			$_SESSION[sha1(__FILE__) . 'consultantSearchText'] = $consultantSearchText;
 

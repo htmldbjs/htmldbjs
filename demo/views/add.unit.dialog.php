@@ -1,4 +1,4 @@
-<div id="divUnitDialog" class="divDialogContent divDialogActive">
+<div id="divUnitDialog" class="divDialogContent divDialogActive htmldb-dialog-edit">
     <div class="divContentWrapper level2" style="display: block; opacity: 1;">
         <div class="divDialogContentContainer">
             <header class="headerHero z-depth-1 blue darken-4">
@@ -10,14 +10,15 @@
                 </button>
             </header>
             <div class="divContentPanel z-depth-1 white">
-                <form id="formUnit" name="formUnit" method="post" class="form-horizontal">
-                    <input type="hidden" name="unitCompany" id="unitCompany" value="" class="HTMLDBFieldValue" data-htmldb-field="company_id">
+                <form id="formUnit" name="formUnit" method="post" class="form-horizontal htmldb-form" data-htmldb-table="unitHTMLDB">
+                    <input type="hidden" name="unitId" id="unitId" value="0" class="htmldb-field" data-htmldb-field="id">
+                    <input type="hidden" name="unitCompany" id="unitCompany" value="" class="htmldb-field" data-htmldb-field="company_id" data-htmldb-reset-value="{{$URL.-1}}">
                     <div class="row">
                         <div class="row">
                             <div class="col s12">
                                 <label for="name"><?php echo __('Alan'); ?></label>
                                 <div class="input-field">
-                                    <input id="name" name="name" type="text" value="" class="HTMLDBFieldValue" data-htmldb-field="name">
+                                    <input id="name" name="name" type="text" value="" class="htmldb-field" data-htmldb-field="name" data-htmldb-value="{{name}}">
                                 </div>
                             </div>
                         </div>
@@ -31,7 +32,7 @@
                                 </button>
                             </div>
                             <div class="col s6">
-                                <button id="buttonSaveUnit" name="buttonSaveUnit" data-htmldb-row-id="0" data-htmldb-target="divUnitHTMLDBWriter" data-htmldb-dialog="divUnitDialog" type="button" data-default-text="<?php echo __('KAYDET'); ?>" data-loading-text="<?php echo __('KAYDEDİLİYOR...'); ?>" class="waves-effect waves-light btn-large blue darken-4 col s12 HTMLDBAction HTMLDBSave"><?php echo __('KAYDET'); ?></button>
+                                <button id="buttonSaveUnit" name="buttonSaveUnit" type="button" data-htmldb-form="formUnit" class="htmldb-button-save waves-effect waves-light btn-large blue darken-4 col s12"><?php echo __('KAYDET'); ?></button>
                             </div>
                         </div>
                     </div>
