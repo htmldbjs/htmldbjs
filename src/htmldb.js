@@ -757,6 +757,7 @@ var HTMLDB = {
 	"initializeHTMLDBButtons": function () {
 		HTMLDB.initializeHTMLDBRefreshButtons();
 		HTMLDB.initializeHTMLDBAddButtons();
+		HTMLDB.initializeHTMLDBEditButtons();
 		HTMLDB.initializeHTMLDBSaveButtons();
 	},
 	"resetForm": function (form) {
@@ -1011,20 +1012,27 @@ var HTMLDB = {
 
         for (var i = 0; i < buttonCount; i++) {
         	button = buttons[i];
-            if (HTMLDB.getHTMLDBParameter(button, "table") == tableElement.id) {
-				if (button.addEventListener) {
-					button.addEventListener("click", HTMLDB.doEditButtonClick, true);
-				} else if (button.attachEvent) {
-		            button.attachEvent("onclick", HTMLDB.doEditButtonClick);
-		        }
-            }
+
+        	if (tableElement) {
+	            if (HTMLDB.getHTMLDBParameter(button, "table") != tableElement.id) {
+	            	continue;
+	            }
+        	}
+
+			if (button.addEventListener) {
+				button.addEventListener("click", HTMLDB.doEditButtonClick, true);
+			} else if (button.attachEvent) {
+	            button.attachEvent("onclick", HTMLDB.doEditButtonClick);
+	        }
 	    }
 	},
 	"initializeReadQueue": function () {
         var tableElements = document.body.querySelectorAll(".htmldb-table");
         var tableElementCount = tableElements.length;
         var tableElement = null;
+        var indices = [];
        	var priorities = [];
+       	var index = 0;
        	var priority = 0;
 
         HTMLDB.readQueue = null;
@@ -1032,20 +1040,21 @@ var HTMLDB = {
         for (var i = 0; i < tableElementCount; i++) {
         	tableElement = tableElements[i];
         	priority = parseInt(HTMLDB.getHTMLDBParameter(tableElement, "priority"));
-        	if (undefined === priorities[priority]) {
-			    priorities[priority] = [];
+        	if (-1 == indices.indexOf(priority)) {
+			    indices.push(priority);
         	}
         }
 
-		priorities.sort();
+		indices.sort();
 
         for (var i = 0; i < tableElementCount; i++) {
         	tableElement = tableElements[i];
         	priority = parseInt(HTMLDB.getHTMLDBParameter(tableElement, "priority"));
-			if (undefined === priorities[priority]) {
-				priorities[priority] = [];
+        	index = indices.indexOf(priority);
+			if (undefined === priorities[index]) {
+				priorities[index] = [];
 			}
-        	priorities[priority][priorities[priority].length] = tableElement.id;
+        	priorities[index].push(tableElement.id);
         }
 
         HTMLDB.readQueue = priorities;
@@ -2113,11 +2122,26 @@ var HTMLDB = {
 				{detail:{"messageText":messageText}}));
 	},
 	"doEditButtonClick": function (event) {
-		var tableElement = document.getElementById(HTMLDB.getHTMLDBParameter(event.target, "table"));
+		var tableElement = null;
+		var formElement = null;
+		var tableElementId = HTMLDB.getHTMLDBParameter(event.target, "table");
+		var formElementId = HTMLDB.getHTMLDBParameter(event.target, "form");
+
+		if ((tableElementId == "") && (formElementId != "")) {
+			formElement = document.getElementById(formElementId);
+			if (!formElement) {
+	        	throw(new Error("Edit button HTMLDB form " + formElementId + " not found."));
+				return false;
+			}
+			tableElementId = HTMLDB.getHTMLDBParameter(formElement, "table");
+		}
+
+		tableElement = document.getElementById(tableElementId);
 		if (!tableElement) {
-        	throw(new Error("Edit button HTMLDB table not found."));
+        	throw(new Error("Edit button HTMLDB table " + tableElementId + " not found."));
 			return false;
 		}
+
 		HTMLDB.setActiveId(
 				tableElement,
 				HTMLDB.getHTMLDBParameter(event.target, "edit-id"));
