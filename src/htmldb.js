@@ -1058,7 +1058,6 @@ var HTMLDB = {
         }
 
         HTMLDB.readQueue = priorities;
-
         HTMLDB.processReadQueue();
 	},
 	"readChildTable": function (tableElementId, functionDone) {
