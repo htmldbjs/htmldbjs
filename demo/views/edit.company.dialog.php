@@ -28,7 +28,7 @@
                                         <option value=""><?php echo __('Lütfen Seçiniz'); ?></option>
                                     </select>
                                 </div>
-                                <div class="col s12" id="consultantContainer">
+                                <div class="col s12 htmldb-toggle" data-htmldb-filter="type/eq/1" id="consultantContainer">
                                     <label for="consultant"><?php echo __('Danışman'); ?>  </label>
                                     <select class="selectClassSelection htmldb-field" data-htmldb-option-table="consultantHTMLDB" id="companyConsultant" style="width: 100%" name="companyConsultant"  data-htmldb-field="consultant" data-htmldb-value="{{consultant}}" data-htmldb-option-title="{{column0}}" data-htmldb-option-value="{{id}}">
                                         <option value=""><?php echo __('Please Select'); ?></option>

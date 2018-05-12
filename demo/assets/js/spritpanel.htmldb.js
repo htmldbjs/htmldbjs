@@ -143,7 +143,10 @@ var SpritPanelHTMLDB = {
                 create: true,
                 createFilter: function(input) {
                     return false;
-                }
+                },
+				onChange: function(value) {
+      				SpritPanelHTMLDB.doSelectizeChange(sender, value);
+    			}
             });
 
             if ($(".selectize-input.items", sender.parentNode).hasClass('ui-sortable')) {
@@ -160,10 +163,17 @@ var SpritPanelHTMLDB = {
 
 	        $(sender).selectize({
 	    		preload: false,
-	    		create: false
+	    		create: false,
+				onChange: function(value) {
+      				SpritPanelHTMLDB.doSelectizeChange(sender, value);
+    			}
 	        });
 
         }
+	},
+	"doSelectizeChange": function (sender, value) {
+		var form = HTMLDB.extractToggleParentElement(sender);
+		HTMLDB.doParentElementToggle(form);
 	}
 }
 SpritPanelHTMLDB.initialize();

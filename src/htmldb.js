@@ -9,6 +9,7 @@ var HTMLDB = {
 		HTMLDB.initializeHTMLDBSections();
 		HTMLDB.initializeHTMLDBForms();
 		HTMLDB.initializeHTMLDBSelects();
+		HTMLDB.initializeHTMLDBToggles();
 		HTMLDB.initializeReadQueue();
 
 		HTMLDB.resetWriterLoop();
@@ -519,6 +520,9 @@ var HTMLDB = {
 		tableElement.setAttribute("data-htmldb-active-id", id);
 		HTMLDB.render(tableElement);
 	},
+	"getActiveId": function (tableElement) {
+		return tableElement.getAttribute("data-htmldb-active-id");
+	},
 	"resetWriterLoop": function () {
 	    var HTMLDBWriterTimer = document.body.HTMLDBWriterTimer;
 	    clearTimeout(HTMLDBWriterTimer);
@@ -666,6 +670,7 @@ var HTMLDB = {
             section = sections[i];
             if (HTMLDB.getHTMLDBParameter(section, "table") == tableElement.id) {
             	HTMLDB.renderSectionElement(section);
+            	HTMLDB.doParentElementToggle(section);
             }
         }
 	},
@@ -677,6 +682,7 @@ var HTMLDB = {
             form = forms[i];
             if (HTMLDB.getHTMLDBParameter(form, "table") == tableElement.id) {
             	HTMLDB.renderFormElement(form);
+            	HTMLDB.doParentElementToggle(form);
             }
         }
         HTMLDB.initializeHTMLDBEditButtons(tableElement);
@@ -858,6 +864,189 @@ var HTMLDB = {
 	"initializeHTMLDBForms": function () {
 	},
 	"initializeHTMLDBSelects": function () {
+	},
+	"initializeHTMLDBToggles": function () {
+        var toggles = document.body.querySelectorAll(".htmldb-toggle");
+        var toggleCount = toggles.length;
+        var toggle = null;
+        var parent = null;
+        var parents = [];
+        var parentCount = 0;
+        var filter = "";
+        var fields = [];
+        var tableElementId = "";
+        var tableElement = null;
+        var functionHeader = "";
+        var functionBody = "";
+        var functionFooter = "";
+
+        functionFooter = "return success;"
+
+        for (var i = 0; i < toggleCount; i++) {
+        	toggle = toggles[i];
+        	parent = HTMLDB.extractToggleParentElement(toggle);
+
+        	if (parent.className.indexOf("htmldb-form") != -1) {
+	        	functionHeader = "var success=false;"
+	        			+ "var object=HTMLDB.convertFormToObject(document.getElementById(\""
+	        			+ parent.id
+	        			+ "\"));";
+        	} else {
+        		tableElementId = HTMLDB.getHTMLDBParameter(parent, "table");
+        		tableElement = document.getElementById(tableElementId);
+
+        		if (!tableElement) {
+		        	throw(new Error("HTMLDB section "
+		        			+ "table "
+		        			+ tableElementId
+		        			+ " not found."));
+					return false;
+        		}
+
+        		functionHeader = "var success=false;"
+        				+ "var object=HTMLDB.get(\""
+        				+ tableElementId
+        				+ "\", HTMLDB.getActiveId(document.getElementById(\""
+        				+ tableElementId
+        				+ "\")));";
+        	}
+
+            if (null == parent) {
+	        	throw(new Error("HTMLDB toggle (index: " + i + ") "
+	        			+ " parent form/section "
+	        			+ " not found."));
+				return false;
+            }
+
+            filter = HTMLDB.getHTMLDBParameter(toggle, "filter");
+
+            if ("" == filter) {
+            	continue;
+            }
+
+            functionBody = HTMLDB.generateFilterFunctionBlock(filter, parent);
+        	fields = HTMLDB.extractFormToggleFields(filter, parent);
+
+        	toggle.toggleFunction = new Function(
+					functionHeader
+					+ functionBody
+					+ functionFooter);
+
+        	parents.push(parent);
+
+        	if (undefined === parent.toggleFields) {
+        		parent.toggleFields = [];
+        	}
+
+        	parent.toggleFields = parent.toggleFields.concat(fields);
+        }
+
+        parentCount = parents.length;
+
+        for (var i = 0; i < parentCount; i++) {
+        	parent = parents[i];
+			if (parent.className.indexOf("htmldb-form") != -1) {
+				HTMLDB.registerFormToggleEvents(parent);
+			}
+        }
+	},
+	"extractFormToggleFields": function (filter, parent) {
+		var tokens = String(filter).split("/");
+		var tokenCount = tokens.length;
+		var fields = [];
+		if ("" == filter) {
+			return [];
+		}
+		for (var i = 0; i < tokenCount; i+=3) {
+			property = HTMLDB.evaluateHTMLDBExpression(tokens[i]);
+			if (property != "") {
+				fields.push(property);
+			}
+		}
+		return fields;
+	},
+	"registerFormToggleEvents": function (form) {
+		var elements = form.elements;
+		var elementCount = elements.length;
+		var element = null;
+		var type = "";
+		var tagName = "";
+		var field = "";
+		if (undefined === form.toggleFields) {
+			return;
+		}
+		if (0 == form.toggleFields.length) {
+			return;
+		}
+		for (var i = 0; i < elementCount; i++) {
+			element = elements[i];
+			field = HTMLDB.getHTMLDBParameter(element, "field");
+			if ("" == field) {
+				continue;
+			}
+			if (-1 == form.toggleFields.indexOf(field)) {
+				continue;
+			}
+			tagName = element.tagName.toLowerCase();
+			type = element.type.toLowerCase();
+			if (tagName == "input") {
+				if ((type == "checkbox") || (type == "radio")) {
+					if (element.addEventListener) {
+						element.addEventListener("click", function () {
+							HTMLDB.doParentElementToggle(form);
+						}, true);
+					} else if (element.attachEvent) {
+			            element.attachEvent("onclick", function () {
+							HTMLDB.doParentElementToggle(form);
+						});
+			        }
+				}
+			} else if (tagName == "select") {
+				if (element.addEventListener) {
+					element.addEventListener("change", function () {
+						HTMLDB.doParentElementToggle(form);
+					}, true);
+				} else if (element.attachEvent) {
+		            element.attachEvent("onchange", function () {
+						HTMLDB.doParentElementToggle(form);
+					});
+		        }
+			}
+		}
+	},
+	"doParentElementToggle": function (parent) {
+        var toggles = parent.querySelectorAll(".htmldb-toggle");
+        var toggleCount = toggles.length;
+        var toggle = null;
+        for (var i = 0; i < toggleCount; i++) {
+        	toggle = toggles[i];
+        	if (toggle.toggleFunction) {
+        		if (toggle.toggleFunction()) {
+        			toggle.style.display = "block";
+        		} else {
+        			toggle.style.display = "none";        			
+        		}
+        	}
+        }
+	},
+	"extractToggleParentElement": function (element) {
+		var exit = false;
+		var parent = element.parentNode;
+		while (!exit && ("html" != parent.tagName.toLowerCase())) {
+			if (parent.className.indexOf("htmldb-section") != -1) {
+				exit = true;
+			} else if (parent.className.indexOf("htmldb-form") != -1) {
+				exit = true;
+			}
+			if (!exit) {
+				parent = parent.parentNode;
+			}
+		}
+		if (exit) {
+			return parent;
+		} else {
+			return null;
+		}
 	},
     "renderSectionElement": function (element) {
         if (!element) {
@@ -1568,101 +1757,119 @@ var HTMLDB = {
 	},
 	"generateChildTableFilterFunctionString": function (tableElement) {
 		var filter = HTMLDB.getHTMLDBParameter(tableElement, "filter");
-		var tokens = String(filter).split("/");
-		var tokenCount = tokens.length;
 		var functionBody = "";
-		var index = 0;
-		var property = "";
-		var operator = "";
-		var constant = "";
-		var andor = "||";
-		var invalidErrorText = "HTMLDB table " + tableElement.id + " has invalid filter attribute.";
 
 		functionBody = "success=false;";
 
 		if (filter != "") {
-			while (index < tokenCount) {
-
-				property = HTMLDB.evaluateHTMLDBExpression(tokens[index]);
-
-				functionBody += "if(undefined===object[\"" + property + "\"]){"
-						+ "throw(new Error(\"HTMLDB table "
-						+ tableElement.id
-						+ " has unknown filter field:"
-						+ property
-						+ "\"));return;}";
-				functionBody += ("success=success" + andor + "(object[\"" + property + "\"]");
-
-				index++;
-				if (index >= tokenCount) {
-		        	throw(new Error(invalidErrorText));
-		    		return;
-				}
-
-				operator = String(tokens[index]).toLowerCase();
-
-				switch (operator) {
-					case "eq":
-						functionBody += "==";
-					break;
-					case "neq":
-						functionBody += "!=";
-					break;
-					case "gt":
-						functionBody += ">";
-					break;
-					case "gte":
-						functionBody += ">=";
-					break;
-					case "lt":
-						functionBody += "<";
-					break;
-					case "lte":
-						functionBody += "<=";
-					break;
-					default:
-		        		throw(new Error("HTMLDB table "
-		        				+ tableElement.id
-		        				+ " has invalid filter operator:" + operator));
-		    			return;
-					break;
-				}
-
-				index++;
-				if (index >= tokenCount) {
-		        	throw(new Error(invalidErrorText));
-		    		return;
-				}
-
-				constant = HTMLDB.evaluateHTMLDBExpression(tokens[index]);
-
-				functionBody += constant + ");";
-
-				index++;
-				if (index < tokenCount) {
-
-					if ((index + 3) >= tokenCount) {
-			        	throw(new Error(invalidErrorText));
-			    		return;
-					}
-
-					andor = String(tokens[index]).toLowerCase();
-
-					if ("or" == andor) {
-						andor = "||";
-					} else {
-						andor = "&&";
-					}
-				}
-
-				index++;
-			}
+			functionBody = generateFilterFunctionBlock(filter, tableElement);
 		} else {
 			functionBody += "success=true;";
 		}
 
 		functionBody += "return success;"
 		return functionBody;
+	},
+	"generateFilterFunctionBlock": function (filter, parent) {
+		var isForm = (parent.className.indexOf("htmldb-form") != -1);
+		var tokens = String(filter).split("/");
+		var tokenCount = tokens.length;
+		var functionBlock = "";
+		var index = 0;
+		var property = "";
+		var operator = "";
+		var constant = "";
+		var andor = "||";
+		var invalidErrorText = "HTMLDB"
+				+ (isForm ? " form " : " table ")
+				+ parent.id
+				+ " has invalid filter attribute.";
+
+		if ("" == filter) {
+			return functionBlock;
+		}
+
+		while (index < tokenCount) {
+			property = HTMLDB.evaluateHTMLDBExpression(tokens[index]);
+
+			functionBlock += "if(undefined===object[\"" + property + "\"]){"
+					+ "throw(new Error(\"HTMLDB"
+					+ (isForm ? " form " : " table ")
+					+ parent.id
+					+ " has unknown filter field:"
+					+ property
+					+ "\"));return;}";
+			functionBlock += ("success=success" + andor + "(object[\"" + property + "\"]");
+
+			index++;
+			if (index >= tokenCount) {
+	        	throw(new Error(invalidErrorText));
+	    		return;
+			}
+
+			operator = String(tokens[index]).toLowerCase();
+
+			switch (operator) {
+				case "is":
+				case "eq":
+					functionBlock += "==";
+				break;
+				case "isnot":
+				case "neq":
+					functionBlock += "!=";
+				break;
+				case "gt":
+					functionBlock += ">";
+				break;
+				case "gte":
+					functionBlock += ">=";
+				break;
+				case "lt":
+					functionBlock += "<";
+				break;
+				case "lte":
+					functionBlock += "<=";
+				break;
+				default:
+	        		throw(new Error("HTMLDB"
+							+ (isForm ? " form " : " table ")
+	        				+ parent.id
+	        				+ " has invalid filter operator:" + operator));
+	    			return;
+				break;
+			}
+
+			index++;
+			if (index >= tokenCount) {
+	        	throw(new Error(invalidErrorText));
+	    		return;
+			}
+
+			constant = HTMLDB.evaluateHTMLDBExpression(tokens[index]);
+
+			functionBlock += constant + ");";
+
+			index++;
+			if (index < tokenCount) {
+
+				if ((index + 3) >= tokenCount) {
+		        	throw(new Error(invalidErrorText));
+		    		return;
+				}
+
+				andor = String(tokens[index]).toLowerCase();
+
+				if ("or" == andor) {
+					andor = "||";
+				} else {
+					andor = "&&";
+				}
+			}
+
+			index++;
+		}
+
+		return functionBlock;
 	},
 	"ss": function (p1) {
 		return (p1 + '').replace(/\\(.?)/g, function(s, n1) {
@@ -1969,16 +2176,7 @@ var HTMLDB = {
 			return false;			
 		}
 
-		var elements = form.querySelectorAll(".htmldb-field");
-		var elementCount = elements.length;
-		var element = null;
-		var object = {};
-
-		for (var i = 0; i < elementCount; i++) {
-			element = elements[i];
-			object[element.getAttribute("data-htmldb-field")]
-					= HTMLDB.getInputValue(element);
-		}
+		var object = HTMLDB.convertFormToObject(form);
 
 		HTMLDB.validate(tableElementId, object, function (DIVId, response) {
 			var responseObject = null;
@@ -1998,6 +2196,20 @@ var HTMLDB = {
 				event.target.dispatchEvent(new CustomEvent("htmldbsave", {detail: {}}));
 			}
 		});
+	},
+	"convertFormToObject": function (form) {
+		var elements = form.querySelectorAll(".htmldb-field");
+		var elementCount = elements.length;
+		var element = null;
+		var object = {};
+
+		for (var i = 0; i < elementCount; i++) {
+			element = elements[i];
+			object[element.getAttribute("data-htmldb-field")]
+					= HTMLDB.getInputValue(element);
+		}
+
+		return object;
 	},
 	"showLoader": function (tableElementId, type) {
 		var tableElement = document.getElementById(tableElementId);

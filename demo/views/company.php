@@ -53,6 +53,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="htmldb-toggle" data-htmldb-filter="type/eq/1" style="background-color: #ffaacc;height: 100px;width: 100%;display: none;"></div>
                     </div>
                     <div class="card-action">
                         <button id="buttonEdit" type="button" name="buttonEdit" data-htmldb-edit-id="{{$URL.-1}}" data-htmldb-form="formCompany" class="buttonAction htmldb-button-edit waves-effect waves-dark cyan-text text-darken-1 btn white"><i class="ion-edit col s12"></i> <?php echo __('UPDATE'); ?></button>
