@@ -2206,6 +2206,7 @@ var HTMLDB = {
 
 		for (var i = 0; i < elementCount; i++) {
 			element = elements[i];
+			element.dispatchEvent(new CustomEvent("htmldbgetvalue", {detail: {}}));
 			object[element.getAttribute("data-htmldb-field")]
 					= HTMLDB.getInputValue(element);
 		}
