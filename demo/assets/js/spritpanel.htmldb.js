@@ -28,6 +28,15 @@ var SpritPanelHTMLDB = {
 		$("select.htmldb-field").on("htmldbsetoptions", function (event) {
 			SpritPanelHTMLDB.renderSelectElement(this, event);
 		});
+
+		$("select.htmldb-field").on("htmldbsetvalue", function (event) {
+			SpritPanelHTMLDB.doSelectizeSetValue(this, event);
+		});
+	},
+	"doSelectizeSetValue": function (sender, event) {
+		if (sender.selectize) {
+			sender.selectize.setValue(event.detail.value);
+		}
 	},
 	"showError": function (event) {
 		showErrorDialog(event.detail.errorText);

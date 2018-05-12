@@ -1095,12 +1095,13 @@ var HTMLDB = {
     	var input = null;
     	var valueTemplate = "";
     	var tableElement = HTMLDB.exploreHTMLDBTable(form);
+    	var value = "";
     	for (var i = 0; i < inputCount; i++) {
     		input = inputs[i];
     		valueTemplate = HTMLDB.getHTMLDBParameter(input, "value");
-			HTMLDB.setInputValue(input,
-					HTMLDB.evaluateHTMLDBExpression(valueTemplate, tableElement.id));
-			input.dispatchEvent(new CustomEvent("htmldbsetvalue", {detail: {}}));
+    		value = HTMLDB.evaluateHTMLDBExpression(valueTemplate, tableElement.id);
+			HTMLDB.setInputValue(input, value);
+			input.dispatchEvent(new CustomEvent("htmldbsetvalue", {detail: {"value": value}}));
     	}
     },
     "renderSelectElement": function (select) {
@@ -2430,7 +2431,6 @@ var HTMLDB = {
 	"setInputValue": function (input, value) {
 		var tagName = String(input.tagName).toLowerCase();
 		var inputType = String(input.getAttribute("type")).toLowerCase();
-
 		switch (tagName) {
 			case "input":
 				if ("checkbox" == inputType) {
