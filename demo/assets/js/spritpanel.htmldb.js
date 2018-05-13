@@ -144,6 +144,10 @@ var SpritPanelHTMLDB = {
             sender.selectize.destroy();
         }
 
+        if (sender.HTMLDBInitials !== undefined) {
+        	sender.innerHTML = sender.HTMLDBInitials.content;
+        }
+
         if (sender.multiple) {
 
             $(sender).selectize({
@@ -182,7 +186,9 @@ var SpritPanelHTMLDB = {
 	},
 	"doSelectizeChange": function (sender, value) {
 		var form = HTMLDB.extractToggleParentElement(sender);
+		var field = HTMLDB.getHTMLDBParameter(sender, "field");
 		HTMLDB.doParentElementToggle(form);
+		HTMLDB.doActiveFormFieldUpdate(form.id, field);
 	}
 }
 SpritPanelHTMLDB.initialize();

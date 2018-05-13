@@ -152,6 +152,8 @@ class companyController {
 				$this->list[$index]['maintenance_responsible_id'] = $object->maintenance_responsible_id;
 				$this->list[$index]['quality_responsible_id'] = $object->quality_responsible_id;
 				$this->list[$index]['propagation_champion_id'] = $object->propagation_champion_id;
+				$this->list[$index]['sehir'] = 0;
+				$this->list[$index]['ilce'] = 0;
 				
 				$index++;
 
@@ -177,6 +179,8 @@ class companyController {
 		$this->columns[] = 'maintenance_responsible_id';
 		$this->columns[] = 'quality_responsible_id';
 		$this->columns[] = 'propagation_champion_id';
+		$this->columns[] = 'sehir';
+		$this->columns[] = 'ilce';
 
 		includeView($this, 'htmldblist');
 		return;
@@ -749,6 +753,68 @@ class companyController {
 		return;
 	}
 
+	public function readsehir($parameters = NULL) {
+		$this->list = array();
+		$this->list[0]['id'] = 1;
+		$this->list[0]['column0'] = 'Ankara';
+		$this->list[1]['id'] = 2;
+		$this->list[1]['column0'] = 'İstanbul';
+		$this->list[2]['id'] = 3;
+		$this->list[2]['column0'] = 'İzmir';
+
+		$this->columns = array();
+		$this->columns[] = 'id';
+		$this->columns[] = 'column0';
+
+		includeView($this, 'htmldblist');
+		return;
+	}
+
+	public function readilce($parameters = NULL) {
+		$this->parameters = $parameters;
+
+		$sehirCSV = '';
+
+		if (isset($this->parameters[0])) {
+			$sehirCSV = $this->parameters[0];
+		} // if (isset($this->parameters[0])) {
+
+		$this->list = array();
+
+		if (strpos((',' . $sehirCSV . ','), ',1,') !== false) {
+			$this->list[0]['id'] = 1;
+			$this->list[0]['column0'] = 'Çankaya';
+			$this->list[1]['id'] = 2;
+			$this->list[1]['column0'] = 'Yenimahalle';
+			$this->list[2]['id'] = 3;
+			$this->list[2]['column0'] = 'Etimesgut';
+		} // if (strpos((',' . $sehirCSV . ','), ',1,') !== false) {
+
+		if (strpos((',' . $sehirCSV . ','), ',2,') !== false) {
+			$this->list[0]['id'] = 1;
+			$this->list[0]['column0'] = 'Arnavutköy';
+			$this->list[1]['id'] = 2;
+			$this->list[1]['column0'] = 'Büyükçekmece';
+			$this->list[2]['id'] = 3;
+			$this->list[2]['column0'] = 'Bayrampaşa';
+		} // if (strpos((',' . $sehirCSV . ','), ',2,') !== false) {
+
+		if (strpos((',' . $sehirCSV . ','), ',3,') !== false) {
+			$this->list[0]['id'] = 1;
+			$this->list[0]['column0'] = 'Aliağa';
+			$this->list[1]['id'] = 2;
+			$this->list[1]['column0'] = 'Balçova';
+			$this->list[2]['id'] = 3;
+			$this->list[2]['column0'] = 'Bayındır';
+		} // if (strpos((',' . $sehirCSV . ','), ',3,') !== false) {
+
+		$this->columns = array();
+		$this->columns[] = 'id';
+		$this->columns[] = 'column0';
+
+		includeView($this, 'htmldblist');
+		return;
+	}
 	
 	public function readcrewtype() {
 		$this->list = array();

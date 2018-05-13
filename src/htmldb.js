@@ -2,8 +2,10 @@
 var HTMLDB = {
 	"readQueue": [],
 	"readingQueue": [],
+	"activeFormFields": [],
 	"initialize": function () {
 		HTMLDB.initializeHTMLDBTables();
+		HTMLDB.initializeHTMLDBFormTables();
 		HTMLDB.initializeHTMLDBTemplates();
 		HTMLDB.initializeHTMLDBButtons();
 		HTMLDB.initializeHTMLDBSections();
@@ -46,8 +48,10 @@ var HTMLDB = {
 			return HTMLDB.readChildTable(tableElementId, functionDone);
 		}
 
+		var parentForm = HTMLDB.getHTMLDBParameter(tableElement, "form");
+
 		var readURL = HTMLDB.getHTMLDBParameter(tableElement, "read-url");
-		readURL = HTMLDB.evaluateHTMLDBExpression(readURL);
+		readURL = HTMLDB.evaluateHTMLDBExpression(readURL, parentForm);
 
 		if ("" == readURL) {
         	throw(new Error("HTMLDB table "
@@ -492,11 +496,16 @@ var HTMLDB = {
 		var tableElement = document.getElementById(tableElementId);
 
 		if (!tableElement) {
-        	throw(new Error("HTMLDB table "
+        	throw(new Error("HTMLDB table/form "
         			+ tableElementId
         			+ " is referenced, but not found."));
 			return false;
 		}
+
+		if (tableElement.className.indexOf("htmldb-form") != -1) {
+			return HTMLDB.getFormFieldActiveValue(tableElementId, column);
+		}
+
 		var activeId = parseInt(HTMLDB.getHTMLDBParameter(tableElement, "active-id"));
 
 		if (isNaN(activeId) || (activeId < 1)) {
@@ -505,7 +514,9 @@ var HTMLDB = {
         			+ " is not active, or has no records."));
 			return false;
 		}
+
 		columnElementId = (tableElementId + "_reader_td" + activeId + column);
+
 		if (!document.getElementById(columnElementId)) {
         	throw(new Error("HTMLDB table "
         			+ tableElementId
@@ -514,7 +525,23 @@ var HTMLDB = {
         			+ " not found."));
 			return false;
 		}
+
 		return document.getElementById(tableElementId + "_reader_td" + activeId + column).innerHTML;
+	},
+	"getFormFieldActiveValue": function (formElementId, field) {
+		var formElement = document.getElementById(formElementId);
+		var object = HTMLDB.convertFormToObject(formElement);
+
+		if (undefined === object[field]) {
+        	throw(new Error("HTMLDB form "
+        			+ formElementId
+        			+ " field "
+        			+ field
+        			+ " not found."));
+			return false;
+		}
+
+		return object[field];
 	},
 	"setActiveId": function (tableElement, id) {
 		tableElement.setAttribute("data-htmldb-active-id", id);
@@ -739,6 +766,56 @@ var HTMLDB = {
         	tableElement.setAttribute("data-htmldb-priority", priority);
         }
 	},
+	"initializeHTMLDBFormTables": function () {
+        var tableElements = document.body.querySelectorAll(".htmldb-table");
+        var tableElementCount = tableElements.length;
+        var tableElement = null;
+        var formElementId = "";
+        var formElement = null;
+        var object = null;
+        var expression = "";
+
+        HTMLDB.activeFormFields = [];
+
+        for (var i = 0; i < tableElementCount; i++) {
+        	tableElement = tableElements[i];
+
+        	formElementId = HTMLDB.getHTMLDBParameter(tableElement, "form");
+
+        	if ("" == formElementId) {
+        		continue;
+        	}
+
+        	formElement = document.getElementById(formElementId);
+
+        	if (!formElement) {
+	        	throw(new Error("HTMLDB form "
+	        			+ formElementId
+	        			+ " referenced by "
+	        			+ tableElement.id
+	        			+ ", but not found."));
+				return false;
+        	}
+
+        	if (undefined === HTMLDB.activeFormFields[formElementId]) {
+        		HTMLDB.activeFormFields[formElementId] = [];
+        	}
+
+        	expression = HTMLDB.getHTMLDBParameter(tableElement, "read-url")
+        			+ HTMLDB.getHTMLDBParameter(tableElement, "filter");
+
+        	object = HTMLDB.convertFormToObject(formElement);
+
+			for(var column in object) {
+				if (expression.indexOf("{{" + column + "}}") != -1) {
+					if (undefined === HTMLDB.activeFormFields[formElementId][column]) {
+						HTMLDB.activeFormFields[formElementId][column] = [];
+					}
+					HTMLDB.activeFormFields[formElementId][column].push(tableElement.id);
+				}
+			}
+        }
+	},
 	"initializeHTMLDBTemplates": function () {
         var templateElements = document.body.querySelectorAll(".htmldb-template");
         var templateElementCount = templateElements.length;
@@ -862,6 +939,34 @@ var HTMLDB = {
         }
     },
 	"initializeHTMLDBForms": function () {
+        var forms = document.body.querySelectorAll(".htmldb-form");
+        var formCount = forms.length;
+        var form = null;
+
+        for (var i = 0; i < formCount; i++) {
+        	form = forms[i];
+        	HTMLDB.initializeHTMLDBFormFields(form);
+        }
+	},
+	"initializeHTMLDBFormFields": function (formElement) {
+		var inputs = formElement.querySelectorAll(".htmldb-field");
+		var inputCount = inputs.length;
+		var input = null;
+		var field = "";
+
+		for (var i = 0; i < inputCount; i++) {
+			input = inputs[i];
+			field = HTMLDB.getHTMLDBParameter(input, "field");
+			if (undefined !== HTMLDB.activeFormFields[formElement.id]) {
+				if (undefined !== HTMLDB.activeFormFields[formElement.id][field]) {
+					if (HTMLDB.activeFormFields[formElement.id][field].length > 0) {
+						HTMLDB.registerFormElementEvent(input, function () {
+							HTMLDB.doActiveFormFieldUpdate(formElement.id, field);
+						});
+					}
+				}
+			}
+		}
 	},
 	"initializeHTMLDBSelects": function () {
 	},
@@ -969,8 +1074,6 @@ var HTMLDB = {
 		var elements = form.elements;
 		var elementCount = elements.length;
 		var element = null;
-		var type = "";
-		var tagName = "";
 		var field = "";
 		if (undefined === form.toggleFields) {
 			return;
@@ -987,31 +1090,28 @@ var HTMLDB = {
 			if (-1 == form.toggleFields.indexOf(field)) {
 				continue;
 			}
-			tagName = element.tagName.toLowerCase();
-			type = element.type.toLowerCase();
-			if (tagName == "input") {
-				if ((type == "checkbox") || (type == "radio")) {
-					if (element.addEventListener) {
-						element.addEventListener("click", function () {
-							HTMLDB.doParentElementToggle(form);
-						}, true);
-					} else if (element.attachEvent) {
-			            element.attachEvent("onclick", function () {
-							HTMLDB.doParentElementToggle(form);
-						});
-			        }
-				}
-			} else if (tagName == "select") {
+			HTMLDB.registerFormElementEvent(element, function () {
+				HTMLDB.doParentElementToggle(form);
+			});
+		}
+	},
+	"registerFormElementEvent": function (element, functionEvent) {
+		var tagName = element.tagName.toLowerCase();
+		var type = element.type.toLowerCase();
+		if (tagName == "input") {
+			if ((type == "checkbox") || (type == "radio")) {
 				if (element.addEventListener) {
-					element.addEventListener("change", function () {
-						HTMLDB.doParentElementToggle(form);
-					}, true);
+					element.addEventListener("click", functionEvent, true);
 				} else if (element.attachEvent) {
-		            element.attachEvent("onchange", function () {
-						HTMLDB.doParentElementToggle(form);
-					});
+		            element.attachEvent("onclick", functionEvent);
 		        }
 			}
+		} else if (tagName == "select") {
+			if (element.addEventListener) {
+				element.addEventListener("change", functionEvent, true);
+			} else if (element.attachEvent) {
+	            element.attachEvent("onchange", functionEvent);
+	        }
 		}
 	},
 	"doParentElementToggle": function (parent) {
@@ -1093,15 +1193,35 @@ var HTMLDB = {
     	var inputs = form.querySelectorAll(".htmldb-field");
     	var inputCount = inputs.length;
     	var input = null;
+    	var field = "";
     	var valueTemplate = "";
     	var tableElement = HTMLDB.exploreHTMLDBTable(form);
     	var value = "";
     	for (var i = 0; i < inputCount; i++) {
     		input = inputs[i];
+    		field = HTMLDB.getHTMLDBParameter(input, "field");
     		valueTemplate = HTMLDB.getHTMLDBParameter(input, "value");
     		value = HTMLDB.evaluateHTMLDBExpression(valueTemplate, tableElement.id);
 			HTMLDB.setInputValue(input, value);
 			input.dispatchEvent(new CustomEvent("htmldbsetvalue", {detail: {"value": value}}));
+    	}
+    },
+    "doActiveFormFieldUpdate": function (formId, field) {
+    	var tables = [];
+    	var tableCount = 0;
+    	if (undefined === HTMLDB.activeFormFields[formId]) {
+    		return;
+    	}
+    	if (undefined === HTMLDB.activeFormFields[formId][field]) {
+    		return;
+    	}
+    	tables = HTMLDB.activeFormFields[formId][field];
+    	if (0 == tables.length) {
+    		return;
+    	}
+    	tableCount = tables.length;
+    	for (var i = 0; i < tableCount; i++) {
+    		HTMLDB.read(tables[i]);
     	}
     },
     "renderSelectElement": function (select) {
@@ -1149,7 +1269,11 @@ var HTMLDB = {
 					tableElementId);
  			select.options[select.options.length] = new Option(title, value);
 		}
-		
+
+        select.HTMLDBInitials = {
+            "content":select.innerHTML
+        };
+
 		tableElement.setAttribute("data-htmldb-active-id", initialActiveId);
 		select.dispatchEvent(new CustomEvent("htmldbsetoptions", {detail: {}}));
     },
@@ -1239,6 +1363,9 @@ var HTMLDB = {
 
         for (var i = 0; i < tableElementCount; i++) {
         	tableElement = tableElements[i];
+        	if (HTMLDB.getHTMLDBParameter(tableElement, "form") != "") {
+        		continue;
+        	}
         	priority = parseInt(HTMLDB.getHTMLDBParameter(tableElement, "priority"));
         	index = indices.indexOf(priority);
 			if (undefined === priorities[index]) {
@@ -1581,6 +1708,18 @@ var HTMLDB = {
 	        	return false;
         	}
         }
+
+        var tableFormId = HTMLDB.getHTMLDBParameter(element, "form");
+
+        if (tableFormId != "") {
+        	if (!document.getElementById(tableFormId)) {
+	        	throw(new Error("HTMLDB table "
+	        			+ element.id
+	        			+ " referencing unknown form "
+	        			+ tableFormId));
+	        	return false;	
+        	}
+        }
 	},
 	"validateHTMLDBTemplateDefinition": function (element) {
 		var tableElementId = HTMLDB.getHTMLDBParameter(element, "table");
@@ -1800,7 +1939,8 @@ var HTMLDB = {
 					+ " has unknown filter field:"
 					+ property
 					+ "\"));return;}";
-			functionBlock += ("success=success" + andor + "(object[\"" + property + "\"]");
+
+			functionBlock += ("success=(success" + andor);
 
 			index++;
 			if (index >= tokenCount) {
@@ -1810,26 +1950,78 @@ var HTMLDB = {
 
 			operator = String(tokens[index]).toLowerCase();
 
+			index++;
+			if (index >= tokenCount) {
+	        	throw(new Error(invalidErrorText));
+	    		return;
+			}
+
+			constant = HTMLDB.evaluateHTMLDBExpression(tokens[index]);
+
 			switch (operator) {
 				case "is":
 				case "eq":
-					functionBlock += "==";
+					functionBlock += "(object[\""
+							+ property
+							+ "\"]"
+							+ "=="
+							+ constant
+							+ ")";
 				break;
 				case "isnot":
 				case "neq":
-					functionBlock += "!=";
+					functionBlock += "(object[\""
+							+ property
+							+ "\"]"
+							+ "!="
+							+ constant
+							+ ")";
 				break;
 				case "gt":
-					functionBlock += ">";
+					functionBlock += "(object[\""
+							+ property
+							+ "\"]"
+							+ ">"
+							+ constant
+							+ ")";
 				break;
 				case "gte":
-					functionBlock += ">=";
+					functionBlock += "(object[\""
+							+ property
+							+ "\"]"
+							+ ">="
+							+ constant
+							+ ")";
 				break;
 				case "lt":
-					functionBlock += "<";
+					functionBlock += "(object[\""
+							+ property
+							+ "\"]"
+							+ "<"
+							+ constant
+							+ ")";
 				break;
 				case "lte":
-					functionBlock += "<=";
+					functionBlock += "(object[\""
+							+ property
+							+ "\"]"
+							+ "<="
+							+ constant
+							+ ")";
+				break;
+				case "in":
+					functionBlock += "(-1!=String(\","
+							+ constant
+							+ ",\").indexOf(\",\"+object[\""
+							+ property
+							+ "\"]+\",\"))";
+				break;
+				case "notin":
+					functionBlock += "(-1==String(\","
+							+ constant
+							+ ",\").indexOf(\",\"+object[\""
+							+ property
+							+ "\"]+\",\"))";
 				break;
 				default:
 	        		throw(new Error("HTMLDB"
@@ -1840,15 +2032,7 @@ var HTMLDB = {
 				break;
 			}
 
-			index++;
-			if (index >= tokenCount) {
-	        	throw(new Error(invalidErrorText));
-	    		return;
-			}
-
-			constant = HTMLDB.evaluateHTMLDBExpression(tokens[index]);
-
-			functionBlock += constant + ");";
+			functionBlock += ");";
 
 			index++;
 			if (index < tokenCount) {
