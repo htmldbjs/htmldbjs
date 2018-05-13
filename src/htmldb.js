@@ -834,7 +834,14 @@ var HTMLDB = {
 					templateElement,
 					tableElementId,
 					targetElementId);
-			templateElement.renderFunction = new Function("tableElement", "rows", functionBody);
+			try {
+				templateElement.renderFunction = new Function("tableElement", "rows", functionBody);				
+			} catch(e) {
+	        	throw(new Error("HTMLDB template (index:"
+	        			+ i
+	        			+ ") render function could not be created."));
+				return false;
+			}
         }
 	},
 	"initializeHTMLDBButtons": function () {
@@ -1032,10 +1039,20 @@ var HTMLDB = {
             functionBody = HTMLDB.generateFilterFunctionBlock(filter, parent);
         	fields = HTMLDB.extractFormToggleFields(filter, parent);
 
-        	toggle.toggleFunction = new Function(
-					functionHeader
-					+ functionBody
-					+ functionFooter);
+        	alert(functionHeader
+						+ functionBody
+						+ functionFooter);
+
+        	try {
+	        	toggle.toggleFunction = new Function(
+						functionHeader
+						+ functionBody
+						+ functionFooter);
+        	} catch(e) {
+	        	throw(new Error("HTMLDB toggle (index: " + i + ") "
+	        			+ " toggle function could not be created."));
+				return false;
+        	}
 
         	parents.push(parent);
 
@@ -1902,7 +1919,7 @@ var HTMLDB = {
 		functionBody = "success=false;";
 
 		if (filter != "") {
-			functionBody = generateFilterFunctionBlock(filter, tableElement);
+			functionBody += HTMLDB.generateFilterFunctionBlock(filter, tableElement);
 		} else {
 			functionBody += "success=true;";
 		}
@@ -1920,6 +1937,7 @@ var HTMLDB = {
 		var operator = "";
 		var constant = "";
 		var andor = "||";
+		var tableFormId = "";
 		var invalidErrorText = "HTMLDB"
 				+ (isForm ? " form " : " table ")
 				+ parent.id
@@ -1929,8 +1947,10 @@ var HTMLDB = {
 			return functionBlock;
 		}
 
+		tableFormId = HTMLDB.getHTMLDBParameter(parent, "form");
+
 		while (index < tokenCount) {
-			property = HTMLDB.evaluateHTMLDBExpression(tokens[index]);
+			property = HTMLDB.evaluateHTMLDBExpression(tokens[index], tableFormId);
 
 			functionBlock += "if(undefined===object[\"" + property + "\"]){"
 					+ "throw(new Error(\"HTMLDB"
@@ -1956,7 +1976,11 @@ var HTMLDB = {
 	    		return;
 			}
 
-			constant = HTMLDB.evaluateHTMLDBExpression(tokens[index]);
+			constant = HTMLDB.evaluateHTMLDBExpression(tokens[index], tableFormId);
+
+			if ("" == constant) {
+				constant = 0;
+			}
 
 			switch (operator) {
 				case "is":
@@ -2584,6 +2608,10 @@ var HTMLDB = {
 		var inputCount = 0;
 		var tagName = "";
 		var inputType = "";
+		var selections = null;
+		var selectionCount = 0;
+		var selection = "";
+		var selectionCSV = "";
 
 		tagName = String(input.tagName).toLowerCase();
 		inputType = String(input.getAttribute("type")).toLowerCase();
@@ -2606,7 +2634,17 @@ var HTMLDB = {
 				if (-1 == input.selectedIndex) {
 					return "";
 				} else {
-					return (input.value || input.options[input.selectedIndex].value);
+					selectionCSV = "";
+					selections = input.querySelectorAll("option:checked");
+					selectionCount = selections.length;
+					for (var i = 0; i < selectionCount; i++) {
+						selection = selections[i];
+						if (selectionCSV != "") {
+							selectionCSV += ",";
+						}
+						selectionCSV += selection.value;
+					}
+					return selectionCSV;
 				}
 			break;
 		}

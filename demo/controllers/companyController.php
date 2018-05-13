@@ -781,36 +781,64 @@ class companyController {
 
 		$this->list = array();
 
-		if (strpos((',' . $sehirCSV . ','), ',1,') !== false) {
-			$this->list[0]['id'] = 1;
-			$this->list[0]['column0'] = 'Çankaya';
-			$this->list[1]['id'] = 2;
-			$this->list[1]['column0'] = 'Yenimahalle';
-			$this->list[2]['id'] = 3;
-			$this->list[2]['column0'] = 'Etimesgut';
-		} // if (strpos((',' . $sehirCSV . ','), ',1,') !== false) {
+		$index = 0;
 
-		if (strpos((',' . $sehirCSV . ','), ',2,') !== false) {
-			$this->list[0]['id'] = 1;
-			$this->list[0]['column0'] = 'Arnavutköy';
-			$this->list[1]['id'] = 2;
-			$this->list[1]['column0'] = 'Büyükçekmece';
-			$this->list[2]['id'] = 3;
-			$this->list[2]['column0'] = 'Bayrampaşa';
-		} // if (strpos((',' . $sehirCSV . ','), ',2,') !== false) {
+		$this->list[$index]['id'] = ($index + 1);
+		$this->list[$index]['sehir'] = 1;
+		$this->list[$index]['ilce'] = 'Çankaya';
 
-		if (strpos((',' . $sehirCSV . ','), ',3,') !== false) {
-			$this->list[0]['id'] = 1;
-			$this->list[0]['column0'] = 'Aliağa';
-			$this->list[1]['id'] = 2;
-			$this->list[1]['column0'] = 'Balçova';
-			$this->list[2]['id'] = 3;
-			$this->list[2]['column0'] = 'Bayındır';
-		} // if (strpos((',' . $sehirCSV . ','), ',3,') !== false) {
+		$index++;
+
+		$this->list[$index]['id'] = ($index + 1);
+		$this->list[$index]['sehir'] = 1;
+		$this->list[$index]['ilce'] = 'Yenimahalle';
+
+		$index++;
+
+		$this->list[$index]['id'] = ($index + 1);
+		$this->list[$index]['sehir'] = 1;
+		$this->list[$index]['ilce'] = 'Etimesgut';
+
+		$index++;
+
+		$this->list[$index]['id'] = ($index + 1);
+		$this->list[$index]['sehir'] = 2;
+		$this->list[$index]['ilce'] = 'Arnavutköy';
+
+		$index++;
+
+		$this->list[$index]['id'] = ($index + 1);
+		$this->list[$index]['sehir'] = 2;
+		$this->list[$index]['ilce'] = 'Büyükçekmece';
+
+		$index++;
+
+		$this->list[$index]['id'] = ($index + 1);
+		$this->list[$index]['sehir'] = 2;
+		$this->list[$index]['ilce'] = 'Bayrampaşa';
+
+		$index++;
+
+		$this->list[$index]['id'] = ($index + 1);
+		$this->list[$index]['sehir'] = 3;
+		$this->list[$index]['ilce'] = 'Aliağa';
+
+		$index++;
+
+		$this->list[$index]['id'] = ($index + 1);
+		$this->list[$index]['sehir'] = 3;
+		$this->list[$index]['ilce'] = 'Balçova';
+
+		$index++;
+
+		$this->list[$index]['id'] = ($index + 1);
+		$this->list[$index]['sehir'] = 3;
+		$this->list[$index]['ilce'] = 'Bayındır';
 
 		$this->columns = array();
 		$this->columns[] = 'id';
-		$this->columns[] = 'column0';
+		$this->columns[] = 'sehir';
+		$this->columns[] = 'ilce';
 
 		includeView($this, 'htmldblist');
 		return;

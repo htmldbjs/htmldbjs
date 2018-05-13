@@ -36,13 +36,13 @@
                                 </div>
                                 <div class="col s12">
                                     <label for="sehir"><?php echo __('Şehir'); ?>  </label>
-                                    <select class="selectClassSelection htmldb-field" data-htmldb-option-table="sehirHTMLDB" id="companySehir" style="width: 100%" name="companySehir" data-htmldb-field="sehir" data-htmldb-value="{{sehir}}" data-htmldb-option-title="{{column0}}" data-htmldb-option-value="{{id}}">
+                                    <select class="selectClassSelection htmldb-field" multiple="multiple" data-htmldb-option-table="sehirHTMLDB" id="companySehir" style="width: 100%" name="companySehir" data-htmldb-field="sehir" data-htmldb-value="{{sehir}}" data-htmldb-option-title="{{column0}}" data-htmldb-option-value="{{id}}">
                                         <option value=""><?php echo __('Please Select'); ?></option>
                                     </select>
                                 </div>
-                                <div class="col s12">
+                                <div class="col s12 htmldb-toggle" data-htmldb-filter="sehir/isnot/''">
                                     <label for="ilce"><?php echo __('İlçe'); ?>  </label>
-                                    <select class="selectClassSelection htmldb-field" data-htmldb-option-table="ilceHTMLDB" id="companyIlce" style="width: 100%" name="companyIlce" data-htmldb-field="ilce" data-htmldb-value="{{ilce}}" data-htmldb-option-title="{{column0}}" data-htmldb-option-value="{{id}}">
+                                    <select class="selectClassSelection htmldb-field" data-htmldb-option-table="sehirIlceHTMLDB" id="companyIlce" style="width: 100%" name="companyIlce" data-htmldb-field="ilce" data-htmldb-value="{{ilce}}" data-htmldb-option-title="{{ilce}}" data-htmldb-option-value="{{id}}">
                                         <option value=""><?php echo __('Please Select'); ?></option>
                                     </select>
                                 </div>
