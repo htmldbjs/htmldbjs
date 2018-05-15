@@ -27,9 +27,9 @@ Usage text goes here...
 Usage text goes here...
 
 ## Elements
-<br>
-<br>
-<br>
+
+<br/>
+
 ### `htmldb-table`
 
 Usage text goes here...
@@ -52,8 +52,9 @@ Events text goes here...
 
 Examples text goes here...
 
-###
-###
+<br/>
+<br/>
+
 ### `htmldb-template`
 
 Usage text goes here...
