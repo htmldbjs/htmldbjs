@@ -6,6 +6,66 @@
 
 This repository contains HTMLDB.js core library source code.
 
+## Installation
+
+Installation text goes here...
+
+## Usage
+
+Usage text goes here...
+
+## Elements
+
+Usage text goes here...
+
+### `htmldb-table`
+
+Usage text goes here...
+
+### `htmldb-template`
+
+Usage text goes here...
+
+### `htmldb-section`
+
+Usage text goes here...
+
+### `htmldb-form`
+
+Usage text goes here...
+
+### `htmldb-field`
+
+Usage text goes here...
+
+### `htmldb-error`
+
+Usage text goes here...
+
+### `htmldb-message`
+
+Usage text goes here...
+
+### `htmldb-toggle`
+
+Usage text goes here...
+
+### `htmldb-button-refresh`
+
+Usage text goes here...
+
+### `htmldb-button-add`
+
+Usage text goes here...
+
+### `htmldb-button-edit`
+
+Usage text goes here...
+
+### `htmldb-button-save`
+
+Usage text goes here...
+
 ## Contributing
 
 Please use the [issue tracker](https://github.com/htmldbjs/htmldbjs/issues) to report any bugs/typos or requests.
