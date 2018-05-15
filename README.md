@@ -77,8 +77,9 @@ Events text goes here...
 
 Examples text goes here...
 
-###
-###
+<br/>
+<br/>
+
 ### `htmldb-section`
 
 Usage text goes here...
@@ -101,7 +102,8 @@ Events text goes here...
 
 Examples text goes here...
 
-##
+<br/>
+<br/>
 
 ### `htmldb-form`
 
@@ -125,7 +127,8 @@ Events text goes here...
 
 Examples text goes here...
 
-##
+<br/>
+<br/>
 
 ### `htmldb-field`
 
@@ -149,7 +152,8 @@ Events text goes here...
 
 Examples text goes here...
 
-##
+<br/>
+<br/>
 
 ### `htmldb-error`
 
@@ -173,7 +177,8 @@ Events text goes here...
 
 Examples text goes here...
 
----
+<br/>
+<br/>
 
 ### `htmldb-message`
 
@@ -197,7 +202,8 @@ Events text goes here...
 
 Examples text goes here...
 
----
+<br/>
+<br/>
 
 ### `htmldb-toggle`
 
@@ -221,7 +227,8 @@ Events text goes here...
 
 Examples text goes here...
 
----
+<br/>
+<br/>
 
 ### `htmldb-button-refresh`
 
@@ -245,7 +252,8 @@ Events text goes here...
 
 Examples text goes here...
 
----
+<br/>
+<br/>
 
 ### `htmldb-button-add`
 
@@ -269,7 +277,8 @@ Events text goes here...
 
 Examples text goes here...
 
----
+<br/>
+<br/>
 
 ### `htmldb-button-edit`
 
@@ -293,7 +302,8 @@ Events text goes here...
 
 Examples text goes here...
 
----
+<br/>
+<br/>
 
 ### `htmldb-button-save`
 
@@ -317,7 +327,8 @@ Events text goes here...
 
 Examples text goes here...
 
-
+<br/>
+<br/>
 
 ## Contributing
 
