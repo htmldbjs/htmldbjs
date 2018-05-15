@@ -15,7 +15,6 @@
                     <div class="row">
                         <form class="col s12">
                             <div class="row">
-                                <div class="col s12"><h5 class="blue-text text-darken-4">Genel Bilgiler</h5></div>
                                 <div class="col s12">
                                     <label for="name"><?php echo __('Firma'); ?></label>
                                     <div class="input-field">

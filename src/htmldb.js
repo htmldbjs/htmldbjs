@@ -672,6 +672,8 @@ var HTMLDB = {
         var templateElements = document.body.querySelectorAll(".htmldb-template");
         var templateElementCount = templateElements.length;
         var templateElement = null;
+        var targetElementId = "";
+        var targetElement = null;
 
 		for (var i = 0; i < templateElementCount; i++) {
 			templateElement = templateElements[i];
@@ -680,8 +682,30 @@ var HTMLDB = {
 				continue;
 			}
 
+			targetElement = null;
+			targetElementId = HTMLDB.getHTMLDBParameter(templateElement, "template-target");
+
+			if ("" == targetElementId) {
+	        	throw(new Error("HTMLDB template (index: " + i + ") "
+	        			+ " target element not specified."));
+				return false;
+			}
+
+	        if (targetElementId != "") {
+	        	targetElement = document.getElementById(targetElementId);
+	        }
+
+	        if (!targetElement) {
+	        	throw(new Error("HTMLDB template (index: " + i + ") "
+	        			+ " target element "
+	        			+ targetElementId
+	        			+ " not found."));
+				return false;
+	        }
+
 			if (templateElement.renderFunction) {
 				templateElement.renderFunction(tableElement, rows);
+				HTMLDB.initializeHTMLDBButtons(targetElement);
 				templateElement.dispatchEvent(new CustomEvent("htmldbrender", {detail: {}}));
 			}
 		}
@@ -709,7 +733,7 @@ var HTMLDB = {
             	HTMLDB.doParentElementToggle(form);
             }
         }
-        HTMLDB.initializeHTMLDBEditButtons(tableElement);
+        HTMLDB.initializeHTMLDBEditButtons(null, tableElement);
 	},
 	"renderSelects": function (tableElement) {
         var selects = document.body.querySelectorAll("select.htmldb-field");
@@ -841,11 +865,11 @@ var HTMLDB = {
 			}
         }
 	},
-	"initializeHTMLDBButtons": function () {
-		HTMLDB.initializeHTMLDBRefreshButtons();
-		HTMLDB.initializeHTMLDBAddButtons();
-		HTMLDB.initializeHTMLDBEditButtons();
-		HTMLDB.initializeHTMLDBSaveButtons();
+	"initializeHTMLDBButtons": function (parent) {
+		HTMLDB.initializeHTMLDBRefreshButtons(parent);
+		HTMLDB.initializeHTMLDBAddButtons(parent);
+		HTMLDB.initializeHTMLDBEditButtons(parent);
+		HTMLDB.initializeHTMLDBSaveButtons(parent);
 	},
 	"resetForm": function (form) {
 		var elements = form.elements;
@@ -1287,8 +1311,11 @@ var HTMLDB = {
 		tableElement.setAttribute("data-htmldb-active-id", initialActiveId);
 		select.dispatchEvent(new CustomEvent("htmldbsetoptions", {detail: {}}));
     },
-	"initializeHTMLDBRefreshButtons": function () {
-        var buttonElements = document.body.querySelectorAll(".htmldb-button-refresh");
+	"initializeHTMLDBRefreshButtons": function (parent) {
+		if ((undefined === parent) || (null === parent)) {
+			parent = document.body;
+		}
+        var buttonElements = parent.querySelectorAll(".htmldb-button-refresh");
         var buttonElementCount = buttonElements.length;
         var buttonElement = null;
 
@@ -1301,8 +1328,11 @@ var HTMLDB = {
 	        }
 	    }
 	},
-	"initializeHTMLDBAddButtons": function () {
-        var buttonElements = document.body.querySelectorAll(".htmldb-button-add");
+	"initializeHTMLDBAddButtons": function (parent) {
+		if ((undefined === parent) || (null === parent)) {
+			parent = document.body;
+		}
+        var buttonElements = parent.querySelectorAll(".htmldb-button-add");
         var buttonElementCount = buttonElements.length;
         var buttonElement = null;
 
@@ -1315,8 +1345,11 @@ var HTMLDB = {
 	        }
 	    }
 	},
-	"initializeHTMLDBSaveButtons": function () {
-        var buttonElements = document.body.querySelectorAll(".htmldb-button-save");
+	"initializeHTMLDBSaveButtons": function (parent) {
+		if ((undefined === parent) || (null === parent)) {
+			parent = document.body;
+		}
+        var buttonElements = parent.querySelectorAll(".htmldb-button-save");
         var buttonElementCount = buttonElements.length;
         var buttonElement = null;
 
@@ -1329,8 +1362,11 @@ var HTMLDB = {
 	        }
 	    }
 	},
-	"initializeHTMLDBEditButtons": function (tableElement) {
-        var buttons = document.body.querySelectorAll(".htmldb-button-edit");
+	"initializeHTMLDBEditButtons": function (parent, tableElement) {
+		if ((undefined === parent) || (null === parent)) {
+			parent = document.body;
+		}
+        var buttons = parent.querySelectorAll(".htmldb-button-edit");
         var buttonCount = buttons.length;
         var button = null;
 

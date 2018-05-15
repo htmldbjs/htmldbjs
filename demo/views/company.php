@@ -23,7 +23,6 @@
             <div class="card horizontal grey lighten-3">
                 <div class="card-stacked">
                     <div class="card-content">
-                        <span class="card-title activator grey-text text-darken-4">Genel Bilgiler</span>
                         <div class="row">
                             <div style="display: none;">
                                 <input id="detailsPersonal" name="detailsPersonal" type="checkbox" class="HTMLDBFieldValue" data-htmldb-source="divCompanyHTMLDBReader" data-htmldb-field="personal" value="">

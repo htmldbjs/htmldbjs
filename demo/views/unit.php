@@ -21,7 +21,6 @@
             <div class="card horizontal grey lighten-3">
                 <div class="card-stacked">
                     <div class="card-content">
-                        <span class="card-title activator grey-text text-darken-4">Genel Bilgiler</span>
                         <div class="row">
                             <div class="col l6 m6 s12">
                                 <label><?php echo __('Alan'); ?></label>
