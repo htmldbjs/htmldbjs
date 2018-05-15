@@ -28,8 +28,6 @@ Usage text goes here...
 
 ## Elements
 
-<br/>
-
 ### `htmldb-table`
 
 Usage text goes here...
@@ -42,11 +40,19 @@ Usage text goes here...
 
 #### Attributes
 
-Attributes text goes here...
+| Attribute Name           | Description                               |
+| ------------------------ | ----------------------------------------- |
+| data-htmldb-read-url     | right-aligned                             |
+| data-htmldb-write-url    | right-aligned                             |
+| data-htmldb-validate-url | right-aligned                             |
 
 #### Events
 
-Events text goes here...
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| data-htmldb-read-url     | right-aligned                             |
+| data-htmldb-write-url    | right-aligned                             |
+| data-htmldb-validate-url | right-aligned                             |
 
 #### Examples
 
