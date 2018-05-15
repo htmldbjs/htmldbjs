@@ -45,6 +45,11 @@ Usage text goes here...
 | `data-htmldb-read-url`     | right-aligned<br/>test                    |
 | `data-htmldb-write-url`    | right-aligned                             |
 | `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
+| `data-htmldb-priority`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
 
 #### Events
 
