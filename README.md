@@ -40,19 +40,19 @@ Usage text goes here...
 
 #### Attributes
 
-| Attribute Name           | Description                               |
-| ------------------------ | ----------------------------------------- |
-| data-htmldb-read-url     | right-aligned                             |
-| data-htmldb-write-url    | right-aligned                             |
-| data-htmldb-validate-url | right-aligned                             |
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-read-url`     | right-aligned<br/>test                    |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
 
 #### Events
 
 | Event Name               | Description                               |
 | ------------------------ | ----------------------------------------- |
-| data-htmldb-read-url     | right-aligned                             |
-| data-htmldb-write-url    | right-aligned                             |
-| data-htmldb-validate-url | right-aligned                             |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
 
 #### Examples
 
