@@ -13,6 +13,10 @@ var SpritPanelHTMLDB = {
 			SpritPanelHTMLDB.showError(event);
 		});
 
+		$(".htmldb-template").on("htmldbrender", function (event) {
+			SpritPanelHTMLDB.doTemplateRender(this, event);
+		});
+
 		$(".htmldb-button-edit").on("click", function (event) {
 			SpritPanelHTMLDB.showEditDialog(this, event);
 		});
@@ -31,6 +35,32 @@ var SpritPanelHTMLDB = {
 
 		$("select.htmldb-field").on("htmldbsetvalue", function (event) {
 			SpritPanelHTMLDB.doSelectizeSetValue(this, event);
+		});
+	},
+	"doTemplateRender": function (sender, event) {
+		var targetId = HTMLDB.getHTMLDBParameter(sender, "template-target");
+		var target = null;
+
+		if ("" == targetId) {
+			return;
+		}
+
+		target = document.getElementById(targetId);
+
+		if (!target) {
+			return;
+		}
+
+		$(".htmldb-button-edit", target).on("click", function (event) {
+			SpritPanelHTMLDB.showEditDialog(this, event);
+		});
+
+		$(".htmldb-button-save", target).on("htmldbsave", function (event) {
+			SpritPanelHTMLDB.doSave(this);
+		});
+
+		$(".htmldb-button-add", target).on("click", function (event) {
+			SpritPanelHTMLDB.showEditDialog(this, event);
 		});
 	},
 	"doSelectizeSetValue": function (sender, event) {

@@ -682,11 +682,8 @@ var HTMLDB = {
 
 			if (templateElement.renderFunction) {
 				templateElement.renderFunction(tableElement, rows);
+				templateElement.dispatchEvent(new CustomEvent("htmldbrender", {detail: {}}));
 			}
-		}
-
-		if (tableElement.renderFunction) {
-			elDIV.renderFunction(newRow);
 		}
 	},
 	"renderSections": function (tableElement) {
@@ -1038,10 +1035,6 @@ var HTMLDB = {
 
             functionBody = HTMLDB.generateFilterFunctionBlock(filter, parent);
         	fields = HTMLDB.extractFormToggleFields(filter, parent);
-
-        	alert(functionHeader
-						+ functionBody
-						+ functionFooter);
 
         	try {
 	        	toggle.toggleFunction = new Function(

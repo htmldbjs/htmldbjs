@@ -126,6 +126,7 @@
             <td class="tdEditObject">{{type}}</td>
             <td class="tdEditObject">{{consultantDisplayText}}</td>
             <td class="tdEditObject">
+                <button class="buttonTableListAction buttonEditObject right htmldb-button-edit" data-htmldb-edit-id="{{id}}" type="button" data-htmldb-table="companyHTMLDB" data-htmldb-form="formCompany"><i class="ion-android-delete"></i></button>
                 <a data-object-id="{{id}}" class="buttonTableListAction buttonEditObject right" href="<?php echo $_SPRIT['URL_PREFIX']; ?>company/{{id}}">
                     <i class="ion-android-search"></i>
                 </a>
