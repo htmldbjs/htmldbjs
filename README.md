@@ -20,8 +20,6 @@ Usage text goes here...
 
 ## Elements
 
-Usage text goes here...
-
 ### `htmldb-table`
 
 Usage text goes here...
@@ -38,49 +36,229 @@ Attributes text goes here...
 
 Events text goes here...
 
+#### Examples
+
+Examples text goes here...
+
 ### `htmldb-template`
 
 Usage text goes here...
+
+#### Syntax
+
+Syntax text goes here...
+
+#### Attributes
+
+Attributes text goes here...
+
+#### Events
+
+Events text goes here...
+
+#### Examples
+
+Examples text goes here...
 
 ### `htmldb-section`
 
 Usage text goes here...
 
+#### Syntax
+
+Syntax text goes here...
+
+#### Attributes
+
+Attributes text goes here...
+
+#### Events
+
+Events text goes here...
+
+#### Examples
+
+Examples text goes here...
+
 ### `htmldb-form`
 
 Usage text goes here...
+
+#### Syntax
+
+Syntax text goes here...
+
+#### Attributes
+
+Attributes text goes here...
+
+#### Events
+
+Events text goes here...
+
+#### Examples
+
+Examples text goes here...
 
 ### `htmldb-field`
 
 Usage text goes here...
 
+#### Syntax
+
+Syntax text goes here...
+
+#### Attributes
+
+Attributes text goes here...
+
+#### Events
+
+Events text goes here...
+
+#### Examples
+
+Examples text goes here...
+
 ### `htmldb-error`
 
 Usage text goes here...
+
+#### Syntax
+
+Syntax text goes here...
+
+#### Attributes
+
+Attributes text goes here...
+
+#### Events
+
+Events text goes here...
+
+#### Examples
+
+Examples text goes here...
 
 ### `htmldb-message`
 
 Usage text goes here...
 
+#### Syntax
+
+Syntax text goes here...
+
+#### Attributes
+
+Attributes text goes here...
+
+#### Events
+
+Events text goes here...
+
+#### Examples
+
+Examples text goes here...
+
 ### `htmldb-toggle`
 
 Usage text goes here...
+
+#### Syntax
+
+Syntax text goes here...
+
+#### Attributes
+
+Attributes text goes here...
+
+#### Events
+
+Events text goes here...
+
+#### Examples
+
+Examples text goes here...
 
 ### `htmldb-button-refresh`
 
 Usage text goes here...
 
+#### Syntax
+
+Syntax text goes here...
+
+#### Attributes
+
+Attributes text goes here...
+
+#### Events
+
+Events text goes here...
+
+#### Examples
+
+Examples text goes here...
+
 ### `htmldb-button-add`
 
 Usage text goes here...
+
+#### Syntax
+
+Syntax text goes here...
+
+#### Attributes
+
+Attributes text goes here...
+
+#### Events
+
+Events text goes here...
+
+#### Examples
+
+Examples text goes here...
 
 ### `htmldb-button-edit`
 
 Usage text goes here...
 
+#### Syntax
+
+Syntax text goes here...
+
+#### Attributes
+
+Attributes text goes here...
+
+#### Events
+
+Events text goes here...
+
+#### Examples
+
+Examples text goes here...
+
 ### `htmldb-button-save`
 
 Usage text goes here...
+
+#### Syntax
+
+Syntax text goes here...
+
+#### Attributes
+
+Attributes text goes here...
+
+#### Events
+
+Events text goes here...
+
+#### Examples
+
+Examples text goes here...
 
 ## Contributing
 
