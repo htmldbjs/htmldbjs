@@ -20,8 +20,6 @@ Usage text goes here...
 
 ## Elements
 
-
-
 ### `htmldb-table`
 
 Usage text goes here...
@@ -44,7 +42,7 @@ Events text goes here...
 
 Examples text goes here...
 
-
+---
 
 ### `htmldb-template`
 
@@ -68,7 +66,7 @@ Events text goes here...
 
 Examples text goes here...
 
-
+---
 
 ### `htmldb-section`
 
@@ -92,7 +90,7 @@ Events text goes here...
 
 Examples text goes here...
 
-
+---
 
 ### `htmldb-form`
 
@@ -116,7 +114,7 @@ Events text goes here...
 
 Examples text goes here...
 
-
+---
 
 ### `htmldb-field`
 
@@ -140,7 +138,7 @@ Events text goes here...
 
 Examples text goes here...
 
-
+---
 
 ### `htmldb-error`
 
@@ -164,7 +162,7 @@ Events text goes here...
 
 Examples text goes here...
 
-
+---
 
 ### `htmldb-message`
 
@@ -188,7 +186,7 @@ Events text goes here...
 
 Examples text goes here...
 
-
+---
 
 ### `htmldb-toggle`
 
@@ -212,7 +210,7 @@ Events text goes here...
 
 Examples text goes here...
 
-
+---
 
 ### `htmldb-button-refresh`
 
@@ -236,7 +234,7 @@ Events text goes here...
 
 Examples text goes here...
 
-
+---
 
 ### `htmldb-button-add`
 
@@ -260,7 +258,7 @@ Events text goes here...
 
 Examples text goes here...
 
-
+---
 
 ### `htmldb-button-edit`
 
@@ -284,7 +282,7 @@ Events text goes here...
 
 Examples text goes here...
 
-
+---
 
 ### `htmldb-button-save`
 
