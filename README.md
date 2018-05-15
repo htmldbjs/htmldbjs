@@ -27,13 +27,9 @@ Usage text goes here...
 Usage text goes here...
 
 ## Elements
-
-###
- 
- 
-### 
- 
- 
+<br>
+<br>
+<br>
 ### `htmldb-table`
 
 Usage text goes here...
