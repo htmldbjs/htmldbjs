@@ -18,7 +18,17 @@ Usage text goes here...
 
 Usage text goes here...
 
+### Request Format
+
+Usage text goes here...
+
+### Response Format
+
+Usage text goes here...
+
 ## Elements
+
+##
 
 ### `htmldb-table`
 
@@ -42,7 +52,7 @@ Events text goes here...
 
 Examples text goes here...
 
----
+##
 
 ### `htmldb-template`
 
@@ -66,7 +76,7 @@ Events text goes here...
 
 Examples text goes here...
 
----
+##
 
 ### `htmldb-section`
 
@@ -90,7 +100,7 @@ Events text goes here...
 
 Examples text goes here...
 
----
+##
 
 ### `htmldb-form`
 
@@ -114,7 +124,7 @@ Events text goes here...
 
 Examples text goes here...
 
----
+##
 
 ### `htmldb-field`
 
@@ -138,7 +148,7 @@ Events text goes here...
 
 Examples text goes here...
 
----
+##
 
 ### `htmldb-error`
 
