@@ -42,14 +42,13 @@ Usage text goes here...
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-read-url`     | right-aligned<br/>test                    |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
 | `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
-| `data-htmldb-priority`     | right-aligned                             |
 | `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
 
 #### Events
 
