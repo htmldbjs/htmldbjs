@@ -48,7 +48,9 @@ Usage text goes here...
 
 #### Syntax
 
-Syntax text goes here...
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
 
 #### Attributes
 
@@ -68,7 +70,9 @@ Usage text goes here...
 
 #### Syntax
 
-Syntax text goes here...
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
 
 #### Attributes
 
@@ -88,7 +92,9 @@ Usage text goes here...
 
 #### Syntax
 
-Syntax text goes here...
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
 
 #### Attributes
 
@@ -108,7 +114,9 @@ Usage text goes here...
 
 #### Syntax
 
-Syntax text goes here...
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
 
 #### Attributes
 
@@ -128,7 +136,9 @@ Usage text goes here...
 
 #### Syntax
 
-Syntax text goes here...
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
 
 #### Attributes
 
@@ -148,7 +158,9 @@ Usage text goes here...
 
 #### Syntax
 
-Syntax text goes here...
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
 
 #### Attributes
 
@@ -168,7 +180,9 @@ Usage text goes here...
 
 #### Syntax
 
-Syntax text goes here...
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
 
 #### Attributes
 
@@ -188,7 +202,9 @@ Usage text goes here...
 
 #### Syntax
 
-Syntax text goes here...
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
 
 #### Attributes
 
@@ -208,7 +224,9 @@ Usage text goes here...
 
 #### Syntax
 
-Syntax text goes here...
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
 
 #### Attributes
 
@@ -228,7 +246,9 @@ Usage text goes here...
 
 #### Syntax
 
-Syntax text goes here...
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
 
 #### Attributes
 
@@ -248,7 +268,9 @@ Usage text goes here...
 
 #### Syntax
 
-Syntax text goes here...
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
 
 #### Attributes
 
