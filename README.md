@@ -26,7 +26,9 @@ Usage text goes here...
 
 #### Syntax
 
-Syntax text goes here...
+```html
+<div id="myFirstTable" class="htmldb-table" data-htmldb-read-url="myfirsttable.json"></div>
+```
 
 #### Attributes
 
