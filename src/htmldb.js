@@ -2385,7 +2385,7 @@ var HTMLDB = {
 		HTMLDB.initializeReadQueue();
 	},
 	"doAddButtonClick": function (event) {
-		var formElement = document.getElementById(HTMLDB.getHTMLDBParameter(event.target, "form"));
+		var formElement = document.getElementById(HTMLDB.getHTMLDBParameter(event.currentTarget, "form"));
 		if (!formElement) {
         	throw(new Error("Add button HTMLDB form not found."));
 			return false;
@@ -2394,7 +2394,7 @@ var HTMLDB = {
 		formElement.dispatchEvent(new CustomEvent("htmldbadd", {detail: {}}));
 	},
 	"doSaveButtonClick": function (event) {
-		var formId = HTMLDB.getHTMLDBParameter(event.target, "form");
+		var formId = HTMLDB.getHTMLDBParameter(event.currentTarget, "form");
 		var form = null;
 
 		if (formId != "") {
@@ -2404,7 +2404,7 @@ var HTMLDB = {
 				return false;
 			}
 		} else {
-			form = HTMLDB.exploreHTMLDBForm(event.target);			
+			form = HTMLDB.exploreHTMLDBForm(event.currentTarget);			
 		}
 
 		var tableElementId = HTMLDB.getHTMLDBParameter(form, "table");
@@ -2574,8 +2574,8 @@ var HTMLDB = {
 	"doEditButtonClick": function (event) {
 		var tableElement = null;
 		var formElement = null;
-		var tableElementId = HTMLDB.getHTMLDBParameter(event.target, "table");
-		var formElementId = HTMLDB.getHTMLDBParameter(event.target, "form");
+		var tableElementId = HTMLDB.getHTMLDBParameter(event.currentTarget, "table");
+		var formElementId = HTMLDB.getHTMLDBParameter(event.currentTarget, "form");
 
 		if ((tableElementId == "") && (formElementId != "")) {
 			formElement = document.getElementById(formElementId);
@@ -2594,7 +2594,7 @@ var HTMLDB = {
 
 		HTMLDB.setActiveId(
 				tableElement,
-				HTMLDB.getHTMLDBParameter(event.target, "edit-id"));
+				HTMLDB.getHTMLDBParameter(event.currentTarget, "edit-id"));
 	},
 	"doWriterIframeLoad": function (p1) {
 		elDIV = p1.target.parentNode.parentNode;
