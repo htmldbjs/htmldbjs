@@ -77,11 +77,23 @@ Usage text goes here...
 
 #### Attributes
 
-Attributes text goes here...
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
 
 #### Events
 
-Events text goes here...
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
 
 #### Examples
 
@@ -101,12 +113,23 @@ Usage text goes here...
 ```
 
 #### Attributes
-
-Attributes text goes here...
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
 
 #### Events
 
-Events text goes here...
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
 
 #### Examples
 
@@ -127,11 +150,23 @@ Usage text goes here...
 
 #### Attributes
 
-Attributes text goes here...
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
 
 #### Events
 
-Events text goes here...
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
 
 #### Examples
 
@@ -152,11 +187,23 @@ Usage text goes here...
 
 #### Attributes
 
-Attributes text goes here...
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
 
 #### Events
 
-Events text goes here...
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
 
 #### Examples
 
@@ -177,11 +224,23 @@ Usage text goes here...
 
 #### Attributes
 
-Attributes text goes here...
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
 
 #### Events
 
-Events text goes here...
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
 
 #### Examples
 
@@ -202,11 +261,23 @@ Usage text goes here...
 
 #### Attributes
 
-Attributes text goes here...
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
 
 #### Events
 
-Events text goes here...
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
 
 #### Examples
 
@@ -227,11 +298,23 @@ Usage text goes here...
 
 #### Attributes
 
-Attributes text goes here...
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
 
 #### Events
 
-Events text goes here...
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
 
 #### Examples
 
@@ -252,11 +335,23 @@ Usage text goes here...
 
 #### Attributes
 
-Attributes text goes here...
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
 
 #### Events
 
-Events text goes here...
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
 
 #### Examples
 
@@ -277,11 +372,23 @@ Usage text goes here...
 
 #### Attributes
 
-Attributes text goes here...
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
 
 #### Events
 
-Events text goes here...
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
 
 #### Examples
 
@@ -302,11 +409,23 @@ Usage text goes here...
 
 #### Attributes
 
-Attributes text goes here...
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
 
 #### Events
 
-Events text goes here...
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
 
 #### Examples
 
@@ -327,11 +446,23 @@ Usage text goes here...
 
 #### Attributes
 
-Attributes text goes here...
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
 
 #### Events
 
-Events text goes here...
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
 
 #### Examples
 
