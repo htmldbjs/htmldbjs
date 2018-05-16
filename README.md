@@ -28,7 +28,7 @@ Usage text goes here...
 
 ## Elements
 
-## `htmldb-table`
+### `htmldb-table`
 
 Usage text goes here...
 
@@ -65,7 +65,7 @@ Examples text goes here...
 <br/>
 <br/>
 
-## `htmldb-template`
+### `htmldb-template`
 
 Usage text goes here...
 
@@ -102,7 +102,7 @@ Examples text goes here...
 <br/>
 <br/>
 
-## `htmldb-section`
+### `htmldb-section`
 
 Usage text goes here...
 
@@ -138,44 +138,7 @@ Examples text goes here...
 <br/>
 <br/>
 
-## `htmldb-form`
-
-Usage text goes here...
-
-#### Syntax
-
-```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
-```
-
-#### Attributes
-
-| Attribute Name             | Description                               |
-| -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
-
-#### Events
-
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
-
-#### Examples
-
-Examples text goes here...
-
-<br/>
-<br/>
-
-## `htmldb-field`
+### `htmldb-form`
 
 Usage text goes here...
 
@@ -212,7 +175,7 @@ Examples text goes here...
 <br/>
 <br/>
 
-## `htmldb-error`
+### `htmldb-field`
 
 Usage text goes here...
 
@@ -249,7 +212,7 @@ Examples text goes here...
 <br/>
 <br/>
 
-## `htmldb-message`
+### `htmldb-error`
 
 Usage text goes here...
 
@@ -286,7 +249,7 @@ Examples text goes here...
 <br/>
 <br/>
 
-## `htmldb-toggle`
+### `htmldb-message`
 
 Usage text goes here...
 
@@ -323,7 +286,7 @@ Examples text goes here...
 <br/>
 <br/>
 
-## `htmldb-button-refresh`
+### `htmldb-toggle`
 
 Usage text goes here...
 
@@ -360,7 +323,7 @@ Examples text goes here...
 <br/>
 <br/>
 
-## `htmldb-button-add`
+### `htmldb-button-refresh`
 
 Usage text goes here...
 
@@ -397,7 +360,7 @@ Examples text goes here...
 <br/>
 <br/>
 
-## `htmldb-button-edit`
+### `htmldb-button-add`
 
 Usage text goes here...
 
@@ -434,7 +397,44 @@ Examples text goes here...
 <br/>
 <br/>
 
-## `htmldb-button-save`
+### `htmldb-button-edit`
+
+Usage text goes here...
+
+#### Syntax
+
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
+
+#### Attributes
+
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
+
+#### Events
+
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
+
+#### Examples
+
+Examples text goes here...
+
+<br/>
+<br/>
+
+### `htmldb-button-save`
 
 Usage text goes here...
 
