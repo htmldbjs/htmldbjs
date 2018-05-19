@@ -257,13 +257,13 @@ Data source element that retrieves and stores data from the server. Also, it val
 | Attribute Name | Description |
 | ---- | ---- |
 | `data-htmldb-filter` | Specifies filter expression will be used while reading data from a parent HTMLDB table instance.<br>This attribute is used with `data-htmldb-table`.<br><br>`Default Value: ""`<br> |
-| `data-htmldb-local` | Specifies that HTMLDB table instance will store data in <br>browser's local storage (IndexedDB) or not. Local HTMLDB table instances are not automatically retreive data from the server or post data to the<br>server. It stores all the data in IndexedDB. Local HTMLDB table instances use `HTMLDB` as database name and HTMLDB table element `id` for object<br>store name. Local HTMLDB table data can be accessible from all pages in the same domain.<br><br>`Default Value: false` |
+| `data-htmldb-local` | Specifies that HTMLDB table instance will store data in browser's local storage (IndexedDB) or not.<br> Local HTMLDB table instances are not automatically retreive data from the server or post data to the server. It stores all the data in IndexedDB.<br> Local HTMLDB table instances use `HTMLDB` as database name and HTMLDB table element `id` for object store name. Local HTMLDB table data can be <br>accessible from all pages in the same domain.<br><br>`Default Value: false` |
 | `data-htmldb-priority` | Specifies the loading priority of the HTMLDB table.<br><br>`Default Value: 0` |
 | `data-htmldb-read-url` | Specifies the URL of the data requested from the server.<br><br>`Default Value: ""` |
 | `data-htmldb-readonly` | Specifies that HTMLDB table instance is read-only or not.<br><br>`Default Value: false` |
 | `data-htmldb-redirect` | Specifies the redirect URL after posting data to the server.<br><br>`Default Value: ""` |
-| `data-htmldb-table` | Specifies the parent HTMLDB table `id`. This attribute <br>is used with `data-htmldb-table`.<br><br>`Default Value: ""` |
-| `data-htmldb-validate-url` | Specifies the URL that simulates posting data to <br>the server for validation.<br><br>`Default Value: ""` |
+| `data-htmldb-table` | Specifies the parent HTMLDB table `id`. This attribute is used with `data-htmldb-table`.<br><br>`Default Value: ""` |
+| `data-htmldb-validate-url` | Specifies the URL that simulates posting data to the server for validation.<br><br>`Default Value: ""` |
 | `data-htmldb-write-url` | Specifies the data post URL.<br><br>`Default Value: ""` |
 | `data-htmldb-writeonly` | Specifies that HTMLDB table instance is write-only or not.<br><br>`Default Value: false` |
 | `id` | Specifies the name of the HTMLDB table.<br><br>`Default Value: ""`<br>`Required`<br>`Unique` |
