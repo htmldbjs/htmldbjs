@@ -46,7 +46,7 @@ First, create an HTMLDB table. HTMLDB tables are like database tables, they have
 </html>
 ```
 
-In the above example, we use a container `<div>` element for storing server side data in HTML format. This `<div>` must have an unique id attribute. By using a special class name `htmldb-table`, we specify this `<div>` as an HTMLDB table. 
+In the above example, we use a container `<div>` element for storing server side data in HTML format. This `<div>` must have an unique id attribute. By using a special class name `htmldb-table`, we specify this `<div>` as an HTMLDB table. Additionally, we use special attributes to to define properties of HTMLDB table. In this case we use `data-htmldb-read-url` for specifying the source url that student data will be loaded.
 
 ## Backend Integration
 
