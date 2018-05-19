@@ -240,19 +240,23 @@ htmldb_row2_columnName: columnName new value
 
 ### `htmldb-table`
 
-Usage text goes here...
+Data source element that retrieves and stores data from the server. Also, it validates and posts data to the server.
 
 #### Syntax
 
 ```html
-<div id="myFirstTable" class="htmldb-table" data-htmldb-read-url="myfirsttable.json"></div>
+<div id="myFirstTable"
+        class="htmldb-table"
+        data-htmldb-read-url="myfirsttable/read"
+        data-htmldb-validate-url="myfirsttable/write"
+        data-htmldb-write-url="myfirsttable/write"></div>
 ```
 
 #### Attributes
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-priority`     | Specifies the loading priority of the HTMLDB table.<br>Default Value: 0<br>Not Required |
 | `data-htmldb-read-url`     | right-aligned                             |
 | `data-htmldb-readonly`     | right-aligned                             |
 | `data-htmldb-redirect`     | right-aligned                             |
