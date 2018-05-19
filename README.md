@@ -104,6 +104,79 @@ Let's list our friends with a template.
 </html>
 ```
 
+In the example above, there is a `<table>` with an empty `<tbody>` element. This empty `<tbody>` element will contain list of friends after the page load with the specified template. `<tbody>` element has an `id` attribute with the value `"friendsList"`.
+
+Additionally, there is a `<script>` element with `type="text/html"` attribute. This `<script>` element contains list template with mustache text fields.
+
+After loading page, this HTML will look like as the following:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>My HTMLDB Page</title>
+
+    <div id="friendsHTMLDB" class="htmldb-table" data-htmldb-read-url="friends/read"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+            </tr>
+        </thead>
+        <tbody id="friendsList">
+            <tr data-row-id="1">
+                <td>1</td>
+                <td>Rachel</td>
+                <td>Green</td>
+            </tr>
+            <tr data-row-id="2">
+                <td>2</td>
+                <td>Phoebe</td>
+                <td>Buffay</td>
+            </tr>
+            <tr data-row-id="3">
+                <td>3</td>
+                <td>Monica</td>
+                <td>Geller</td>
+            </tr>
+            <tr data-row-id="4">
+                <td>4</td>
+                <td>Chandler</td>
+                <td>Bing</td>
+            </tr>
+            <tr data-row-id="5">
+                <td>5</td>
+                <td>Joey</td>
+                <td>Tribbiani</td>
+            </tr>
+            <tr data-row-id="6">
+                <td>6</td>
+                <td>Ross</td>
+                <td>Geller</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script type="text/html" id="friendsListTemplate" class="htmldb-template"
+            data-htmldb-table="friendsHTMLDB" data-htmldb-template-target="friendsList">
+        <tr data-row-id="{{id}}">
+            <td>{{id}}</td>
+            <td>{{firstname}}</td>
+            <td>{{lastname}}</td>
+        </tr>
+    </script>
+
+    <script type="text/javascript" src="htmldb.min.js"></script>
+  </head>
+  <body>
+  </body>
+</html>
+```
+
 ## Backend Integration
 
 It is easy to integrate HTMLDB with your favorite backend framework. HTMLDB requests data in JSON format and uses an inner form to post data to the server.
