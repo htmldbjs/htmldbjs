@@ -254,15 +254,16 @@ Data source element that retrieves and stores data from the server. Also, it val
 
 #### Attributes
 
-| Attribute Name             | Description                               |
-| -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | Specifies the loading priority of the HTMLDB table.<br><br>`Default Value: 0`<br>`Not Required` |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
+| Attribute Name | Description |
+| ---- | ---- |
+| `id` | Specifies the name of the HTMLDB table.<br><br>`Default Value: ""`<br>`Required`<br>`Unique`    |
+| `data-htmldb-priority` | Specifies the loading priority of the HTMLDB table.<br><br>`Default Value: 0`<br>`Not Required` |
+| `data-htmldb-read-url` | right-aligned |
+| `data-htmldb-readonly` | right-aligned |
+| `data-htmldb-redirect` | right-aligned |
+| `data-htmldb-validate-url` | right-aligned |
+| `data-htmldb-write-url` | right-aligned |
+| `data-htmldb-writeonly` | right-aligned |
 
 #### Events
 
