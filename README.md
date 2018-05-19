@@ -8,7 +8,7 @@ This repository contains HTMLDB.js core library source code.
 
 ## Installation
 
-Installation HTMLDB is very simple. Just add `src/htmldb.js` or `dist/htmldb.min.js` in your HTML document. You don't need to initialize it with javascript. HTMLDB automatically initializes itself, on the page load.
+Installation HTMLDB is very simple. Just add `src/htmldb.js` or `dist/htmldb.min.js` in your HTML document. You don't need to initialize it with javascript. On the page load, HTMLDB automatically initializes itself.
 
 ```html
 <!DOCTYPE html>
