@@ -117,7 +117,9 @@ After loading page, this HTML will look like as the following:
     <meta charset="utf-8">
     <title>My HTMLDB Page</title>
 
-    <div id="friendsHTMLDB" class="htmldb-table" data-htmldb-read-url="friends/read"></div>
+    <div id="friendsHTMLDB" class="htmldb-table" data-htmldb-read-url="friends/read">
+        <!-- HTMLDB table runtime content -->
+    </div>
 
     <table>
         <thead>
