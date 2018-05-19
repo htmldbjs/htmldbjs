@@ -8,7 +8,22 @@ This repository contains HTMLDB.js core library source code.
 
 ## Installation
 
-Installation text goes here...
+Installation HTMLDB is very simple. Just add `src/htmldb.js` or `dist/htmldb.min.js` in your HTML document.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+  </head>
+  <body>
+  <script type="text/javascript" src="js/htmldb.min.js"></script>
+  </body>
+</html>
+```
 
 ## Usage
 
