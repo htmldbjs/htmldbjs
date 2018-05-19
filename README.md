@@ -270,11 +270,10 @@ Data source element that retrieves and stores data from the server. Also, it val
 
 #### Events
 
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
+| Event Name | Description  |
+| ---- | ---- |
+| `htmldberror` | Triggered when an error returned especially after validation process.<br><br>`Event.detail.errorText` holds the error text returned. |
+| `htmldbmessage` | Triggered when a message returned especially after validation process.<br><br>`Event.detail.messageText` holds the message text returned. |
 
 #### Examples
 
