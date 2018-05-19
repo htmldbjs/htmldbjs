@@ -46,7 +46,7 @@ Firstly, create an HTMLDB table. HTMLDB tables are like database tables, they ha
 </html>
 ```
 
-In the above example, we use a container `<div>` element for storing server side data (friends) in HTML format. This `<div>` must have an unique id attribute. By using a special class name `htmldb-table`, we specify this `<div>` as an HTMLDB table. Additionally, we use special attributes starting with `data-htmldb-` to define properties of HTMLDB elements. In this case we use `data-htmldb-read-url` for specifying the source url of HTMLDB table that friends data will be loaded.
+In the above example, we use a container `<div>` element for storing server side data (friends) in HTML format. This `<div>` must have a unique id attribute. By using a special class name `htmldb-table`, we specify this `<div>` as an HTMLDB table. Additionally, we use special attributes starting with `data-htmldb-` to define properties of HTMLDB elements. In this case we use `data-htmldb-read-url` for specifying the source url of HTMLDB table that friends data will be loaded.
 
 Let's assume friends data loaded from the server are as follows:
 
