@@ -183,7 +183,7 @@ It is easy to integrate HTMLDB with your favorite backend framework. HTMLDB requ
 
 ### Request Format
 
-A typical HTMLDB request is a JSON string with the following structure:
+A typical HTMLDB request is a JSON string with the following format:
 
 ```javascript
 {
@@ -200,7 +200,7 @@ A typical HTMLDB request is a JSON string with the following structure:
 
 ### Response Format
 
-HTMLDB uses an inner HTML form element to post data to the server with the following structure:
+HTMLDB uses an inner HTML form element to post data to the server with the following format:
 
 ```
 htmldb_action0:	inserted
@@ -211,7 +211,7 @@ htmldb_row0_column2: column2 new value
 htmldb_row0_columnName: columnName new value
 ```
 
-The above example shows single-row post parameters. For posting multiple rows the following structure is used:
+The above example shows single-row post parameters. For posting multiple rows the following format is used:
 
 ```
 htmldb_action0:	inserted
