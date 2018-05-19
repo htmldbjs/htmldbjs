@@ -28,7 +28,7 @@ Installation HTMLDB is very simple. Just add `src/htmldb.js` or `dist/htmldb.min
 
 ## Usage
 
-First, create an HTMLDB table. HTMLDB tables are like database tables, they have columns and rows.
+Firstly, create an HTMLDB table. HTMLDB tables are like database tables, they have columns and rows. In this case we have a table to list our friends.
 
 ```html
 <!DOCTYPE html>
@@ -37,7 +37,7 @@ First, create an HTMLDB table. HTMLDB tables are like database tables, they have
     <meta charset="utf-8">
     <title>My HTMLDB Page</title>
 
-    <div id="myHTMLDBTable" class="htmldb-table" data-htmldb-read-url="student/read"></div>
+    <div id="friendsHTMLDB" class="htmldb-table" data-htmldb-read-url="friends/read"></div>
 
     <script type="text/javascript" src="htmldb.min.js"></script>
   </head>
@@ -46,7 +46,25 @@ First, create an HTMLDB table. HTMLDB tables are like database tables, they have
 </html>
 ```
 
-In the above example, we use a container `<div>` element for storing server side data in HTML format. This `<div>` must have an unique id attribute. By using a special class name `htmldb-table`, we specify this `<div>` as an HTMLDB table. Additionally, we use special attributes starting with `data-htmldb-` to define properties of HTMLDB elements. In this case we use `data-htmldb-read-url` for specifying the source url of HTMLDB table that student data will be loaded.
+In the above example, we use a container `<div>` element for storing server side data (friends) in HTML format. This `<div>` must have an unique id attribute. By using a special class name `htmldb-table`, we specify this `<div>` as an HTMLDB table. Additionally, we use special attributes starting with `data-htmldb-` to define properties of HTMLDB elements. In this case we use `data-htmldb-read-url` for specifying the source url of HTMLDB table that friends data will be loaded.
+
+Let's assume friends data loaded from the server are as follows:
+
+```javascript
+{
+    "c": [
+        "id", "firstname", "lastname"
+    ],
+    "r": [
+        ["1", "Rachel", "Green"],
+        ["2", "Phoebe", "Buffay"],
+        ["3", "Monica", "Geller"],
+        ["4", "Chandler", "Bing"],
+        ["5", "Joey", "Tribbiani"],
+        ["6", "Ross", "Geller"],
+    ]
+}
+```
 
 ## Backend Integration
 
