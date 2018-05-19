@@ -277,7 +277,9 @@ Data source element that retrieves and stores data from the server. Also, it val
 
 #### Examples
 
-Examples text goes here...
+- Basic HTMLDB Table Example
+- HTMLDB Table Filter Example
+- Local HTMLDB Example
 
 <br/>
 <br/>
