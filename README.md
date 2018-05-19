@@ -53,7 +53,39 @@ A typical HTMLDB request is a JSON string with the following structure:
 
 ### Response Format
 
-Usage text goes here...
+HTMLDB uses an inner HTML form element to post data to the server with the following structure:
+
+```
+htmldb_action0:	inserted
+htmldb_row0_id: 1
+htmldb_row0_column0: column0 new value	
+htmldb_row0_column1: column1 new value
+htmldb_row0_column2: column2 new value
+htmldb_row0_columnName: columnName new value
+```
+
+The above example shows single-row post parameters. For posting multiple rows the following structure is used:
+
+```
+htmldb_action0:	inserted
+htmldb_row0_id: 1
+htmldb_row0_column0: column0 new value	
+htmldb_row0_column1: column1 new value
+htmldb_row0_column2: column2 new value
+htmldb_row0_columnName: columnName new value
+htmldb_action1:	inserted
+htmldb_row1_id: 2
+htmldb_row1_column0: column0 new value	
+htmldb_row1_column1: column1 new value
+htmldb_row1_column2: column2 new value
+htmldb_row1_columnName: columnName new value
+htmldb_action2:	inserted
+htmldb_row2_id: 3
+htmldb_row2_column0: column0 new value	
+htmldb_row2_column1: column1 new value
+htmldb_row2_column2: column2 new value
+htmldb_row2_columnName: columnName new value
+```
 
 ## Elements
 
