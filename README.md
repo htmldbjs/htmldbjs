@@ -66,6 +66,43 @@ Let's assume friends data loaded from the server are as follows:
 }
 ```
 
+Let's list our friends with a template.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>My HTMLDB Page</title>
+
+    <div id="friendsHTMLDB" class="htmldb-table" data-htmldb-read-url="friends/read"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+            </tr>
+        </thead>
+        <tbody id="friendsList"></tbody>
+    </table>
+
+    <script type="text/html" id="friendsListTemplate" class="htmldb-template" data-htmldb-table="friendsHTMLDB" data-htmldb-template-target="friendsList">
+        <tr data-row-id="{{id}}">
+            <td>{{id}}</td>
+            <td>{{firstname}}</td>
+            <td>{{lastname}}</td>
+        </tr>
+    </script>
+
+    <script type="text/javascript" src="htmldb.min.js"></script>
+  </head>
+  <body>
+  </body>
+</html>
+```
+
 ## Backend Integration
 
 It is easy to integrate HTMLDB with your favorite backend framework. HTMLDB requests data in JSON format and uses an inner form to post data to the server.
@@ -77,12 +114,12 @@ A typical HTMLDB request is a JSON string with the following structure:
 ```javascript
 {
     "c": [
-        "id","column0", "column1", "column2", "columnName"
+        "id", "column0", "column1", "column2", "columnName"
     ],
     "r": [
-        ["1","This is column0 value", "Column 1 Value", "Column 2 Value", "Last column value"],
-        ["2","This is column0 value", "Column 1 Value", "Column 2 Value", "Last column value"],
-        ["3","This is column0 value", "Column 1 Value", "Column 2 Value", "Last column value"]
+        ["1", "This is column0 value", "Column 1 Value", "Column 2 Value", "Last column value"],
+        ["2", "This is column0 value", "Column 1 Value", "Column 2 Value", "Last column value"],
+        ["3", "This is column0 value", "Column 1 Value", "Column 2 Value", "Last column value"]
     ]
 }
 ```
