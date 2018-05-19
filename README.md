@@ -28,7 +28,25 @@ Installation HTMLDB is very simple. Just add `src/htmldb.js` or `dist/htmldb.min
 
 ## Usage
 
-Usage text goes here...
+First, create an HTMLDB table. HTMLDB tables are like database tables, they have columns and rows.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>My HTMLDB Page</title>
+
+    <div id="myHTMLDBTable" class="htmldb-table" data-htmldb-read-url="student/read"></div>
+
+    <script type="text/javascript" src="htmldb.min.js"></script>
+  </head>
+  <body>
+  </body>
+</html>
+```
+
+In the above example, we use a container `<div>` element for storing server side data in HTML format. This `<div>` must have an unique id attribute. By using a special class name `htmldb-table`, we specify this `<div>` as an HTMLDB table. 
 
 ## Backend Integration
 
