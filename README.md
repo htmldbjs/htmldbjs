@@ -15,12 +15,13 @@ Installation HTMLDB is very simple. Just add `src/htmldb.js` or `dist/htmldb.min
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>title</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <title>My HTMLDB Page</title>
+    <!--
+    htmldb.min.js file location can change based on your directory structure.
+    -->
+    <script type="text/javascript" src="htmldb.min.js"></script>
   </head>
   <body>
-  <script type="text/javascript" src="js/htmldb.min.js"></script>
   </body>
 </html>
 ```
