@@ -32,7 +32,7 @@ Usage text goes here...
 
 ## Backend Integration
 
-Usage text goes here...
+It is easy to integrate HTMLDB with your favorite backend framework. HTMLDB requests data in JSON format and uses an inner form to post data to the server.
 
 ### Request Format
 
