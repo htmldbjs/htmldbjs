@@ -257,13 +257,13 @@ Data source element that retrieves and stores data from the server. Also, it val
 | Attribute Name | Description |
 | ---- | ---- |
 | `id` | Specifies the name of the HTMLDB table.<br><br>`Default Value: ""`<br>`Required`<br>`Unique`    |
-| `data-htmldb-priority` | Specifies the loading priority of the HTMLDB table.<br><br>`Default Value: 0`<br>`Not Required` |
-| `data-htmldb-read-url` | right-aligned |
-| `data-htmldb-readonly` | right-aligned |
-| `data-htmldb-redirect` | right-aligned |
-| `data-htmldb-validate-url` | right-aligned |
-| `data-htmldb-write-url` | right-aligned |
-| `data-htmldb-writeonly` | right-aligned |
+| `data-htmldb-priority` | Specifies the loading priority of the HTMLDB table.<br><br>`Default Value: 0` |
+| `data-htmldb-read-url` | Specifies the url of the data requested from the server.<br><br>`Default Value: ""` |
+| `data-htmldb-readonly` | Specifies that HTMLDB table instance is read-only or not.<br><br>`Default Value: false` |
+| `data-htmldb-redirect` | Specifies the redirect url after posting data to the server.<br><br>`Default Value: ""` |
+| `data-htmldb-validate-url` | Specifies the url that simulates posting data to the server for validation.<br><br>`Default Value: ""` |
+| `data-htmldb-write-url` | Specifies the data post url.<br><br>`Default Value: ""` |
+| `data-htmldb-writeonly` | Specifies that HTMLDB table instance is write-only or not.<br><br>`Default Value: false` |
 
 #### Events
 
