@@ -257,7 +257,7 @@ Data source element that retrieves and stores data from the server. Also, it val
 | Attribute Name | Description |
 | ---- | ---- |
 | `data-htmldb-filter` | Specifies filter expression will be used while reading data from a parent HTMLDB table instance. This attribute is used with `data-htmldb-table`.<br><br>`Default Value: ""`<br> |
-| `data-htmldb-local` | Specifies that HTMLDB table instance will store data in browser's local storage (IndexedDB). Local HTMLDB table instances are not automatically retreive data from the server or post data to the server. It stores all operations in IndexedDB. Local HTMLDB tables uses `HTMLDB` as database name and HTMLDB element `id` for object store name.<br><br>`Default Value: false` |
+| `data-htmldb-local` | Specifies that HTMLDB table instance will store data in browser's local storage (IndexedDB) or not. Local HTMLDB table instances are not automatically retreive data from the server or post data to the server. It stores all operations in IndexedDB. Local HTMLDB table instances use `HTMLDB` as database name and HTMLDB table element `id` for object store name.<br><br>`Default Value: false` |
 | `data-htmldb-priority` | Specifies the loading priority of the HTMLDB table.<br><br>`Default Value: 0` |
 | `data-htmldb-read-url` | Specifies the URL of the data requested from the server.<br><br>`Default Value: ""` |
 | `data-htmldb-readonly` | Specifies that HTMLDB table instance is read-only or not.<br><br>`Default Value: false` |
