@@ -36,7 +36,20 @@ Usage text goes here...
 
 ### Request Format
 
-Usage text goes here...
+A typical HTMLDB request is a JSON string with the following structure:
+
+```javascript
+{
+    "c": [
+        "id","column0", "column1", "column2", "columnName"
+    ],
+    "r": [
+        ["1","This is column0 value", "Column 1 Value", "Column 2 Value", "Last column value"],
+        ["2","This is column0 value", "Column 1 Value", "Column 2 Value", "Last column value"],
+        ["3","This is column0 value", "Column 1 Value", "Column 2 Value", "Last column value"]
+    ]
+}
+```
 
 ### Response Format
 
