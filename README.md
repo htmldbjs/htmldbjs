@@ -256,7 +256,7 @@ Data source element that retrieves and stores data from the server. Also, it val
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | Specifies the loading priority of the HTMLDB table.<br>Default Value: 0<br>Not Required |
+| `data-htmldb-priority`     | Specifies the loading priority of the HTMLDB table.<br><br>`Default Value: 0`<br>`Not Required` |
 | `data-htmldb-read-url`     | right-aligned                             |
 | `data-htmldb-readonly`     | right-aligned                             |
 | `data-htmldb-redirect`     | right-aligned                             |
