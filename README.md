@@ -88,7 +88,11 @@ Let's list our friends with a template.
         <tbody id="friendsList"></tbody>
     </table>
 
-    <script type="text/html" id="friendsListTemplate" class="htmldb-template" data-htmldb-table="friendsHTMLDB" data-htmldb-template-target="friendsList">
+    <script type="text/html"
+            id="friendsListTemplate"
+            class="htmldb-template"
+            data-htmldb-table="friendsHTMLDB"
+            data-htmldb-template-target="friendsList">
         <tr data-row-id="{{id}}">
             <td>{{id}}</td>
             <td>{{firstname}}</td>
