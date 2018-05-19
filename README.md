@@ -46,7 +46,7 @@ Firstly, create an HTMLDB table. HTMLDB tables are like database tables, they ha
 </html>
 ```
 
-In the above example, we use a container `<div>` element for storing server side data (e.g. friends) in HTML format. This `<div>` must have a unique id attribute. By using a special class name `htmldb-table`, we specify this `<div>` as an HTMLDB table. Additionally, we use special attributes starting with `data-htmldb-` to define properties of HTMLDB elements. In this case we use `data-htmldb-read-url` for specifying the source url of HTMLDB table that friends data will be loaded.
+In the above example, we use a container `<div>` element for storing server side data (e.g. friends) in HTML format. This `<div>` must have a unique id attribute. By using a special class name `htmldb-table`, we specify this `<div>` as an HTMLDB table. Additionally, we use special attributes starting with `data-htmldb-` to define properties of HTMLDB elements. In this case we use `data-htmldb-read-url` for specifying the source URL of HTMLDB table that friends data will be loaded.
 
 Let's assume friends data loaded from the server are as follows:
 
@@ -258,12 +258,12 @@ Data source element that retrieves and stores data from the server. Also, it val
 | ---- | ---- |
 | `data-htmldb-filter` | Specifies filter expression will be used while reading data from a parent HTMLDB table instance. This attribute is used with `data-htmldb-table`.<br><br>`Default Value: ""`<br> |
 | `data-htmldb-priority` | Specifies the loading priority of the HTMLDB table.<br><br>`Default Value: 0` |
-| `data-htmldb-read-url` | Specifies the url of the data requested from the server.<br><br>`Default Value: ""` |
+| `data-htmldb-read-url` | Specifies the URL of the data requested from the server.<br><br>`Default Value: ""` |
 | `data-htmldb-readonly` | Specifies that HTMLDB table instance is read-only or not.<br><br>`Default Value: false` |
-| `data-htmldb-redirect` | Specifies the redirect url after posting data to the server.<br><br>`Default Value: ""` |
-| `data-htmldb-table` | Specifies the parent HTMLDB table id. This attribute is used with `data-htmldb-table`.<br><br>`Default Value: ""` |
-| `data-htmldb-validate-url` | Specifies the url that simulates posting data to the server for validation.<br><br>`Default Value: ""` |
-| `data-htmldb-write-url` | Specifies the data post url.<br><br>`Default Value: ""` |
+| `data-htmldb-redirect` | Specifies the redirect URL after posting data to the server.<br><br>`Default Value: ""` |
+| `data-htmldb-table` | Specifies the parent HTMLDB table `id`. This attribute is used with `data-htmldb-table`.<br><br>`Default Value: ""` |
+| `data-htmldb-validate-url` | Specifies the URL that simulates posting data to the server for validation.<br><br>`Default Value: ""` |
+| `data-htmldb-write-url` | Specifies the data post URL.<br><br>`Default Value: ""` |
 | `data-htmldb-writeonly` | Specifies that HTMLDB table instance is write-only or not.<br><br>`Default Value: false` |
 | `id` | Specifies the name of the HTMLDB table.<br><br>`Default Value: ""`<br>`Required`<br>`Unique` |
 
