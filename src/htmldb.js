@@ -449,7 +449,10 @@ var HTMLDB = {
     	tbodyHTMLDB.innerHTML += strTRContent;
 
     	if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
+    		tbodyHTMLDB = document.getElementById(tableElementId + "_reader_tbody");
+    		tbodyHTMLDB.innerHTML += strTRContent;
     		HTMLDB.updateLocal(tableElement, ("n" + lTRCount), object);
+    		HTMLDB.render(tableElement);
     	}
 	},
 	"update": function (tableElementId, id, object, className) {
@@ -481,7 +484,14 @@ var HTMLDB = {
 		}
 
     	if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
+    		elTR = document.getElementById(tableElementId + "_reader_tr" + id);
+    		if (!elTR) {
+    			return;
+    		}
+			tbodyHTMLDB = document.getElementById(tableElementId + "_reader_tbody");
+			elTR.innerHTML = strTRContent;
     		HTMLDB.updateLocal(tableElement, id, object);
+    		HTMLDB.render(tableElement);
     	}
 	},
 	"updateLocal": function (tableElement, id, object) {
