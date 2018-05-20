@@ -422,8 +422,8 @@ var HTMLDB = {
 		return JSON.parse(strJSON);
 	},
 	"insert": function (tableElementId, object, className) {
-		var elDIV = document.getElementById(tableElementId);
-		if (!elDIV) {
+		var tableElement = document.getElementById(tableElementId);
+		if (!tableElement) {
 			return;
 		}
 
@@ -439,45 +439,71 @@ var HTMLDB = {
 				+ "\" data-row-id=\"n"
 				+ lTRCount
 				+ "\" id=\""
-				+ elDIV.id
+				+ tableElement.id
 				+"_trn"
 				+ lTRCount
 				+"\">";
-		strTRContent += HTMLDB.generateTDHTML(elDIV, "_writer", object, ("n" + lTRCount));
+		strTRContent += HTMLDB.generateTDHTML(tableElement, "_writer", object, ("n" + lTRCount));
     	strTRContent += "</tr>";
 
     	tbodyHTMLDB.innerHTML += strTRContent;
+
+    	if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
+    		HTMLDB.updateLocal(tableElement, ("n" + lTRCount), object);
+    	}
 	},
-	"update": function (p1, p2, p3, p4) {
-		var elDIV = document.getElementById(p1);
-		if (!elDIV) {
+	"update": function (tableElementId, id, object, className) {
+		var tableElement = document.getElementById(tableElementId);
+		if (!tableElement) {
 			return;
 		}
 
-		if (undefined === p4) {
-			p4 = "";
+		if (undefined === className) {
+			className = "";
 		}
 
-		if (0 == p2) {
-			return HTMLDB.insert(p1, p3, p4);
+		if (0 == id) {
+			return HTMLDB.insert(tableElementId, object, className);
 		}
 
-		var elTR = document.getElementById(p1 + "_writer_tr" + p2);
+		var elTR = document.getElementById(tableElementId + "_writer_tr" + id);
 
 		if (!elTR) {
 			return;
 		}
 
-		var tbodyHTMLDB = document.getElementById(p1 + "_writer_tbody");
-		strTRContent = HTMLDB.generateTDHTML(elDIV, "_writer", p3, p2);
+		var tbodyHTMLDB = document.getElementById(tableElementId + "_writer_tbody");
+		strTRContent = HTMLDB.generateTDHTML(tableElement, "_writer", object, id);
 
 		elTR.innerHTML = strTRContent;
 		if (-1 == elTR.className.indexOf("inserted")) {
-			elTR.className = "updated" + ((p4!="") ? (" " + p4) : "");
+			elTR.className = "updated" + ((className!="") ? (" " + className) : "");
 		}
+
+    	if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
+    		HTMLDB.updateLocal(tableElement, id, object);
+    	}
 	},
-	"delete": function (p1, p2, p3) {
-		var elDIV = document.getElementById(p1);
+	"updateLocal": function (tableElement, id, object) {
+		if (null == HTMLDB.indexedDBConnection) {
+        	throw(new Error("HTMLDB IndexedDB not initialized."));
+			return false;
+		}
+		var database = HTMLDB.indexedDBConnection.result;
+		var readerTransaction = database.transaction(
+				(tableElement.id + "Reader"),
+				"readwrite");
+		var writerTransaction = database.transaction(
+				(tableElement.id + "Writer"),
+				"readwrite");
+		var readerStore = transaction.objectStore(tableElement.id + "Reader");
+		var writerStore = transaction.objectStore(tableElement.id + "Writer");
+
+		readerStore.put(object);
+		writerStore.put(object);
+	},
+	"delete": function (tableElementId, p2, p3) {
+		var elDIV = document.getElementById(tableElementId);
 		if (!elDIV) {
 			return;
 		}
@@ -486,7 +512,7 @@ var HTMLDB = {
 			p3 = "";
 		}
 
-		var trDeleted = document.getElementById(p1 + "_writer_tr" + p2);
+		var trDeleted = document.getElementById(tableElementId + "_writer_tr" + p2);
 		if (trDeleted) {
 			trDeleted.className = "deleted" + ((p3!="") ? (" " + p3) : "");
 		}
@@ -628,6 +654,9 @@ var HTMLDB = {
     			continue;
     		}
     		if (!document.getElementById(element.id + "_writer_tbody")) {
+    			continue;
+    		}
+    		if (HTMLDB.isHTMLDBParameter(element, "local")) {
     			continue;
     		}
     		loading = parseInt(HTMLDB.getHTMLDBParameter(element, "loading"));
@@ -963,7 +992,6 @@ var HTMLDB = {
 		var writerRequest = writerStore.getAll();
 		writerRequest.onsuccess = function() {
 			initializeLocalTableRows(tableElement, "writer", writerRequest.result);
-			HTMLDB.render(tableElement);
 		}
 	},
 	"initializeLocalTableRows": function (tableElement, tablePrefix, result) {
