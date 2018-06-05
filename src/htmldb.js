@@ -359,18 +359,18 @@ var HTMLDB = {
 		HTMLDB.showLoader(tableElementId, "read");
 
 		if (null == HTMLDB.indexedDBConnection) {
-			HTMLDB.indexedDBConnection = indexedDB.open("HTMLDB", 1);
+			HTMLDB.indexedDBConnection = indexedDB.open("htmldb", 1);
 			HTMLDB.indexedDBConnection.onupgradeneeded = HTMLDB.doIndexedDBUpgradeNeeded;
 
-			var funcIframeLoadCallback = null;
+			var funcIndexedDBLoadCallback = null;
 			if (!functionDone) {
-				funcIframeLoadCallback = function (event) {
+				funcIndexedDBLoadCallback = function (event) {
 					tableElement.setAttribute("data-htmldb-loading", 0);
 					HTMLDB.hideLoader(tableElementId, "read");
 					HTMLDB.initializeLocalTable(tableElement);
 				}
 			} else {
-				funcIframeLoadCallback = function (event) {
+				funcIndexedDBLoadCallback = function (event) {
 					tableElement.setAttribute("data-htmldb-loading", 0);
 					HTMLDB.hideLoader(tableElementId, "read");
 					HTMLDB.initializeLocalTable(tableElement);
@@ -489,6 +489,7 @@ var HTMLDB = {
     			return;
     		}
 			tbodyHTMLDB = document.getElementById(tableElementId + "_reader_tbody");
+			strTRContent = HTMLDB.generateTDHTML(tableElement, "_reader", object, id);
 			elTR.innerHTML = strTRContent;
     		HTMLDB.updateLocal(tableElement, id, object);
     		HTMLDB.render(tableElement);
@@ -501,13 +502,15 @@ var HTMLDB = {
 		}
 		var database = HTMLDB.indexedDBConnection.result;
 		var readerTransaction = database.transaction(
-				(tableElement.id + "Reader"),
+				("htmldb_" + tableElement.id + "_reader"),
 				"readwrite");
 		var writerTransaction = database.transaction(
-				(tableElement.id + "Writer"),
+				("htmldb_" + tableElement.id + "_writer"),
 				"readwrite");
-		var readerStore = transaction.objectStore(tableElement.id + "Reader");
-		var writerStore = transaction.objectStore(tableElement.id + "Writer");
+		var readerStore = readerTransaction.objectStore(
+				"htmldb_" + tableElement.id + "_reader");
+		var writerStore = writerTransaction.objectStore(
+				"htmldb_" + tableElement.id + "_writer");
 
 		readerStore.put(object);
 		writerStore.put(object);
@@ -986,22 +989,24 @@ var HTMLDB = {
 		}
 		var database = HTMLDB.indexedDBConnection.result;
 		var readerTransaction = database.transaction(
-				(tableElement.id + "Reader"),
+				("htmldb_" + tableElement.id + "_reader"),
 				"readwrite");
 		var writerTransaction = database.transaction(
-				(tableElement.id + "Writer"),
+				("htmldb_" + tableElement.id + "_writer"),
 				"readwrite");
-		var readerStore = transaction.objectStore(tableElement.id + "Reader");
-		var writerStore = transaction.objectStore(tableElement.id + "Writer");
+		var readerStore = readerTransaction.objectStore(
+				"htmldb_" + tableElement.id + "_reader");
+		var writerStore = writerTransaction.objectStore(
+				"htmldb_" + tableElement.id + "_writer");
 		var readerRequest = readerStore.getAll();
 		readerRequest.onsuccess = function() {
-			initializeLocalTableRows(tableElement, "reader", readerRequest.result);
+			HTMLDB.initializeLocalTableRows(tableElement, "reader", readerRequest.result);
 			HTMLDB.render(tableElement);
 		}
 
 		var writerRequest = writerStore.getAll();
 		writerRequest.onsuccess = function() {
-			initializeLocalTableRows(tableElement, "writer", writerRequest.result);
+			HTMLDB.initializeLocalTableRows(tableElement, "writer", writerRequest.result);
 		}
 	},
 	"initializeLocalTableRows": function (tableElement, tablePrefix, result) {
@@ -1014,7 +1019,8 @@ var HTMLDB = {
 		for (var i = 0; i < resultCount; i++) {
 			object = result[i];
 			id = object.id;
-			if (!tableElement.filterFunction(object)) {
+			if (tableElement.filterFunction &&
+					!tableElement.filterFunction(object)) {
 				continue;
 			}
 			content += "<tr class=\"refreshed\" data-row-id=\""
@@ -1873,7 +1879,7 @@ var HTMLDB = {
 	},
 	"isHTMLDBParameter": function (element, parameter) {
 		var value = HTMLDB.getHTMLDBParameter(element, parameter);
-		if (("true" == value) || ("1" == true)) {
+		if (("true" == value) || ("1" == value)) {
 			return true;
 		} else {
 			return false;
@@ -2571,8 +2577,12 @@ var HTMLDB = {
 		var indexedDBTableCount = HTMLDB.indexedDBTables.length;
 
 		for (var i = 0; i < indexedDBTableCount; i++) {
-			database.createObjectStore((HTMLDB.indexedDBTables[i] + "Reader"), {keyPath: "id"});
-			database.createObjectStore((HTMLDB.indexedDBTables[i] + "Writer"), {keyPath: "id"});
+			database.createObjectStore(
+					("htmldb_" + HTMLDB.indexedDBTables[i] + "_reader"),
+					{keyPath: "id"});
+			database.createObjectStore(
+					("htmldb_" + HTMLDB.indexedDBTables[i] + "_writer"),
+					{keyPath: "id"});
 		}
 	},
 	"doAddButtonClick": function (event) {
