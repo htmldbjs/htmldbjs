@@ -436,10 +436,14 @@ var HTMLDB = {
 		}
 	},
 	"render": function (tableElement, functionDone) {
-		HTMLDB.renderTemplates(tableElement);
-		HTMLDB.renderSections(tableElement);
-		HTMLDB.renderForms(tableElement);
-		HTMLDB.renderSelects(tableElement);
+		var activeId = parseInt(getActiveId(tableElement));
+
+		if (activeId > 0) {
+			HTMLDB.renderTemplates(tableElement);
+			HTMLDB.renderSections(tableElement);
+			HTMLDB.renderForms(tableElement);
+			HTMLDB.renderSelects(tableElement);
+		}
 
 		if (functionDone) {
 			functionDone();
