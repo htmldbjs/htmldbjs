@@ -436,7 +436,7 @@ var HTMLDB = {
 		}
 	},
 	"render": function (tableElement, functionDone) {
-		var activeId = parseInt(getActiveId(tableElement));
+		var activeId = parseInt(HTMLDB.getActiveId(tableElement));
 
 		if (activeId > 0) {
 			HTMLDB.renderTemplates(tableElement);
