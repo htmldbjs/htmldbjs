@@ -438,8 +438,9 @@ var HTMLDB = {
 	"render": function (tableElement, functionDone) {
 		var activeId = parseInt(HTMLDB.getActiveId(tableElement));
 
+		HTMLDB.renderTemplates(tableElement);
+
 		if (activeId > 0) {
-			HTMLDB.renderTemplates(tableElement);
 			HTMLDB.renderSections(tableElement);
 			HTMLDB.renderForms(tableElement);
 			HTMLDB.renderSelects(tableElement);
