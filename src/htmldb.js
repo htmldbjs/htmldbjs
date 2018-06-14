@@ -1567,7 +1567,13 @@ var HTMLDB = {
 			return;
 		}
 
-		HTMLDB.readingQueue = HTMLDB.readQueue.shift();
+		HTMLDB.readingQueue = undefined;
+
+		while ((HTMLDB.readingQueue === undefined)
+				&& (HTMLDB.readQueue.length > 0)) {
+			HTMLDB.readingQueue = HTMLDB.readQueue.shift();
+		}
+
 		readingQueueCount = 0;
 		if (HTMLDB.readingQueue) {
 			readingQueueCount = HTMLDB.readingQueue.length;
