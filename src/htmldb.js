@@ -8,10 +8,12 @@ var HTMLDB = {
 		HTMLDB.initializeHTMLDBFormTables();
 		HTMLDB.initializeHTMLDBTemplates();
 		HTMLDB.initializeHTMLDBButtons();
+		HTMLDB.initializeHTMLDBPaginations();
 		HTMLDB.initializeHTMLDBSections();
 		HTMLDB.initializeHTMLDBForms();
 		HTMLDB.initializeHTMLDBSelects();
 		HTMLDB.initializeHTMLDBToggles();
+		HTMLDB.initializeHTMLDBUpdaters();
 		HTMLDB.initializeReadQueue();
 
 		HTMLDB.resetWriterLoop();
@@ -875,6 +877,12 @@ var HTMLDB = {
 		HTMLDB.initializeHTMLDBAddButtons(parent);
 		HTMLDB.initializeHTMLDBEditButtons(parent);
 		HTMLDB.initializeHTMLDBSaveButtons(parent);
+	},
+	"initializeHTMLDBPaginations": function (parent) {
+
+	},
+	"initializeHTMLDBUpdaters": function (parent) {
+
 	},
 	"resetForm": function (form) {
 		var elements = form.elements;
