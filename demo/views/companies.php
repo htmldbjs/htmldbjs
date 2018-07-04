@@ -71,7 +71,35 @@
                     <tbody id="tbodyObjectList"></tbody>
                 </table>
                 <div class="row">
-                    <ul class="htmldb-pagination" data-htmldb-table="sessionHTMLDB" data-htmldb-page-field="page" data-htmldb-page-count-field="pageCount" data-htmldb-refresh-table="companyHTMLDB"></ul>
+                    <div class="col s12">
+                        <ul class="ulPagination htmldb-pagination" data-htmldb-table="sessionHTMLDB" data-htmldb-page-field="page" data-htmldb-page-count-field="pageCount" data-htmldb-refresh-table="companyHTMLDB" data-htmldb-max-visible-pages="">
+                            <li class="htmldb-pagination-template htmldb-pagination-first">
+                                <button class="buttonPage waves-effect white btn right cyan-text text-darken-1 htmldb-button-page">
+                                    <i class="ion-chevron-left"></i>
+                                </button>
+                            </li>
+                            <li class="htmldb-pagination-template htmldb-pagination-default">
+                                <button class="buttonPage waves-effect white btn right cyan-text text-darken-1 htmldb-button-page">
+                                    <span data-htmldb-content="{{page}}"></span>
+                                </button>
+                            </li>
+                            <li class="htmldb-pagination-template htmldb-pagination-active">
+                                <button class="buttonPage waves-effect white-text btn right cyan darken-1 htmldb-button-page">
+                                    <span data-htmldb-content="{{page}}"></span>
+                                </button>
+                            </li>
+                            <li class="htmldb-pagination-template htmldb-pagination-hidden">
+                                <button class="buttonPage waves-effect disabled white btn right cyan-text text-darken-1 htmldb-button-page">
+                                    <span>...</span>
+                                </button>
+                            </li>
+                            <li class="htmldb-pagination-template htmldb-pagination-last">
+                                <button class="buttonPage waves-effect white btn right cyan-text text-darken-1 htmldb-button-page">
+                                    <i class="ion-chevron-right"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

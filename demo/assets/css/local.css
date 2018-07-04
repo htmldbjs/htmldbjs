@@ -1365,3 +1365,24 @@ div.col td .checkbox2 {
     transition: 0.3s;
     vertical-align: text-bottom;
 }
+.ulPagination {
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+}
+.ulPagination > li {
+    display: inline-block;
+}
+.ulPagination .buttonPage {
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    min-width: 40px;
+    margin:2px;
+}
+.ulPagination .htmldb-pagination-template {
+    display: none;
+}
