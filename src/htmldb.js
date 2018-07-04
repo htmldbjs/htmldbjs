@@ -1001,14 +1001,7 @@ var HTMLDB = {
 		HTMLDB.initializeHTMLDBSaveButtons(parent);
 	},
 	"initializeHTMLDBPaginations": function (parent) {
-        var paginationElements = document.body.querySelectorAll(".htmldb-pagination");
-        var paginationElementCount = paginationElements.length;
-        var paginationElement = null;
 
-        for (var i = 0; i < paginationElementCount; i++) {
-        	paginationElement = paginationElements[i];
-        	HTMLDB.validateHTMLDBPaginationDefinition(paginationElement);
-        }
 	},
 	"initializeHTMLDBUpdaters": function (parent) {
 
@@ -1441,7 +1434,250 @@ var HTMLDB = {
     	}
     },
     "renderPaginationElement": function (element) {
+		var tableElementId = HTMLDB.getHTMLDBParameter(element, "table");
+		var tableElement = document.getElementById(tableElementId);
+		var activeId = parseInt(HTMLDB.getActiveId(tableElement));
+		var refreshTableElementIds = "";
+		var refreshTables = [];
+		var refreshTableCount = 0;
+		var pageField = "";
+		var pageFieldId = "";
+		var pageCountField = "";
+		var pageCountFieldId = "";
+		var page = 0;
+		var pageCount = 0;
+
+		if ("" == tableElementId) {
+			throw(new Error("HTMLDB pagination table not specified."));
+	        return false;
+		}
+
+		if (!document.getElementById(tableElementId)) {
+			throw(new Error("HTMLDB pagination table "
+					+ tableElementId
+					+ " not found."));
+	        return false;
+		}
+
+		refreshTableElementIds = HTMLDB.getHTMLDBParameter(element, "refresh-table");
+		refreshTables = refreshTableElementIds.split(",");
+		refreshTableCount = refreshTables;
+		refreshTable = null;
+
+		if ("" == refreshTableElementIds) {
+			throw(new Error("HTMLDB pagination refresh table not specified."));
+	        return false;	
+		}
+
+		for (var i = 0; i < refreshTableCount; i++) {
+			refreshTable = document.getElementById(refreshTables[i]);
+			if (!refreshTable) {
+				throw(new Error("HTMLDB table "
+						+ refreshTables[i]
+						+ " referenced as pagination refresh table, but not found."));
+	        	return false;
+			}
+		}
+
+		pageField = HTMLDB.getHTMLDBParameter(element, "page-field");
+
+		if ("" == pageField) {
+			throw(new Error("HTMLDB pagination data-htmldb-page-field attribute not specified."));
+	        return false;
+		}
+
+		pageCountField = HTMLDB.getHTMLDBParameter(element, "page-count-field");
+
+		if ("" == pageCountField) {
+			throw(new Error("HTMLDB pagination data-htmldb-page-count-field attribute not specified."));
+	        return false;	
+		}
+
+		if (activeId <= 0) {
+        	throw(new Error("HTMLDB pagination table "
+        			+ tableElementId
+        			+ " is not active, or has no records."));
+			return false;
+		}
+
+		var pageFieldId = (tableElementId
+				+ "_reader_td"
+				+ activeId
+				+ pageField);
+
+		if (!document.getElementById(pageFieldId)) {
+        	throw(new Error("HTMLDB pagination page field "
+        			+ tableElementId
+        			+ "."
+        			+ pageField
+        			+ " not found."));
+			return false;
+		}
+
+		pageCountFieldId = (tableElementId
+				+ "_reader_td"
+				+ activeId
+				+ pageCountField);
+
+		if (!document.getElementById(pageCountFieldId)) {
+        	throw(new Error("HTMLDB pagination page count field "
+        			+ tableElementId
+        			+ "."
+        			+ pageCountField
+        			+ " not found."));
+			return false;
+		}
+
+		page = parseInt(document.getElementById(pageFieldId).innerHTML);
+
+		if (isNaN(page)) {
+			throw(new Error("HTMLDB pagination page value "
+        			+ tableElementId
+        			+ "."
+        			+ pageCountField
+        			+ " is not valid."));
+			return false;
+		}
+
+		pageCount = parseInt(document.getElementById(pageCountFieldId).innerHTML);
+
+		if (isNaN(pageCount)) {
+			throw(new Error("HTMLDB pagination page count value "
+        			+ tableElementId
+        			+ "."
+        			+ pageCountField
+        			+ " is not valid."));
+			return false;
+		}
+
+		element.setAttribute("data-htmldb-page", page);
+		element.setAttribute("data-htmldb-page-count", pageCount);
+
+		HTMLDB.removePaginationElements(element);
+		HTMLDB.createPaginationElements(element);
+
 		element.dispatchEvent(new CustomEvent("htmldbrender", {detail: {}}));
+    },
+    "removePaginationElements": function (element) {
+		var pageElements = element.getElementsByClassName("htmldb-pagination-element");
+		while (pageElements.length > 0) {
+			element.removeChild(pageElements[0]);
+		}
+    },
+    "createPaginationElements": function (element) {
+    	var page = HTMLDB.getHTMLDBParameter(element, "page");
+    	var pageCount = HTMLDB.getHTMLDBParameter(element, "page-count");
+		var maxVisiblePages = parseInt(
+				HTMLDB.getHTMLDBParameter(
+				element,
+				"max-visible-pages"));
+		var firstTemplate = null;
+		var lastTemplate = null;
+		var defaultTemplate = null;
+		var activeTemplate = null;
+		var hiddenTemplate = null;
+		var childTemplates = element.children;
+		var childTemplateCount = childTemplates.length;
+		var childTemplate = null;
+		var pageButtons = [];
+
+		if (isNaN(maxVisiblePages)) {
+			maxVisiblePages = 5;
+		}
+
+		for (var i = 0; i < childTemplateCount; i++) {
+			childTemplate = childTemplates[i];
+			if (-1 == childTemplate.className.indexOf("htmldb-pagination-template")) {
+				continue;
+			}
+
+			if (childTemplate.className.indexOf("htmldb-pagination-first") != -1) {
+				firstTemplate = childTemplate;
+			}
+
+			if (childTemplate.className.indexOf("htmldb-pagination-last") != -1) {
+				lastTemplate = childTemplate;
+			}
+
+			if (childTemplate.className.indexOf("htmldb-pagination-default") != -1) {
+				defaultTemplate = childTemplate;
+			}
+
+			if (childTemplate.className.indexOf("htmldb-pagination-active") != -1) {
+				activeTemplate = childTemplate;
+			}
+
+			if (childTemplate.className.indexOf("htmldb-pagination-hidden") != -1) {
+				hiddenTemplate = childTemplate;
+			}
+
+			pageButtons = childTemplate.querySelectorAll(".htmldb-button-page");
+
+			if (0 == pageButtons.length) {
+				throw(new Error("HTMLDB pagination templates must have page "
+						+ "buttons specified with htmldb-button-page class."));
+	        	return false;
+			}
+		}
+
+		if ((null == firstTemplate)
+				&& (null == lastTemplate)
+				&& (null == defaultTemplate)) {
+			throw(new Error("HTMLDB pagination first-last or default"
+					+ " page template(s) not specified."));
+	        return false;
+		}
+
+		if ((firstTemplate != null)
+				&& (null == lastTemplate)
+				&& (null == defaultTemplate)) {
+			throw(new Error("HTMLDB pagination first page template "
+					+ "defined but last or default page template not specified."));
+	        return false;
+		}
+
+		if ((lastTemplate != null)
+				&& (null == firstTemplate)
+				&& (null == defaultTemplate)) {
+			throw(new Error("HTMLDB pagination last page template defined but "
+					+ "first or default page template not specified."));
+	        return false;
+		}
+
+		if (null == activeTemplate) {
+			throw(new Error("HTMLDB pagination active template not specified."));
+	        return false;	
+		}
+
+		if (firstTemplate != null) {
+			HTMLDB.clonePaginationElement(firstTemplate, 1);
+		}
+
+		if (page < maxVisiblePages) {
+
+			for (var i = 1; i < page; i++) {
+				HTMLDB.clonePaginationElement(defaultTemplate, (i + 1));
+			}
+
+			HTMLDB.clonePaginationElement(activeTemplate, (page + 1));
+
+			for (i = (page + 1); i < pageCount; i++) {
+				HTMLDB.clonePaginationElement(defaultTemplate, (i + 1));	
+			}
+
+		} else if (page >= maxVisiblePages) {
+
+		}
+
+		if (lastTemplate != null) {
+			HTMLDB.clonePaginationElement(lastTemplate, (pageCount));
+		}
+    },
+    "clonePaginationElement": function (element, page) {
+		newElement = element.cloneNode(true);
+		newElement.classList.remove("htmldb-pagination-template");
+		newElement.classList.add("htmldb-pagination-element");
+		element.parentNode.appendChild(newElement);
     },
     "doActiveFormFieldUpdate": function (formId, field) {
     	var tables = [];
@@ -2005,118 +2241,7 @@ var HTMLDB = {
     	}
 	},
 	"validateHTMLDBPaginationDefinition": function (element) {
-		var hasFirstTemplate = false;
-		var hasLastTemplate = false;
-		var hasDefaultTemplate = false;
-		var hasHiddenTemplate = false;
-		var hasActiveTemplate = false;
-		var tableElementId = "";
-		var refreshTableElementIds = "";
-		var refreshTables = [];
-		var refreshTableCount = 0;
-		var pageField = "";
-		var pageCountField = "";
 
-		tableElementId = HTMLDB.getHTMLDBParameter(element, "table");
-
-		// Check data-htmldb-table Value
-		if ("" == tableElementId) {
-			throw(new Error("HTMLDB pagination table not specified."));
-	        return false;
-		}
-
-		if (!document.getElementById(tableElementId)) {
-			throw(new Error("HTMLDB pagination table "
-					+ tableElementId
-					+ " not found."));
-	        return false;
-		}
-
-		refreshTableElementIds = HTMLDB.getHTMLDBParameter(element, "refresh-table");
-		refreshTables = refreshTableElementIds.split(",");
-		refreshTableCount = refreshTables;
-		refreshTable = null;
-
-		if ("" == refreshTableElementIds) {
-			throw(new Error("HTMLDB pagination refresh table not specified."));
-	        return false;	
-		}
-
-		for (var i = 0; i < refreshTableCount; i++) {
-			refreshTable = document.getElementById(refreshTables[i]);
-			if (!refreshTable) {
-				throw(new Error("HTMLDB table "
-						+ refreshTables[i]
-						+ " referenced as pagination refresh table, but not found."));
-	        	return false;
-			}
-		}
-		
-		var childTemplates = element.children;
-		var childTemplateCount = childTemplates.length;
-		var childTemplate = null;
-		var pageButtons = [];
-
-		for (var i = 0; i < childTemplateCount; i++) {
-			childTemplate = childTemplates[i];
-			if (-1 == childTemplate.className.indexOf("htmldb-pagination-template")) {
-				continue;
-			}
-
-			if (childTemplate.className.indexOf("htmldb-pagination-first") != -1) {
-				hasFirstTemplate = true;
-			}
-
-			if (childTemplate.className.indexOf("htmldb-pagination-last") != -1) {
-				hasLastTemplate = true;
-			}
-
-			if (childTemplate.className.indexOf("htmldb-pagination-default") != -1) {
-				hasDefaultTemplate = true;
-			}
-
-			if (childTemplate.className.indexOf("htmldb-pagination-active") != -1) {
-				hasActiveTemplate = true;
-			}
-
-			if (childTemplate.className.indexOf("htmldb-pagination-hidden") != -1) {
-				hasHiddenTemplate = true;
-			}
-
-			pageButtons = childTemplate.querySelectorAll(".htmldb-button-page");
-
-			if (0 == pageButtons.length) {
-				throw(new Error("HTMLDB pagination templates must have page "
-						+ "buttons specified with htmldb-button-page class."));
-	        	return false;
-			}
-		}
-
-		if ((false == hasFirstTemplate)
-				&& (false == hasLastTemplate)
-				&& (false == hasDefaultTemplate)) {
-			throw(new Error("HTMLDB pagination first-last or default"
-					+ " page template(s) not specified."));
-	        return false;
-		}
-
-		if ((hasFirstTemplate)
-				&& (false == hasLastTemplate)
-				&& (false == hasDefaultTemplate)) {
-			throw(new Error("HTMLDB pagination first page template "
-					+ "defined but last or default page template not specified."));
-	        return false;
-		}
-
-		if ((hasLastTemplate)
-				&& (false == hasFirstTemplate)
-				&& (false == hasDefaultTemplate)) {
-			throw(new Error("HTMLDB pagination last page template defined but "
-					+ "first or default page template not specified."));
-	        return false;
-		}
-
-		return true;
 	},
 	"createHelperElements": function (element) {
         var tableHTML = "";
