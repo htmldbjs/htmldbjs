@@ -80,7 +80,7 @@ class companiesController {
 
 		$listObject = new Company();
 		$listObject->beginBulkOperation();
-		$listObject->bufferSize = 100;
+		$listObject->bufferSize = 5;
 		$listObject->page = $sessionParameters['page'];
 		$listObject->addFilter('deleted','==', false);
 		if (10 == $this->user->user_type) {
@@ -88,7 +88,7 @@ class companiesController {
 		}
 		$listObject->find();
 
-		$_SESSION[sha1(__FILE__) . 'pageCount'] = $listObject->getPageCount();
+		$_SESSION[sha1('companiesController') . 'pageCount'] = $listObject->getPageCount();
 
 		$objectCount = $listObject->listCount;
 		
@@ -247,27 +247,27 @@ class companiesController {
 			$searchText = isset($_REQUEST['htmldb_row0_searchText'])
 					? htmlspecialchars($_REQUEST['htmldb_row0_searchText'])
 					: $sessionParameters['searchText'];
-			$_SESSION[sha1(__FILE__) . 'searchText'] = $searchText;
+			$_SESSION[sha1('companiesController') . 'searchText'] = $searchText;
 
 			$sortingColumn = isset($_REQUEST['htmldb_row0_sortingColumn'])
 					? intval($_REQUEST['htmldb_row0_sortingColumn'])
 					: $sessionParameters['sortingColumn'];
-			$_SESSION[sha1(__FILE__) . 'sortingColumn'] = $sortingColumn;
+			$_SESSION[sha1('companiesController') . 'sortingColumn'] = $sortingColumn;
 
 			$sortingASC = isset($_REQUEST['htmldb_row0_sortingASC'])
 					? intval($_REQUEST['htmldb_row0_sortingASC'])
 					: $sessionParameters['sortingASC'];
-			$_SESSION[sha1(__FILE__) . 'sortingASC'] = $sortingASC;
+			$_SESSION[sha1('companiesController') . 'sortingASC'] = $sortingASC;
 
 			$page = isset($_REQUEST['htmldb_row0_page'])
 					? intval($_REQUEST['htmldb_row0_page'])
 					: $sessionParameters['page'];
-			$_SESSION[sha1(__FILE__) . 'page'] = $page;
+			$_SESSION[sha1('companiesController') . 'page'] = $page;
 
 			$consultantSearchText = isset($_REQUEST['htmldb_row0_consultantSearchText'])
 					? htmlspecialchars($_REQUEST['htmldb_row0_consultantSearchText'])
 					: $sessionParameters['consultantSearchText'];
-			$_SESSION[sha1(__FILE__) . 'consultantSearchText'] = $consultantSearchText;
+			$_SESSION[sha1('companiesController') . 'consultantSearchText'] = $consultantSearchText;
 
 		} // if (isset($_REQUEST['inputaction' . $index])) {
 
@@ -277,28 +277,28 @@ class companiesController {
 
 		$sessionParameters = array();
 		$sessionParameters['searchText']
-				= (isset($_SESSION[sha1(__FILE__) . 'searchText'])
-				? $_SESSION[sha1(__FILE__) . 'searchText']
+				= (isset($_SESSION[sha1('companiesController') . 'searchText'])
+				? $_SESSION[sha1('companiesController') . 'searchText']
 				: '');
 		$sessionParameters['sortingColumn']
-				= (isset($_SESSION[sha1(__FILE__) . 'sortingColumn'])
-				? $_SESSION[sha1(__FILE__) . 'sortingColumn']
+				= (isset($_SESSION[sha1('companiesController') . 'sortingColumn'])
+				? $_SESSION[sha1('companiesController') . 'sortingColumn']
 				: 0);
 		$sessionParameters['sortingASC']
-				= (isset($_SESSION[sha1(__FILE__) . 'sortingASC'])
-				? $_SESSION[sha1(__FILE__) . 'sortingASC']
+				= (isset($_SESSION[sha1('companiesController') . 'sortingASC'])
+				? $_SESSION[sha1('companiesController') . 'sortingASC']
 				: 1);
 		$sessionParameters['page']
-				= (isset($_SESSION[sha1(__FILE__) . 'page'])
-				? $_SESSION[sha1(__FILE__) . 'page']
+				= (isset($_SESSION[sha1('companiesController') . 'page'])
+				? $_SESSION[sha1('companiesController') . 'page']
 				: 0);
 		$sessionParameters['pageCount']
-				= (isset($_SESSION[sha1(__FILE__) . 'pageCount'])
-				? $_SESSION[sha1(__FILE__) . 'pageCount']
+				= (isset($_SESSION[sha1('companiesController') . 'pageCount'])
+				? $_SESSION[sha1('companiesController') . 'pageCount']
 				: 0);
 		$sessionParameters['consultantSearchText']
-				= (isset($_SESSION[sha1(__FILE__) . 'consultantSearchText'])
-				? $_SESSION[sha1(__FILE__) . 'consultantSearchText']
+				= (isset($_SESSION[sha1('companiesController') . 'consultantSearchText'])
+				? $_SESSION[sha1('companiesController') . 'consultantSearchText']
 				: '');
 		return $sessionParameters;
 

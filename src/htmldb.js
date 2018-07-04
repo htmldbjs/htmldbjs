@@ -3,6 +3,9 @@ var HTMLDB = {
 	"readQueue": [],
 	"readingQueue": [],
 	"activeFormFields": [],
+	"indexedDB": null,
+	"indexedDBConnection": null,
+	"indexedDBTables": [],
 	"initialize": function () {
 		HTMLDB.initializeHTMLDBTables();
 		HTMLDB.initializeHTMLDBFormTables();
@@ -89,7 +92,7 @@ var HTMLDB = {
 			funcIframeLoadCallback = function (evEvent) {
 				tableElement.setAttribute("data-htmldb-loading", 0);
 				HTMLDB.hideLoader(tableElementId, "read");
-				HTMLDB.doirlc(evEvent, true);
+				HTMLDB.doReaderIframeDefaultLoad(evEvent, true);
 				functionDone(tableElementId);
 			}
 		}
@@ -335,6 +338,58 @@ var HTMLDB = {
 		} catch(e) {
 		}
 	},
+	"readLocal": function (tableElementId, functionDone) {
+		var tableElement = document.getElementById(tableElementId);
+		if (!tableElement) {
+        	throw(new Error("HTMLDB table "
+        			+ tableElementId
+        			+ " will be readed, but not found."));
+			return false;
+		}
+
+		var loading = parseInt(tableElement.getAttribute("data-htmldb-loading"));
+
+		if (loading > 0) {
+        	throw(new Error("HTMLDB table "
+        			+ tableElementId
+        			+ " is loading right now."));
+			return false;
+		}
+
+		tableElement.setAttribute("data-htmldb-loading", 1);
+		HTMLDB.showLoader(tableElementId, "read");
+
+		if (null == HTMLDB.indexedDBConnection) {
+			HTMLDB.indexedDBConnection = indexedDB.open("htmldb", 1);
+			HTMLDB.indexedDBConnection.onupgradeneeded = HTMLDB.doIndexedDBUpgradeNeeded;
+
+			var funcIndexedDBLoadCallback = null;
+			if (!functionDone) {
+				funcIndexedDBLoadCallback = function (event) {
+					tableElement.setAttribute("data-htmldb-loading", 0);
+					HTMLDB.hideLoader(tableElementId, "read");
+					HTMLDB.initializeLocalTable(tableElement);
+				}
+			} else {
+				funcIndexedDBLoadCallback = function (event) {
+					tableElement.setAttribute("data-htmldb-loading", 0);
+					HTMLDB.hideLoader(tableElementId, "read");
+					HTMLDB.initializeLocalTable(tableElement);
+					functionDone(tableElementId);
+				}
+			}
+
+			HTMLDB.indexedDBConnection.onsuccess = funcIndexedDBLoadCallback;
+		} else {
+			tableElement.setAttribute("data-htmldb-loading", 0);
+			HTMLDB.hideLoader(tableElementId, "read");
+			HTMLDB.initializeLocalTable(tableElement);
+
+			if (functionDone) {
+				functionDone(tableElementId);
+			}
+		}
+	},
 	"get": function (p1, p2) {
 		var elDIV = document.getElementById(p1);
 		if (!elDIV) {
@@ -368,8 +423,8 @@ var HTMLDB = {
 		return JSON.parse(strJSON);
 	},
 	"insert": function (tableElementId, object, className) {
-		var elDIV = document.getElementById(tableElementId);
-		if (!elDIV) {
+		var tableElement = document.getElementById(tableElementId);
+		if (!tableElement) {
 			return;
 		}
 
@@ -385,45 +440,84 @@ var HTMLDB = {
 				+ "\" data-row-id=\"n"
 				+ lTRCount
 				+ "\" id=\""
-				+ elDIV.id
+				+ tableElement.id
 				+"_trn"
 				+ lTRCount
 				+"\">";
-		strTRContent += HTMLDB.generateTDHTML(elDIV, "_writer", object, ("n" + lTRCount));
+		strTRContent += HTMLDB.generateTDHTML(tableElement, "_writer", object, ("n" + lTRCount));
     	strTRContent += "</tr>";
 
     	tbodyHTMLDB.innerHTML += strTRContent;
+
+    	if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
+    		tbodyHTMLDB = document.getElementById(tableElementId + "_reader_tbody");
+    		tbodyHTMLDB.innerHTML += strTRContent;
+    		HTMLDB.updateLocal(tableElement, ("n" + lTRCount), object);
+    		HTMLDB.render(tableElement);
+    	}
 	},
-	"update": function (p1, p2, p3, p4) {
-		var elDIV = document.getElementById(p1);
-		if (!elDIV) {
+	"update": function (tableElementId, id, object, className) {
+		var tableElement = document.getElementById(tableElementId);
+		if (!tableElement) {
 			return;
 		}
 
-		if (undefined === p4) {
-			p4 = "";
+		if (undefined === className) {
+			className = "";
 		}
 
-		if (0 == p2) {
-			return HTMLDB.insert(p1, p3, p4);
+		if (0 == id) {
+			return HTMLDB.insert(tableElementId, object, className);
 		}
 
-		var elTR = document.getElementById(p1 + "_writer_tr" + p2);
+		var elTR = document.getElementById(tableElementId + "_writer_tr" + id);
 
 		if (!elTR) {
 			return;
 		}
 
-		var tbodyHTMLDB = document.getElementById(p1 + "_writer_tbody");
-		strTRContent = HTMLDB.generateTDHTML(elDIV, "_writer", p3, p2);
+		var tbodyHTMLDB = document.getElementById(tableElementId + "_writer_tbody");
+		strTRContent = HTMLDB.generateTDHTML(tableElement, "_writer", object, id);
 
 		elTR.innerHTML = strTRContent;
 		if (-1 == elTR.className.indexOf("inserted")) {
-			elTR.className = "updated" + ((p4!="") ? (" " + p4) : "");
+			elTR.className = "updated" + ((className!="") ? (" " + className) : "");
 		}
+
+    	if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
+    		elTR = document.getElementById(tableElementId + "_reader_tr" + id);
+    		if (!elTR) {
+    			return;
+    		}
+			tbodyHTMLDB = document.getElementById(tableElementId + "_reader_tbody");
+			strTRContent = HTMLDB.generateTDHTML(tableElement, "_reader", object, id);
+			elTR.innerHTML = strTRContent;
+    		HTMLDB.updateLocal(tableElement, id, object);
+    		HTMLDB.render(tableElement);
+    	}
 	},
-	"delete": function (p1, p2, p3) {
-		var elDIV = document.getElementById(p1);
+	"updateLocal": function (tableElement, id, object) {
+		if (null == HTMLDB.indexedDBConnection) {
+        	throw(new Error("HTMLDB IndexedDB not initialized."));
+			return false;
+		}
+		var database = HTMLDB.indexedDBConnection.result;
+		var readerTransaction = database.transaction(
+				("htmldb_" + tableElement.id + "_reader"),
+				"readwrite");
+		var writerTransaction = database.transaction(
+				("htmldb_" + tableElement.id + "_writer"),
+				"readwrite");
+		var readerStore = readerTransaction.objectStore(
+				"htmldb_" + tableElement.id + "_reader");
+		var writerStore = writerTransaction.objectStore(
+				"htmldb_" + tableElement.id + "_writer");
+
+		readerStore.put(object);
+		writerStore.put(object);
+	},
+	"delete": function (tableElementId, p2, p3) {
+		var elDIV = document.getElementById(tableElementId);
 		if (!elDIV) {
 			return;
 		}
@@ -432,7 +526,7 @@ var HTMLDB = {
 			p3 = "";
 		}
 
-		var trDeleted = document.getElementById(p1 + "_writer_tr" + p2);
+		var trDeleted = document.getElementById(tableElementId + "_writer_tr" + p2);
 		if (trDeleted) {
 			trDeleted.className = "deleted" + ((p3!="") ? (" " + p3) : "");
 		}
@@ -575,10 +669,13 @@ var HTMLDB = {
     	var writerTable = null;
     	for (var i = 0; i < elementCount; i++) {
     		element = elements[i];
-    		if (1 == parseInt(HTMLDB.getHTMLDBParameter(element, "read-only"))) {
+    		if (HTMLDB.isHTMLDBParameter(element, "read-only")) {
     			continue;
     		}
     		if (!document.getElementById(element.id + "_writer_tbody")) {
+    			continue;
+    		}
+    		if (HTMLDB.isHTMLDBParameter(element, "local")) {
     			continue;
     		}
     		loading = parseInt(HTMLDB.getHTMLDBParameter(element, "loading"));
@@ -607,7 +704,7 @@ var HTMLDB = {
     	}
 	},
 	"doTableWrite": function (tableElement) {
-		if (1 == parseInt(HTMLDB.getHTMLDBParameter(tableElement, "write-only"))) {
+		if (HTMLDB.isHTMLDBParameter(tableElement, "write-only")) {
 			return true;
 		}
 		var redirectURL = HTMLDB.getHTMLDBParameter(tableElement, "redirect");
@@ -753,11 +850,21 @@ var HTMLDB = {
             }
         }
 	},
+	"initializeHTMLDBIndexedDB": function () {
+		HTMLDB.indexedDB = (window.indexedDB
+				|| window.mozIndexedDB
+				|| window.webkitIndexedDB
+				|| window.msIndexedDB
+				|| window.shimIndexedDB);
+	},
 	"initializeHTMLDBTables": function () {
         var tableElements = document.body.querySelectorAll(".htmldb-table");
         var tableElementCount = tableElements.length;
         var tableElement = null;
         var priority = 0;
+        var local = false;
+
+        HTMLDB.indexedDBTables = [];
 
         for (var i = 0; i < tableElementCount; i++) {
         	tableElement = tableElements[i];
@@ -773,6 +880,9 @@ var HTMLDB = {
         	if (isNaN(priority)) {
         		priority = 0;
         		tableElement.setAttribute("data-htmldb-priority", priority);
+        	}
+        	if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
+        		HTMLDB.indexedDBTables.push(tableElement.id);
         	}
         }
 
@@ -883,6 +993,64 @@ var HTMLDB = {
 	},
 	"initializeHTMLDBUpdaters": function (parent) {
 
+	},
+	"initializeLocalTable": function (tableElement) {
+		if (null == HTMLDB.indexedDBConnection) {
+        	throw(new Error("HTMLDB IndexedDB not initialized."));
+			return false;
+		}
+		var database = HTMLDB.indexedDBConnection.result;
+		var readerTransaction = database.transaction(
+				("htmldb_" + tableElement.id + "_reader"),
+				"readwrite");
+		var writerTransaction = database.transaction(
+				("htmldb_" + tableElement.id + "_writer"),
+				"readwrite");
+		var readerStore = readerTransaction.objectStore(
+				"htmldb_" + tableElement.id + "_reader");
+		var writerStore = writerTransaction.objectStore(
+				"htmldb_" + tableElement.id + "_writer");
+		var readerRequest = readerStore.getAll();
+		readerRequest.onsuccess = function() {
+			HTMLDB.initializeLocalTableRows(tableElement, "reader", readerRequest.result);
+			HTMLDB.render(tableElement);
+		}
+
+		var writerRequest = writerStore.getAll();
+		writerRequest.onsuccess = function() {
+			HTMLDB.initializeLocalTableRows(tableElement, "writer", writerRequest.result);
+		}
+	},
+	"initializeLocalTableRows": function (tableElement, tablePrefix, result) {
+		var resultCount = result.length;
+		var object = null;
+		var id = 0;
+		var content = "";
+		var activeId = 0;
+
+		for (var i = 0; i < resultCount; i++) {
+			object = result[i];
+			id = object.id;
+			if (tableElement.filterFunction &&
+					!tableElement.filterFunction(object)) {
+				continue;
+			}
+			content += "<tr class=\"refreshed\" data-row-id=\""
+					+ id
+					+ "\" id=\""
+					+ (tableElement.id
+					+ "_" + tablePrefix + "_tr"
+					+ id)
+					+ "\">";
+			content += HTMLDB.generateTDHTML(tableElement, ("_" + tablePrefix), object, id);
+			content += "</tr>";
+			if (0 == i) {
+				activeId = id;
+			}
+		}
+
+		document.getElementById(tableElementId + "_" + tablePrefix + "_tbody").innerHTML = content;
+		tableElement.setAttribute("data-htmldb-active-id", activeId);
 	},
 	"resetForm": function (form) {
 		var elements = form.elements;
@@ -1035,7 +1203,7 @@ var HTMLDB = {
         	if (parent.className.indexOf("htmldb-form") != -1) {
 	        	functionHeader = "var success=false;"
 	        			+ "var object=HTMLDB.convertFormToObject(document.getElementById(\""
-	        			+ parent.getAttribute("id")
+	        			+ parent.id
 	        			+ "\"));";
         	} else {
         		tableElementId = HTMLDB.getHTMLDBParameter(parent, "table");
@@ -1189,7 +1357,6 @@ var HTMLDB = {
 				parent = parent.parentNode;
 			}
 		}
-
 		if (exit) {
 			return parent;
 		} else {
@@ -1588,10 +1755,16 @@ var HTMLDB = {
 		}
 
 		tableElementId = "";
+		tableElement = null;
 
 		for (var i = 0; i < readingQueueCount; i++) {
 			tableElementId = HTMLDB.readingQueue[i];
-			HTMLDB.read(tableElementId);
+			tableElement = document.getElementById(tableElementId);
+			if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
+				HTMLDB.readLocal(tableElementId);
+			} else {
+				HTMLDB.read(tableElementId);
+			}
 		}
 	},
 	"removeFromReadingQueue": function (tableElementId) {
@@ -1720,6 +1893,14 @@ var HTMLDB = {
 			return element.getAttribute(parameter);
 		} else {
 			return "";
+		}
+	},
+	"isHTMLDBParameter": function (element, parameter) {
+		var value = HTMLDB.getHTMLDBParameter(element, parameter);
+		if (("true" == value) || ("1" == value)) {
+			return true;
+		} else {
+			return false;
 		}
 	},
 	"hasHTMLDBParameter": function (element, parameter) {
@@ -2398,11 +2579,29 @@ var HTMLDB = {
     	}
     },
 	"doReaderIframeLoad":function (p1) {
-		HTMLDB.doirlc(p1, false);
+		HTMLDB.doReaderIframeDefaultLoad(p1, false);
 		HTMLDB.render(p1.target.parentNode.parentNode);
 	},
 	"doRefreshButtonClick": function () {
 		HTMLDB.initializeReadQueue();
+	},
+	"doIndexedDBUpgradeNeeded": function () {
+		if (null == HTMLDB.indexedDBConnection) {
+        	throw(new Error("HTMLDB IndexedDB not initialized."));
+			return false;
+		}
+
+		var database = HTMLDB.indexedDBConnection.result;
+		var indexedDBTableCount = HTMLDB.indexedDBTables.length;
+
+		for (var i = 0; i < indexedDBTableCount; i++) {
+			database.createObjectStore(
+					("htmldb_" + HTMLDB.indexedDBTables[i] + "_reader"),
+					{keyPath: "id"});
+			database.createObjectStore(
+					("htmldb_" + HTMLDB.indexedDBTables[i] + "_writer"),
+					{keyPath: "id"});
+		}
 	},
 	"doAddButtonClick": function (event) {
 		var formElement = document.getElementById(HTMLDB.getHTMLDBParameter(event.currentTarget, "form"));
@@ -2473,12 +2672,14 @@ var HTMLDB = {
 	"showLoader": function (tableElementId, type) {
 		var tableElement = document.getElementById(tableElementId);
 		var loader = HTMLDB.getHTMLDBParameter(tableElement, (type + "-loader"));
+
 		if ("" == loader) {
 			loader = HTMLDB.getHTMLDBParameter(tableElement, "loader");
 		}
 		if ("" == loader) {
 			return;
 		}
+
 		var loaderElement = document.getElementById(loader);
 		if (loaderElement.depth === undefined) {
 			loaderElement.depth = 0;
@@ -2496,12 +2697,14 @@ var HTMLDB = {
 	"hideLoader": function (tableElementId, type) {
 		var tableElement = document.getElementById(tableElementId);
 		var loader = HTMLDB.getHTMLDBParameter(tableElement, (type + "-loader"));
+
 		if ("" == loader) {
 			loader = HTMLDB.getHTMLDBParameter(tableElement, "loader");
 		}
 		if ("" == loader) {
 			return;
 		}
+
 		var loaderElement = document.getElementById(loader);
 		if (loaderElement.depth === undefined) {
 			loaderElement.depth = 0;
@@ -2723,8 +2926,8 @@ var HTMLDB = {
 			break;
 		}
 	},
-	"doirlc": function (p1, p2) {
-		var iframeHTMLDB = p1.target;
+	"doReaderIframeDefaultLoad": function (event, readAll) {
+		var iframeHTMLDB = event.target;
 		var elDIV = iframeHTMLDB.parentNode.parentNode;
 		var strHTMLDBDIVID = iframeHTMLDB.parentNode.parentNode.id;
 		var tbodyHTMLDB = document.getElementById(strHTMLDBDIVID + "_reader_tbody");
@@ -2745,7 +2948,7 @@ var HTMLDB = {
 	        	throw(new Error("HTMLDB table "
 	        			+ elDIV.id
 	        			+ " could not be read: Not valid JSON format from URL "
-	        			+ p1.target.src));
+	        			+ event.target.src));
 				return false;
 			}
 
@@ -2802,14 +3005,14 @@ var HTMLDB = {
 		var iframeFormGUID = iframeHTMLDB.id.substr(iframeFormDefaultName.length);
 		HTMLDB.removeIframeAndForm(elDIV.id, iframeFormGUID);
 
-		if ((p2 === false) && elDIV.doHTMLDBRead) {
+		if ((readAll === false) && elDIV.doHTMLDBRead) {
 			elDIV.doHTMLDBRead(elDIV);
-		} else if ((p2 === true) && elDIV.doHTMLDBReadAll) {
+		} else if ((readAll === true) && elDIV.doHTMLDBReadAll) {
 			elDIV.doHTMLDBReadAll(elDIV);
 		}
 
 		elDIV.setAttribute("data-htmldb-loading", 0);
-		HTMLDB.hideLoader(tableElementId, "read");
+		HTMLDB.hideLoader(strHTMLDBDIVID, "read");
 
 		setTimeout(function () {
 			HTMLDB.removeFromReadingQueue(elDIV.id);
