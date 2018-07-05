@@ -1567,12 +1567,8 @@ var HTMLDB = {
     "createPaginationElements": function (element) {
     	var page = HTMLDB.getHTMLDBParameter(element, "page");
     	var pageCount = HTMLDB.getHTMLDBParameter(element, "page-count");
-		var maxVisiblePages = parseInt(
-				HTMLDB.getHTMLDBParameter(
-				element,
-				"max-visible-pages"));
-		var firstTemplate = null;
-		var lastTemplate = null;
+		var previousTemplate = null;
+		var nextTemplate = null;
 		var defaultTemplate = null;
 		var activeTemplate = null;
 		var hiddenTemplate = null;
@@ -1581,22 +1577,18 @@ var HTMLDB = {
 		var childTemplate = null;
 		var pageButtons = [];
 
-		if (isNaN(maxVisiblePages)) {
-			maxVisiblePages = 5;
-		}
-
 		for (var i = 0; i < childTemplateCount; i++) {
 			childTemplate = childTemplates[i];
 			if (-1 == childTemplate.className.indexOf("htmldb-pagination-template")) {
 				continue;
 			}
 
-			if (childTemplate.className.indexOf("htmldb-pagination-first") != -1) {
-				firstTemplate = childTemplate;
+			if (childTemplate.className.indexOf("htmldb-pagination-previous") != -1) {
+				previousTemplate = childTemplate;
 			}
 
-			if (childTemplate.className.indexOf("htmldb-pagination-last") != -1) {
-				lastTemplate = childTemplate;
+			if (childTemplate.className.indexOf("htmldb-pagination-next") != -1) {
+				nextTemplate = childTemplate;
 			}
 
 			if (childTemplate.className.indexOf("htmldb-pagination-default") != -1) {
@@ -1620,27 +1612,27 @@ var HTMLDB = {
 			}
 		}
 
-		if ((null == firstTemplate)
-				&& (null == lastTemplate)
+		if ((null == previousTemplate)
+				&& (null == nextTemplate)
 				&& (null == defaultTemplate)) {
-			throw(new Error("HTMLDB pagination first-last or default"
+			throw(new Error("HTMLDB pagination previous-next or default"
 					+ " page template(s) not specified."));
 	        return false;
 		}
 
-		if ((firstTemplate != null)
-				&& (null == lastTemplate)
+		if ((previousTemplate != null)
+				&& (null == nextTemplate)
 				&& (null == defaultTemplate)) {
-			throw(new Error("HTMLDB pagination first page template "
-					+ "defined but last or default page template not specified."));
+			throw(new Error("HTMLDB pagination previous page template "
+					+ "defined but next or default page template not specified."));
 	        return false;
 		}
 
-		if ((lastTemplate != null)
-				&& (null == firstTemplate)
+		if ((nextTemplate != null)
+				&& (null == previousTemplate)
 				&& (null == defaultTemplate)) {
-			throw(new Error("HTMLDB pagination last page template defined but "
-					+ "first or default page template not specified."));
+			throw(new Error("HTMLDB pagination next page template defined but "
+					+ "previous or default page template not specified."));
 	        return false;
 		}
 
@@ -1649,28 +1641,67 @@ var HTMLDB = {
 	        return false;	
 		}
 
-		if (firstTemplate != null) {
-			HTMLDB.clonePaginationElement(firstTemplate, 1);
+		page = parseInt(page);
+		pageCount = parseInt(pageCount);
+
+		if (previousTemplate != null) {
+			HTMLDB.clonePaginationElement(previousTemplate, 1);
 		}
 
-		if (page < maxVisiblePages) {
+		if (pageCount < 7) {
+			for (var i = 0; i < pageCount; i++) {
+				if (i == page) {
+					HTMLDB.clonePaginationElement(activeTemplate, (i + 1));
+				} else {
+					HTMLDB.clonePaginationElement(defaultTemplate, (i + 1));
+				}
+			}
+		} else {
 
-			for (var i = 1; i < page; i++) {
-				HTMLDB.clonePaginationElement(defaultTemplate, (i + 1));
+			var start = 0
+			var end = (pageCount - 1);
+			var leftHidden = true;
+			var rightHidden = true;
+
+			if (page < 4) {
+				leftHidden = false;
+				start = 0;
+				end = 4;
+			} else if (page > (pageCount - 5)) {
+				rightHidden = false;
+				start = (pageCount - 5);
+				end = (pageCount - 1);
+			} else {
+				start = (page - 1);
+				end = (page + 1);
 			}
 
-			HTMLDB.clonePaginationElement(activeTemplate, (page + 1));
-
-			for (i = (page + 1); i < pageCount; i++) {
-				HTMLDB.clonePaginationElement(defaultTemplate, (i + 1));	
+			if (leftHidden) {
+				HTMLDB.clonePaginationElement(defaultTemplate, 1);
+				if (hiddenTemplate != null) {
+					HTMLDB.clonePaginationElement(hiddenTemplate, 0);
+				}
 			}
 
-		} else if (page >= maxVisiblePages) {
+			for (var i = start; i <= end; i++) {
+				if (i == page) {
+					HTMLDB.clonePaginationElement(activeTemplate, (i + 1));
+				} else {
+					HTMLDB.clonePaginationElement(defaultTemplate, (i + 1));
+				}
+			}
+
+			if (rightHidden) {
+				if (hiddenTemplate != null) {
+					HTMLDB.clonePaginationElement(hiddenTemplate, 0);
+				}
+				HTMLDB.clonePaginationElement(defaultTemplate, pageCount);
+			}
 
 		}
 
-		if (lastTemplate != null) {
-			HTMLDB.clonePaginationElement(lastTemplate, (pageCount));
+		if (nextTemplate != null) {
+			HTMLDB.clonePaginationElement(nextTemplate, (pageCount));
 		}
     },
     "clonePaginationElement": function (element, page) {

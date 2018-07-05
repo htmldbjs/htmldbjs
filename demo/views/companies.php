@@ -72,13 +72,13 @@
                 </table>
                 <div class="row">
                     <div class="col s12">
-                        <ul class="ulPagination htmldb-pagination" data-htmldb-table="sessionHTMLDB" data-htmldb-page-field="page" data-htmldb-page-count-field="pageCount" data-htmldb-refresh-table="companyHTMLDB" data-htmldb-max-visible-pages="">
-                            <li class="htmldb-pagination-template htmldb-pagination-first">
+                        <ul class="ulPagination htmldb-pagination" data-htmldb-table="sessionHTMLDB" data-htmldb-page-field="page" data-htmldb-page-count-field="pageCount" data-htmldb-refresh-table="companyHTMLDB">
+                            <li class="htmldb-pagination-template htmldb-pagination-previous">
                                 <button class="buttonPage waves-effect white btn right cyan-text text-darken-1 htmldb-button-page">
                                     <i class="ion-chevron-left"></i>
                                 </button>
                             </li>
-                            <li class="htmldb-pagination-template htmldb-pagination-last">
+                            <li class="htmldb-pagination-template htmldb-pagination-next">
                                 <button class="buttonPage waves-effect white btn right cyan-text text-darken-1 htmldb-button-page">
                                     <i class="ion-chevron-right"></i>
                                 </button>
