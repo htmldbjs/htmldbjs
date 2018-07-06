@@ -1643,9 +1643,20 @@ var HTMLDB = {
 
 		page = parseInt(page);
 		pageCount = parseInt(pageCount);
+		previousPage = (page - 1);
+
+		if (previousPage < 0) {
+			previousPage = 0;
+		}
+
+		nextPage = (page + 1);
+
+		if (nextPage >= pageCount) {
+			nextPage = (pageCount - 1);
+		}
 
 		if (previousTemplate != null) {
-			HTMLDB.clonePaginationElement(previousTemplate, 1);
+			HTMLDB.clonePaginationElement(previousTemplate, (previousPage + 1));
 		}
 
 		if (pageCount < 7) {
@@ -1701,14 +1712,82 @@ var HTMLDB = {
 		}
 
 		if (nextTemplate != null) {
-			HTMLDB.clonePaginationElement(nextTemplate, (pageCount));
+			HTMLDB.clonePaginationElement(nextTemplate, (nextPage + 1));
 		}
     },
     "clonePaginationElement": function (element, page) {
-		newElement = element.cloneNode(true);
+		var newElement = element.cloneNode(true);
 		newElement.classList.remove("htmldb-pagination-template");
 		newElement.classList.add("htmldb-pagination-element");
+		
 		element.parentNode.appendChild(newElement);
+		HTMLDB.storeSectionElementTemplates(newElement);
+		HTMLDB.renderElementWithObject(newElement, {"page":page});
+
+		var newButtons = newElement.querySelectorAll(".htmldb-button-page");
+		var newButtonCount = newButtons.length;
+		var newButton = null;
+
+		for (var i = 0; i < newButtonCount; i++) {
+			newButton = newButtons[i];
+			newButton.setAttribute("data-htmldb-page", page);
+
+			if (newButton.addEventListener) {
+				newButton.addEventListener("click", HTMLDB.doPaginationButtonClick, true);
+			} else if (newButton.attachEvent) {
+	            newButton.attachEvent("onclick", HTMLDB.doPaginationButtonClick);
+	        }
+		}
+    },
+    "doPaginationButtonClick": function (event) {
+    	alert(event.target.getAttribute("data-htmldb-page"));
+    },
+    "renderElementWithObject": function (element, object) {
+        if (!element) {
+            return false;
+        }
+
+        if (!object) {
+            return false;
+        }
+
+        if ((element.HTMLDBInitials !== undefined)
+        		&& (element.HTMLDBInitials.attributes !== undefined)) {
+            var attributeCount = element.HTMLDBInitials.attributes.length;
+            var attributeName = "";
+            var attributeValue = "";
+            var content = "";
+            for (var i = 0; i < attributeCount; i++) {
+                attributeName = element.HTMLDBInitials.attributes[i].name;
+                attributeValue = element.HTMLDBInitials.attributes[i].value;
+                content = HTMLDB.evaluateHTMLDBExpressionWithObject(
+                		attributeValue,
+                		object);
+                element.setAttribute(attributeName, content);
+            }
+        }
+
+        var childrenCount = element.children.length;
+        var children = null;
+
+        for (var i = 0; i < childrenCount; i++) {
+            children = element.children[i];
+            HTMLDB.renderElementWithObject(children, object);
+        }
+
+        if (0 == childrenCount) {
+            if ((element.HTMLDBInitials !== undefined)
+            		&& (element.HTMLDBInitials.content !== undefined)) {
+                content = HTMLDB.evaluateHTMLDBExpressionWithObject(
+                		element.HTMLDBInitials.content,
+                		object);
+                element.innerHTML = content;
+            } else {
+            	if (HTMLDB.hasHTMLDBParameter(element, "content")) {
+            		element.innerHTML = HTMLDB.getHTMLDBParameter(element, "content");
+            	}
+            }
+        }
     },
     "doActiveFormFieldUpdate": function (formId, field) {
     	var tables = [];
@@ -2830,6 +2909,62 @@ var HTMLDB = {
     			return HTMLDB.getURLParameter(parseInt(parameter));
     		break;
     	}
+    },
+    "evaluateHTMLDBExpressionWithObject": function (expression, object) {
+		var tokens = String(expression).split("{{");
+		var subTokens = null;
+		var content = "";
+		var tokenCount = 0;
+		var foreignTableId = "";
+		var column = "";
+		var text = "";
+		var position = 0;
+
+		if (tokens.length <= 1) {
+			return expression;
+		}
+
+		tokenCount = tokens.length;
+		var value = "";
+
+		for (var i = 1; (i < tokenCount); i++) {
+			content = tokens[i];
+			position = 1;
+
+			while (("}" != content[position - 1])
+					&& ("}" != content[position])) {
+				position++;
+			}
+
+			subTokens = (String(content).substr(0, (position))).split(".");
+
+			if (subTokens.length > 1) {
+				foreignTableId = subTokens[0];
+				column = subTokens[1];
+			} else {
+				foreignTableId = "";
+				column = subTokens[0];
+			}
+
+			if (object[column] !== undefined) {
+				value = object[column];
+			} else {
+				value = ("{{" + content);
+			}
+
+			text = String(content).substr(position + 2);
+			text = String(text).replace(/(?:\r\n|\r|\n)/g, "");
+
+			content = value + HTMLDB.as((String(text).trim()));
+
+			tokens[i] = content;
+		}
+
+		if (tokens.length > 1) {
+			returnValue = tokens.join("");
+		}
+
+		return returnValue;
     },
     "exploreHTMLDBTable": function (element) {
     	var exit = false;
