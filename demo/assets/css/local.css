@@ -1372,6 +1372,7 @@ div.col td .checkbox2 {
     padding-top: 10px;
     padding-bottom: 10px;
     box-sizing: border-box;
+    transition: all 0.3s;
 }
 .ulPagination > li {
     display: inline-block;
@@ -1385,4 +1386,7 @@ div.col td .checkbox2 {
 }
 .ulPagination .htmldb-pagination-template {
     display: none;
+}
+.ulPagination.htmldb-loading {
+    opacity: 0.6;
 }

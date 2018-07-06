@@ -241,35 +241,30 @@ class companiesController {
 
 		$resetPage = false;
 
-		if (isset($_REQUEST['inputaction0'])
-				&& ('updated' == $_REQUEST['inputaction0'])) {
+		$searchText = isset($_REQUEST['htmldb_row0_searchText'])
+				? htmlspecialchars($_REQUEST['htmldb_row0_searchText'])
+				: $sessionParameters['searchText'];
+		$_SESSION[sha1('companiesController') . 'searchText'] = $searchText;
 
-			$searchText = isset($_REQUEST['htmldb_row0_searchText'])
-					? htmlspecialchars($_REQUEST['htmldb_row0_searchText'])
-					: $sessionParameters['searchText'];
-			$_SESSION[sha1('companiesController') . 'searchText'] = $searchText;
+		$sortingColumn = isset($_REQUEST['htmldb_row0_sortingColumn'])
+				? intval($_REQUEST['htmldb_row0_sortingColumn'])
+				: $sessionParameters['sortingColumn'];
+		$_SESSION[sha1('companiesController') . 'sortingColumn'] = $sortingColumn;
 
-			$sortingColumn = isset($_REQUEST['htmldb_row0_sortingColumn'])
-					? intval($_REQUEST['htmldb_row0_sortingColumn'])
-					: $sessionParameters['sortingColumn'];
-			$_SESSION[sha1('companiesController') . 'sortingColumn'] = $sortingColumn;
+		$sortingASC = isset($_REQUEST['htmldb_row0_sortingASC'])
+				? intval($_REQUEST['htmldb_row0_sortingASC'])
+				: $sessionParameters['sortingASC'];
+		$_SESSION[sha1('companiesController') . 'sortingASC'] = $sortingASC;
 
-			$sortingASC = isset($_REQUEST['htmldb_row0_sortingASC'])
-					? intval($_REQUEST['htmldb_row0_sortingASC'])
-					: $sessionParameters['sortingASC'];
-			$_SESSION[sha1('companiesController') . 'sortingASC'] = $sortingASC;
+		$page = isset($_REQUEST['htmldb_row0_page'])
+				? intval($_REQUEST['htmldb_row0_page'])
+				: $sessionParameters['page'];
+		$_SESSION[sha1('companiesController') . 'page'] = $page;
 
-			$page = isset($_REQUEST['htmldb_row0_page'])
-					? intval($_REQUEST['htmldb_row0_page'])
-					: $sessionParameters['page'];
-			$_SESSION[sha1('companiesController') . 'page'] = $page;
-
-			$consultantSearchText = isset($_REQUEST['htmldb_row0_consultantSearchText'])
-					? htmlspecialchars($_REQUEST['htmldb_row0_consultantSearchText'])
-					: $sessionParameters['consultantSearchText'];
-			$_SESSION[sha1('companiesController') . 'consultantSearchText'] = $consultantSearchText;
-
-		} // if (isset($_REQUEST['inputaction' . $index])) {
+		$consultantSearchText = isset($_REQUEST['htmldb_row0_consultantSearchText'])
+				? htmlspecialchars($_REQUEST['htmldb_row0_consultantSearchText'])
+				: $sessionParameters['consultantSearchText'];
+		$_SESSION[sha1('companiesController') . 'consultantSearchText'] = $consultantSearchText;
 
 	}
 

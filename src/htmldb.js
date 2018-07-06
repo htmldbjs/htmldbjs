@@ -1553,6 +1553,8 @@ var HTMLDB = {
 		element.setAttribute("data-htmldb-page", page);
 		element.setAttribute("data-htmldb-page-count", pageCount);
 
+		element.classList.remove("htmldb-loading");
+
 		HTMLDB.removePaginationElements(element);
 		HTMLDB.createPaginationElements(element);
 
@@ -1740,7 +1742,42 @@ var HTMLDB = {
 		}
     },
     "doPaginationButtonClick": function (event) {
-    	alert(event.target.getAttribute("data-htmldb-page"));
+    	var page = (parseInt(event.target.getAttribute("data-htmldb-page")) - 1);
+
+    	if (isNaN(page)) {
+			throw(new Error("HTMLDB pagination button has no valid data-htmldb-page attribute."));
+	        return false;
+    	}
+
+    	var paginationElement = HTMLDB.exploreHTMLDBPagination(event.target);
+    	var tableElement = HTMLDB.exploreHTMLDBTable(event.target);
+
+    	if (!tableElement) {
+			throw(new Error("HTMLDB pagination table not found."));
+	        return false;
+    	}
+
+    	var className = (" " + paginationElement.className + " ");
+
+    	if (className.indexOf(" htmldb-loading ") != -1) {
+    		return false;
+    	}
+
+		paginationElement.classList.add("htmldb-loading");
+
+		var activeId = parseInt(HTMLDB.getActiveId(tableElement));
+		var sessionObject = HTMLDB.get(tableElement.id, activeId);
+
+		if (undefined === sessionObject["page"]) {
+			throw(new Error("HTMLDB pagination table " + tableElement.id + " has no page column."));
+	        return false;	
+		}
+
+		sessionObject["page"] = page;
+
+		document.getElementById(tableElement.id + "_reader_td" + activeId + "page").innerHTML = page;
+
+		HTMLDB.insert(tableElement.id, sessionObject);
     },
     "renderElementWithObject": function (element, object) {
         if (!element) {
@@ -3000,6 +3037,29 @@ var HTMLDB = {
     	}
     	if (exit) {
         	throw(new Error("HTMLDB form not found."));
+			return false;
+    	} else {
+    		return element;
+    	}
+    },
+    "exploreHTMLDBPagination": function (element) {
+    	var exit = false;
+
+    	var className = (" " + element.className + " ");
+    	if (className.indexOf(" htmldb-pagination ") != -1) {
+    		return element;
+    	}
+    	var element = element.parentNode;
+    	className = (" " + element.className + " ");
+    	while (!exit && (-1 == className.indexOf(" htmldb-pagination "))) {
+    		element = element.parentNode;
+    		className = (" " + element.className + " ");
+    		if ("body" == element.tagName.toLowerCase()) {
+    			exit = true;
+    		}
+    	}
+    	if (exit) {
+        	throw(new Error("HTMLDB pagination not found."));
 			return false;
     	} else {
     		return element;
