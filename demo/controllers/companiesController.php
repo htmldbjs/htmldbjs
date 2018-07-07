@@ -80,7 +80,7 @@ class companiesController {
 
 		$listObject = new Company();
 		$listObject->beginBulkOperation();
-		$listObject->bufferSize = 2;
+		$listObject->bufferSize = 10;
 		$listObject->page = $sessionParameters['page'];
 		$listObject->addFilter('deleted','==', false);
 		if (10 == $this->user->user_type) {

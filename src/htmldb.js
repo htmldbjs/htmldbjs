@@ -67,6 +67,10 @@ var HTMLDB = {
 
 		var tbodyHTMLDB = document.getElementById(tableElementId + "_reader_tbody");
 
+		if (!HTMLDB.isHTMLDBParameter(tableElement, "read-incremental")) {
+			tbodyHTMLDB.innerHTML = "";
+		}
+
 		var iframeFormGUID = document.getElementById(tableElementId + "_iframe_container").children.length;
 		HTMLDB.createNewIframeAndForm(tableElementId, iframeFormGUID);
 
@@ -1770,7 +1774,7 @@ var HTMLDB = {
 
 		if (undefined === sessionObject["page"]) {
 			throw(new Error("HTMLDB pagination table " + tableElement.id + " has no page column."));
-	        return false;	
+	        return false;
 		}
 
 		sessionObject["page"] = page;
@@ -1778,6 +1782,25 @@ var HTMLDB = {
 		document.getElementById(tableElement.id + "_reader_td" + activeId + "page").innerHTML = page;
 
 		HTMLDB.insert(tableElement.id, sessionObject);
+
+		var refreshTableCSV = HTMLDB.getHTMLDBParameter(paginationElement, "refresh-table");
+		var refreshTables = refreshTableCSV.split(",");
+		var refreshTableCount = refreshTables.length;
+		var refreshTableId = "";
+		var refreshTable = null;
+
+		for (var i = 0; i < refreshTableCount; i++) {
+			refreshTableId = refreshTables[i];
+			refreshTable = document.getElementById(refreshTableId);
+			if (!refreshTable) {
+				throw(new Error("HTMLDB table "
+						+ refreshTableId
+						+ " referenced in pagination data-htmldb-refresh-table "
+						+ "attribute but not found."));
+	        	return false;
+			}
+			HTMLDB.updateReadQueue(refreshTable);
+		}
     },
     "renderElementWithObject": function (element, object) {
         if (!element) {
