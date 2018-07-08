@@ -245,7 +245,7 @@ An action button is used for adding a new record to the specified table. When ht
 #### Syntax
 
 ```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+<button class="htmldb-button-add" type="button" data-htmldb-form="myForm">Add New Record</button>
 ```
 
 #### Attributes
@@ -274,7 +274,7 @@ An action button is used for editing a specific record. When htmldb-button-edit 
 #### Syntax
 
 ```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+<button class="htmldb-button-edit" type="button" data-htmldb-edit-id="1" data-htmldb-table="myTable" data-htmldb-form="myForm">Edit Record</button>
 ```
 
 #### Attributes
@@ -303,7 +303,7 @@ An action button is used for refreshing all htmldb-table elements.
 #### Syntax
 
 ```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+<button class="htmldb-button-refresh" type="button">Refresh</button>
 ```
 
 #### Attributes
@@ -328,7 +328,7 @@ An action button is used for saving current values of the specified form.
 #### Syntax
 
 ```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+<button class="htmldb-button-save" type="button" data-htmldb-form="myForm">Save</button>
 ```
 
 #### Attributes
@@ -361,7 +361,14 @@ An action button is used for updating the sorting preferences.
 #### Syntax
 
 ```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+<button type="button"
+        class="htmldb-button-sort"
+        data-htmldb-table="myTable"
+        data-htmldb-sort-field="sortingColumn"
+        data-htmldb-sort-value="0"
+        data-htmldb-direction-field="sortingASC"
+        data-htmldb-refresh-table="myTable2"
+        data-htmldb-table-defaults='{"page":0}'>Sort Column</button>
 ```
 
 #### Attributes
@@ -421,7 +428,7 @@ An input element, that holds the current values of the htmldb-form fields.
 #### Syntax
 
 ```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+<input id="name" name="name" type="text" value="" class="htmldb-field" data-htmldb-field="company_name">
 ```
 
 #### Attributes
@@ -453,7 +460,8 @@ A container for the htmldb-fields, that automatically updated by htmldb-table.
 #### Syntax
 
 ```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+<form id="myForm" name="myForm" method="post" class="htmldb-form" data-htmldb-table="myTable">
+</form>
 ```
 
 #### Attributes
@@ -482,7 +490,15 @@ A standalone input that automatically update the specific htmldb-table record.
 #### Syntax
 
 ```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+<input id="name"
+        name="name"
+        class="htmldb-input-save"
+        type="search"
+        data-htmldb-table="myTable"
+        data-htmldb-input-field="company_name"
+        data-htmldb-refresh-table="myTable2"
+        data-htmldb-table-defaults='{"page":0}'
+        data-htmldb-save-delay="1000">
 ```
 
 #### Attributes
@@ -542,7 +558,40 @@ A container element for easily navigating among the pages of htmldb-table elemen
 #### Syntax
 
 ```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+<ul class="htmldb-pagination"
+        data-htmldb-table="myTable"
+        data-htmldb-page-field="page"
+        data-htmldb-page-count-field="pageCount"
+        data-htmldb-refresh-table="myTable2"
+        data-htmldb-table-defaults="">
+
+    <li class="htmldb-pagination-template htmldb-pagination-previous">
+        <button class="htmldb-button-page">Previous</button>
+    </li>
+
+    <li class="htmldb-pagination-template htmldb-pagination-next">
+        <button class="htmldb-button-page">Next</button>
+    </li>
+
+    <li class="htmldb-pagination-template htmldb-pagination-default">
+        <button class="htmldb-button-page">
+            <span data-htmldb-content="{{page}}"></span>
+        </button>
+    </li>
+
+    <li class="htmldb-pagination-template htmldb-pagination-active">
+        <button class="htmldb-button-page">
+            <span data-htmldb-content="{{page}}"></span>
+        </button>
+    </li>
+
+    <li class="htmldb-pagination-template htmldb-pagination-hidden">
+        <button class="htmldb-button-page" disabled="disabled">
+            <span>...</span>
+        </button>
+    </li>
+
+</ul>
 ```
 
 #### Attributes
@@ -578,7 +627,21 @@ A container for the elements, that automatically rendered by the related htmldb-
 #### Syntax
 
 ```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+<div class="htmldb-section" data-htmldb-table="myTable">
+    
+    <p>First Name:</p>
+    
+    <p data-htmldb-content="{{firstname}}"></p>
+    
+    <p>Last Name:</p>
+    
+    <p data-htmldb-content="{{lastname}}"></p>
+    
+    <p>E-mail Address:</p>
+    
+    <p data-htmldb-content="{{email}}"></p>
+
+</div>
 ```
 
 #### Attributes
@@ -605,7 +668,13 @@ A select element that automatically populated with the related htmldb-table.
 #### Syntax
 
 ```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+<select id="mySelect"
+        name="mySelect"
+        class="htmldb-select htmldb-field"
+        data-htmldb-field="company_type"
+        data-htmldb-option-table="companyTypes"
+        data-htmldb-option-value="{{id}}"
+        data-htmldb-option-title="{{company_type}}"></select>
 ```
 
 #### Attributes
@@ -690,7 +759,25 @@ A container element for the templates, that are automatically rendered by relate
 #### Syntax
 
 ```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+<table id="myTemplateTarget"></table>
+
+<script type="text/html"
+        id="myTemplate"
+        class="htmldb-template"
+        data-htmldb-table="myTable"
+        data-htmldb-template-target="myTemplateTarget">
+
+        <tr class="tr{{id}}" data-object-id="{{id}}">
+
+            <td>{{id}}</td>
+
+            <td>{{company_name}}</td>
+
+            <td>{{company_type}}</td>
+
+        </tr>
+
+</script>
 ```
 
 #### Attributes
@@ -720,7 +807,13 @@ A special container for the form fields that automatically displayed or hided fo
 #### Syntax
 
 ```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+<div id="myContainer"
+        class="htmldb-toggle"
+        data-htmldb-filter="company_type/eq/1">
+
+    <p>Company Type: 1</p>
+
+</div>
 ```
 
 #### Attributes
