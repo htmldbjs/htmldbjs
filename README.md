@@ -659,10 +659,10 @@ Data source element that retrieves and stores data from the server. Also, it val
 | `data-htmldb-validate-loader` |   |
 | `data-htmldb-validate-url` | Specifies the URL that simulates posting data to the server for validation.<br><br>`Default Value: ""` |
 | `data-htmldb-write-loader` |   |
-| `data-htmldb-write-form` |   |
-| `data-htmldb-write-loading` |   |
-| `data-htmldb-write-active-id` |   |
-| `data-htmldb-write-read-incremental` |   |
+| `data-htmldb-form` |   |
+| `data-htmldb-loading` |   |
+| `data-htmldb-active-id` |   |
+| `data-htmldb-read-incremental` |   |
 | `data-htmldb-write-url` | Specifies the data post URL.<br><br>`Default Value: ""` |
 | `data-htmldb-write-only` | Specifies that HTMLDB table instance is write-only or not.<br><br>`Default Value: false` |
 | `id` | Specifies the name of the HTMLDB table.<br><br>`Default Value: ""`<br>`Required`<br>`Unique` |
