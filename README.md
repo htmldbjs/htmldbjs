@@ -238,347 +238,6 @@ htmldb_row2_columnName: columnName new value
 
 ## Elements
 
-### `htmldb-table`
-
-Data source element that retrieves and stores data from the server. Also, it validates and posts data to the server.
-
-#### Syntax
-
-```html
-<div id="myFirstTable"
-        class="htmldb-table"
-        data-htmldb-read-url="myfirsttable/read"
-        data-htmldb-validate-url="myfirsttable/write"
-        data-htmldb-write-url="myfirsttable/write"></div>
-```
-
-#### Attributes
-
-| Attribute Name | Description |
-| ---- | ---- |
-| `data-htmldb-filter` | Specifies filter expression will be used while reading data from a parent HTMLDB table instance. This attribute is used with `data-htmldb-table`.<br><br>`Default Value: ""`<br> |
-| `data-htmldb-local` | Specifies whether HTMLDB table instance will store data in browser's local storage (IndexedDB) or not. Local HTMLDB table instances are not automatically retreive data from the server or post data to the server. It stores all the data in IndexedDB. Local HTMLDB table instances use `HTMLDB` as database name and HTMLDB table element `id` for object store name. Local HTMLDB table data can be accessible from all pages in the same domain.<br><br>`Default Value: false` |
-| `data-htmldb-priority` | Specifies the loading priority of the HTMLDB table.<br><br>`Default Value: 0` |
-| `data-htmldb-read-url` | Specifies the URL of the data requested from the server.<br><br>`Default Value: ""` |
-| `data-htmldb-readonly` | Specifies that HTMLDB table instance is read-only or not.<br><br>`Default Value: false` |
-| `data-htmldb-redirect` | Specifies the redirect URL after posting data to the server.<br><br>`Default Value: ""` |
-| `data-htmldb-table` | Specifies the parent HTMLDB table `id`. This attribute is used with `data-htmldb-table`.<br><br>`Default Value: ""` |
-| `data-htmldb-validate-url` | Specifies the URL that simulates posting data to the server for validation.<br><br>`Default Value: ""` |
-| `data-htmldb-write-url` | Specifies the data post URL.<br><br>`Default Value: ""` |
-| `data-htmldb-writeonly` | Specifies that HTMLDB table instance is write-only or not.<br><br>`Default Value: false` |
-| `id` | Specifies the name of the HTMLDB table.<br><br>`Default Value: ""`<br>`Required`<br>`Unique` |
-
-#### Events
-
-| Event Name | Description  |
-| ---- | ---- |
-| `htmldberror` | Triggered when an error returned especially after validation process.<br><br>`Event.detail.errorText` holds the error text returned. |
-| `htmldbmessage` | Triggered when a message returned especially after validation process.<br><br>`Event.detail.messageText` holds the message text returned. |
-
-#### Examples
-
-- Basic HTMLDB Table Example
-- HTMLDB Table Filter Example
-- Local HTMLDB Example
-
-<br/>
-<br/>
-
-### `htmldb-template`
-
-Usage text goes here...
-
-#### Syntax
-
-```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
-```
-
-#### Attributes
-
-| Attribute Name             | Description                               |
-| -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
-
-#### Events
-
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
-
-#### Examples
-
-Examples text goes here...
-
-<br/>
-<br/>
-
-### `htmldb-section`
-
-Usage text goes here...
-
-#### Syntax
-
-```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
-```
-
-#### Attributes
-| Attribute Name             | Description                               |
-| -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
-
-#### Events
-
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
-
-#### Examples
-
-Examples text goes here...
-
-<br/>
-<br/>
-
-### `htmldb-form`
-
-Usage text goes here...
-
-#### Syntax
-
-```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
-```
-
-#### Attributes
-
-| Attribute Name             | Description                               |
-| -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
-
-#### Events
-
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
-
-#### Examples
-
-Examples text goes here...
-
-<br/>
-<br/>
-
-### `htmldb-field`
-
-Usage text goes here...
-
-#### Syntax
-
-```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
-```
-
-#### Attributes
-
-| Attribute Name             | Description                               |
-| -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
-
-#### Events
-
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
-
-#### Examples
-
-Examples text goes here...
-
-<br/>
-<br/>
-
-### `htmldb-error`
-
-Usage text goes here...
-
-#### Syntax
-
-```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
-```
-
-#### Attributes
-
-| Attribute Name             | Description                               |
-| -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
-
-#### Events
-
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
-
-#### Examples
-
-Examples text goes here...
-
-<br/>
-<br/>
-
-### `htmldb-message`
-
-Usage text goes here...
-
-#### Syntax
-
-```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
-```
-
-#### Attributes
-
-| Attribute Name             | Description                               |
-| -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
-
-#### Events
-
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
-
-#### Examples
-
-Examples text goes here...
-
-<br/>
-<br/>
-
-### `htmldb-toggle`
-
-Usage text goes here...
-
-#### Syntax
-
-```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
-```
-
-#### Attributes
-
-| Attribute Name             | Description                               |
-| -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
-
-#### Events
-
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
-
-#### Examples
-
-Examples text goes here...
-
-<br/>
-<br/>
-
-### `htmldb-button-refresh`
-
-Usage text goes here...
-
-#### Syntax
-
-```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
-```
-
-#### Attributes
-
-| Attribute Name             | Description                               |
-| -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
-
-#### Events
-
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
-
-#### Examples
-
-Examples text goes here...
-
-<br/>
-<br/>
-
 ### `htmldb-button-add`
 
 Usage text goes here...
@@ -653,7 +312,499 @@ Examples text goes here...
 <br/>
 <br/>
 
+### `htmldb-button-refresh`
+
+Usage text goes here...
+
+#### Syntax
+
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
+
+#### Attributes
+
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
+
+#### Events
+
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
+
+#### Examples
+
+Examples text goes here...
+
+<br/>
+<br/>
+
 ### `htmldb-button-save`
+
+Usage text goes here...
+
+#### Syntax
+
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
+
+#### Attributes
+
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
+
+#### Events
+
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
+
+#### Examples
+
+Examples text goes here...
+
+<br/>
+<br/>
+
+### `htmldb-button-sort`
+
+Usage text goes here...
+
+#### Syntax
+
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
+
+#### Attributes
+
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
+
+#### Events
+
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
+
+#### Examples
+
+Examples text goes here...
+
+<br/>
+<br/>
+
+### `htmldb-error`
+
+Usage text goes here...
+
+#### Syntax
+
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
+
+#### Attributes
+
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
+
+#### Events
+
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
+
+#### Examples
+
+Examples text goes here...
+
+<br/>
+<br/>
+
+### `htmldb-field`
+
+Usage text goes here...
+
+#### Syntax
+
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
+
+#### Attributes
+
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
+
+#### Events
+
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
+
+#### Examples
+
+Examples text goes here...
+
+<br/>
+<br/>
+
+### `htmldb-form`
+
+Usage text goes here...
+
+#### Syntax
+
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
+
+#### Attributes
+
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
+
+#### Events
+
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
+
+#### Examples
+
+Examples text goes here...
+
+<br/>
+<br/>
+
+### `htmldb-input-save`
+
+Usage text goes here...
+
+#### Syntax
+
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
+
+#### Attributes
+
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
+
+#### Events
+
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
+
+#### Examples
+
+Examples text goes here...
+
+<br/>
+<br/>
+
+### `htmldb-message`
+
+Usage text goes here...
+
+#### Syntax
+
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
+
+#### Attributes
+
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
+
+#### Events
+
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
+
+#### Examples
+
+Examples text goes here...
+
+<br/>
+<br/>
+
+### `htmldb-pagination`
+
+Usage text goes here...
+
+#### Syntax
+
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
+
+#### Attributes
+
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
+
+#### Events
+
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
+
+#### Examples
+
+Examples text goes here...
+
+<br/>
+<br/>
+
+### `htmldb-section`
+
+Usage text goes here...
+
+#### Syntax
+
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
+
+#### Attributes
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
+
+#### Events
+
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
+
+#### Examples
+
+Examples text goes here...
+
+<br/>
+<br/>
+
+### `htmldb-select`
+
+Usage text goes here...
+
+#### Syntax
+
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
+
+#### Attributes
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
+
+#### Events
+
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
+
+#### Examples
+
+Examples text goes here...
+
+<br/>
+<br/>
+
+### `htmldb-table`
+
+Data source element that retrieves and stores data from the server. Also, it validates and posts data to the server.
+
+#### Syntax
+
+```html
+<div id="myFirstTable"
+        class="htmldb-table"
+        data-htmldb-read-url="myfirsttable/read"
+        data-htmldb-validate-url="myfirsttable/write"
+        data-htmldb-write-url="myfirsttable/write"></div>
+```
+
+#### Attributes
+
+| Attribute Name | Description |
+| ---- | ---- |
+| `data-htmldb-filter` | Specifies filter expression will be used while reading data from a parent HTMLDB table instance. This attribute is used with `data-htmldb-table`.<br><br>`Default Value: ""`<br> |
+| `data-htmldb-loader` |   |
+| `data-htmldb-local` | Specifies whether HTMLDB table instance will store data in browser's local storage (IndexedDB) or not. Local HTMLDB table instances are not automatically retreive data from the server or post data to the server. It stores all the data in IndexedDB. Local HTMLDB table instances use `HTMLDB` as database name and HTMLDB table element `id` for object store name. Local HTMLDB table data can be accessible from all pages in the same domain.<br><br>`Default Value: false` |
+| `data-htmldb-priority` | Specifies the loading priority of the HTMLDB table.<br><br>`Default Value: 0` |
+| `data-htmldb-read-loader` |   |
+| `data-htmldb-read-url` | Specifies the URL of the data requested from the server.<br><br>`Default Value: ""` |
+| `data-htmldb-readonly` | Specifies that HTMLDB table instance is read-only or not.<br><br>`Default Value: false` |
+| `data-htmldb-redirect` | Specifies the redirect URL after posting data to the server.<br><br>`Default Value: ""` |
+| `data-htmldb-table` | Specifies the parent HTMLDB table `id`. This attribute is used with `data-htmldb-table`.<br><br>`Default Value: ""` |
+| `data-htmldb-validate-loader` |   |
+| `data-htmldb-validate-url` | Specifies the URL that simulates posting data to the server for validation.<br><br>`Default Value: ""` |
+| `data-htmldb-write-loader` |   |
+| `data-htmldb-write-url` | Specifies the data post URL.<br><br>`Default Value: ""` |
+| `data-htmldb-writeonly` | Specifies that HTMLDB table instance is write-only or not.<br><br>`Default Value: false` |
+| `id` | Specifies the name of the HTMLDB table.<br><br>`Default Value: ""`<br>`Required`<br>`Unique` |
+
+#### Events
+
+| Event Name | Description  |
+| ---- | ---- |
+| `htmldberror` | Triggered when an error returned especially after validation process.<br><br>`Event.detail.errorText` holds the error text returned. |
+| `htmldbmessage` | Triggered when a message returned especially after validation process.<br><br>`Event.detail.messageText` holds the message text returned. |
+
+#### Examples
+
+- Basic HTMLDB Table Example
+- HTMLDB Table Filter Example
+- Local HTMLDB Example
+
+<br/>
+<br/>
+
+### `htmldb-template`
+
+Usage text goes here...
+
+#### Syntax
+
+```html
+<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+```
+
+#### Attributes
+
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-priority`     | right-aligned<br/>test                    |
+| `data-htmldb-read-url`     | right-aligned                             |
+| `data-htmldb-readonly`     | right-aligned                             |
+| `data-htmldb-redirect`     | right-aligned                             |
+| `data-htmldb-validate-url` | right-aligned                             |
+| `data-htmldb-write-url`    | right-aligned                             |
+| `data-htmldb-writeonly`    | right-aligned                             |
+
+#### Events
+
+| Event Name               | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `htmldbread`             | right-aligned                             |
+| `htmldbwrite`            | right-aligned                             |
+| `htmldbvalidate`         | right-aligned                             |
+
+#### Examples
+
+Examples text goes here...
+
+<br/>
+<br/>
+
+### `htmldb-toggle`
 
 Usage text goes here...
 
