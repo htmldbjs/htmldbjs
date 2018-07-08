@@ -240,7 +240,7 @@ htmldb_row2_columnName: columnName new value
 
 ### `htmldb-button-add`
 
-Usage text goes here...
+An action button is used for adding a new record to the specified table. When htmldb-button-add button clicked related forms are reset.
 
 #### Syntax
 
@@ -269,7 +269,7 @@ Examples text goes here...
 
 ### `htmldb-button-edit`
 
-Usage text goes here...
+An action button is used for editing a specific record. When htmldb-button-edit button clicked htmldb-table element active id is set to the specified record. Additionally, all related form fields are populated with the values of the record.
 
 #### Syntax
 
@@ -298,7 +298,7 @@ Examples text goes here...
 
 ### `htmldb-button-refresh`
 
-Usage text goes here...
+An action button is used for refreshing all htmldb-table elements.
 
 #### Syntax
 
@@ -323,7 +323,7 @@ Examples text goes here...
 
 ### `htmldb-button-save`
 
-Usage text goes here...
+An action button is used for saving current values of the specified form.
 
 #### Syntax
 
@@ -356,7 +356,7 @@ Examples text goes here...
 
 ### `htmldb-button-sort`
 
-Usage text goes here...
+An action button is used for updating sorting preferences.
 
 #### Syntax
 
@@ -389,7 +389,7 @@ Examples text goes here...
 
 ### `htmldb-error`
 
-Usage text goes here...
+A container element for the errors.
 
 #### Syntax
 
@@ -416,7 +416,7 @@ Examples text goes here...
 
 ### `htmldb-field`
 
-Usage text goes here...
+An input element, that holds the current values of the htmldb-form fields.
 
 #### Syntax
 
@@ -448,7 +448,7 @@ Examples text goes here...
 
 ### `htmldb-form`
 
-Usage text goes here...
+A container for the htmldb-fields, that automatically updated by htmldb-table.
 
 #### Syntax
 
@@ -477,7 +477,7 @@ Examples text goes here...
 
 ### `htmldb-input-save`
 
-Usage text goes here...
+A standalone input that automatically update the specific htmldb-table record.
 
 #### Syntax
 
@@ -510,7 +510,7 @@ Examples text goes here...
 
 ### `htmldb-message`
 
-Usage text goes here...
+A container element for the messages.
 
 #### Syntax
 
@@ -537,7 +537,7 @@ Examples text goes here...
 
 ### `htmldb-pagination`
 
-Usage text goes here...
+A container element for easily navigating among the pages of htmldb-table element.
 
 #### Syntax
 
@@ -573,7 +573,7 @@ Examples text goes here...
 
 ### `htmldb-section`
 
-Usage text goes here...
+A container for the elements, that automatically rendered by the related htmldb-table.
 
 #### Syntax
 
@@ -600,7 +600,7 @@ Examples text goes here...
 
 ### `htmldb-select`
 
-Usage text goes here...
+A select element that automatically populated with the related htmldb-table.
 
 #### Syntax
 
@@ -685,7 +685,7 @@ Data source element that retrieves and stores data from the server. Also, it val
 
 ### `htmldb-template`
 
-Usage text goes here...
+A container element for the templates, that are automatically rendered by related htmldb-table.
 
 #### Syntax
 
@@ -715,7 +715,7 @@ Examples text goes here...
 
 ### `htmldb-toggle`
 
-Usage text goes here...
+A special container for the form fields that automatically displayed or hided for a certain condition.
 
 #### Syntax
 
