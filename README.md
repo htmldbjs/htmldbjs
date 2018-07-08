@@ -252,13 +252,7 @@ Usage text goes here...
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
+| `data-htmldb-form`         |   |
 
 #### Events
 
@@ -287,13 +281,9 @@ Usage text goes here...
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
+| `data-htmldb-table`     | right-aligned<br/>test                    |
+| `data-htmldb-form`     | right-aligned                             |
+| `data-htmldb-edit-id`     | right-aligned                             |
 
 #### Events
 
@@ -318,15 +308,7 @@ Usage text goes here...
 
 #### Attributes
 
-| Attribute Name             | Description                               |
-| -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
+This element has no attributes.
 
 #### Events
 
@@ -353,13 +335,11 @@ Usage text goes here...
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
+| `data-htmldb-table`     | right-aligned<br/>test                    |
+| `data-htmldb-save-delay`     | right-aligned                             |
+| `data-htmldb-input-field`     | right-aligned                             |
+| `data-htmldb-refresh-table`     | right-aligned                             |
+| `data-htmldb-table-defaults` | right-aligned                             |
 
 #### Events
 
@@ -388,13 +368,11 @@ Usage text goes here...
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
+| `data-htmldb-table`     | right-aligned<br/>test                    |
+| `data-htmldb-sort-field`     | right-aligned                             |
+| `data-htmldb-sort-value`     | right-aligned                             |
+| `data-htmldb-direction-field`     | right-aligned                             |
+| `data-htmldb-refresh-table` | right-aligned                             |
 
 #### Events
 
@@ -421,15 +399,7 @@ Usage text goes here...
 
 #### Attributes
 
-| Attribute Name             | Description                               |
-| -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
+This element has no attributes.
 
 #### Events
 
@@ -458,13 +428,9 @@ Usage text goes here...
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
+| `data-htmldb-field`     | right-aligned<br/>test                    |
+| `data-htmldb-value`     | right-aligned                             |
+| `data-htmldb-reset-value`     | right-aligned                             |
 
 #### Events
 
@@ -494,13 +460,7 @@ Usage text goes here...
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
+| `data-htmldb-table`     | right-aligned<br/>test                    |
 
 #### Events
 
@@ -529,13 +489,11 @@ Usage text goes here...
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
+| `data-htmldb-table`     | right-aligned<br/>test                    |
+| `data-htmldb-save-delay`     | right-aligned                             |
+| `data-htmldb-input-field`     | right-aligned                             |
+| `data-htmldb-refresh-table`     | right-aligned                             |
+| `data-htmldb-table-defaults` | right-aligned                             |
 
 #### Events
 
@@ -562,15 +520,7 @@ Usage text goes here...
 
 #### Attributes
 
-| Attribute Name             | Description                               |
-| -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
+This element has no attributes.
 
 #### Events
 
@@ -599,13 +549,13 @@ Usage text goes here...
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
+| `data-htmldb-table`     | right-aligned<br/>test                    |
+| `data-htmldb-refresh-table`     | right-aligned                             |
+| `data-htmldb-page-field`     | right-aligned                             |
+| `data-htmldb-page-count-field`     | right-aligned                             |
+| `data-htmldb-page` | right-aligned                             |
+| `data-htmldb-page-count`    | right-aligned                             |
+| `data-htmldb-table-defaults`    | right-aligned                             |
 
 #### Events
 
@@ -634,13 +584,8 @@ Usage text goes here...
 #### Attributes
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
+| `data-htmldb-table`     | right-aligned<br/>test                    |
+| `data-htmldb-content`     | right-aligned                             |
 
 #### Events
 
@@ -666,13 +611,10 @@ Usage text goes here...
 #### Attributes
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
+| `data-htmldb-field`     | right-aligned<br/>test                    |
+| `data-htmldb-option-table`     | right-aligned                             |
+| `data-htmldb-option-title`     | right-aligned                             |
+| `data-htmldb-option-value`     | right-aligned                             |
 
 #### Events
 
@@ -711,14 +653,18 @@ Data source element that retrieves and stores data from the server. Also, it val
 | `data-htmldb-priority` | Specifies the loading priority of the HTMLDB table.<br><br>`Default Value: 0` |
 | `data-htmldb-read-loader` |   |
 | `data-htmldb-read-url` | Specifies the URL of the data requested from the server.<br><br>`Default Value: ""` |
-| `data-htmldb-readonly` | Specifies that HTMLDB table instance is read-only or not.<br><br>`Default Value: false` |
+| `data-htmldb-read-only` | Specifies that HTMLDB table instance is read-only or not.<br><br>`Default Value: false` |
 | `data-htmldb-redirect` | Specifies the redirect URL after posting data to the server.<br><br>`Default Value: ""` |
 | `data-htmldb-table` | Specifies the parent HTMLDB table `id`. This attribute is used with `data-htmldb-table`.<br><br>`Default Value: ""` |
 | `data-htmldb-validate-loader` |   |
 | `data-htmldb-validate-url` | Specifies the URL that simulates posting data to the server for validation.<br><br>`Default Value: ""` |
 | `data-htmldb-write-loader` |   |
+| `data-htmldb-write-form` |   |
+| `data-htmldb-write-loading` |   |
+| `data-htmldb-write-active-id` |   |
+| `data-htmldb-write-read-incremental` |   |
 | `data-htmldb-write-url` | Specifies the data post URL.<br><br>`Default Value: ""` |
-| `data-htmldb-writeonly` | Specifies that HTMLDB table instance is write-only or not.<br><br>`Default Value: false` |
+| `data-htmldb-write-only` | Specifies that HTMLDB table instance is write-only or not.<br><br>`Default Value: false` |
 | `id` | Specifies the name of the HTMLDB table.<br><br>`Default Value: ""`<br>`Required`<br>`Unique` |
 
 #### Events
@@ -751,13 +697,8 @@ Usage text goes here...
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
+| `data-htmldb-table`     | right-aligned<br/>test                    |
+| `data-htmldb-template-target`     | right-aligned                             |
 
 #### Events
 
@@ -786,13 +727,8 @@ Usage text goes here...
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-priority`     | right-aligned<br/>test                    |
-| `data-htmldb-read-url`     | right-aligned                             |
-| `data-htmldb-readonly`     | right-aligned                             |
-| `data-htmldb-redirect`     | right-aligned                             |
-| `data-htmldb-validate-url` | right-aligned                             |
-| `data-htmldb-write-url`    | right-aligned                             |
-| `data-htmldb-writeonly`    | right-aligned                             |
+| `data-htmldb-table`     | right-aligned<br/>test                    |
+| `data-htmldb-filter`     | right-aligned                             |
 
 #### Events
 
