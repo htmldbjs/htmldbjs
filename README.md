@@ -245,7 +245,9 @@ An action button is used for adding a new record to the specified table. When ht
 #### Syntax
 
 ```html
-<button class="htmldb-button-add" type="button" data-htmldb-form="myForm">Add New Record</button>
+<button class="htmldb-button-add"
+        type="button"
+        data-htmldb-form="myForm">Add New Record</button>
 ```
 
 #### Attributes
@@ -274,7 +276,11 @@ An action button is used for editing a specific record. When htmldb-button-edit 
 #### Syntax
 
 ```html
-<button class="htmldb-button-edit" type="button" data-htmldb-edit-id="1" data-htmldb-table="myTable" data-htmldb-form="myForm">Edit Record</button>
+<button class="htmldb-button-edit"
+        type="button"
+        data-htmldb-edit-id="1"
+        data-htmldb-table="myTable"
+        data-htmldb-form="myForm">Edit Record</button>
 ```
 
 #### Attributes
@@ -303,7 +309,8 @@ An action button is used for refreshing all htmldb-table elements.
 #### Syntax
 
 ```html
-<button class="htmldb-button-refresh" type="button">Refresh</button>
+<button class="htmldb-button-refresh"
+        type="button">Refresh</button>
 ```
 
 #### Attributes
@@ -328,7 +335,9 @@ An action button is used for saving current values of the specified form.
 #### Syntax
 
 ```html
-<button class="htmldb-button-save" type="button" data-htmldb-form="myForm">Save</button>
+<button class="htmldb-button-save"
+        type="button"
+        data-htmldb-form="myForm">Save</button>
 ```
 
 #### Attributes
@@ -401,7 +410,9 @@ A container element for the errors.
 #### Syntax
 
 ```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+<script id="myFirstTemplate"
+        class="htmldb-template"
+        type="text/html"></script>
 ```
 
 #### Attributes
@@ -428,7 +439,12 @@ An input element, that holds the current values of the htmldb-form fields.
 #### Syntax
 
 ```html
-<input id="name" name="name" type="text" value="" class="htmldb-field" data-htmldb-field="company_name">
+<input id="name"
+        name="name"
+        type="text"
+        value=""
+        class="htmldb-field"
+        data-htmldb-field="company_name">
 ```
 
 #### Attributes
@@ -460,7 +476,12 @@ A container for the htmldb-fields, that automatically updated by htmldb-table.
 #### Syntax
 
 ```html
-<form id="myForm" name="myForm" method="post" class="htmldb-form" data-htmldb-table="myTable">
+<form id="myForm"
+        name="myForm"
+        method="post"
+        class="htmldb-form"
+        data-htmldb-table="myTable">
+
 </form>
 ```
 
@@ -566,29 +587,45 @@ A container element for easily navigating among the pages of htmldb-table elemen
         data-htmldb-table-defaults="">
 
     <li class="htmldb-pagination-template htmldb-pagination-previous">
+
         <button class="htmldb-button-page">Previous</button>
+
     </li>
 
     <li class="htmldb-pagination-template htmldb-pagination-next">
+
         <button class="htmldb-button-page">Next</button>
+
     </li>
 
     <li class="htmldb-pagination-template htmldb-pagination-default">
+
         <button class="htmldb-button-page">
+
             <span data-htmldb-content="{{page}}"></span>
+
         </button>
+
     </li>
 
     <li class="htmldb-pagination-template htmldb-pagination-active">
+
         <button class="htmldb-button-page">
+
             <span data-htmldb-content="{{page}}"></span>
+
         </button>
+
     </li>
 
     <li class="htmldb-pagination-template htmldb-pagination-hidden">
+
         <button class="htmldb-button-page" disabled="disabled">
+
             <span>...</span>
+
         </button>
+
     </li>
 
 </ul>
