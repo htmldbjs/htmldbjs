@@ -1012,6 +1012,7 @@ var HTMLDB = {
 		HTMLDB.initializeHTMLDBAddButtons(parent);
 		HTMLDB.initializeHTMLDBEditButtons(parent);
 		HTMLDB.initializeHTMLDBSaveButtons(parent);
+		HTMLDB.initializeHTMLDBSortButtons(parent);
 	},
 	"initializeHTMLDBInputs": function (parent) {
 		HTMLDB.initializeHTMLDBSaveInputs(parent);
@@ -1989,6 +1990,23 @@ var HTMLDB = {
 	        }
 	    }
 	},
+	"initializeHTMLDBSortButtons": function (parent) {
+		if ((undefined === parent) || (null === parent)) {
+			parent = document.body;
+		}
+        var buttonElements = parent.querySelectorAll(".htmldb-button-sort");
+        var buttonElementCount = buttonElements.length;
+        var buttonElement = null;
+
+        for (var i = 0; i < buttonElementCount; i++) {
+        	buttonElement = buttonElements[i];
+			if (buttonElement.addEventListener) {
+				buttonElement.addEventListener("click", HTMLDB.doSortButtonClick, true);
+			} else if (buttonElement.attachEvent) {
+	            buttonElement.attachEvent("onclick", HTMLDB.doSortButtonClick);
+	        }
+	    }
+	},
 	"initializeHTMLDBEditButtons": function (parent, tableElement) {
 		if ((undefined === parent) || (null === parent)) {
 			parent = document.body;
@@ -2139,6 +2157,93 @@ var HTMLDB = {
 		HTMLDB.insert(tableElement.id, sessionObject);
 		HTMLDB.updateReadQueueWithParameter(input, "refresh-table");
 		input.dispatchEvent(new CustomEvent("htmldbinputsave", {detail: {"input": input}}));
+	},
+	"doSortButtonClick": function (event) {
+		var button = event.target;
+
+    	var tableElementId = HTMLDB.getHTMLDBParameter(button, "table");
+    	var tableElement = document.getElementById(tableElementId);
+    	var sortField = HTMLDB.getHTMLDBParameter(button, "sort-field");
+    	var sortValue = HTMLDB.getHTMLDBParameter(button, "sort-value");
+    	var directionField = HTMLDB.getHTMLDBParameter(button, "direction-field");
+    	var sortingASC = false;
+
+    	if (!tableElement) {
+			throw(new Error("HTMLDB button table " + tableElementId + " not found."));
+	        return false;
+    	}
+
+    	var className = (" " + button.className + " ");
+
+    	if (className.indexOf(" htmldb-loading ") != -1) {
+    		return false;
+    	}
+
+    	if (className.indexOf(" htmldb-sorting-asc ") != -1) {
+    		sortingASC = true;
+    	} else {
+    		sortingASC = false;
+    	}
+
+		var activeId = parseInt(HTMLDB.getActiveId(tableElement));
+		var sessionObject = HTMLDB.get(tableElement.id, activeId);
+
+		if (undefined === sessionObject[sortField]) {
+			throw(new Error("HTMLDB button table "
+					+ tableElement.id
+					+ " has no "
+					+ sortField
+					+ " column."));
+	        return false;
+		}
+
+		if (undefined === sessionObject[directionField]) {
+			throw(new Error("HTMLDB button table "
+					+ tableElement.id
+					+ " has no "
+					+ directionField
+					+ " column."));
+	        return false;
+		}
+
+		button.classList.add("htmldb-loading");
+
+		if (sortingASC) {
+			button.classList.remove("htmldb-sorting-asc");
+			button.classList.add("htmldb-sorting-desc");
+			button.setAttribute("data-htmldb-sorting-asc", 0);
+		} else {
+			button.classList.add("htmldb-sorting-asc");
+			button.classList.remove("htmldb-sorting-desc");
+			button.setAttribute("data-htmldb-sorting-asc", 1);
+		}
+
+		sessionObject = HTMLDB.parseElementDefaults(button, sessionObject);
+
+		sessionObject[sortField] = sortValue;
+		sessionObject[directionField] = ((sortingASC) ? 2 : 1);
+
+		document.getElementById(tableElement.id
+				+ "_reader_td"
+				+ activeId
+				+ sortField).innerHTML
+				= sortValue;
+
+		document.getElementById(tableElement.id
+				+ "_reader_td"
+				+ activeId
+				+ directionField).innerHTML
+				= sessionObject[directionField];
+
+		HTMLDB.updateReadQueueCallbacks(tableElement, function () {
+			button.classList.remove("htmldb-loading");
+		});
+
+		console.log(sessionObject);
+
+		HTMLDB.insert(tableElement.id, sessionObject);
+		HTMLDB.updateReadQueueWithParameter(button, "refresh-table");
+		button.dispatchEvent(new CustomEvent("htmldbbuttonsort", {detail: {}}));
 	},
 	"updateReadQueueWithParameter": function (element, parameter) {
 		var refreshTableCSV = HTMLDB.getHTMLDBParameter(element, parameter);

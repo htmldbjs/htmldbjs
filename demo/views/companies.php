@@ -35,8 +35,8 @@
                                 </label>
                             </th>
                             <th>
-                                <button type="button" class="buttonTableColumn buttonTableColumn0 sorting-asc"
-                                data-column-index="0">ID&nbsp;<span
+                                <button type="button" class="buttonTableColumn buttonTableColumn0 htmldb-button-sort"
+                                data-htmldb-table="sessionHTMLDB" data-htmldb-sort-field="sortingColumn" data-htmldb-sort-value="0" data-htmldb-direction-field="sortingASC" data-htmldb-refresh-table="companyHTMLDB" data-htmldb-table-defaults='{"page":0}'>ID&nbsp;<span
                                 class="sorting sorting-desc blue-text text-darken-4"><i
                                 class="ion-arrow-down-b"></i></span><span
                                 class="sorting sorting-asc blue-text text-darken-4"></span></button>
