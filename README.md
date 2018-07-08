@@ -356,7 +356,7 @@ Examples text goes here...
 
 ### `htmldb-button-sort`
 
-An action button is used for updating sorting preferences.
+An action button is used for updating the sorting preferences.
 
 #### Syntax
 
