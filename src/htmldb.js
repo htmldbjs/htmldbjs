@@ -2,6 +2,7 @@
 var HTMLDB = {
 	"readQueue": [],
 	"readingQueue": [],
+	"readQueueCallbacks": [],
 	"activeFormFields": [],
 	"indexedDB": null,
 	"indexedDBConnection": null,
@@ -11,6 +12,7 @@ var HTMLDB = {
 		HTMLDB.initializeHTMLDBFormTables();
 		HTMLDB.initializeHTMLDBTemplates();
 		HTMLDB.initializeHTMLDBButtons();
+		HTMLDB.initializeHTMLDBInputs();
 		HTMLDB.initializeHTMLDBPaginations();
 		HTMLDB.initializeHTMLDBSections();
 		HTMLDB.initializeHTMLDBForms();
@@ -748,6 +750,13 @@ var HTMLDB = {
 		
 		HTMLDB.processReadQueue();
 	},
+	"updateReadQueueCallbacks": function (tableElement, callbackFunction) {
+		if (undefined === HTMLDB.readQueueCallbacks[tableElement.id]) {
+			HTMLDB.readQueueCallbacks[tableElement.id] = [];
+		}
+		var functionCount = HTMLDB.readQueueCallbacks[tableElement.id].length;
+		HTMLDB.readQueueCallbacks[tableElement.id][functionCount] = callbackFunction;
+	},
 	"isInReadQueue": function (tableElement) {
 		for (var tables in HTMLDB.readQueue){
 		    if (tables.indexOf(tableElement.id) != -1) {
@@ -1003,6 +1012,9 @@ var HTMLDB = {
 		HTMLDB.initializeHTMLDBAddButtons(parent);
 		HTMLDB.initializeHTMLDBEditButtons(parent);
 		HTMLDB.initializeHTMLDBSaveButtons(parent);
+	},
+	"initializeHTMLDBInputs": function (parent) {
+		HTMLDB.initializeHTMLDBSaveInputs(parent);
 	},
 	"initializeHTMLDBPaginations": function (parent) {
 
@@ -1777,30 +1789,36 @@ var HTMLDB = {
 	        return false;
 		}
 
+		sessionObject = HTMLDB.parseElementDefaults(paginationElement, sessionObject);
+
 		sessionObject["page"] = page;
 
 		document.getElementById(tableElement.id + "_reader_td" + activeId + "page").innerHTML = page;
 
 		HTMLDB.insert(tableElement.id, sessionObject);
+		HTMLDB.updateReadQueueWithParameter(paginationElement, "refresh-table");
+		paginationElement.dispatchEvent(new CustomEvent("htmldbpageclick", {detail: {"page":page}}));
+    },
+    "parseElementDefaults": function (element, object) {
+		var defaults = HTMLDB.getHTMLDBParameter(element, 'table-defaults');
 
-		var refreshTableCSV = HTMLDB.getHTMLDBParameter(paginationElement, "refresh-table");
-		var refreshTables = refreshTableCSV.split(",");
-		var refreshTableCount = refreshTables.length;
-		var refreshTableId = "";
-		var refreshTable = null;
-
-		for (var i = 0; i < refreshTableCount; i++) {
-			refreshTableId = refreshTables[i];
-			refreshTable = document.getElementById(refreshTableId);
-			if (!refreshTable) {
-				throw(new Error("HTMLDB table "
-						+ refreshTableId
-						+ " referenced in pagination data-htmldb-refresh-table "
-						+ "attribute but not found."));
-	        	return false;
-			}
-			HTMLDB.updateReadQueue(refreshTable);
+		if ("" == defaults) {
+			return object;
 		}
+
+		try {
+			defaultsObject = JSON.parse(defaults);
+		} catch(e) {
+        	throw(new Error("HTMLDB data-htmldb-table-defaults attribute value "
+        			+ "has no valid JSON format"));
+			return false;
+		}
+
+		for (var key in defaultsObject) {
+			object[key] = defaultsObject[key];
+		}
+
+		return object;
     },
     "renderElementWithObject": function (element, object) {
         if (!element) {
@@ -1994,6 +2012,152 @@ var HTMLDB = {
 	            button.attachEvent("onclick", HTMLDB.doEditButtonClick);
 	        }
 	    }
+	},
+	"initializeHTMLDBSaveInputs": function (parent) {
+		if ((undefined === parent) || (null === parent)) {
+			parent = document.body;
+		}
+        var inputElements = parent.querySelectorAll(".htmldb-input-save");
+        var inputElementCount = inputElements.length;
+        var inputElement = null;
+        var tagName = "";
+        var inputType = "";
+
+        for (var i = 0; i < inputElementCount; i++) {
+        	inputElement = inputElements[i];
+
+			tagName = String(inputElement.tagName).toLowerCase();
+			inputType = String(inputElement.getAttribute("type")).toLowerCase();
+
+			switch (tagName) {
+				case "input":
+					if (("checkbox" == inputType) || ("radio" == inputType)) {
+						if (inputElement.addEventListener) {
+							inputElement.addEventListener("click", HTMLDB.doSaveInputEvent, true);
+						} else if (inputElement.attachEvent) {
+				            inputElement.attachEvent("onclick", HTMLDB.doSaveInputEvent);
+				        }
+					} else {
+						if (inputElement.addEventListener) {
+							inputElement.addEventListener("input", HTMLDB.doSaveInputEvent, true);
+							inputElement.addEventListener("keyup", HTMLDB.doSaveInputKeyUp, true);
+						} else if (inputElement.attachEvent) {
+				            inputElement.attachEvent("oninput", HTMLDB.doSaveInputEvent);
+				            inputElement.attachEvent("onkeyup", HTMLDB.doSaveInputKeyUp);
+				        }
+					}
+				break;
+				case "textarea":
+					if (inputElement.addEventListener) {
+						inputElement.addEventListener("input", HTMLDB.doSaveInputEvent, true);
+					} else if (inputElement.attachEvent) {
+			            inputElement.attachEvent("oninput", HTMLDB.doSaveInputEvent);
+			        }
+				break;
+				case "select":
+					if (inputElement.addEventListener) {
+						inputElement.addEventListener("change", HTMLDB.doSaveInputEvent, true);
+					} else if (inputElement.attachEvent) {
+			            inputElement.attachEvent("onchange", HTMLDB.doSaveInputEvent);
+			        }
+				break;
+			}
+	    }
+	},
+	"doSaveInputEvent": function (event) {
+		var element = event.target;
+		var delay = parseInt(HTMLDB.getHTMLDBParameter(element, "save-delay"));
+		if (isNaN(delay)) {
+			delay = 500;
+		}
+		if (delay > 0) {
+			clearTimeout(element.tmSaveDelay);
+			element.tmSaveDelay = setTimeout(function () {
+				clearTimeout(element.tmSaveDelay);
+				HTMLDB.doSaveInputEventNow(event);
+			}, delay);
+		} else {
+			HTMLDB.doSaveInputEventNow(event);
+		}
+	},
+	"doSaveInputKeyUp": function (event) {
+		var element = event.target;
+		if (13 == event.keyCode) {
+        	// Trigger Save Event On Enter
+        	HTMLDB.doSaveInputEventNow(event);
+        }
+	},
+	"doSaveInputEventNow": function (event) {
+		var input = event.target;
+		clearTimeout(input.tmSaveDelay);
+
+    	var inputValue = getInputValue(event.target);
+
+    	var tableElementId = HTMLDB.getHTMLDBParameter(input, "table");
+    	var tableElement = document.getElementById(tableElementId);
+    	var inputField = HTMLDB.getHTMLDBParameter(input, "input-field");
+
+    	if (!tableElement) {
+			throw(new Error("HTMLDB input table " + tableElementId + " not found."));
+	        return false;
+    	}
+
+    	var className = (" " + input.className + " ");
+
+    	if (className.indexOf(" htmldb-loading ") != -1) {
+    		return false;
+    	}
+
+		input.classList.add("htmldb-loading");
+
+		var activeId = parseInt(HTMLDB.getActiveId(tableElement));
+		var sessionObject = HTMLDB.get(tableElement.id, activeId);
+
+		if (undefined === sessionObject[inputField]) {
+			throw(new Error("HTMLDB input table "
+					+ tableElement.id
+					+ " has no "
+					+ inputField
+					+ " column."));
+	        return false;
+		}
+
+		sessionObject = HTMLDB.parseElementDefaults(input, sessionObject);
+
+		sessionObject[inputField] = inputValue;
+
+		document.getElementById(tableElement.id
+				+ "_reader_td"
+				+ activeId
+				+ inputField).innerHTML
+				= inputValue;
+
+		HTMLDB.updateReadQueueCallbacks(tableElement, function () {
+			input.classList.remove("htmldb-loading");
+		});
+
+		HTMLDB.insert(tableElement.id, sessionObject);
+		HTMLDB.updateReadQueueWithParameter(input, "refresh-table");
+		input.dispatchEvent(new CustomEvent("htmldbinputsave", {detail: {"input": input}}));
+	},
+	"updateReadQueueWithParameter": function (element, parameter) {
+		var refreshTableCSV = HTMLDB.getHTMLDBParameter(element, parameter);
+		var refreshTables = refreshTableCSV.split(",");
+		var refreshTableCount = refreshTables.length;
+		var refreshTableId = "";
+		var refreshTable = null;
+		for (var i = 0; i < refreshTableCount; i++) {
+			refreshTableId = refreshTables[i];
+			refreshTable = document.getElementById(refreshTableId);
+			if (!refreshTable) {
+				throw(new Error("HTMLDB table "
+						+ refreshTableId
+						+ " referenced in " + parameter
+						+ "attribute but not found."));
+	        	return false;
+			}
+			HTMLDB.updateReadQueue(refreshTable);
+		}
 	},
 	"initializeReadQueue": function () {
         var tableElements = document.body.querySelectorAll(".htmldb-table");
@@ -3436,6 +3600,19 @@ var HTMLDB = {
 			break;
 		}
 	},
+	"removeReadQueueCallbacks": function () {
+		HTMLDB.readQueueCallbacks = [];
+	},
+	"callReadQueueCallbacks": function (tableElement) {
+		if (undefined === HTMLDB.readQueueCallbacks[tableElement.id]) {
+			return;
+		}
+		var callbackFunction = null;
+		while (HTMLDB.readQueueCallbacks[tableElement.id].length > 0) {
+			callbackFunction = HTMLDB.readQueueCallbacks[tableElement.id].shift();
+			callbackFunction();
+		}
+	},
 	"doReaderIframeDefaultLoad": function (event, readAll) {
 		var iframeHTMLDB = event.target;
 		var elDIV = iframeHTMLDB.parentNode.parentNode;
@@ -3525,6 +3702,7 @@ var HTMLDB = {
 		HTMLDB.hideLoader(strHTMLDBDIVID, "read");
 
 		setTimeout(function () {
+			HTMLDB.callReadQueueCallbacks(elDIV);
 			HTMLDB.removeFromReadingQueue(elDIV.id);
 			HTMLDB.processReadQueue();
 		}, 150);

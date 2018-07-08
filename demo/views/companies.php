@@ -14,10 +14,10 @@
                 <button class="waves-effect white-text btn right cyan darken-1 htmldb-button-add" type="button" data-htmldb-form="formCompany"><i class="ion-plus"></i> YENİ FİRMA</button>
                 <nav class="navSearch" style="margin-top:60px">
                     <div class="nav-wrapper">
-                        <form>
+                        <form onsubmit="return false;">
                             <div class="input-field"><input id="strSearchObject" name="strSearchObject"
-                                class="blue-text text-darken-4" placeholder="Ara..."
-                                type="search"><label for="strSearchObject" class="active"><i
+                                class="blue-text text-darken-4 htmldb-input-save" placeholder="Ara..."
+                                type="search" data-htmldb-table="sessionHTMLDB" data-htmldb-input-field="searchText" data-htmldb-refresh-table="companyHTMLDB" data-htmldb-table-defaults='{"page":0}' data-htmldb-save-delay="1000"><label for="strSearchObject" class="active"><i
                                     class="blue-text text-darken-4 material-icons ion-android-search"></i></label>
                             </div>
                         </form>
@@ -72,7 +72,7 @@
                 </table>
                 <div class="row">
                     <div class="col s12">
-                        <ul class="ulPagination htmldb-pagination" data-htmldb-table="sessionHTMLDB" data-htmldb-page-field="page" data-htmldb-page-count-field="pageCount" data-htmldb-refresh-table="companyHTMLDB">
+                        <ul class="ulPagination htmldb-pagination" data-htmldb-table="sessionHTMLDB" data-htmldb-page-field="page" data-htmldb-page-count-field="pageCount" data-htmldb-refresh-table="companyHTMLDB" data-htmldb-table-defaults="">
                             <li class="htmldb-pagination-template htmldb-pagination-previous">
                                 <button class="buttonPage waves-effect white btn right cyan-text text-darken-1 htmldb-button-page">
                                     <i class="ion-chevron-left"></i>
