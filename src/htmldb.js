@@ -2079,6 +2079,13 @@ var HTMLDB = {
 			            inputElement.attachEvent("onchange", HTMLDB.doSaveInputEvent);
 			        }
 				break;
+				case "button":
+					if (inputElement.addEventListener) {
+						inputElement.addEventListener("click", HTMLDB.doSaveInputEvent, true);
+					} else if (inputElement.attachEvent) {
+			            inputElement.attachEvent("onclick", HTMLDB.doSaveInputEvent);
+			        }
+				break;
 			}
 	    }
 	},
