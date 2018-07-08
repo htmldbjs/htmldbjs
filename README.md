@@ -205,9 +205,9 @@ A typical HTMLDB request is a JSON string with the following format:
 HTMLDB uses an inner HTML form element to post data to the server with the following format:
 
 ```
-htmldb_action0:	inserted
+htmldb_action0: inserted
 htmldb_row0_id: 1
-htmldb_row0_column0: column0 new value	
+htmldb_row0_column0: column0 new value  
 htmldb_row0_column1: column1 new value
 htmldb_row0_column2: column2 new value
 htmldb_row0_columnName: columnName new value
@@ -216,21 +216,21 @@ htmldb_row0_columnName: columnName new value
 The above example shows single-row post parameters. For posting multiple rows the following format is used:
 
 ```
-htmldb_action0:	inserted
+htmldb_action0: inserted
 htmldb_row0_id: 1
-htmldb_row0_column0: column0 new value	
+htmldb_row0_column0: column0 new value  
 htmldb_row0_column1: column1 new value
 htmldb_row0_column2: column2 new value
 htmldb_row0_columnName: columnName new value
-htmldb_action1:	inserted
+htmldb_action1: inserted
 htmldb_row1_id: 2
-htmldb_row1_column0: column0 new value	
+htmldb_row1_column0: column0 new value  
 htmldb_row1_column1: column1 new value
 htmldb_row1_column2: column2 new value
 htmldb_row1_columnName: columnName new value
-htmldb_action2:	inserted
+htmldb_action2: inserted
 htmldb_row2_id: 3
-htmldb_row2_column0: column0 new value	
+htmldb_row2_column0: column0 new value  
 htmldb_row2_column1: column1 new value
 htmldb_row2_column2: column2 new value
 htmldb_row2_columnName: columnName new value
@@ -262,11 +262,9 @@ Usage text goes here...
 
 #### Events
 
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
+| Event Name | Description  |
+| ---- | ---- |
+| `htmldbadd` | Triggered when an htmldb-button-add button clicked. |
 
 #### Examples
 
@@ -299,11 +297,7 @@ Usage text goes here...
 
 #### Events
 
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
+This element has no events.
 
 #### Examples
 
@@ -336,11 +330,7 @@ Usage text goes here...
 
 #### Events
 
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
+This element has no events.
 
 #### Examples
 
@@ -373,11 +363,9 @@ Usage text goes here...
 
 #### Events
 
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
+| Event Name | Description  |
+| ---- | ---- |
+| `htmldbsave` | Triggered when an htmldb-button-save button clicked. |
 
 #### Examples
 
@@ -410,11 +398,9 @@ Usage text goes here...
 
 #### Events
 
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
+| Event Name | Description  |
+| ---- | ---- |
+| `htmldbsort` | Triggered when an htmldb-button-sort button clicked. |
 
 #### Examples
 
@@ -447,11 +433,9 @@ Usage text goes here...
 
 #### Events
 
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
+| Event Name | Description  |
+| ---- | ---- |
+| `htmldberror` | Triggered when an error returned especially after validation process.<br><br>`Event.detail.tableElementId` holds the table id that returned the error.<br>`Event.detail.errorText` holds the error text returned. |
 
 #### Examples
 
@@ -484,11 +468,10 @@ Usage text goes here...
 
 #### Events
 
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
+| Event Name | Description  |
+| ---- | ---- |
+| `htmldbsetvalue` | Triggered when HTMLDB sets the htmldb-field input value.<br><br>`Event.detail.value` holds the value has been set. |
+| `htmldbgetvalue` | Triggered when HTMLDB is about to get the htmldb-field input value. |
 
 #### Examples
 
@@ -521,11 +504,9 @@ Usage text goes here...
 
 #### Events
 
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
+| Event Name | Description  |
+| ---- | ---- |
+| `htmldbreset` | Triggered when HTMLDB resets the htmldb-form form element. |
 
 #### Examples
 
@@ -558,11 +539,9 @@ Usage text goes here...
 
 #### Events
 
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
+| Event Name | Description  |
+| ---- | ---- |
+| `htmldbsave` | Triggered when an htmldb-input-save input has been saved. |
 
 #### Examples
 
@@ -595,11 +574,9 @@ Usage text goes here...
 
 #### Events
 
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
+| Event Name | Description  |
+| ---- | ---- |
+| `htmldbmessage` | Triggered when a message returned especially after validation process.<br><br>`Event.detail.tableElementId` holds the table id that returned the message.<br>`Event.detail.messageText` holds the message text returned. |
 
 #### Examples
 
@@ -632,11 +609,10 @@ Usage text goes here...
 
 #### Events
 
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
+| Event Name | Description  |
+| ---- | ---- |
+| `htmldbrender` | Triggered when an htmldb-pagination element has been rendered. |
+| `htmldbpageclick` | Triggered when a page element clicked within an htmldb-pagination element.<br><br>`Event.detail.page` holds the page index. |
 
 #### Examples
 
@@ -668,11 +644,7 @@ Usage text goes here...
 
 #### Events
 
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
+This element has no events.
 
 #### Examples
 
@@ -704,11 +676,9 @@ Usage text goes here...
 
 #### Events
 
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
+| Event Name | Description  |
+| ---- | ---- |
+| `htmldbsetoptions` | Triggered when an htmldb-select element options has been set. |
 
 #### Examples
 
@@ -791,11 +761,9 @@ Usage text goes here...
 
 #### Events
 
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
+| Event Name | Description  |
+| ---- | ---- |
+| `htmldbrender` | Triggered when an htmldb-template element has been rendered. |
 
 #### Examples
 
@@ -828,11 +796,7 @@ Usage text goes here...
 
 #### Events
 
-| Event Name               | Description                               |
-| ------------------------ | ----------------------------------------- |
-| `htmldbread`             | right-aligned                             |
-| `htmldbwrite`            | right-aligned                             |
-| `htmldbvalidate`         | right-aligned                             |
+This element has no events.
 
 #### Examples
 
