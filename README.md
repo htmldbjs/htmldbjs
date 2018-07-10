@@ -240,7 +240,7 @@ htmldb_row2_columnName: columnName new value
 
 ### `htmldb-button-add`
 
-An action button is used for adding a new record to the specified table. When htmldb-button-add button clicked related forms are reset.
+An action button is used for adding a new record to the specified table. When `htmldb-button-add` button is clicked related forms are reset.
 
 #### Syntax
 
@@ -269,7 +269,7 @@ An action button is used for adding a new record to the specified table. When ht
 
 ### `htmldb-button-edit`
 
-An action button is used for editing a specific record. When htmldb-button-edit button clicked htmldb-table element active id is set to the specified record. Additionally, all related form fields are populated with the values of the record.
+An action button is used for editing a specific record. When `htmldb-button-edit` button is clicked `htmldb-table` element active id is set to the specified record. Additionally, all related form fields are populated with the values of the record.
 
 #### Syntax
 
@@ -298,7 +298,7 @@ This element has no HTMLDB events.
 
 ### `htmldb-button-refresh`
 
-An action button is used for refreshing all htmldb-table elements.
+An action button is used for refreshing all `htmldb-table` elements.
 
 #### Syntax
 
@@ -409,7 +409,7 @@ This element has no HTMLDB attributes.
 
 ### `htmldb-field`
 
-An input element, that holds the current values of the htmldb-form fields.
+An input element, that holds the current values of the `htmldb-form` fields.
 
 #### Syntax
 
@@ -450,7 +450,7 @@ An input element, that holds the current values of the htmldb-form fields.
 
 ### `htmldb-form`
 
-A container for the htmldb-fields, that automatically updated by htmldb-table.
+A container for the `htmldb-field` elements, that automatically updated by `htmldb-table`.
 
 #### Syntax
 
@@ -481,7 +481,7 @@ A container for the htmldb-fields, that automatically updated by htmldb-table.
 
 ### `htmldb-input-save`
 
-A standalone input that automatically update the specific htmldb-table record.
+A standalone input that automatically update the specific `htmldb-table` record.
 
 #### Syntax
 
@@ -541,7 +541,7 @@ This element has no HTMLDB attributes.
 
 ### `htmldb-pagination`
 
-A container element for easily navigating among the pages of htmldb-table element.
+A container element for easily navigating among the pages of `htmldb-table` element.
 
 #### Syntax
 
@@ -622,7 +622,7 @@ A container element for easily navigating among the pages of htmldb-table elemen
 
 ### `htmldb-section`
 
-A container for the elements, that automatically rendered by the related htmldb-table.
+A container for the elements, that automatically rendered by the related `htmldb-table`.
 
 #### Syntax
 
@@ -659,7 +659,7 @@ This element has no HTMLDB events.
 
 ### `htmldb-select`
 
-A select element that automatically populated with the related htmldb-table.
+A select element that automatically populated with the related `htmldb-table`.
 
 #### Syntax
 
@@ -740,7 +740,7 @@ Data source element that retrieves and stores data from the server. Also, it val
 
 ### `htmldb-template`
 
-A container element for the templates, that are automatically rendered by related htmldb-table.
+A container element for the templates, that are automatically rendered by related `htmldb-table`.
 
 #### Syntax
 
@@ -784,7 +784,7 @@ A container element for the templates, that are automatically rendered by relate
 
 ### `htmldb-toggle`
 
-A special container for the form fields that automatically displayed or hided for a certain condition.
+A special container for the `form` fields that automatically displayed or hided for a certain condition.
 
 #### Syntax
 
