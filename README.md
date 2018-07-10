@@ -247,7 +247,8 @@ An action button is used for adding a new record to the specified table. When ht
 ```html
 <button class="htmldb-button-add"
         type="button"
-        data-htmldb-form="myForm">Add New Record</button>
+        data-htmldb-form="myForm"
+        data-htmldb-form-defaults='{"enabled":1}'>Add New Record</button>
 ```
 
 #### Attributes
