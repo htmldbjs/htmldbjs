@@ -264,10 +264,6 @@ An action button is used for adding a new record to the specified table. When ht
 | ---- | ---- |
 | `htmldbadd` | Triggered when an htmldb-button-add button clicked. |
 
-#### Examples
-
-Examples text goes here...
-
 <br/>
 <br/>
 
@@ -297,10 +293,6 @@ An action button is used for editing a specific record. When htmldb-button-edit 
 
 This element has no HTMLDB events.
 
-#### Examples
-
-Examples text goes here...
-
 <br/>
 <br/>
 
@@ -322,10 +314,6 @@ This element has no HTMLDB attributes.
 #### Events
 
 This element has no HTMLDB events.
-
-#### Examples
-
-Examples text goes here...
 
 <br/>
 <br/>
@@ -357,10 +345,6 @@ An action button is used for saving current values of the specified form.
 | Event Name | Description  |
 | ---- | ---- |
 | `htmldbsave` | Triggered when an htmldb-button-save button clicked. |
-
-#### Examples
-
-Examples text goes here...
 
 <br/>
 <br/>
@@ -398,10 +382,6 @@ An action button is used for updating the sorting preferences.
 | ---- | ---- |
 | `htmldbsort` | Triggered when an htmldb-button-sort button clicked. |
 
-#### Examples
-
-Examples text goes here...
-
 <br/>
 <br/>
 
@@ -426,10 +406,6 @@ This element has no HTMLDB attributes.
 | Event Name | Description  |
 | ---- | ---- |
 | `htmldberror` | Triggered when an error returned especially after validation process.<br><br>`Event.detail.tableElementId` holds the table id that returned the error.<br>`Event.detail.errorText` holds the error text returned. |
-
-#### Examples
-
-Examples text goes here...
 
 <br/>
 <br/>
@@ -464,10 +440,6 @@ An input element, that holds the current values of the htmldb-form fields.
 | `htmldbsetvalue` | Triggered when HTMLDB sets the htmldb-field input value.<br><br>`Event.detail.value` holds the value has been set. |
 | `htmldbgetvalue` | Triggered when HTMLDB is about to get the htmldb-field input value. |
 
-#### Examples
-
-Examples text goes here...
-
 <br/>
 <br/>
 
@@ -498,10 +470,6 @@ A container for the htmldb-fields, that automatically updated by htmldb-table.
 | Event Name | Description  |
 | ---- | ---- |
 | `htmldbreset` | Triggered when HTMLDB resets the htmldb-form form element. |
-
-#### Examples
-
-Examples text goes here...
 
 <br/>
 <br/>
@@ -540,10 +508,6 @@ A standalone input that automatically update the specific htmldb-table record.
 | ---- | ---- |
 | `htmldbsave` | Triggered when an htmldb-input-save input has been saved. |
 
-#### Examples
-
-Examples text goes here...
-
 <br/>
 <br/>
 
@@ -566,10 +530,6 @@ This element has no HTMLDB attributes.
 | Event Name | Description  |
 | ---- | ---- |
 | `htmldbmessage` | Triggered when a message returned especially after validation process.<br><br>`Event.detail.tableElementId` holds the table id that returned the message.<br>`Event.detail.messageText` holds the message text returned. |
-
-#### Examples
-
-Examples text goes here...
 
 <br/>
 <br/>
@@ -652,10 +612,6 @@ A container element for easily navigating among the pages of htmldb-table elemen
 | `htmldbrender` | Triggered when an htmldb-pagination element has been rendered. |
 | `htmldbpageclick` | Triggered when a page element clicked within an htmldb-pagination element.<br><br>`Event.detail.page` holds the page index. |
 
-#### Examples
-
-Examples text goes here...
-
 <br/>
 <br/>
 
@@ -693,10 +649,6 @@ A container for the elements, that automatically rendered by the related htmldb-
 
 This element has no HTMLDB events.
 
-#### Examples
-
-Examples text goes here...
-
 <br/>
 <br/>
 
@@ -729,10 +681,6 @@ A select element that automatically populated with the related htmldb-table.
 | Event Name | Description  |
 | ---- | ---- |
 | `htmldbsetoptions` | Triggered when an htmldb-select element options has been set. |
-
-#### Examples
-
-Examples text goes here...
 
 <br/>
 <br/>
@@ -782,12 +730,6 @@ Data source element that retrieves and stores data from the server. Also, it val
 | `htmldberror` | Triggered when an error returned especially after validation process.<br><br>`Event.detail.errorText` holds the error text returned. |
 | `htmldbmessage` | Triggered when a message returned especially after validation process.<br><br>`Event.detail.messageText` holds the message text returned. |
 
-#### Examples
-
-- Basic HTMLDB Table Example
-- HTMLDB Table Filter Example
-- Local HTMLDB Example
-
 <br/>
 <br/>
 
@@ -832,10 +774,6 @@ A container element for the templates, that are automatically rendered by relate
 | ---- | ---- |
 | `htmldbrender` | Triggered when an htmldb-template element has been rendered. |
 
-#### Examples
-
-Examples text goes here...
-
 <br/>
 <br/>
 
@@ -865,10 +803,6 @@ A special container for the form fields that automatically displayed or hided fo
 #### Events
 
 This element has no HTMLDB events.
-
-#### Examples
-
-Examples text goes here...
 
 <br/>
 <br/>
