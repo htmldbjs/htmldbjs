@@ -255,8 +255,8 @@ An action button is used for adding a new record to the specified table. When ht
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-form`         | Specifies parent form, that new record will be entered.<br><br>`Default Value: ""`<br>`Required` |
-| `data-htmldb-form-defaults`| Specifies new record defaults in JSON format. This attribute value must be specified between `'` single quotation marks. Because, double quotation marks are required for the definition of JSON object properties.<br><br>`Default Value: ""`  |
+| `data-htmldb-form` | Specifies parent form, that new record will be entered.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-form-defaults`| Specifies new record defaults in JSON format. This attribute value must be specified between `'` single quotation marks. Because, double quotation marks are required for the definition of JSON object properties.<br><br>`Default Value: ""` |
 
 #### Events
 
@@ -285,9 +285,9 @@ An action button is used for editing a specific record. When htmldb-button-edit 
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-table`     | Specifies parent table, that holds the record to be edited.<br><br>`Default Value: ""`<br>`Required` |
-| `data-htmldb-form`     | Specifies the form, that will be populated with the record in `data-htmldb-table` table specified by `data-htmldb-edit-id` value.<br><br>`Default Value: ""`<br>`Required` |
-| `data-htmldb-edit-id`     | Specified the unique id value of the record to be edited.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-table` | Specifies parent table, that holds the record to be edited.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-form` | Specifies the form, that will be populated with the record in `data-htmldb-table` table specified by `data-htmldb-edit-id` value.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-edit-id` | Specified the unique id value of the record to be edited.<br><br>`Default Value: ""`<br>`Required` |
 
 #### Events
 
@@ -334,11 +334,7 @@ An action button is used for saving current values of the specified form.
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-table`     | right-aligned<br/>test                    |
-| `data-htmldb-save-delay`     | right-aligned                             |
-| `data-htmldb-input-field`     | right-aligned                             |
-| `data-htmldb-refresh-table`     | right-aligned                             |
-| `data-htmldb-table-defaults` | right-aligned                             |
+| `data-htmldb-form` | Specifies the form, that holds the record to be saved.<br><br>`Default Value: ""`<br>`Required` |
 
 #### Events
 
@@ -370,11 +366,12 @@ An action button is used for updating the sorting preferences.
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-table`     | right-aligned<br/>test                    |
-| `data-htmldb-sort-field`     | right-aligned                             |
-| `data-htmldb-sort-value`     | right-aligned                             |
-| `data-htmldb-direction-field`     | right-aligned                             |
-| `data-htmldb-refresh-table` | right-aligned                             |
+| `data-htmldb-table` | Specifies table, that holds the sorting configuration. When user clicks the `htmldb-button-sort` button, sorting configuration specified by `data-htmldb-sort-field`, `data-htmldb-sort-value` and `data-htmldb-direction-field` is saved to this table.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-sort-field` | Specifies the sort field in the `data-htmldb-table` table.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-sort-value` | Specifies the sort field value, that holds the column id, index or name to be saved when the user clicks this button. |
+| `data-htmldb-direction-field` | Specifies the sort direction (Ascending or Descending) field in the `data-htmldb-table` table. Value of this field is automatically determined by the current state of this button. Additionally, an extra class is added according to the state of this button. If the sorting direction is ascending, `htmldb-sorting-asc` class is added. If the sorting direction is descending, `htmldb-sorting-desc` class is added. |
+| `data-htmldb-refresh-table` | Specifies the table(s), that will refreshed after sorting configuration is saved. This attribute can holds more than one HTMLDB table seperating with comma `,` symbol. |
+| `data-htmldb-sorting-asc` | Specifies the current sorting direction. If sorting direction is ascending, the value of this attribute is `1`, `0` otherwise.<br><br>`Default Value: "0"`<br>`Read-Only` |
 
 #### Events
 
