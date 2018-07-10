@@ -505,7 +505,7 @@ A standalone input that automatically update the specific `htmldb-table` record.
 | `data-htmldb-table` | Specifies the parent table, to be updated.<br><br>`Default Value: ""`<br>`Required` |
 | `data-htmldb-save-delay` | Specifies the delay time between update operations. This attribute is very useful when using `htmldb-input-save` with text inputs.<br><br>`Default Value: "500"` |
 | `data-htmldb-input-field` | Specifies the field name in the `data-htmldb-table` to be updated. |
-| `data-htmldb-refresh-table` | right-aligned                             |
+| `data-htmldb-refresh-table` | Specifies the table(s), that will refreshed after saving. This attribute can hold more than one HTMLDB table seperating with comma `,` symbol. |
 | `data-htmldb-table-defaults` | Specifies extra fields to be updated. This attribute value must be in JSON format, thus specified between `'` single quotation marks. Because, double quotation marks are required for the definition of JSON object properties.<br><br>`Default Value: ""` |
 
 #### Events
@@ -606,13 +606,13 @@ A container element for easily navigating among the pages of `htmldb-table` elem
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-table`     | right-aligned<br/>test                    |
-| `data-htmldb-refresh-table`     | right-aligned                             |
-| `data-htmldb-page-field`     | right-aligned                             |
-| `data-htmldb-page-count-field`     | right-aligned                             |
-| `data-htmldb-page` | right-aligned                             |
-| `data-htmldb-page-count`    | right-aligned                             |
-| `data-htmldb-table-defaults`    | right-aligned                             |
+| `data-htmldb-table` | Specifies table, that holds the pagination configuration. When user clicks the a page in `htmldb-pagination`, pagination configuration specified by `data-htmldb-page-field` is saved to this table.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-refresh-table` | Specifies the table(s), that will refreshed after a page is clicked in `htmldb-pagination`  element. This attribute can hold more than one HTMLDB table seperating with comma `,` symbol. |
+| `data-htmldb-page-field` | Specifies the field name that holds the current page index start from `0`. |
+| `data-htmldb-page-count-field` | Specifies the field name that holds page count. |
+| `data-htmldb-page` | Specifies the current page index starting from `0`. |
+| `data-htmldb-page-count` | Specifies the current page count. |
+| `data-htmldb-table-defaults` | Specifies extra fields to be updated when a user clicks a page in `htmldb-pagination`. This attribute value must be in JSON format, thus specified between `'` single quotation marks. Because, double quotation marks are required for the definition of JSON object properties.<br><br>`Default Value: ""` |
 
 #### Events
 
@@ -651,8 +651,8 @@ A container for the elements, that automatically rendered by the related `htmldb
 #### Attributes
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-table`     | right-aligned<br/>test                    |
-| `data-htmldb-content`     | right-aligned                             |
+| `data-htmldb-table` | Specifies the parent table, that will automatically update the mustache text templates in the `htmldb-section` element. |
+| `data-htmldb-content` | Specifies the mustache text template that will be copied into the inner HTML of the element in the `htmldb-section` element. |
 
 #### Events
 
