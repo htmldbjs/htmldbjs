@@ -724,7 +724,7 @@ Data source element that retrieves and stores data from the server. Also, it val
 | `data-htmldb-validate-loader` | Specifies the loader element id that will be shown only on validate operations. |
 | `data-htmldb-validate-url` | Specifies the URL that simulates posting data to the server for validation.<br><br>`Default Value: ""` |
 | `data-htmldb-write-loader` | Specifies the loader element id that will be shown only on write operations. |
-| `data-htmldb-form` |   |
+| `data-htmldb-form` | Specifies the target form that will be updated after read operations. |
 | `data-htmldb-loading` | Specifies the table is loading or not.<br><br>`Default Value: ""`<br>`Read-Only` |
 | `data-htmldb-active-id` | Specifies the current id (like cursor) of the table. After loading/refreshing, active id is automatically reset to first id in the list.<br><br>`Default Value: ""`<br>`Read-Only` |
 | `data-htmldb-read-incremental` | Specifies that read operations will be incremental or not. In incremental read operations, the table records are not cleared. All read operations are added at the end of the list. |
