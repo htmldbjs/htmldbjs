@@ -269,7 +269,7 @@ An action button is used for adding a new record to the specified table. When `h
 
 ### `htmldb-button-edit`
 
-An action button is used for editing a specific record. When `htmldb-button-edit` button is clicked `htmldb-table` element active id is set to the specified record. Additionally, all related form fields are populated with the values of the record.
+An action button is used for editing a specific record. When `htmldb-button-edit` button is clicked `htmldb-table` element's active id is set to the specified record. Additionally, all related form fields are populated with the values of the record.
 
 #### Syntax
 
@@ -389,14 +389,15 @@ A container element for the errors.
 #### Syntax
 
 ```html
-<script id="myFirstTemplate"
-        class="htmldb-template"
-        type="text/html"></script>
+<div class="htmldb-error"
+        data-htmldb-table="myTable"></div>
 ```
 
 #### Attributes
 
-This element has no HTMLDB attributes.
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-table` | Specifies the parent table, whose errors will be printed in this element.<br><br>`Default Value: ""`<br>`Required` |
 
 #### Events
 
@@ -434,9 +435,9 @@ An input element, that holds the current values of the `htmldb-form` fields.
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-field`     | right-aligned<br/>test                    |
-| `data-htmldb-value`     | right-aligned                             |
-| `data-htmldb-reset-value`     | right-aligned                             |
+| `data-htmldb-field` | Specifies the field name. The parent table name is specified in the container form.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-value` | Specifies the field value in mustache text notation (e.g. `{{id}}`, `{{name}}`).<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-reset-value` | Specifies the value of the element, after container form is reset.<br><br>`Default Value: ""` |
 
 #### Events
 
@@ -468,7 +469,7 @@ A container for the `htmldb-field` elements, that automatically updated by `html
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-table`     | right-aligned<br/>test                    |
+| `data-htmldb-table` | Specifies the parent table of the form.<br><br>`Default Value: ""`<br>`Required` |
 
 #### Events
 
@@ -501,11 +502,11 @@ A standalone input that automatically update the specific `htmldb-table` record.
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-table`     | right-aligned<br/>test                    |
-| `data-htmldb-save-delay`     | right-aligned                             |
-| `data-htmldb-input-field`     | right-aligned                             |
-| `data-htmldb-refresh-table`     | right-aligned                             |
-| `data-htmldb-table-defaults` | right-aligned                             |
+| `data-htmldb-table` | Specifies the parent table, to be updated.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-save-delay` | Specifies the delay time between update operations. This attribute is very useful when using `htmldb-input-save` with text inputs.<br><br>`Default Value: "500"` |
+| `data-htmldb-input-field` | Specifies the field name in the `data-htmldb-table` to be updated. |
+| `data-htmldb-refresh-table` | right-aligned                             |
+| `data-htmldb-table-defaults` | Specifies extra fields to be updated. This attribute value must be in JSON format, thus specified between `'` single quotation marks. Because, double quotation marks are required for the definition of JSON object properties.<br><br>`Default Value: ""` |
 
 #### Events
 
@@ -523,12 +524,15 @@ A container element for the messages.
 #### Syntax
 
 ```html
-<script id="myFirstTemplate" class="htmldb-template" type="text/html"></script>
+<div class="htmldb-message"
+        data-htmldb-table="myTable"></div>
 ```
 
 #### Attributes
 
-This element has no HTMLDB attributes.
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-table` | Specifies the parent table, whose messages will be printed in this element.<br><br>`Default Value: ""`<br>`Required` |
 
 #### Events
 
@@ -784,7 +788,7 @@ A container element for the templates, that are automatically rendered by relate
 
 ### `htmldb-toggle`
 
-A special container for the `form` fields that automatically displayed or hided for a certain condition.
+A special container for the form fields that automatically displayed or hided for a certain condition.
 
 #### Syntax
 
