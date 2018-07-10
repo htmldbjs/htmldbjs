@@ -1450,6 +1450,22 @@ var HTMLDB = {
 			input.dispatchEvent(new CustomEvent("htmldbsetvalue", {detail: {"value": value}}));
     	}
     },
+    "renderFormElementWithObject": function (form, object) {
+    	var inputs = form.querySelectorAll(".htmldb-field");
+    	var inputCount = inputs.length;
+    	var input = null;
+    	var field = "";
+    	var valueTemplate = "";
+    	var value = "";
+    	for (var i = 0; i < inputCount; i++) {
+    		input = inputs[i];
+    		field = HTMLDB.getHTMLDBParameter(input, "field");
+    		valueTemplate = HTMLDB.getHTMLDBParameter(input, "value");
+    		value = HTMLDB.evaluateHTMLDBExpressionWithObject(valueTemplate, object);
+			HTMLDB.setInputValue(input, value);
+			input.dispatchEvent(new CustomEvent("htmldbsetvalue", {detail: {"value": value}}));
+    	}
+    },
     "renderPaginationElement": function (element) {
 		var tableElementId = HTMLDB.getHTMLDBParameter(element, "table");
 		var tableElement = document.getElementById(tableElementId);
@@ -1759,15 +1775,15 @@ var HTMLDB = {
 		}
     },
     "doPaginationButtonClick": function (event) {
-    	var page = (parseInt(event.target.getAttribute("data-htmldb-page")) - 1);
+    	var page = (parseInt(event.currentTarget.getAttribute("data-htmldb-page")) - 1);
 
     	if (isNaN(page)) {
 			throw(new Error("HTMLDB pagination button has no valid data-htmldb-page attribute."));
 	        return false;
     	}
 
-    	var paginationElement = HTMLDB.exploreHTMLDBPagination(event.target);
-    	var tableElement = HTMLDB.exploreHTMLDBTable(event.target);
+    	var paginationElement = HTMLDB.exploreHTMLDBPagination(event.currentTarget);
+    	var tableElement = HTMLDB.exploreHTMLDBTable(event.currentTarget);
 
     	if (!tableElement) {
 			throw(new Error("HTMLDB pagination table not found."));
@@ -1790,7 +1806,9 @@ var HTMLDB = {
 	        return false;
 		}
 
-		sessionObject = HTMLDB.parseElementDefaults(paginationElement, sessionObject);
+		var defaults = HTMLDB.getHTMLDBParameter(paginationElement, "table-defaults");
+
+		sessionObject = HTMLDB.parseObjectDefaults(sessionObject, defaults);
 
 		sessionObject["page"] = page;
 
@@ -1800,9 +1818,7 @@ var HTMLDB = {
 		HTMLDB.updateReadQueueWithParameter(paginationElement, "refresh-table");
 		paginationElement.dispatchEvent(new CustomEvent("htmldbpageclick", {detail: {"page":page}}));
     },
-    "parseElementDefaults": function (element, object) {
-		var defaults = HTMLDB.getHTMLDBParameter(element, 'table-defaults');
-
+    "parseObjectDefaults": function (object, defaults) {
 		if ("" == defaults) {
 			return object;
 		}
@@ -1810,7 +1826,7 @@ var HTMLDB = {
 		try {
 			defaultsObject = JSON.parse(defaults);
 		} catch(e) {
-        	throw(new Error("HTMLDB data-htmldb-table-defaults attribute value "
+        	throw(new Error("HTMLDB defaults attribute value "
         			+ "has no valid JSON format"));
 			return false;
 		}
@@ -2090,7 +2106,7 @@ var HTMLDB = {
 	    }
 	},
 	"doSaveInputEvent": function (event) {
-		var element = event.target;
+		var element = event.currentTarget;
 		var delay = parseInt(HTMLDB.getHTMLDBParameter(element, "save-delay"));
 		if (isNaN(delay)) {
 			delay = 500;
@@ -2106,17 +2122,17 @@ var HTMLDB = {
 		}
 	},
 	"doSaveInputKeyUp": function (event) {
-		var element = event.target;
+		var element = event.currentTarget;
 		if (13 == event.keyCode) {
         	// Trigger Save Event On Enter
         	HTMLDB.doSaveInputEventNow(event);
         }
 	},
 	"doSaveInputEventNow": function (event) {
-		var input = event.target;
+		var input = event.currentTarget;
 		clearTimeout(input.tmSaveDelay);
 
-    	var inputValue = getInputValue(event.target);
+    	var inputValue = getInputValue(event.currentTarget);
 
     	var tableElementId = HTMLDB.getHTMLDBParameter(input, "table");
     	var tableElement = document.getElementById(tableElementId);
@@ -2147,7 +2163,9 @@ var HTMLDB = {
 	        return false;
 		}
 
-		sessionObject = HTMLDB.parseElementDefaults(input, sessionObject);
+		var defaults = HTMLDB.getHTMLDBParameter(input, "table-defaults");
+
+		sessionObject = HTMLDB.parseObjectDefaults(sessionObject, defaults);
 
 		sessionObject[inputField] = inputValue;
 
@@ -2163,10 +2181,10 @@ var HTMLDB = {
 
 		HTMLDB.insert(tableElement.id, sessionObject);
 		HTMLDB.updateReadQueueWithParameter(input, "refresh-table");
-		input.dispatchEvent(new CustomEvent("htmldbinputsave", {detail: {"input": input}}));
+		input.dispatchEvent(new CustomEvent("htmldbsave", {detail: {}}));
 	},
 	"doSortButtonClick": function (event) {
-		var button = event.target;
+		var button = event.currentTarget;
 
     	var tableElementId = HTMLDB.getHTMLDBParameter(button, "table");
     	var tableElement = document.getElementById(tableElementId);
@@ -2225,7 +2243,9 @@ var HTMLDB = {
 			button.setAttribute("data-htmldb-sorting-asc", 1);
 		}
 
-		sessionObject = HTMLDB.parseElementDefaults(button, sessionObject);
+		var defaults = HTMLDB.getHTMLDBParameter(button, "table-defaults");
+
+		sessionObject = HTMLDB.parseObjectDefaults(sessionObject, defaults);
 
 		sessionObject[sortField] = sortValue;
 		sessionObject[directionField] = ((sortingASC) ? 2 : 1);
@@ -2250,7 +2270,7 @@ var HTMLDB = {
 
 		HTMLDB.insert(tableElement.id, sessionObject);
 		HTMLDB.updateReadQueueWithParameter(button, "refresh-table");
-		button.dispatchEvent(new CustomEvent("htmldbbuttonsort", {detail: {}}));
+		button.dispatchEvent(new CustomEvent("htmldbsort", {detail: {}}));
 	},
 	"updateReadQueueWithParameter": function (element, parameter) {
 		var refreshTableCSV = HTMLDB.getHTMLDBParameter(element, parameter);
@@ -3366,7 +3386,7 @@ var HTMLDB = {
     },
 	"doReaderIframeLoad":function (p1) {
 		HTMLDB.doReaderIframeDefaultLoad(p1, false);
-		HTMLDB.render(p1.target.parentNode.parentNode);
+		HTMLDB.render(p1.currentTarget.parentNode.parentNode);
 	},
 	"doRefreshButtonClick": function () {
 		HTMLDB.initializeReadQueue();
@@ -3396,6 +3416,11 @@ var HTMLDB = {
 			return false;
 		}
 		HTMLDB.resetForm(formElement);
+		var formObject = HTMLDB.convertFormToObject(formElement);
+		var defaults = HTMLDB.getHTMLDBParameter(event.currentTarget, "form-defaults");
+		formObject = HTMLDB.parseObjectDefaults(formObject, defaults);
+		HTMLDB.renderFormElementWithObject(formElement, formObject);
+		HTMLDB.doParentElementToggle(formElement);
 		formElement.dispatchEvent(new CustomEvent("htmldbadd", {detail: {}}));
 	},
 	"doSaveButtonClick": function (event) {
@@ -3436,7 +3461,7 @@ var HTMLDB = {
 			} else {
 				HTMLDB.showMessage(tableElementId, responseObject.lastMessage);
 				HTMLDB.insert(tableElementId, object);
-				event.target.dispatchEvent(new CustomEvent("htmldbsave", {detail: {}}));
+				event.currentTarget.dispatchEvent(new CustomEvent("htmldbsave", {detail: {}}));
 			}
 		});
 	},
@@ -3606,17 +3631,17 @@ var HTMLDB = {
 				HTMLDB.getHTMLDBParameter(event.currentTarget, "edit-id"));
 	},
 	"doWriterIframeLoad": function (p1) {
-		elDIV = p1.target.parentNode.parentNode;
+		elDIV = p1.currentTarget.parentNode.parentNode;
 		elDIV.setAttribute("data-htmldb-loading", 0);
 		HTMLDB.hideLoader(elDIV.id, "write");
-		iframeWindow = top.frames[p1.target.id];
+		iframeWindow = top.frames[p1.currentTarget.id];
 		var strResponse = "";
 		if (iframeWindow.document) {
 			strResponse = String(iframeWindow.document.body.innerHTML).trim();
 		}
 
 		var iframeFormDefaultName = (elDIV.id + "_iframe_");
-		var iframeFormGUID = p1.target.id.substr(iframeFormDefaultName.length);
+		var iframeFormGUID = p1.currentTarget.id.substr(iframeFormDefaultName.length);
 		HTMLDB.removeIframeAndForm(elDIV.id, iframeFormGUID);
 
 		if (elDIV.doHTMLDBWrite) {
@@ -3624,10 +3649,10 @@ var HTMLDB = {
 		}
 	},
 	"doValidatorIframeLoad": function (p1) {
-		elDIV = p1.target.parentNode.parentNode;
+		elDIV = p1.currentTarget.parentNode.parentNode;
 		elDIV.setAttribute("data-htmldb-loading", 0);
 		HTMLDB.hideLoader(elDIV.id, "validate");
-		iframeWindow = top.frames[p1.target.id];
+		iframeWindow = top.frames[p1.currentTarget.id];
 		var strResponse = "";
 		if (iframeWindow.document) {
 			strResponse = String(iframeWindow.document.body.innerHTML).trim();
@@ -3726,7 +3751,7 @@ var HTMLDB = {
 		}
 	},
 	"doReaderIframeDefaultLoad": function (event, readAll) {
-		var iframeHTMLDB = event.target;
+		var iframeHTMLDB = event.currentTarget;
 		var elDIV = iframeHTMLDB.parentNode.parentNode;
 		var strHTMLDBDIVID = iframeHTMLDB.parentNode.parentNode.id;
 		var tbodyHTMLDB = document.getElementById(strHTMLDBDIVID + "_reader_tbody");
@@ -3747,7 +3772,7 @@ var HTMLDB = {
 	        	throw(new Error("HTMLDB table "
 	        			+ elDIV.id
 	        			+ " could not be read: Not valid JSON format from URL "
-	        			+ event.target.src));
+	        			+ event.currentTarget.src));
 				return false;
 			}
 
