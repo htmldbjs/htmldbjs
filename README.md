@@ -255,8 +255,8 @@ An action button is used for adding a new record to the specified table. When ht
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-form`         |   |
-| `data-htmldb-form-defaults`|   |
+| `data-htmldb-form`         | Specifies parent form, that new record will be entered.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-form-defaults`| Specifies new record defaults in JSON format. This attribute value must be specified between `'` single quotation marks. Because, double quotation marks are required for the definition of object properties.<br><br>`Default Value: ""`  |
 
 #### Events
 
