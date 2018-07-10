@@ -256,7 +256,7 @@ An action button is used for adding a new record to the specified table. When ht
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `data-htmldb-form`         | Specifies parent form, that new record will be entered.<br><br>`Default Value: ""`<br>`Required` |
-| `data-htmldb-form-defaults`| Specifies new record defaults in JSON format. This attribute value must be specified between `'` single quotation marks. Because, double quotation marks are required for the definition of object properties.<br><br>`Default Value: ""`  |
+| `data-htmldb-form-defaults`| Specifies new record defaults in JSON format. This attribute value must be specified between `'` single quotation marks. Because, double quotation marks are required for the definition of JSON object properties.<br><br>`Default Value: ""`  |
 
 #### Events
 
@@ -289,9 +289,9 @@ An action button is used for editing a specific record. When htmldb-button-edit 
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-table`     | right-aligned<br/>test                    |
-| `data-htmldb-form`     | right-aligned                             |
-| `data-htmldb-edit-id`     | right-aligned                             |
+| `data-htmldb-table`     | Specifies parent table, that holds the record to be edited.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-form`     | Specifies the form, that will be populated with the record in `data-htmldb-table` table specified by `data-htmldb-edit-id` value.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-edit-id`     | Specified the unique id value of the record to be edited.<br><br>`Default Value: ""`<br>`Required` |
 
 #### Events
 
