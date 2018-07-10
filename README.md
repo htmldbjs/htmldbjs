@@ -295,7 +295,7 @@ An action button is used for editing a specific record. When htmldb-button-edit 
 
 #### Events
 
-This element has no events.
+This element has no HTMLDB events.
 
 #### Examples
 
@@ -317,11 +317,11 @@ An action button is used for refreshing all htmldb-table elements.
 
 #### Attributes
 
-This element has no attributes.
+This element has no HTMLDB attributes.
 
 #### Events
 
-This element has no events.
+This element has no HTMLDB events.
 
 #### Examples
 
@@ -419,7 +419,7 @@ A container element for the errors.
 
 #### Attributes
 
-This element has no attributes.
+This element has no HTMLDB attributes.
 
 #### Events
 
@@ -559,7 +559,7 @@ A container element for the messages.
 
 #### Attributes
 
-This element has no attributes.
+This element has no HTMLDB attributes.
 
 #### Events
 
@@ -691,7 +691,7 @@ A container for the elements, that automatically rendered by the related htmldb-
 
 #### Events
 
-This element has no events.
+This element has no HTMLDB events.
 
 #### Examples
 
@@ -864,7 +864,7 @@ A special container for the form fields that automatically displayed or hided fo
 
 #### Events
 
-This element has no events.
+This element has no HTMLDB events.
 
 #### Examples
 
