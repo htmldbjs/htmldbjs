@@ -608,7 +608,7 @@ A container element for easily navigating among the pages of `htmldb-table` elem
 | -------------------------- | ----------------------------------------- |
 | `data-htmldb-table` | Specifies table, that holds the pagination configuration. When user clicks the a page in `htmldb-pagination`, pagination configuration specified by `data-htmldb-page-field` is saved to this table.<br><br>`Default Value: ""`<br>`Required` |
 | `data-htmldb-refresh-table` | Specifies the table(s), that will refreshed after a page is clicked in `htmldb-pagination`  element. This attribute can hold more than one HTMLDB table seperating with comma `,` symbol. |
-| `data-htmldb-page-field` | Specifies the field name that holds the current page index start from `0`. |
+| `data-htmldb-page-field` | Specifies the field name that holds the current page index starting from `0`. |
 | `data-htmldb-page-count-field` | Specifies the field name that holds page count. |
 | `data-htmldb-page` | Specifies the current page index starting from `0`. |
 | `data-htmldb-page-count` | Specifies the current page count. |
@@ -680,10 +680,10 @@ A select element that automatically populated with the related `htmldb-table`.
 #### Attributes
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-field`     | right-aligned<br/>test                    |
-| `data-htmldb-option-table`     | right-aligned                             |
-| `data-htmldb-option-title`     | right-aligned                             |
-| `data-htmldb-option-value`     | right-aligned                             |
+| `data-htmldb-field` | Specifies the field name. The parent table name is specified in the container form.<br><br>`Default Value: ""` |
+| `data-htmldb-option-table` | Specifies the table that holds the options.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-option-title` | Specifies the title field name of the options in the `data-htmldb-option-table`.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-option-value` | Specifies the value field name of the options in the `data-htmldb-option-table`.<br><br>`Default Value: ""`<br>`Required` |
 
 #### Events
 
@@ -713,21 +713,21 @@ Data source element that retrieves and stores data from the server. Also, it val
 | Attribute Name | Description |
 | ---- | ---- |
 | `data-htmldb-filter` | Specifies filter expression will be used while reading data from a parent HTMLDB table instance. This attribute is used with `data-htmldb-table`.<br><br>`Default Value: ""`<br> |
-| `data-htmldb-loader` |   |
+| `data-htmldb-loader` | Specifies the loader element id that will be shown on all read, validate and write operations. |
 | `data-htmldb-local` | Specifies whether HTMLDB table instance will store data in browser's local storage (IndexedDB) or not. Local HTMLDB table instances are not automatically retreive data from the server or post data to the server. It stores all the data in IndexedDB. Local HTMLDB table instances use `HTMLDB` as database name and HTMLDB table element `id` for object store name. Local HTMLDB table data can be accessible from all pages in the same domain.<br><br>`Default Value: false` |
 | `data-htmldb-priority` | Specifies the loading priority of the HTMLDB table.<br><br>`Default Value: 0` |
-| `data-htmldb-read-loader` |   |
+| `data-htmldb-read-loader` | Specifies the loader element id that will be shown only on read operations. |
 | `data-htmldb-read-url` | Specifies the URL of the data requested from the server.<br><br>`Default Value: ""` |
 | `data-htmldb-read-only` | Specifies that HTMLDB table instance is read-only or not.<br><br>`Default Value: false` |
 | `data-htmldb-redirect` | Specifies the redirect URL after posting data to the server.<br><br>`Default Value: ""` |
 | `data-htmldb-table` | Specifies the parent HTMLDB table `id`. This attribute is used with `data-htmldb-table`.<br><br>`Default Value: ""` |
-| `data-htmldb-validate-loader` |   |
+| `data-htmldb-validate-loader` | Specifies the loader element id that will be shown only on validate operations. |
 | `data-htmldb-validate-url` | Specifies the URL that simulates posting data to the server for validation.<br><br>`Default Value: ""` |
-| `data-htmldb-write-loader` |   |
+| `data-htmldb-write-loader` | Specifies the loader element id that will be shown only on write operations. |
 | `data-htmldb-form` |   |
-| `data-htmldb-loading` |   |
-| `data-htmldb-active-id` |   |
-| `data-htmldb-read-incremental` |   |
+| `data-htmldb-loading` | Specifies the table is loading or not.<br><br>`Default Value: ""`<br>`Read-Only` |
+| `data-htmldb-active-id` | Specifies the current id (like cursor) of the table. After loading/refreshing, active id is automatically reset to first id in the list.<br><br>`Default Value: ""`<br>`Read-Only` |
+| `data-htmldb-read-incremental` | Specifies that read operations will be incremental or not. In incremental read operations, the table records are not cleared. All read operations are added at the end of the list. |
 | `data-htmldb-write-url` | Specifies the data post URL.<br><br>`Default Value: ""` |
 | `data-htmldb-write-only` | Specifies that HTMLDB table instance is write-only or not.<br><br>`Default Value: false` |
 | `id` | Specifies the name of the HTMLDB table.<br><br>`Default Value: ""`<br>`Required`<br>`Unique` |
@@ -774,8 +774,8 @@ A container element for the templates, that are automatically rendered by relate
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-table`     | right-aligned<br/>test                    |
-| `data-htmldb-template-target`     | right-aligned                             |
+| `data-htmldb-table` | Specifies the parent table, that will be used to render this template. |
+| `data-htmldb-template-target` | Specifies the target element id, which will be populated after rendering this template. |
 
 #### Events
 
@@ -806,9 +806,8 @@ A special container for the form fields that automatically displayed or hided fo
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-table`     | right-aligned<br/>test                    |
-| `data-htmldb-filter`     | right-aligned                             |
-
+| `data-htmldb-filter` | Specifies the condition according to the values of the container form that make this element visible. |
+ 
 #### Events
 
 This element has no HTMLDB events.
