@@ -255,6 +255,7 @@ An action button is used for adding a new record to the specified table. When ht
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `data-htmldb-form`         |   |
+| `data-htmldb-form-defaults`|   |
 
 #### Events
 
