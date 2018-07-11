@@ -7,7 +7,6 @@
 This repository contains HTMLDB.js core library source code.
 
 <br/>
-<br/>
 
 ## Installation
 
@@ -29,7 +28,6 @@ Installation HTMLDB is very simple. Just add `src/htmldb.js` or `dist/htmldb.min
 </html>
 ```
 
-<br/>
 <br/>
 
 ## Usage
@@ -186,13 +184,11 @@ After loading page, this HTML will look like as the following:
 ```
 
 <br/>
-<br/>
 
 ## Backend Integration
 
 It is easy to integrate HTMLDB with your favorite backend framework. HTMLDB requests data in JSON format and uses an inner form to post data to the server.
 
-<br/>
 <br/>
 
 ### Request Format
@@ -212,7 +208,6 @@ A typical HTMLDB request is a JSON string with the following format:
 }
 ```
 
-<br/>
 <br/>
 
 ### Response Format
@@ -252,9 +247,10 @@ htmldb_row2_columnName: columnName new value
 ```
 
 <br/>
-<br/>
 
 ## Elements
+
+<br/>
 
 ### `htmldb-button-add`
 
@@ -282,7 +278,6 @@ An action button is used for adding a new record to the specified table. When `h
 | ---- | ---- |
 | `htmldbadd` | Triggered when an htmldb-button-add button clicked. |
 
-<br/>
 <br/>
 
 ### `htmldb-button-edit`
@@ -312,7 +307,6 @@ An action button is used for editing a specific record. When `htmldb-button-edit
 This element has no HTMLDB events.
 
 <br/>
-<br/>
 
 ### `htmldb-button-refresh`
 
@@ -333,7 +327,6 @@ This element has no HTMLDB attributes.
 
 This element has no HTMLDB events.
 
-<br/>
 <br/>
 
 ### `htmldb-button-save`
@@ -360,7 +353,6 @@ An action button is used for saving current values of the specified form.
 | ---- | ---- |
 | `htmldbsave` | Triggered when an htmldb-button-save button clicked. |
 
-<br/>
 <br/>
 
 ### `htmldb-button-sort`
@@ -398,7 +390,6 @@ An action button is used for updating the sorting preferences.
 | `htmldbsort` | Triggered when an htmldb-button-sort button clicked. |
 
 <br/>
-<br/>
 
 ### `htmldb-error`
 
@@ -423,7 +414,6 @@ A container element for the errors.
 | ---- | ---- |
 | `htmldberror` | Triggered when an error returned especially after validation process.<br><br>`Event.detail.tableElementId` holds the table id that returned the error.<br>`Event.detail.errorText` holds the error text returned. |
 
-<br/>
 <br/>
 
 ### `htmldb-field`
@@ -465,7 +455,6 @@ An input element, that holds the current values of the `htmldb-form` fields.
 | `htmldbgetvalue` | Triggered when HTMLDB is about to get the htmldb-field input value. |
 
 <br/>
-<br/>
 
 ### `htmldb-form`
 
@@ -495,7 +484,6 @@ A container for the `htmldb-field` elements, that automatically updated by `html
 | ---- | ---- |
 | `htmldbreset` | Triggered when HTMLDB resets the htmldb-form form element. |
 
-<br/>
 <br/>
 
 ### `htmldb-input-save`
@@ -533,7 +521,6 @@ A standalone input that automatically update the specific `htmldb-table` record.
 | `htmldbsave` | Triggered when an htmldb-input-save input has been saved. |
 
 <br/>
-<br/>
 
 ### `htmldb-message`
 
@@ -558,7 +545,6 @@ A container element for the messages.
 | ---- | ---- |
 | `htmldbmessage` | Triggered when a message returned especially after validation process.<br><br>`Event.detail.tableElementId` holds the table id that returned the message.<br>`Event.detail.messageText` holds the message text returned. |
 
-<br/>
 <br/>
 
 ### `htmldb-pagination`
@@ -640,7 +626,6 @@ A container element for easily navigating among the pages of `htmldb-table` elem
 | `htmldbpageclick` | Triggered when a page element clicked within an htmldb-pagination element.<br><br>`Event.detail.page` holds the page index. |
 
 <br/>
-<br/>
 
 ### `htmldb-section`
 
@@ -677,7 +662,6 @@ A container for the elements, that automatically rendered by the related `htmldb
 This element has no HTMLDB events.
 
 <br/>
-<br/>
 
 ### `htmldb-select`
 
@@ -709,7 +693,6 @@ A select element that automatically populated with the related `htmldb-table`.
 | ---- | ---- |
 | `htmldbsetoptions` | Triggered when an htmldb-select element options has been set. |
 
-<br/>
 <br/>
 
 ### `htmldb-table`
@@ -758,7 +741,6 @@ Data source element that retrieves and stores data from the server. Also, it val
 | `htmldbmessage` | Triggered when a message returned especially after validation process.<br><br>`Event.detail.messageText` holds the message text returned. |
 
 <br/>
-<br/>
 
 ### `htmldb-template`
 
@@ -802,7 +784,6 @@ A container element for the templates, that are automatically rendered by relate
 | `htmldbrender` | Triggered when an htmldb-template element has been rendered. |
 
 <br/>
-<br/>
 
 ### `htmldb-toggle`
 
@@ -831,7 +812,6 @@ A special container for the form fields that automatically displayed or hided fo
 This element has no HTMLDB events.
 
 <br/>
-<br/>
 
 ## Global Variables
 
@@ -841,7 +821,6 @@ HTMLDB provides some critical information in global variables. This global varia
 
 `$URL` global variable holds the URL address of the current page. You can access URL parameters with `$URL.parameter` notation. Additionally `$URL` accepts integer parameter indices e.g. `$URL.1` or `$URL.-1`. `$URL.1` gives the first URL parameter value. `$URL.-1` gives the last URL parameter value.
 
-<br/>
 <br/>
 
 ## Using Other Table Fields in Mustache Templates
@@ -888,19 +867,24 @@ In some cases, it is required to use other table fields in mustache templates. `
 In the example above, there is a form and two `htmldb-table` instances called `companyTable` and `myFirstTable` respectively. Also, the form has two inputs. The first input is a hidden input that holds predefined `company_id` value from `companyTable`. In this case, `data-htmldb-reset-value` attribute must be specified with the value `{{companyTable.id}}`. So, `company_id` input value will be automatically reset to the `id` value of the active record in `companyTable` instance.
 
 <br/>
-<br/>
 
 ## Contributing
 
 Please use the [issue tracker](https://github.com/htmldbjs/htmldbjs/issues) to report any bugs/typos or requests.
 
+<br/>
+
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/htmldbjs/htmldbjs/tags). 
 
+<br/>
+
 ## Authors
 
 * **Aykut Aydınlı** - [@aykutaydinli](https://github.com/aykutaydinli)
+
+<br/>
 
 ## License
 
