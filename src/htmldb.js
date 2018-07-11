@@ -1775,15 +1775,15 @@ var HTMLDB = {
 		}
     },
     "doPaginationButtonClick": function (event) {
-    	var page = (parseInt(event.currentTarget.getAttribute("data-htmldb-page")) - 1);
+    	var page = (parseInt(HTMLDB.getEventTarget(event).getAttribute("data-htmldb-page")) - 1);
 
     	if (isNaN(page)) {
 			throw(new Error("HTMLDB pagination button has no valid data-htmldb-page attribute."));
 	        return false;
     	}
 
-    	var paginationElement = HTMLDB.exploreHTMLDBPagination(event.currentTarget);
-    	var tableElement = HTMLDB.exploreHTMLDBTable(event.currentTarget);
+    	var paginationElement = HTMLDB.exploreHTMLDBPagination(HTMLDB.getEventTarget(event));
+    	var tableElement = HTMLDB.exploreHTMLDBTable(HTMLDB.getEventTarget(event));
 
     	if (!tableElement) {
 			throw(new Error("HTMLDB pagination table not found."));
@@ -2106,7 +2106,7 @@ var HTMLDB = {
 	    }
 	},
 	"doSaveInputEvent": function (event) {
-		var element = event.currentTarget;
+		var element = HTMLDB.getEventTarget(event);
 		var delay = parseInt(HTMLDB.getHTMLDBParameter(element, "save-delay"));
 		if (isNaN(delay)) {
 			delay = 500;
@@ -2122,17 +2122,17 @@ var HTMLDB = {
 		}
 	},
 	"doSaveInputKeyUp": function (event) {
-		var element = event.currentTarget;
+		var element = HTMLDB.getEventTarget(event);
 		if (13 == event.keyCode) {
         	// Trigger Save Event On Enter
         	HTMLDB.doSaveInputEventNow(event);
         }
 	},
 	"doSaveInputEventNow": function (event) {
-		var input = event.currentTarget;
+		var input = HTMLDB.getEventTarget(event);
 		clearTimeout(input.tmSaveDelay);
 
-    	var inputValue = getInputValue(event.currentTarget);
+    	var inputValue = getInputValue(HTMLDB.getEventTarget(event));
 
     	var tableElementId = HTMLDB.getHTMLDBParameter(input, "table");
     	var tableElement = document.getElementById(tableElementId);
@@ -2184,7 +2184,7 @@ var HTMLDB = {
 		input.dispatchEvent(new CustomEvent("htmldbsave", {detail: {}}));
 	},
 	"doSortButtonClick": function (event) {
-		var button = event.currentTarget;
+		var button = HTMLDB.getEventTarget(event);
 
     	var tableElementId = HTMLDB.getHTMLDBParameter(button, "table");
     	var tableElement = document.getElementById(tableElementId);
@@ -3386,7 +3386,7 @@ var HTMLDB = {
     },
 	"doReaderIframeLoad":function (p1) {
 		HTMLDB.doReaderIframeDefaultLoad(p1, false);
-		HTMLDB.render(p1.currentTarget.parentNode.parentNode);
+		HTMLDB.render(HTMLDB.getEventTarget(p1).parentNode.parentNode);
 	},
 	"doRefreshButtonClick": function () {
 		HTMLDB.initializeReadQueue();
@@ -3410,21 +3410,27 @@ var HTMLDB = {
 		}
 	},
 	"doAddButtonClick": function (event) {
-		var formElement = document.getElementById(HTMLDB.getHTMLDBParameter(event.currentTarget, "form"));
+		var formElement = document.getElementById(HTMLDB.getHTMLDBParameter(HTMLDB.getEventTarget(event), "form"));
 		if (!formElement) {
         	throw(new Error("Add button HTMLDB form not found."));
 			return false;
 		}
 		HTMLDB.resetForm(formElement);
 		var formObject = HTMLDB.convertFormToObject(formElement);
-		var defaults = HTMLDB.getHTMLDBParameter(event.currentTarget, "form-defaults");
+		var defaults = HTMLDB.getHTMLDBParameter(HTMLDB.getEventTarget(event), "form-defaults");
 		formObject = HTMLDB.parseObjectDefaults(formObject, defaults);
 		HTMLDB.renderFormElementWithObject(formElement, formObject);
 		HTMLDB.doParentElementToggle(formElement);
 		formElement.dispatchEvent(new CustomEvent("htmldbadd", {detail: {}}));
 	},
 	"doSaveButtonClick": function (event) {
-		var formId = HTMLDB.getHTMLDBParameter(event.currentTarget, "form");
+		var eventTarget = HTMLDB.getEventTarget(event);
+
+		if (!eventTarget) {
+			eventTarget = event.target;
+		}
+
+		var formId = HTMLDB.getHTMLDBParameter(eventTarget, "form");
 		var form = null;
 
 		if (formId != "") {
@@ -3434,7 +3440,7 @@ var HTMLDB = {
 				return false;
 			}
 		} else {
-			form = HTMLDB.exploreHTMLDBForm(event.currentTarget);			
+			form = HTMLDB.exploreHTMLDBForm(eventTarget);			
 		}
 
 		var tableElementId = HTMLDB.getHTMLDBParameter(form, "table");
@@ -3461,7 +3467,7 @@ var HTMLDB = {
 			} else {
 				HTMLDB.showMessage(tableElementId, responseObject.lastMessage);
 				HTMLDB.insert(tableElementId, object);
-				event.currentTarget.dispatchEvent(new CustomEvent("htmldbsave", {detail: {}}));
+				eventTarget.dispatchEvent(new CustomEvent("htmldbsave", {detail: {}}));
 			}
 		});
 	},
@@ -3608,8 +3614,8 @@ var HTMLDB = {
 	"doEditButtonClick": function (event) {
 		var tableElement = null;
 		var formElement = null;
-		var tableElementId = HTMLDB.getHTMLDBParameter(event.currentTarget, "table");
-		var formElementId = HTMLDB.getHTMLDBParameter(event.currentTarget, "form");
+		var tableElementId = HTMLDB.getHTMLDBParameter(HTMLDB.getEventTarget(event), "table");
+		var formElementId = HTMLDB.getHTMLDBParameter(HTMLDB.getEventTarget(event), "form");
 
 		if ((tableElementId == "") && (formElementId != "")) {
 			formElement = document.getElementById(formElementId);
@@ -3628,20 +3634,21 @@ var HTMLDB = {
 
 		HTMLDB.setActiveId(
 				tableElement,
-				HTMLDB.getHTMLDBParameter(event.currentTarget, "edit-id"));
+				HTMLDB.getHTMLDBParameter(HTMLDB.getEventTarget(event), "edit-id"));
 	},
 	"doWriterIframeLoad": function (p1) {
-		elDIV = p1.currentTarget.parentNode.parentNode;
+		var eventTarget = HTMLDB.getEventTarget(p1);
+		elDIV = HTMLDB.getEventTarget(p1).parentNode.parentNode;
 		elDIV.setAttribute("data-htmldb-loading", 0);
 		HTMLDB.hideLoader(elDIV.id, "write");
-		iframeWindow = top.frames[p1.currentTarget.id];
+		iframeWindow = top.frames[eventTarget.id];
 		var strResponse = "";
 		if (iframeWindow.document) {
 			strResponse = String(iframeWindow.document.body.innerHTML).trim();
 		}
 
 		var iframeFormDefaultName = (elDIV.id + "_iframe_");
-		var iframeFormGUID = p1.currentTarget.id.substr(iframeFormDefaultName.length);
+		var iframeFormGUID = eventTarget.id.substr(iframeFormDefaultName.length);
 		HTMLDB.removeIframeAndForm(elDIV.id, iframeFormGUID);
 
 		if (elDIV.doHTMLDBWrite) {
@@ -3649,10 +3656,11 @@ var HTMLDB = {
 		}
 	},
 	"doValidatorIframeLoad": function (p1) {
-		elDIV = p1.currentTarget.parentNode.parentNode;
+		var eventTarget = HTMLDB.getEventTarget(p1);
+		elDIV = eventTarget.parentNode.parentNode;
 		elDIV.setAttribute("data-htmldb-loading", 0);
 		HTMLDB.hideLoader(elDIV.id, "validate");
-		iframeWindow = top.frames[p1.currentTarget.id];
+		iframeWindow = top.frames[eventTarget.id];
 		var strResponse = "";
 		if (iframeWindow.document) {
 			strResponse = String(iframeWindow.document.body.innerHTML).trim();
@@ -3750,12 +3758,20 @@ var HTMLDB = {
 			callbackFunction();
 		}
 	},
+	"getEventTarget": function (event) {
+		var eventTarget = event.currentTarget;
+		if (!eventTarget) {
+			eventTarget = event.target;
+		}
+		return eventTarget;
+	},
 	"doReaderIframeDefaultLoad": function (event, readAll) {
-		var iframeHTMLDB = event.currentTarget;
+		var iframeHTMLDB = HTMLDB.getEventTarget(event);
 		var elDIV = iframeHTMLDB.parentNode.parentNode;
 		var strHTMLDBDIVID = iframeHTMLDB.parentNode.parentNode.id;
 		var tbodyHTMLDB = document.getElementById(strHTMLDBDIVID + "_reader_tbody");
 		var theadHTMLDB = document.getElementById(strHTMLDBDIVID + "_reader_thead");
+		var eventTarget = HTMLDB.getEventTarget(event);
 		iframeWindow = top.frames[iframeHTMLDB.id];
 		var strResponse = "";
 		if (iframeWindow.document) {
@@ -3772,7 +3788,7 @@ var HTMLDB = {
 	        	throw(new Error("HTMLDB table "
 	        			+ elDIV.id
 	        			+ " could not be read: Not valid JSON format from URL "
-	        			+ event.currentTarget.src));
+	        			+ eventTarget.src));
 				return false;
 			}
 
