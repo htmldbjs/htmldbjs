@@ -6,6 +6,9 @@
 
 This repository contains HTMLDB.js core library source code.
 
+<br/>
+<br/>
+
 ## Installation
 
 Installation HTMLDB is very simple. Just add `src/htmldb.js` or `dist/htmldb.min.js` in your HTML document. You don't need to initialize it with javascript. On the page load, HTMLDB automatically initializes itself.
@@ -25,6 +28,9 @@ Installation HTMLDB is very simple. Just add `src/htmldb.js` or `dist/htmldb.min
   </body>
 </html>
 ```
+
+<br/>
+<br/>
 
 ## Usage
 
@@ -179,9 +185,15 @@ After loading page, this HTML will look like as the following:
 </html>
 ```
 
+<br/>
+<br/>
+
 ## Backend Integration
 
 It is easy to integrate HTMLDB with your favorite backend framework. HTMLDB requests data in JSON format and uses an inner form to post data to the server.
+
+<br/>
+<br/>
 
 ### Request Format
 
@@ -199,6 +211,9 @@ A typical HTMLDB request is a JSON string with the following format:
     ]
 }
 ```
+
+<br/>
+<br/>
 
 ### Response Format
 
@@ -235,6 +250,9 @@ htmldb_row2_column1: column1 new value
 htmldb_row2_column2: column2 new value
 htmldb_row2_columnName: columnName new value
 ```
+
+<br/>
+<br/>
 
 ## Elements
 
@@ -876,22 +894,13 @@ In the example above, there is a form and two `htmldb-table` instances called `c
 
 Please use the [issue tracker](https://github.com/htmldbjs/htmldbjs/issues) to report any bugs/typos or requests.
 
-<br/>
-<br/>
-
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/htmldbjs/htmldbjs/tags). 
 
-<br/>
-<br/>
-
 ## Authors
 
 * **Aykut Aydınlı** - [@aykutaydinli](https://github.com/aykutaydinli)
-
-<br/>
-<br/>
 
 ## License
 
