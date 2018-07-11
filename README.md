@@ -823,6 +823,9 @@ HTMLDB provides some critical information in global variables. This global varia
 
 `$URL` global variable holds the URL address of the current page. You can access URL parameters with `$URL.parameter` notation. Additionally `$URL` accepts integer parameter indices e.g. `$URL.1` or `$URL.-1`. `$URL.1` gives the first URL parameter value. `$URL.-1` gives the last URL parameter value.
 
+<br/>
+<br/>
+
 ## Using Other Table Fields in Mustache Templates
 
 In some cases, it is required to use other table fields in mustache templates. `htmldb-table` fields are accessible using `{{TableName.FieldName}}` notation in mustache templates. HTMLDB uses active records of the `htmldb-table` instances while parsing mustache templates.
@@ -864,19 +867,31 @@ In some cases, it is required to use other table fields in mustache templates. `
         data-htmldb-write-url="myfirsttable/write"></div>
 ```
 
-In the example above, there is a form and two `htmldb-table` instances called `companyTable` and `myFirstTable` respectively. Also, the form has two inputs. The first input is a hidden input that holds predefined `company_id` value from `companyTable`. In this case, `data-htmldb-reset-value` attribute must be specified with the value `"{{companyTable.id}}"`. So, `company_id` input value will be automatically reset to the `id` value of the active record in `companyTable` instance.
+In the example above, there is a form and two `htmldb-table` instances called `companyTable` and `myFirstTable` respectively. Also, the form has two inputs. The first input is a hidden input that holds predefined `company_id` value from `companyTable`. In this case, `data-htmldb-reset-value` attribute must be specified with the value `{{companyTable.id}}`. So, `company_id` input value will be automatically reset to the `id` value of the active record in `companyTable` instance.
+
+<br/>
+<br/>
 
 ## Contributing
 
 Please use the [issue tracker](https://github.com/htmldbjs/htmldbjs/issues) to report any bugs/typos or requests.
 
+<br/>
+<br/>
+
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/htmldbjs/htmldbjs/tags). 
 
+<br/>
+<br/>
+
 ## Authors
 
 * **Aykut Aydınlı** - [@aykutaydinli](https://github.com/aykutaydinli)
+
+<br/>
+<br/>
 
 ## License
 
