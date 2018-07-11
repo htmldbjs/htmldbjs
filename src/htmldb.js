@@ -1134,7 +1134,15 @@ var HTMLDB = {
 		HTMLDB.initializeHTMLDBSaveInputs(parent);
 	},
 	"initializeHTMLDBPaginations": function (parent) {
-
+        var paginationElements
+        		= document.body.querySelectorAll(
+        		".htmldb-pagination");
+        var paginationElementCount = paginationElements.length;
+        var paginationElement = null;
+        for (var i = 0; i < paginationElementCount; i++) {
+        	paginationElement = paginationElements[i];
+        	HTMLDB.validateHTMLDBPaginationDefinition(paginationElement);
+        }
 	},
 	"initializeHTMLDBUpdaters": function (parent) {
 
@@ -1575,6 +1583,12 @@ var HTMLDB = {
             				= HTMLDB.getHTMLDBParameter(
             				element,
             				"content");
+            	} else if (HTMLDB.hasHTMLDBParameter(element, "value")) {
+            		HTMLDB.setInputValue(
+            				element,
+            				HTMLDB.getHTMLDBParameter(
+            				element,
+            				"value"));
             	}
             }
         }
@@ -2395,7 +2409,7 @@ var HTMLDB = {
 		var input = HTMLDB.getEventTarget(event);
 		clearTimeout(input.tmSaveDelay);
 
-    	var inputValue = getInputValue(HTMLDB.getEventTarget(event));
+    	var inputValue = HTMLDB.getInputValue(input);
 
     	var tableElementId = HTMLDB.getHTMLDBParameter(input, "table");
     	var tableElement = document.getElementById(tableElementId);
@@ -2555,7 +2569,7 @@ var HTMLDB = {
 				throw(new Error("HTMLDB table "
 						+ refreshTableId
 						+ " referenced in " + parameter
-						+ "attribute but not found."));
+						+ " attribute but not found."));
 	        	return false;
 			}
 			HTMLDB.updateReadQueue(refreshTable);
@@ -3020,7 +3034,14 @@ var HTMLDB = {
     	}
 	},
 	"validateHTMLDBPaginationDefinition": function (element) {
+		var tableElementId = HTMLDB.getHTMLDBParameter(element, "table");
 
+    	if (("" == tableElementId)
+    			|| (!document.getElementById(tableElementId))) {
+        	throw(new Error(tableElementId + " HTMLDB table referenced in "
+        			+ "htmldb-pagination element, but not found."));
+    		return;
+    	}
 	},
 	"createHelperElements": function (element) {
         var tableHTML = "";
