@@ -23,7 +23,7 @@
                     <div class="row">
                         <div class="col s12">
                             <label for="type"><?php echo __('Firma Türü'); ?> </label>
-                            <select id="input2" class="htmldb-field" data-htmldb-field="type" data-htmldb-option-table="companyTypesHTMLDB" data-htmldb-option-value="{{id}}" data-htmldb-option-title="{{column0}}">
+                            <select id="input2" class="htmldb-field" data-htmldb-field="type" data-htmldb-value="{{type}}" data-htmldb-option-table="companyTypesHTMLDB" data-htmldb-option-value="{{id}}" data-htmldb-option-title="{{column0}}">
                                 <option value=""><?php echo __('Lütfen Seçiniz'); ?></option>
                             </select>
                         </div>

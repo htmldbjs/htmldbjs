@@ -704,7 +704,7 @@ Data source element that retrieves and stores data from the server. Also, it val
 <div id="myFirstTable"
         class="htmldb-table"
         data-htmldb-read-url="myfirsttable/read"
-        data-htmldb-validate-url="myfirsttable/write"
+        data-htmldb-validate-url="myfirsttable/validate"
         data-htmldb-write-url="myfirsttable/write"></div>
 ```
 
@@ -814,6 +814,57 @@ This element has no HTMLDB events.
 
 <br/>
 <br/>
+
+## Global Variables
+
+HTMLDB provides some critical information in global variables. This global variables can be used in mustache templates.
+
+### `$URL`
+
+`$URL` global variable holds the URL address of the current page. You can access URL parameters with `$URL.parameter` notation. Additionally `$URL` accepts integer parameter indices e.g. `$URL.1` or `$URL.-1`. `$URL.1` gives the first URL parameter value. `$URL.-1` gives the last URL parameter value.
+
+## Using Other Table Fields in Mustache Templates
+
+In some cases, it is required to use other table fields in mustache templates. `htmldb-table` fields are accessible using `{{TableName.FieldName}}` notation in mustache templates. HTMLDB uses active records of the `htmldb-table` instances while parsing mustache templates.
+
+```html
+<form id="myForm"
+        name="myForm"
+        method="post"
+        class="htmldb-form"
+        data-htmldb-table="myTable">
+
+    <input id="company_id"
+            name="company_id"
+            type="hidden"
+            value=""
+            class="htmldb-field"
+            data-htmldb-field="company_id"
+            data-htmldb-reset-value="{{companyTable.id}}">
+
+    <input id="name"
+            name="name"
+            type="text"
+            value=""
+            class="htmldb-field"
+            data-htmldb-field="company_name">
+
+</form>
+
+<div id="companyTable"
+        class="htmldb-table"
+        data-htmldb-read-url="company/read"
+        data-htmldb-validate-url="company/validate"
+        data-htmldb-write-url="company/write"></div>
+
+<div id="myFirstTable"
+        class="htmldb-table"
+        data-htmldb-read-url="myfirsttable/read"
+        data-htmldb-validate-url="myfirsttable/validate"
+        data-htmldb-write-url="myfirsttable/write"></div>
+```
+
+In the example above, there is a form and two `htmldb-table` instances called `companyTable` and `myFirstTable` respectively. Also, the form has two inputs. The first input is a hidden input that holds predefined `company_id` value from `companyTable`. In this case, `data-htmldb-reset-value` attribute must be specified with the value `"{{companyTable.id}}"`. So, `company_id` input value will be automatically reset to the `id` value of the active record in `companyTable` instance.
 
 ## Contributing
 

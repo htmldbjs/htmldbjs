@@ -11,7 +11,7 @@
     <section class="sectionContent">
         <div class="divDialogContentContainer col s12">
             <div class="divContentPanel z-depth-1">
-                <button class="waves-effect white-text btn right cyan darken-1 htmldb-button-add" type="button" data-htmldb-form="formCompany"><i class="ion-plus"></i> YENİ FİRMA</button>
+                <button class="waves-effect white-text btn right cyan darken-1 htmldb-button-add" type="button" data-htmldb-form="formCompany" data-htmldb-form-defaults='{"type":1}'><i class="ion-plus"></i> YENİ FİRMA</button>
                 <nav class="navSearch" style="margin-top:60px">
                     <div class="nav-wrapper">
                         <form onsubmit="return false;">
