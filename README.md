@@ -817,6 +817,8 @@ This element has no HTMLDB events.
 
 HTMLDB provides some critical information in global variables. This global variables can be used in mustache templates.
 
+<br/>
+
 ### `$URL`
 
 `$URL` global variable holds the URL address of the current page. You can access URL parameters with `$URL.parameter` notation. Additionally `$URL` accepts integer parameter indices e.g. `$URL.1` or `$URL.-1`. `$URL.1` gives the first URL parameter value. `$URL.-1` gives the last URL parameter value.
