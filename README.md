@@ -873,7 +873,7 @@ Data source element that retrieves and stores data from the server. Also, it val
 
 #### Variables
 
-This element has no HTMLDB variables.
+All the columns in the table, can be considered as HTMLDB variable.
 
 <br/>
 
