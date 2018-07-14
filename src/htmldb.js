@@ -888,6 +888,7 @@ var HTMLDB = {
 				continue;
 			}
 
+			/*
 			targetElement = null;
 			targetElementId
 					= HTMLDB.getHTMLDBParameter(
@@ -911,6 +912,7 @@ var HTMLDB = {
 	        			+ " not found."));
 				return false;
 	        }
+	        */
 
 			if (templateElement.renderFunction) {
 				templateElement.renderFunction(tableElement, rows);
@@ -3024,14 +3026,6 @@ var HTMLDB = {
         	throw(new Error(tableElementId + " HTMLDB table not found."));
     		return;
     	}
-
-    	if (("" == targetElementId)
-    			|| (!document.getElementById(targetElementId))) {
-        	throw(new Error("Template target element "
-        			+ targetElementId
-        			+ " not found."));
-    		return;
-    	}
 	},
 	"validateHTMLDBPaginationDefinition": function (element) {
 		var tableElementId = HTMLDB.getHTMLDBParameter(element, "table");
@@ -3207,9 +3201,12 @@ var HTMLDB = {
 		}
 
 		functionBody += ";}"
-				+ "document.getElementById(\""
+				+ "document.getElementById("
+				+ "HTMLDB.evaluateHTMLDBExpression(\""
 				+ targetElementId
-				+ "\").innerHTML=generatedCode"
+				+ "\", \""
+				+ tableElementId
+				+ "\")).innerHTML=generatedCode"
 				+ templateElement.HTMLDBGUID
 				+ ";";
 
