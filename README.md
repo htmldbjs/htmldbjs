@@ -278,6 +278,10 @@ An action button is used for adding a new record to the specified table. When `h
 | ---- | ---- |
 | `htmldbadd` | Triggered when an htmldb-button-add button clicked. |
 
+#### Variables
+
+This element has no HTMLDB variables.
+
 <br/>
 
 ### `htmldb-button-edit`
@@ -306,6 +310,10 @@ An action button is used for editing a specific record. When `htmldb-button-edit
 
 This element has no HTMLDB events.
 
+#### Variables
+
+This element has no HTMLDB variables.
+
 <br/>
 
 ### `htmldb-button-refresh`
@@ -327,6 +335,10 @@ This element has no HTMLDB attributes.
 
 This element has no HTMLDB events.
 
+#### Variables
+
+This element has no HTMLDB variables.
+
 <br/>
 
 ### `htmldb-button-save`
@@ -346,12 +358,17 @@ An action button is used for saving current values of the specified form.
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `data-htmldb-form` | Specifies the form, that holds the record to be saved.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-checkbox-group` | HTMLDB provides multiple selection of records via checkbox groups. This attribute specifies the checkbox group will be used to identify selected records to be updated.<br><br>`Default Value: ""` |
 
 #### Events
 
 | Event Name | Description  |
 | ---- | ---- |
 | `htmldbsave` | Triggered when an htmldb-button-save button clicked. |
+
+#### Variables
+
+This element has no HTMLDB variables.
 
 <br/>
 
@@ -389,6 +406,84 @@ An action button is used for updating the sorting preferences.
 | ---- | ---- |
 | `htmldbsort` | Triggered when an htmldb-button-sort button clicked. |
 
+#### Variables
+
+This element has no HTMLDB variables.
+
+<br/>
+
+### `htmldb-checkbox-group`
+
+A container element for checkbox inputs. `htmldb-checkbox-group` makes it possible to select/update/delete multiple records.
+
+#### Syntax
+
+```html
+<ul id="ulCheckboxGroup1" class="htmldb-checkbox-group" htmldb-table="myTable">
+
+    <li>
+
+        <input id="checkboxAll"
+                name="checkboxAll"
+                type="checkbox"
+                class="htmldb-checkbox-all"
+                data-htmldb-checkbox-id="" />
+
+    </li>
+    
+    <li>
+
+        <input id="checkbox1"
+                name="checkbox1"
+                type="checkbox"
+                class="htmldb-checkbox"
+                data-htmldb-checkbox-id="1" />
+    
+    </li>
+    
+    <li>
+    
+        <input id="checkbox2"
+                name="checkbox2"
+                type="checkbox"
+                class="htmldb-checkbox"
+                data-htmldb-checkbox-id="2" />
+    
+    </li>
+    
+    <li>
+    
+        <input id="checkbox3"
+                name="checkbox3"
+                type="checkbox"
+                class="htmldb-checkbox"
+                data-htmldb-checkbox-id="3" />
+    
+    </li>
+
+</ul>
+```
+
+#### Attributes
+
+| Attribute Name             | Description                               |
+| -------------------------- | ----------------------------------------- |
+| `data-htmldb-table` | Specifies the parent table. <br><br>`Default Value: ""`<br>`Required` |
+| `id` | Specifies the unique identifier of the checkbox group. <br><br>`Default Value: ""`<br>`Required`<br>`Unique` |
+
+#### Events
+
+| Event Name | Description  |
+| ---- | ---- |
+| `htmldbclick` | Triggered when a checkbox in the checkbox group is clicked. |
+
+#### Variables
+
+| Variable Name | Description  |
+| ---- | ---- |
+| `checkedCount` | Gives the checked checkbox count in the checkbox group.<br><br>`Read-Only` |
+| `checkboxCount` | Gives the total checkbox count in the checkbox group.<br><br>`Read-Only` |
+
 <br/>
 
 ### `htmldb-error`
@@ -413,6 +508,10 @@ A container element for the errors.
 | Event Name | Description  |
 | ---- | ---- |
 | `htmldberror` | Triggered when an error returned especially after validation process.<br><br>`Event.detail.tableElementId` holds the table id that returned the error.<br>`Event.detail.errorText` holds the error text returned. |
+
+#### Variables
+
+This element has no HTMLDB variables.
 
 <br/>
 
@@ -454,6 +553,10 @@ An input element, that holds the current values of the `htmldb-form` fields.
 | `htmldbsetvalue` | Triggered when HTMLDB sets the htmldb-field input value.<br><br>`Event.detail.value` holds the value has been set. |
 | `htmldbgetvalue` | Triggered when HTMLDB is about to get the htmldb-field input value. |
 
+#### Variables
+
+This element has no HTMLDB variables.
+
 <br/>
 
 ### `htmldb-form`
@@ -484,6 +587,10 @@ A container for the `htmldb-field` elements, that automatically updated by `html
 | ---- | ---- |
 | `htmldbreset` | Triggered when HTMLDB resets the htmldb-form form element. |
 
+#### Variables
+
+This element has no HTMLDB variables.
+
 <br/>
 
 ### `htmldb-input-save`
@@ -513,12 +620,17 @@ A standalone input that automatically update the specific `htmldb-table` record.
 | `data-htmldb-input-field` | Specifies the field name in the `data-htmldb-table` to be updated.<br><br>`Default Value: ""`<br>`Required` |
 | `data-htmldb-refresh-table` | Specifies the table(s), that will refreshed after saving. This attribute can hold more than one HTMLDB table seperating with comma `,` symbol.<br><br>`Default Value: ""` |
 | `data-htmldb-table-defaults` | Specifies extra fields to be updated. This attribute value must be in JSON format, thus specified between `'` single quotation marks. Because, double quotation marks are required for the definition of JSON object properties.<br><br>`Default Value: ""` |
+| `data-htmldb-checkbox-group` | HTMLDB provides multiple selection of records via checkbox groups. This attribute specifies the checkbox group will be used to identify selected records to be updated.<br><br>`Default Value: ""` |
 
 #### Events
 
 | Event Name | Description  |
 | ---- | ---- |
 | `htmldbsave` | Triggered when an htmldb-input-save input has been saved. |
+
+#### Variables
+
+This element has no HTMLDB variables.
 
 <br/>
 
@@ -544,6 +656,10 @@ A container element for the messages.
 | Event Name | Description  |
 | ---- | ---- |
 | `htmldbmessage` | Triggered when a message returned especially after validation process.<br><br>`Event.detail.tableElementId` holds the table id that returned the message.<br>`Event.detail.messageText` holds the message text returned. |
+
+#### Variables
+
+This element has no HTMLDB variables.
 
 <br/>
 
@@ -625,6 +741,13 @@ A container element for easily navigating among the pages of `htmldb-table` elem
 | `htmldbrender` | Triggered when an htmldb-pagination element has been rendered. |
 | `htmldbpageclick` | Triggered when a page element clicked within an htmldb-pagination element.<br><br>`Event.detail.page` holds the page index. |
 
+#### Variables
+
+| Variable Name | Description  |
+| ---- | ---- |
+| `page` | Gives the current page index starting from `0`.<br><br>`Read-Only` |
+| `pageCount` | Gives the current page count.<br><br>`Read-Only` |
+
 <br/>
 
 ### `htmldb-section`
@@ -661,6 +784,10 @@ A container for the elements, that automatically rendered by the related `htmldb
 
 This element has no HTMLDB events.
 
+#### Variables
+
+This element has no HTMLDB variables.
+
 <br/>
 
 ### `htmldb-select`
@@ -692,6 +819,10 @@ A select element that automatically populated with the related `htmldb-table`.
 | Event Name | Description  |
 | ---- | ---- |
 | `htmldbsetoptions` | Triggered when an htmldb-select element options has been set. |
+
+#### Variables
+
+This element has no HTMLDB variables.
 
 <br/>
 
@@ -740,6 +871,10 @@ Data source element that retrieves and stores data from the server. Also, it val
 | `htmldberror` | Triggered when an error returned especially after validation process.<br><br>`Event.detail.errorText` holds the error text returned. |
 | `htmldbmessage` | Triggered when a message returned especially after validation process.<br><br>`Event.detail.messageText` holds the message text returned. |
 
+#### Variables
+
+This element has no HTMLDB variables.
+
 <br/>
 
 ### `htmldb-template`
@@ -783,6 +918,10 @@ A container element for the templates, that are automatically rendered by relate
 | ---- | ---- |
 | `htmldbrender` | Triggered when an htmldb-template element has been rendered. |
 
+#### Variables
+
+This element has no HTMLDB variables.
+
 <br/>
 
 ### `htmldb-toggle`
@@ -810,6 +949,10 @@ A special container for the form fields that automatically displayed or hided fo
 #### Events
 
 This element has no HTMLDB events.
+
+#### Variables
+
+This element has no HTMLDB variables.
 
 <br/>
 
