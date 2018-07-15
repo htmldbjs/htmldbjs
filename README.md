@@ -968,9 +968,9 @@ HTMLDB provides some critical information in global variables. This global varia
 
 <br/>
 
-## Using Other Table Fields in Mustache Templates
+## Using Other Table Fields and Element Variables in Mustache Templates
 
-In some cases, it is required to use other table fields in mustache templates. `htmldb-table` fields are accessible using `{{TableName.FieldName}}` notation in mustache templates. HTMLDB uses active records of the `htmldb-table` instances while parsing mustache templates.
+In some cases, it is required to use other table fields and/or element variables (e.g. current page index, page count, checked record count, etc.) in mustache templates. `htmldb-table` fields are accessible using `{{TableName.FieldName}}` notation, and also `htmldb-pagination`, `htmldb-checkbox-group` variables using `{{ElementID.VariableName}}` in mustache templates. HTMLDB uses active records of the `htmldb-table` instances while parsing mustache templates.
 
 ```html
 <form id="myForm"
