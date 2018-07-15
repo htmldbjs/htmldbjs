@@ -607,6 +607,7 @@ var HTMLDB = {
 			HTMLDB.renderSections(tableElement);
 			HTMLDB.renderForms(tableElement);
 			HTMLDB.renderSelects(tableElement);
+			HTMLDB.renderCheckboxGroups(tableElement);
 		}
 
 		if (functionDone) {
@@ -977,6 +978,75 @@ var HTMLDB = {
             	HTMLDB.renderPaginationElement(pagination);
             }
         }
+	},
+	"renderCheckboxGroups": function (tableElement) {
+        var checkboxGroups = document.body.querySelectorAll(".htmldb-checkbox-group");
+        var checkboxGroupCount = checkboxGroups.length;
+        var checkboxGroup = null;
+        for (var i = 0; i < checkboxGroupCount; i++) {
+            checkboxGroup = checkboxGroups[i];
+            if (HTMLDB.getHTMLDBParameter(
+            		checkboxGroup,
+            		"table")
+            		== tableElement.getAttribute("id")) {
+            	HTMLDB.renderCheckboxGroup(checkboxGroup);
+            }
+        }
+	},
+	"renderCheckboxGroup": function (checkboxGroup) {
+		var checkboxes = checkboxGroup.querySelectorAll(".htmldb-checkbox,.htmldb-checkbox-all");
+		var checkboxCount = checkboxes.length;
+		var checkbox = null;
+		for (var i = 0; i < checkboxCount; i++) {
+			checkbox = checkboxes[i];
+			checkbox.checked = false;
+			if (checkbox.addEventListener) {
+				checkbox.addEventListener(
+						"click",
+						HTMLDB.doCheckboxClick,
+						true);
+			} else if (checkbox.attachEvent) {
+	            checkbox.attachEvent(
+	            		"onclick",
+	            		HTMLDB.doCheckboxClick);
+	        }
+		}
+	},
+	"doCheckboxClick": function (event) {
+		var checkbox = HTMLDB.getEventTarget(event);
+		var checked = checkbox.checked;
+		var checkboxGroup = HTMLDB.exploreHTMLDBCheckboxGroup(checkbox);
+		var checkboxes = checkboxGroup.querySelectorAll(
+				".htmldb-checkbox,.htmldb-checkbox-all");
+		var checkboxCount = checkboxes.length;
+		var checkedCheckboxes = checkboxGroup.querySelectorAll(
+				".htmldb-checkbox:checked");
+		var checkedCheckboxCount = checkedCheckboxes.length;
+		var checkboxesAll = checkboxGroup.querySelectorAll(
+				".htmldb-checkbox-all");
+		var checkboxesAllCount = checkboxesAll.length;
+		var checkboxesAllChecked = false;
+		if (checkbox.className.indexOf("htmldb-checkbox-all") != -1) {
+			for (var i = 0; i < checkboxCount; i++) {
+				checkbox = checkboxes[i];
+				checkbox.checked = checked;
+			}
+		} else {
+			if (checkboxCount == (checkedCheckboxCount + 1)) {
+				checkboxesAllChecked = true;
+			} else {
+				checkboxesAllChecked = false;
+			}
+
+			for (var i = 0; i < checkboxesAllCount; i++) {
+				checkbox = checkboxesAll[i];
+				checkbox.checked = checkboxesAllChecked;
+			}
+		}
+		checkbox.dispatchEvent(
+				new CustomEvent(
+				"htmldbclick",
+				{detail: {}}));
 	},
 	"initializeHTMLDBIndexedDB": function () {
 		HTMLDB.indexedDB = (window.indexedDB
@@ -3768,6 +3838,25 @@ var HTMLDB = {
     	}
     	if (exit) {
         	throw(new Error("HTMLDB pagination not found."));
+			return false;
+    	} else {
+    		return element;
+    	}
+    },
+    "exploreHTMLDBCheckboxGroup": function (element) {
+    	var exit = false;
+    	if (element.className.indexOf("htmldb-checkbox-group") != -1) {
+    		return element;
+    	}
+    	var element = element.parentNode;
+    	while (!exit && (-1 == element.className.indexOf("htmldb-checkbox-group"))) {
+    		element = element.parentNode;
+    		if ("body" == element.tagName.toLowerCase()) {
+    			exit = true;
+    		}
+    	}
+    	if (exit) {
+        	throw(new Error("HTMLDB checkbox group element not found."));
 			return false;
     	} else {
     		return element;

@@ -23,12 +23,12 @@
                         </form>
                     </div>
                 </nav>
-                <table id="tableObjectList" class="tableList highlight" data-related-table-id="tableGhostObjectList">
+                <table id="tableObjectList" class="tableList highlight htmldb-checkbox-group" data-related-table-id="tableGhostObjectList" data-htmldb-table="companyHTMLDB">
                     <thead>
                         <tr>
                             <th class="center" style="width: 40px;">
                                 <label class="checkbox2 left-align" for="bSelectObjects">
-                                    <input class="" id="bSelectObjects" name="bSelectObjects" value="1" type="checkbox">
+                                    <input class="htmldb-checkbox-all" id="bSelectObjects" name="bSelectObjects" value="1" type="checkbox">
                                     <span class="outer">
                                         <span class="inner"></span>
                                     </span>
@@ -143,7 +143,7 @@
         <tr class="tr{{id}}" data-object-id="{{id}}">
             <td class="center">
                 <label class="checkbox2 left-align" for="bSelectObject{{id}}">
-                    <input data-object-id="{{id}}" class="bSelectObject" id="bSelectObject{{id}}" name="bSelectObject{{id}}" value="1" type="checkbox">
+                    <input data-object-id="{{id}}" class="bSelectObject htmldb-checkbox" id="bSelectObject{{id}}" name="bSelectObject{{id}}" value="1" type="checkbox">
                     <span class="outer">
                         <span class="inner"></span>
                     </span>
