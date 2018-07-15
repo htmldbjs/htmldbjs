@@ -910,7 +910,7 @@ A container element for the templates, that are automatically rendered by relate
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `data-htmldb-table` | Specifies the parent table, that will be used to render this template.<br><br>`Default Value: ""`<br>`Required` |
-| `data-htmldb-template-target` | Specifies the target element id, which will be populated after rendering this template.<br><br>Additionally this attribute accepts expressions containing table fields and element variables.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-template-target` | Specifies the target element id, which will be populated after rendering this template. Additionally this attribute accepts expressions containing table fields and element variables.<br><br>`Default Value: ""`<br>`Required` |
 
 #### Events
 
