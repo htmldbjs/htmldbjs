@@ -2625,8 +2625,6 @@ var HTMLDB = {
 			button.classList.remove("htmldb-loading");
 		});
 
-		console.log(sessionObject);
-
 		HTMLDB.insert(tableElement.getAttribute("id"), sessionObject);
 		HTMLDB.updateReadQueueWithParameter(button, "refresh-table");
 		button.dispatchEvent(new CustomEvent("htmldbsort", {detail: {}}));
