@@ -419,7 +419,7 @@ A container element for checkbox inputs. `htmldb-checkbox-group` makes it possib
 #### Syntax
 
 ```html
-<ul id="ulCheckboxGroup1" class="htmldb-checkbox-group" htmldb-table="myTable">
+<ul id="ulCheckboxGroup1" class="htmldb-checkbox-group" data-htmldb-table="myTable">
 
     <li>
 
