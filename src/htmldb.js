@@ -1112,12 +1112,14 @@ var HTMLDB = {
 					templateElement,
 					tableElementId,
 					targetElementId);
+
 			try {
 				templateElement.renderFunction
 						= new Function(
 						"tableElement",
 						"rows",
-						functionBody);				
+						functionBody);
+
 			} catch(e) {
 	        	throw(new Error("HTMLDB template (index:"
 	        			+ i
@@ -3115,16 +3117,21 @@ var HTMLDB = {
 		functionHeader = "if(tableElement.getAttribute(\"id\")!=\""
 				+ tableElementId
 				+ "\")return;var generatedCode"
-				+ templateElement.HTMLDBGUID
 				+ "=\"\";"
 				+ "var rowCount=rows.length;"
-				+ "for(var currentRow=0;currentRow<rowCount;currentRow++){";
+				+ "var rowId=0;"
+				+ "var rowObject=null;"
+				+ "var generatedIdList=[];"
+				+ "var generatedId=\"\";"
+				+ "var generatedIdListIndex=0;"
+				+ "var generatedIdListCount=0;"
+				+ "var generatedCodeList=[];"
+				+ "for(var currentRow=0;currentRow<rowCount;currentRow++){"
+				+ "rowId=rows[currentRow].getAttribute(\"data-row-id\");"
+				+ "rowObject=HTMLDB.get(\"" + tableElementId + "\", rowId);";
 
 		functionBody = "generatedCode"
-				+ templateElement.HTMLDBGUID
-				+ "="
-				+ "generatedCode"
-				+ templateElement.HTMLDBGUID;
+				+ "=\"\"";
 
 		tokenCount = tokens.length;
 
@@ -3165,23 +3172,26 @@ var HTMLDB = {
 						+ column
 						+ "\")";
 			} else {
+				/*
 				functionBody += "+document.getElementById(\""
 						+ tableElementId
 						+ "_reader_td\"+rows[currentRow].getAttribute(\""
 						+ "data-row-id\")+\""
 						+ column
 						+ "\").innerHTML";
+				*/
+
+				functionBody += "+rowObject[\""
+						+ column
+						+ "\"]";
 
 				if (-1 == columnHistory.indexOf("," + tableElementId
 						+ "."
 						+ column
 						+ ",")) {
-					functionHeader += "if(!document.getElementById(\""
-							+ tableElementId
-							+ "_reader_td\"+rows[currentRow].getAttribute(\""
-							+ "data-row-id\")+\""
+					functionHeader += "if(undefined===rowObject[\""
 							+ column
-							+ "\")){"
+							+ "\"]){"
 							+ "throw(new Error(\"An unknown field "
 							+ tableElementId
 							+ "."
@@ -3202,15 +3212,25 @@ var HTMLDB = {
 			functionBody += "+\"" + HTMLDB.as((String(text).trim())) + "\"";
 		}
 
-		functionBody += ";}"
-				+ "document.getElementById("
-				+ "HTMLDB.evaluateHTMLDBExpression(\""
+		functionBody += ";generatedId=HTMLDB.evaluateHTMLDBExpression("
+				+ "HTMLDB.evaluateHTMLDBExpressionWithObject(\""
 				+ targetElementId
-				+ "\", \""
-				+ tableElementId
-				+ "\")).innerHTML=generatedCode"
-				+ templateElement.HTMLDBGUID
-				+ ";";
+				+ "\",rowObject));"
+				+ "generatedIdListIndex=generatedIdList.indexOf(generatedId);"
+				+ "if(-1==generatedIdListIndex){"
+				+ "generatedIdListIndex=generatedIdList.length;"
+				+ "generatedIdList[generatedIdListIndex]=generatedId;"
+				+ "generatedCodeList[generatedIdListIndex]=\"\";"
+				+ "}generatedCodeList[generatedIdListIndex]+=generatedCode;}"
+				+ "generatedIdListCount=generatedIdList.length;"
+				+ "for(var i=0;i<generatedIdListCount;i++){"
+				+ "if(!document.getElementById(generatedIdList[i])){"
+				+ "throw(new Error(\"An element with the id=\"+generatedIdList[i]+\""
+				+ " is referenced in template, but not found.\"));"
+				+ "return;"
+				+ "}"
+				+ "document.getElementById(generatedIdList[i]).innerHTML=generatedCodeList[i];"
+				+ "}";
 
 		return (functionHeader + functionBody);
 	},
