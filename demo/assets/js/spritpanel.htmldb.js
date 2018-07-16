@@ -83,7 +83,9 @@ var SpritPanelHTMLDB = {
 
 		dialog = SpritPanelHTMLDB.extractFormDialog(form);
 
-		showDialog(dialog.id);
+		if (dialog) {
+			showDialog(dialog.id);			
+		}
 	},
 	"extractButtonForm": function (button) {
 		if (!button) {
@@ -111,7 +113,6 @@ var SpritPanelHTMLDB = {
 		}
 
 		var parent = form.parentNode;
-		var exit = false;
 
 		while ((-1 == parent.className.indexOf("htmldb-dialog-edit"))
 				&& (parent.tagName.toLowerCase() != "body")) {
@@ -119,7 +120,6 @@ var SpritPanelHTMLDB = {
 		}
 
 		if (-1 == parent.className.indexOf("htmldb-dialog-edit")) {
-			throw(new Error("Button target form " + form.getAttribute("id") + " dialog not found."));
 			return false;
 		}
 
@@ -159,11 +159,9 @@ var SpritPanelHTMLDB = {
 
 		dialog = SpritPanelHTMLDB.extractFormDialog(form);
 
-		if (!dialog) {
-			return false;
+		if (dialog) {
+			hideDialog(dialog.id);
 		}
-
-		hideDialog(dialog.id);
 	},
 	"renderSelectElement": function (sender, event) {
 		if (!sender) {
