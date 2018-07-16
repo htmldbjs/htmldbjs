@@ -883,6 +883,17 @@ var HTMLDB = {
         var targetElementId = "";
         var targetElement = null;
 
+        // Clear Template Target Contents
+        var targetCount = tableElement.HTMLDBTemplateTargets.length;
+        var targetId = "";
+
+        for (var i = 0; i < targetCount; i++) {
+        	targetId = tableElement.HTMLDBTemplateTargets[i];
+        	if (document.getElementById(targetId)) {
+        		document.getElementById(targetId).innerHTML = "";
+        	}
+        } // for (var i = 0; i < targetCount; i++) {
+
 		for (var i = 0; i < templateElementCount; i++) {
 			templateElement = templateElements[i];
 			if (tableElement.getAttribute("id")
@@ -1074,6 +1085,7 @@ var HTMLDB = {
         	HTMLDB.createHelperElements(tableElement);
         	tableElement.style.display = "none";
         	tableElement.setAttribute("data-htmldb-loading", 0);
+			tableElement.HTMLDBTemplateTargets = [];
         	priority = parseInt(
         			HTMLDB.getHTMLDBParameter(
         			tableElement,
@@ -3296,6 +3308,9 @@ var HTMLDB = {
 				+ "throw(new Error(\"An element with the id=\"+generatedIdList[i]+\""
 				+ " is referenced in template, but not found.\"));"
 				+ "return;"
+				+ "}"
+				+ "if(-1==tableElement.HTMLDBTemplateTargets.indexOf(generatedIdList[i])){"
+				+ "tableElement.HTMLDBTemplateTargets.push(generatedIdList[i]);"
 				+ "}"
 				+ "document.getElementById(generatedIdList[i]).innerHTML=generatedCodeList[i];"
 				+ "}";
