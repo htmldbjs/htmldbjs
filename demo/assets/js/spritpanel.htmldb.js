@@ -1,6 +1,7 @@
 var SpritPanelHTMLDB = {
 	"initialize": function () {
 		SpritPanelHTMLDB.initializeHTMLDBEvents();
+		SpritPanelHTMLDB.initializeSelectElements();
 	},
 	"validate": function() {
 		if (!document.getElementById("divErrorDialog")) {
@@ -36,6 +37,16 @@ var SpritPanelHTMLDB = {
 		$("select.htmldb-field").on("htmldbsetvalue", function (event) {
 			SpritPanelHTMLDB.doSelectizeSetValue(this, event);
 		});
+	},
+	"initializeSelectElements": function () {
+		var selects = $("select.htmldb-field,select.htmldb-select");
+		var selectCount = selects.length;
+		var select = null;
+
+		for (var i = 0; i < selectCount; i++) {
+			select = selects[i];
+			SpritPanelHTMLDB.renderSelectElement(select, null);
+		}
 	},
 	"doTemplateRender": function (sender, event) {
 		var targetId = HTMLDB.getHTMLDBParameter(sender, "template-target");
