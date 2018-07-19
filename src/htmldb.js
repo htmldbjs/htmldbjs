@@ -3219,7 +3219,7 @@ var HTMLDB = {
 			content = tokens[0];
 			text = content;
 			text = String(text).replace(/(?:\r\n|\r|\n)/g, "");
-			functionBody += "+\"" + HTMLDB.as((String(text).trim())) + "\"";
+			functionBody += "+\"" + HTMLDB.as(text) + "\"";
 		}
 
 		for (var i = 1; (i < tokenCount); i++) {
@@ -3289,7 +3289,7 @@ var HTMLDB = {
 			text = String(content).substr(position + 2);
 			text = String(text).replace(/(?:\r\n|\r|\n)/g, "");
 
-			functionBody += "+\"" + HTMLDB.as((String(text).trim())) + "\"";
+			functionBody += "+\"" + HTMLDB.as(text) + "\"";
 		}
 
 		functionBody += ";generatedId=HTMLDB.evaluateHTMLDBExpression("
@@ -3719,7 +3719,7 @@ var HTMLDB = {
 			text = String(content).substr(position + 2);
 			text = String(text).replace(/(?:\r\n|\r|\n)/g, "");
 
-			content = value + HTMLDB.as((String(text).trim()));
+			content = value + HTMLDB.as(text);
 
 			tokens[i] = content;
 		}
@@ -3783,7 +3783,7 @@ var HTMLDB = {
 			text = String(content).substr(position + 2);
 			text = String(text).replace(/(?:\r\n|\r|\n)/g, "");
 
-			content = value + HTMLDB.as((String(text).trim()));
+			content = value + HTMLDB.as(text);
 
 			tokens[i] = content;
 		}
