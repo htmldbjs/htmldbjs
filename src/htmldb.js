@@ -1691,6 +1691,7 @@ var HTMLDB = {
     				valueTemplate,
     				tableElement.getAttribute("id"));
 			HTMLDB.setInputValue(input, value);
+			HTMLDB.doActiveFormFieldUpdate(input, field);
 			input.dispatchEvent(new CustomEvent(
 					"htmldbsetvalue",
 					{detail: {"value": value}}));
@@ -2188,6 +2189,7 @@ var HTMLDB = {
     	var tableCount = 0;
     	var form = HTMLDB.exploreHTMLDBForm(input);
     	var formId = form.getAttribute("id");
+    	var tableElement = null;
     	if (undefined === HTMLDB.activeFormFields[formId]) {
     		return;
     	}
@@ -2200,7 +2202,15 @@ var HTMLDB = {
     	}
     	tableCount = tables.length;
     	for (var i = 0; i < tableCount; i++) {
-    		HTMLDB.read(tables[i]);
+			tableElement = document.getElementById(tables[i]);
+			if (!tableElement) {
+				throw(new Error("HTMLDB table "
+						+ tables[i]
+						+ " referenced by " + field
+						+ " in " + formId + " but not found."));
+	        	return false;
+			}
+			HTMLDB.updateReadQueue(tableElement);
     	}
     },
     "renderSelectElement": function (select) {
