@@ -363,9 +363,26 @@
 <div id="crewTypeHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readcrewtype" data-htmldb-read-only="1" data-htmldb-priority="0" data-htmldb-loader="divLoader"></div>
 <div id="auditTypeHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readaudittype" data-htmldb-read-only="1" data-htmldb-priority="0" data-htmldb-loader="divLoader"></div>
 <div id="companyHTMLDB" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/read/{{$URL.-1}}" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/validate/{{$URL.-1}}" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/write/{{$URL.-1}}" class="htmldb-table" data-htmldb-priority="0" data-htmldb-loader="divLoader"></div>
-<div id="sehirHTMLDB" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readsehir" data-htmldb-read-only="1" class="htmldb-table" data-htmldb-priority="0" data-htmldb-loader="divLoader"></div>
-<div id="ilceHTMLDB" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readilce" data-htmldb-read-only="1" class="htmldb-table" data-htmldb-priority="0" data-htmldb-loader="divLoader"></div>
-<div id="sehirIlceHTMLDB" data-htmldb-table="ilceHTMLDB" data-htmldb-filter="sehir/in/{{sehir}}" data-htmldb-read-only="1" class="htmldb-table" data-htmldb-form="formCompany" data-htmldb-priority="0" data-htmldb-loader="divLoader" data-htmldb-form="formCompany"></div>
+<div id="sehirHTMLDB"
+        class="htmldb-table"
+        data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readsehir"
+        data-htmldb-read-only="1"
+        data-htmldb-priority="0"
+        data-htmldb-loader="divLoader"></div>
+<div id="ilceHTMLDB"
+        class="htmldb-table"
+        data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readilce"
+        data-htmldb-read-only="1"
+        data-htmldb-priority="0"
+        data-htmldb-loader="divLoader"></div>
+<div id="sehirIlceHTMLDB"
+        class="htmldb-table"
+        data-htmldb-table="ilceHTMLDB"
+        data-htmldb-filter="sehir/in/{{sehir}}"
+        data-htmldb-read-only="1"
+        data-htmldb-priority="0"
+        data-htmldb-loader="divLoader"
+        data-htmldb-form="formCompany"></div>
 <div id="unitHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readunit/{{$URL.-1}}" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/validateunit/{{$URL.-1}}" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/writeunit/{{$URL.-1}}" data-htmldb-redirect="<?php echo $_SPRIT['URL_PREFIX']; ?>unit/last" data-htmldb-loader="divLoader"></div>
 <div id="crewHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readcrew/{{$URL.-1}}" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/validatecrew/{{$URL.-1}}" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/writecrew/{{$URL.-1}}" data-htmldb-loader="divLoader"></div>
 <div id="auditHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readaudit/{{$URL.-1}}" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>audit/validate" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>audit/write" data-htmldb-redirect="<?php echo $_SPRIT['URL_PREFIX']; ?>audit/last" data-htmldb-loader="divLoader"></div>

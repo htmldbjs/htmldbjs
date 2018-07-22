@@ -1418,21 +1418,16 @@ var HTMLDB = {
 		var inputCount = inputs.length;
 		var input = null;
 		var field = "";
+		var formElementId = formElement.getAttribute("id");
 
 		for (var i = 0; i < inputCount; i++) {
 			input = inputs[i];
 			field = HTMLDB.getHTMLDBParameter(input, "field");
-			if (undefined !== HTMLDB.activeFormFields[formElement.getAttribute("id")]) {
-				if (undefined
-						!== HTMLDB.activeFormFields[formElement.getAttribute("id")][field]) {
-					if (HTMLDB.activeFormFields[
-							formElement.getAttribute("id")][
-							field].length
-							> 0) {
+			if (undefined !== HTMLDB.activeFormFields[formElementId]) {
+				if (undefined !== HTMLDB.activeFormFields[formElementId][field]) {
+					if (HTMLDB.activeFormFields[formElementId][field].length > 0) {
 						HTMLDB.registerFormElementEvent(input, function () {
-							HTMLDB.doActiveFormFieldUpdate(
-									formElement.getAttribute("id"),
-									field);
+							HTMLDB.doActiveFormFieldUpdate(input, field);
 						});
 					}
 				}
@@ -2188,9 +2183,11 @@ var HTMLDB = {
             }
         }
     },
-    "doActiveFormFieldUpdate": function (formId, field) {
+    "doActiveFormFieldUpdate": function (input, field) {
     	var tables = [];
     	var tableCount = 0;
+    	var form = HTMLDB.exploreHTMLDBForm(input);
+    	var formId = form.getAttribute("id");
     	if (undefined === HTMLDB.activeFormFields[formId]) {
     		return;
     	}
