@@ -1675,43 +1675,41 @@ var HTMLDB = {
             }
         }
     },
-    "renderFormElement": function (form) {
+    "renderFormElement": function (form, object) {
     	var inputs = form.querySelectorAll(".htmldb-field");
     	var inputCount = inputs.length;
     	var input = null;
     	var field = "";
     	var valueTemplate = "";
-    	var tableElement = HTMLDB.exploreHTMLDBTable(form);
+    	var tableElement = null;
     	var value = "";
     	for (var i = 0; i < inputCount; i++) {
     		input = inputs[i];
     		field = HTMLDB.getHTMLDBParameter(input, "field");
     		valueTemplate = HTMLDB.getHTMLDBParameter(input, "value");
-    		value = HTMLDB.evaluateHTMLDBExpression(
-    				valueTemplate,
-    				tableElement.getAttribute("id"));
+    		value = "";
+
+    		if (undefined == object) {
+    			tableElement = HTMLDB.exploreHTMLDBTable(form);
+	    		value = HTMLDB.evaluateHTMLDBExpression(
+	    				valueTemplate,
+	    				tableElement.getAttribute("id"));
+    		} else {
+	    		value = HTMLDB.evaluateHTMLDBExpressionWithObject(
+	    				valueTemplate,
+	    				object);
+    		}
+
+    		if (undefined == input.HTMLDBInitials) {
+    			input.HTMLDBInitials = {
+    				"renderValue": value
+    			}
+    		} else {
+    			input.HTMLDBInitials.renderValue = value;
+    		}
+
 			HTMLDB.setInputValue(input, value);
 			HTMLDB.doActiveFormFieldUpdate(input, field);
-			input.dispatchEvent(new CustomEvent(
-					"htmldbsetvalue",
-					{detail: {"value": value}}));
-    	}
-    },
-    "renderFormElementWithObject": function (form, object) {
-    	var inputs = form.querySelectorAll(".htmldb-field");
-    	var inputCount = inputs.length;
-    	var input = null;
-    	var field = "";
-    	var valueTemplate = "";
-    	var value = "";
-    	for (var i = 0; i < inputCount; i++) {
-    		input = inputs[i];
-    		field = HTMLDB.getHTMLDBParameter(input, "field");
-    		valueTemplate = HTMLDB.getHTMLDBParameter(input, "value");
-    		value = HTMLDB.evaluateHTMLDBExpressionWithObject(
-    				valueTemplate,
-    				object);
-			HTMLDB.setInputValue(input, value);
 			input.dispatchEvent(new CustomEvent(
 					"htmldbsetvalue",
 					{detail: {"value": value}}));
@@ -2263,6 +2261,12 @@ var HTMLDB = {
 					tableElementId);
  			select.options[select.options.length]
  					= new Option(title, value);
+		}
+
+		if (undefined !== select.HTMLDBInitials) {
+			if (undefined !== select.HTMLDBInitials.renderValue) {
+				HTMLDB.setInputValue(select, select.HTMLDBInitials.renderValue);
+			}
 		}
 
         select.HTMLDBInitials = {
@@ -3921,7 +3925,7 @@ var HTMLDB = {
 		var formObject = HTMLDB.convertFormToObject(formElement);
 		var defaults = HTMLDB.getHTMLDBParameter(eventTarget, "form-defaults");
 		formObject = HTMLDB.parseObjectDefaults(formObject, defaults);
-		HTMLDB.renderFormElementWithObject(formElement, formObject);
+		HTMLDB.renderFormElement(formElement, formObject);
 		HTMLDB.doParentElementToggle(formElement);
 		formElement.dispatchEvent(new CustomEvent("htmldbadd", {detail: {}}));
 	},
