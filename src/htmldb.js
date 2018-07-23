@@ -44,10 +44,7 @@ var HTMLDB = {
 				tableElement.getAttribute("data-htmldb-loading"));
 
 		if (loading > 0) {
-        	throw(new Error("HTMLDB table "
-        			+ tableElementId
-        			+ " is loading right now."));
-			return false;
+			return true;
 		}
 
 		var parentTable = HTMLDB.getHTMLDBParameter(tableElement, "table");
@@ -2241,6 +2238,8 @@ var HTMLDB = {
 		var content = "";
 		var title = "";
 		var value = "";
+		var hasRenderValue = false;
+		var renderValue = "";
 
 		select.innerHTML = "";
 
@@ -2265,7 +2264,8 @@ var HTMLDB = {
 
 		if (undefined !== select.HTMLDBInitials) {
 			if (undefined !== select.HTMLDBInitials.renderValue) {
-				HTMLDB.setInputValue(select, select.HTMLDBInitials.renderValue);
+				hasRenderValue = true;
+				renderValue = select.HTMLDBInitials.renderValue;
 			}
 		}
 
@@ -2275,6 +2275,13 @@ var HTMLDB = {
 
 		tableElement.setAttribute("data-htmldb-active-id", initialActiveId);
 		select.dispatchEvent(new CustomEvent("htmldbsetoptions", {detail: {}}));
+
+		if (hasRenderValue) {
+			HTMLDB.setInputValue(select, renderValue);
+			select.dispatchEvent(new CustomEvent(
+					"htmldbsetvalue",
+					{detail: {"value": renderValue}}));
+		}
     },
 	"initializeHTMLDBRefreshButtons": function (parent) {
 		if ((undefined === parent) || (null === parent)) {
