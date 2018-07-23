@@ -4274,6 +4274,8 @@ var HTMLDB = {
 	"setInputValue": function (input, value) {
 		var tagName = String(input.tagName).toLowerCase();
 		var inputType = String(input.getAttribute("type")).toLowerCase();
+		var inputDate = 0;
+		var inputDateText = "";
 		switch (tagName) {
 			case "input":
 				if ("checkbox" == inputType) {
@@ -4282,6 +4284,15 @@ var HTMLDB = {
 					if (input.value == value) {
 						input.checked = true;
 					}
+				} else if ("date" == inputType) {
+					inputDate = new Date(parseInt(value));
+					inputDateText = inputDate.getFullYear()
+							+ "-"
+							+ (("0"
+							+ (inputDate.getMonth() + 1)).slice(-2))
+							+ "-"
+							+ (("0" + inputDate.getDate()).slice(-2));
+					input.defaultValue = inputDateText;
 				} else {
 					input.value = value;
 				}
