@@ -1707,7 +1707,6 @@ var HTMLDB = {
     		}
 
 			HTMLDB.setInputValue(input, value);
-			HTMLDB.doActiveFormFieldUpdate(input, field);
 			input.dispatchEvent(new CustomEvent(
 					"htmldbsetvalue",
 					{detail: {"value": value}}));
