@@ -329,6 +329,7 @@ var HTMLDB = {
 				var redirectURL = HTMLDB.getHTMLDBParameter(
 						tableElement,
 						"redirect");
+				redirectURL = HTMLDB.evaluateHTMLDBExpression(redirectURL);
 				if (redirectURL != "") {
 					window.location = redirectURL;
 				}
