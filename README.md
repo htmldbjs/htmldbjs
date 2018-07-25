@@ -870,6 +870,7 @@ Data source element that retrieves and stores data from the server. Also, it val
 | ---- | ---- |
 | `htmldberror` | Triggered when an error returned especially after validation process.<br><br>`Event.detail.errorText` holds the error text returned. |
 | `htmldbmessage` | Triggered when a message returned especially after validation process.<br><br>`Event.detail.messageText` holds the message text returned. |
+| `htmldbread` | Triggered when table is readed. |
 
 #### Variables
 

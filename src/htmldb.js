@@ -4437,6 +4437,11 @@ var HTMLDB = {
 		elDIV.setAttribute("data-htmldb-loading", 0);
 		HTMLDB.hideLoader(strHTMLDBDIVID, "read");
 
+		elDIV.dispatchEvent(
+				new CustomEvent(
+				"htmldbread",
+				{detail: {}}));
+
 		setTimeout(function () {
 			HTMLDB.callReadQueueCallbacks(elDIV);
 			HTMLDB.removeFromReadingQueue(elDIV.getAttribute("id"));
