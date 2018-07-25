@@ -3218,15 +3218,24 @@ var HTMLDB = {
 				+ "=\"\";"
 				+ "var rowCount=rows.length;"
 				+ "var rowId=0;"
-				+ "var rowObject=null;"
+				+ "var object=null;"
 				+ "var generatedIdList=[];"
 				+ "var generatedId=\"\";"
 				+ "var generatedIdListIndex=0;"
 				+ "var generatedIdListCount=0;"
 				+ "var generatedCodeList=[];"
+				+ "var success=false;"
 				+ "for(var currentRow=0;currentRow<rowCount;currentRow++){"
 				+ "rowId=rows[currentRow].getAttribute(\"data-row-id\");"
-				+ "rowObject=HTMLDB.get(\"" + tableElementId + "\", rowId);";
+				+ "object=HTMLDB.get(\"" + tableElementId + "\", rowId);";
+
+		if (HTMLDB.getHTMLDBParameter(templateElement, "filter") != "") {
+			functionHeader += "success=false;"
+			functionHeader += HTMLDB.generateFilterFunctionBlock(
+					HTMLDB.getHTMLDBParameter(templateElement, "filter"),
+					templateElement);
+			functionHeader += "if(!success){continue;}";
+		}
 
 		functionBody = "generatedCode"
 				+ "=\"\"";
@@ -3279,7 +3288,7 @@ var HTMLDB = {
 						+ "\").innerHTML";
 				*/
 
-				functionBody += "+rowObject[\""
+				functionBody += "+object[\""
 						+ column
 						+ "\"]";
 
@@ -3287,7 +3296,7 @@ var HTMLDB = {
 						+ "."
 						+ column
 						+ ",")) {
-					functionHeader += "if(undefined===rowObject[\""
+					functionHeader += "if(undefined===object[\""
 							+ column
 							+ "\"]){"
 							+ "throw(new Error(\"An unknown field "
@@ -3313,7 +3322,7 @@ var HTMLDB = {
 		functionBody += ";generatedId=HTMLDB.evaluateHTMLDBExpression("
 				+ "HTMLDB.evaluateHTMLDBExpressionWithObject(\""
 				+ targetElementId
-				+ "\",rowObject));"
+				+ "\",object));"
 				+ "generatedIdListIndex=generatedIdList.indexOf(generatedId);"
 				+ "if(-1==generatedIdListIndex){"
 				+ "generatedIdListIndex=generatedIdList.length;"
