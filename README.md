@@ -252,9 +252,23 @@ htmldb_row2_columnName: columnName new value
 
 | Element Name | Description  |
 | ---- | ---- |
-| [`htmldb-button-add`](docs/htmldb-button-add.md) | An action button is used for adding a new record to the specified table. When htmldb-button-add button is clicked related forms are reset. |
-| [`htmldb-button-edit`](docs/htmldb-button-edit.md) | An action button is used for editing a specific record. When htmldb-button-edit button is clicked htmldb-table element's active id is set to the specified record. Additionally, all related form fields are populated with the values of the record. |
-| [`htmldb-button-refresh`](docs/htmldb-button-refresh.md) | An action button is used for refreshing all htmldb-table elements. |
+| [`htmldb-button-add`](docs/htmldb-button-add.md) | An action button is used for adding a new record to the specified table. When `htmldb-button-add` button is clicked related forms are reset. |
+| [`htmldb-button-edit`](docs/htmldb-button-edit.md) | An action button is used for editing a specific record. When `htmldb-button-edit` button is clicked `htmldb-table` element's active id is set to the specified record. Additionally, all related form fields are populated with the values of the record. |
+| [`htmldb-button-refresh`](docs/htmldb-button-refresh.md) | An action button is used for refreshing all `htmldb-table` elements. |
+| [`htmldb-button-save`](docs/htmldb-button-save.md) | An action button is used for saving current values of the specified form. |
+| [`htmldb-button-sort`](docs/htmldb-button-sort.md) | An action button is used for updating the sorting preferences. |
+| [`htmldb-checkbox-group`](docs/htmldb-checkbox-group.md) | A container element for checkbox inputs. `htmldb-checkbox-group` makes it possible to select/update/delete multiple records. |
+| [`htmldb-error`](docs/htmldb-error.md) | A container element for the errors. |
+| [`htmldb-field`](docs/htmldb-field.md) | An input element, that holds the current values of the `htmldb-form` fields. |
+| [`htmldb-form`](docs/htmldb-form.md) | A container for the `htmldb-field` elements, that automatically updated by `htmldb-table`. |
+| [`htmldb-input-save`](docs/htmldb-input-save.md) | A standalone input that automatically update the specific `htmldb-table` record. |
+| [`htmldb-message`](docs/htmldb-message.md) | A container element for the messages. |
+| [`htmldb-pagination`](docs/htmldb-pagination.md) | A container element for easily navigating among the pages of `htmldb-table` element. |
+| [`htmldb-section`](docs/htmldb-section.md) | A container for the elements, that automatically rendered by the related `htmldb-table`. |
+| [`htmldb-select`](docs/htmldb-select.md) | A select element that automatically populated with the related `htmldb-table`. |
+| [`htmldb-table`](docs/htmldb-table.md) | Data source element that retrieves and stores data from the server. Also, it validates and posts data to the server. |
+| [`htmldb-template`](docs/htmldb-template.md) | A container element for the templates, that are automatically rendered by related `htmldb-table`. |
+| [`htmldb-toggle`](docs/htmldb-toggle.md) | A special container for the form fields that automatically displayed or hided for a certain condition. |
 
 ## Global Variables
 
