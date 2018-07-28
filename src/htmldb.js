@@ -1819,7 +1819,7 @@ var HTMLDB = {
 			throw(new Error("HTMLDB pagination page value "
         			+ tableElementId
         			+ "."
-        			+ pageCountField
+        			+ pageField
         			+ " is not valid."));
 			return false;
 		}
