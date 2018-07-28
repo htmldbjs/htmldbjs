@@ -270,6 +270,8 @@ htmldb_row2_columnName: columnName new value
 | [`htmldb-template`](docs/htmldb-template.md) | A container element for the templates, that are automatically rendered by related `htmldb-table`. |
 | [`htmldb-toggle`](docs/htmldb-toggle.md) | A special container for the form fields that automatically displayed or hided for a certain condition. |
 
+<br/>
+
 ## Global Variables
 
 HTMLDB provides some critical information in global variables. This global variables can be used in mustache templates.
