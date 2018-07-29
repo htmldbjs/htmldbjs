@@ -35,6 +35,7 @@ An input element, that holds the current values of the `htmldb-form` fields.
 | ---- | ---- |
 | `htmldbsetvalue` | Triggered when HTMLDB sets the htmldb-field input value.<br><br>`Event.detail.value` holds the value has been set. |
 | `htmldbgetvalue` | Triggered when HTMLDB is about to get the htmldb-field input value. |
+| `htmldbreset` | Triggered when HTMLDB resets the htmldb-field element. |
 
 #### Variables
 
