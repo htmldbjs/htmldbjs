@@ -2182,6 +2182,7 @@ var HTMLDB = {
     "doActiveFormFieldUpdate": function (input, field) {
     	var tables = [];
     	var tableCount = 0;
+
     	var form = HTMLDB.exploreHTMLDBForm(input);
     	var formId = form.getAttribute("id");
     	var tableElement = null;
@@ -2240,8 +2241,35 @@ var HTMLDB = {
 		var value = "";
 		var hasRenderValue = false;
 		var renderValue = "";
+		var addNewCaption = HTMLDB.getHTMLDBParameter(select, "add-option-caption");
+		var addNewFormId = HTMLDB.getHTMLDBParameter(select, "add-option-form");
+
+		if ((addNewCaption != "") && ("" == addNewFormId)) {
+        	throw(new Error("HTMLDB select element "
+        			+ select.getAttribute("id")
+        			+ " data-htmldb-add-option-caption attribute value"
+        			+ " is specified, but data-htmldb-add-option-form"
+        			+ " attribute value is not specified."));
+			return false;
+		}
 
 		select.innerHTML = "";
+
+		if (addNewCaption != "") {
+			select.options[0]
+ 					= new Option((" " + addNewCaption), addNewCaption);
+
+			if (select.addEventListener) {
+				select.addEventListener(
+						"change",
+						HTMLDB.doSelectChange,
+						true);
+			} else if (select.attachEvent) {
+	            select.attachEvent(
+	            		"onchange",
+	            		HTMLDB.doSelectChange);
+	        }
+		}
 
 		for (var i = 0; i < rowCount; i++) {
 			row = rows[i];
@@ -3843,6 +3871,7 @@ var HTMLDB = {
     },
     "exploreHTMLDBForm": function (element) {
     	var exit = false;
+
     	if (element.className.indexOf("htmldb-form") != -1) {
     		return element;
     	}
@@ -4189,6 +4218,11 @@ var HTMLDB = {
 				HTMLDB.getHTMLDBParameter(
 				eventTarget,
 				"edit-id"));
+	},
+	"doSelectChange": function (event) {
+
+		alert("test");
+
 	},
 	"doWriterIframeLoad": function (p1) {
 		var eventTarget = HTMLDB.getEventTarget(p1);

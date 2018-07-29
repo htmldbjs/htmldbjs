@@ -227,7 +227,7 @@ var SpritPanelHTMLDB = {
 		var form = HTMLDB.extractToggleParentElement(sender);
 		var field = HTMLDB.getHTMLDBParameter(sender, "field");
 		HTMLDB.doParentElementToggle(form);
-		HTMLDB.doActiveFormFieldUpdate(form.id, field);
+		HTMLDB.doActiveFormFieldUpdate(form, field);
 	}
 }
 SpritPanelHTMLDB.initialize();
