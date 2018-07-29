@@ -37,6 +37,10 @@ var SpritPanelHTMLDB = {
 		$("select.htmldb-field").on("htmldbsetvalue", function (event) {
 			SpritPanelHTMLDB.doSelectizeSetValue(this, event);
 		});
+
+		$("select.htmldb-field").on("htmldbaddoptionclick", function (event) {
+			SpritPanelHTMLDB.showEditDialog(this, event);
+		});
 	},
 	"initializeSelectElements": function () {
 		var selects = $("select.htmldb-field,select.htmldb-select");
@@ -86,7 +90,7 @@ var SpritPanelHTMLDB = {
 		var form = null;
 		var dialog = null;
 
-		form = SpritPanelHTMLDB.extractButtonForm(sender);
+		form = SpritPanelHTMLDB.extractElementForm(sender);
 
 		if (!form) {
 			return false;
@@ -98,21 +102,33 @@ var SpritPanelHTMLDB = {
 			showDialog(dialog.id);			
 		}
 	},
-	"extractButtonForm": function (button) {
-		if (!button) {
+	"extractElementForm": function (element) {
+		if (!element) {
 			return false;
 		}
 
-		if ("" == HTMLDB.getHTMLDBParameter(button, "form")) {
-			throw(new Error("Button target form not specified."));
-			return false;
+		var formId = "";
+		var form = null;
+		var tagName = element.tagName.toLowerCase();
+
+		if ("button" == tagName) {
+			if ("" == HTMLDB.getHTMLDBParameter(element, "form")) {
+				throw(new Error("Button target form not specified."));
+				return false;
+			}
+			formId = HTMLDB.getHTMLDBParameter(element, "form");
+		} else if ("select" == tagName) {
+			if ("" == HTMLDB.getHTMLDBParameter(element, "add-option-form")) {
+				throw(new Error("Select add option form not specified."));
+				return false;
+			}
+			formId = HTMLDB.getHTMLDBParameter(element, "add-option-form");
 		}
 
-		var formId = HTMLDB.getHTMLDBParameter(button, "form");
 		var form = document.getElementById(formId);
 
 		if (!form) {
-			throw(new Error("Button target form " + formId + " not found."));
+			throw(new Error(tagName + " target form " + formId + " not found."));
 			return false;
 		}
 
@@ -148,7 +164,7 @@ var SpritPanelHTMLDB = {
 
 		$(sender).addClass("disabled");
 
-		form = SpritPanelHTMLDB.extractButtonForm(sender);
+		form = SpritPanelHTMLDB.extractElementForm(sender);
 
 		if (!form) {
 			return false;
@@ -228,6 +244,9 @@ var SpritPanelHTMLDB = {
 		var field = HTMLDB.getHTMLDBParameter(sender, "field");
 		HTMLDB.doParentElementToggle(form);
 		HTMLDB.doActiveFormFieldUpdate(form, field);
+		sender.dispatchEvent(new CustomEvent(
+				"change",
+				{detail: {}}));
 	}
 }
 SpritPanelHTMLDB.initialize();

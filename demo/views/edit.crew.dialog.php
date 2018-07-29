@@ -1,4 +1,4 @@
-<div id="divCrewDialog" class="divDialogContent divDialogActive">
+<div id="divCrewDialog" class="divDialogContent divDialogActive htmldb-dialog-edit">
 	<div class="divContentWrapper level2" style="display: block; opacity: 1;">
 		<div class="divDialogContentContainer">
 			<header class="headerHero z-depth-1 blue darken-4">
@@ -14,28 +14,24 @@
 					<input type="hidden" name="crewUnitId" id="crewUnitId" value="" class="HTMLDBFieldValue" data-htmldb-field="unit_id" data-htmldb-source="divUnitHTMLDBReader">
 					<input type="hidden" name="crewType" id="crewType" value="15" class="HTMLDBFieldValue" data-htmldb-field="type" data-htmldb-source="divCrewHTMLDBReader">
 					<div class="row">
-						<form class="col s12">
-							<div class="row">
-								<div class="col l6 m6 s12">
-									<label for="name"><?php echo __('Ad Soyad'); ?></label>
-									<div class="input-field">
-										<input id="crewFirstName" name="crewFirstName" type="text" value="" data-htmldb-field="name" data-htmldb-source="divCrewHTMLDBReader" class="HTMLDBFieldValue">
-									</div>
-								</div>
-								<div class="col l6 m6 s12">
-									<label for="name"><?php echo __('E-posta'); ?></label>
-									<div class="input-field">
-										<input id="crewEmail" name="crewEmail" type="text" value="" data-htmldb-source="divCrewHTMLDBReader" data-htmldb-field="email" class="HTMLDBFieldValue">
-									</div>
-								</div>
-								<!-- <div class="col l6 m6 s12">
-									<label for="name"><?php echo __('Şifre'); ?></label>
-									<div class="input-field">
-										<input id="crewPassword" name="crewPassword" type="password" value="" data-htmldb-source="divCrewHTMLDBReader" data-htmldb-field="password" class="HTMLDBFieldValue">
-									</div>
-								</div> -->
+						<div class="col l6 m6 s12">
+							<label for="name"><?php echo __('Ad Soyad'); ?></label>
+							<div class="input-field">
+								<input id="crewFirstName" name="crewFirstName" type="text" value="" data-htmldb-field="name" data-htmldb-source="divCrewHTMLDBReader" class="HTMLDBFieldValue">
 							</div>
-						</form>
+						</div>
+						<div class="col l6 m6 s12">
+							<label for="name"><?php echo __('E-posta'); ?></label>
+							<div class="input-field">
+								<input id="crewEmail" name="crewEmail" type="text" value="" data-htmldb-source="divCrewHTMLDBReader" data-htmldb-field="email" class="HTMLDBFieldValue">
+							</div>
+						</div>
+						<!-- <div class="col l6 m6 s12">
+							<label for="name"><?php echo __('Şifre'); ?></label>
+							<div class="input-field">
+								<input id="crewPassword" name="crewPassword" type="password" value="" data-htmldb-source="divCrewHTMLDBReader" data-htmldb-field="password" class="HTMLDBFieldValue">
+							</div>
+						</div> -->
 					</div>
 					<div class="row">
 						<div class="input-field">

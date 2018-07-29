@@ -3974,6 +3974,25 @@ var HTMLDB = {
 		HTMLDB.doParentElementToggle(formElement);
 		formElement.dispatchEvent(new CustomEvent("htmldbadd", {detail: {}}));
 	},
+	"doAddOptionClick": function (event) {
+		var eventTarget = HTMLDB.getEventTarget(event);
+		var formElement = document.getElementById(
+				HTMLDB.getHTMLDBParameter(
+				eventTarget,
+				"add-option-form"));
+		if (!formElement) {
+        	throw(new Error("Add option HTMLDB form not found."));
+			return false;
+		}
+		HTMLDB.resetForm(formElement);
+		var formObject = HTMLDB.convertFormToObject(formElement);
+		var defaults = HTMLDB.getHTMLDBParameter(eventTarget, "add-option-form-defaults");
+		formObject = HTMLDB.parseObjectDefaults(formObject, defaults);
+		HTMLDB.renderFormElement(formElement, formObject);
+		HTMLDB.doParentElementToggle(formElement);
+		formElement.dispatchEvent(new CustomEvent("htmldbadd", {detail: {}}));
+		eventTarget.dispatchEvent(new CustomEvent("htmldbaddoptionclick", {detail: {}}));
+	},
 	"doSaveButtonClick": function (event) {
 		var eventTarget = HTMLDB.getEventTarget(event);
 
@@ -4220,9 +4239,13 @@ var HTMLDB = {
 				"edit-id"));
 	},
 	"doSelectChange": function (event) {
-
-		alert("test");
-
+		var select = HTMLDB.getEventTarget(event);
+		var addOptionCaption = HTMLDB.getHTMLDBParameter(select, "add-option-caption");
+		if (addOptionCaption != "") {
+			if (addOptionCaption == HTMLDB.getInputValue(select)) {
+				HTMLDB.doAddOptionClick(event);
+			}
+		}
 	},
 	"doWriterIframeLoad": function (p1) {
 		var eventTarget = HTMLDB.getEventTarget(p1);
@@ -4344,6 +4367,7 @@ var HTMLDB = {
 				input.innerHTML = value;
 			break;
 			case "select":
+				input.HTMLDBInitials.previousValue = input.value;
 				input.value = value;
 			break;
 		}

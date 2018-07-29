@@ -38,7 +38,7 @@
                                             data-htmldb-option-title="{{column0}}"
                                             data-htmldb-option-value="{{id}}"
                                             data-htmldb-add-option-caption="Yeni Danışman..."
-                                            data-htmldb-add-option-form=""
+                                            data-htmldb-add-option-form="formCrew"
                                             data-htmldb-add-option-form-defaults=""
                                             style="width: 100%">
                                         <option value=""><?php echo __('Please Select'); ?></option>

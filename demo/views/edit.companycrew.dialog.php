@@ -1,4 +1,4 @@
-<div id="divCompanyCrewDialog" class="divDialogContent divDialogActive">
+<div id="divCompanyCrewDialog" class="divDialogContent divDialogActive htmldb-dialog-edit">
 	<div class="divContentWrapper level2" style="display: block; opacity: 1;">
 		<div class="divDialogContentContainer">
 			<header class="headerHero z-depth-1 blue darken-4">
