@@ -1331,13 +1331,15 @@ var HTMLDB = {
 				case "select-one":
 				case "select-multi":
 					elements[i].selectedIndex = -1;
-					if (elements[i].selectize) {
-						elements[i].selectize.clear(true);
-					}
+					elements[i].HTMLDBInitials.previousOptionValueCSV = undefined;
+					elements[i].HTMLDBInitials.selectNewOption = undefined;
 				break;
 				default:
 				break;
 			}
+
+			elements[i].dispatchEvent(new CustomEvent("htmldbreset", {detail: {}}));
+
 			if (HTMLDB.hasHTMLDBParameter(elements[i], "reset-value")) {
 				HTMLDB.setInputValue(elements[i],
 						HTMLDB.evaluateHTMLDBExpression(
@@ -2241,6 +2243,10 @@ var HTMLDB = {
 		var value = "";
 		var hasRenderValue = false;
 		var renderValue = "";
+		var selectNewOption = false;
+		var newValue = null;
+		var optionValueCSV = "";
+		var previousOptionValueCSV = "";
 		var addNewCaption = HTMLDB.getHTMLDBParameter(select, "add-option-caption");
 		var addNewFormId = HTMLDB.getHTMLDBParameter(select, "add-option-form");
 
@@ -2271,6 +2277,8 @@ var HTMLDB = {
 	        }
 		}
 
+		optionValueCSV = "";
+
 		for (var i = 0; i < rowCount; i++) {
 			row = rows[i];
 			id = HTMLDB.getHTMLDBParameter(row, "data-row-id");
@@ -2288,6 +2296,12 @@ var HTMLDB = {
 					tableElementId);
  			select.options[select.options.length]
  					= new Option(title, value);
+
+ 			if (optionValueCSV != "") {
+ 				optionValueCSV += ",";
+ 			}
+
+ 			optionValueCSV += value;
 		}
 
 		if (undefined !== select.HTMLDBInitials) {
@@ -2295,21 +2309,64 @@ var HTMLDB = {
 				hasRenderValue = true;
 				renderValue = select.HTMLDBInitials.renderValue;
 			}
+
+			if (undefined !== select.HTMLDBInitials.selectNewOption) {
+				selectNewOption = select.HTMLDBInitials.selectNewOption;
+			}
+
+			if (undefined !== select.HTMLDBInitials.optionValueCSV) {
+				previousOptionValueCSV = select.HTMLDBInitials.optionValueCSV;
+			}
 		}
 
         select.HTMLDBInitials = {
-            "content":select.innerHTML
+            "content":select.innerHTML,
+            "optionValueCSV": optionValueCSV,
+            "previousOptionValueCSV": previousOptionValueCSV
         };
 
 		tableElement.setAttribute("data-htmldb-active-id", initialActiveId);
 		select.dispatchEvent(new CustomEvent("htmldbsetoptions", {detail: {}}));
 
-		if (hasRenderValue) {
+		if (selectNewOption) {
+			newValue = HTMLDB.getSelectNewOptionValue(select);
+			if (newValue != null) {
+				HTMLDB.setInputValue(select, newValue);
+				select.dispatchEvent(new CustomEvent(
+						"htmldbsetvalue",
+						{detail: {"value": newValue}}));
+			}
+		} else if (hasRenderValue) {
 			HTMLDB.setInputValue(select, renderValue);
 			select.dispatchEvent(new CustomEvent(
 					"htmldbsetvalue",
 					{detail: {"value": renderValue}}));
 		}
+    },
+    "getSelectNewOptionValue": function (select) {
+    	var optionValueCSV = "";
+    	var previousOptionValueCSV = "";
+
+    	if (undefined !== select.HTMLDBInitials) {
+    		if (undefined !== select.HTMLDBInitials.previousOptionValueCSV) {
+    			previousOptionValueCSV = select.HTMLDBInitials.previousOptionValueCSV;
+    		}
+    		if (undefined !== select.HTMLDBInitials.optionValueCSV) {
+    			optionValueCSV = select.HTMLDBInitials.optionValueCSV;
+    		}
+    	}
+
+    	var previousOptionValues = previousOptionValueCSV.split(",");
+    	var optionValues = optionValueCSV.split(",");
+    	var optionValueCount = optionValues.length;
+
+    	for (var i = 0; i < optionValueCount; i++) {
+    		if (-1 == previousOptionValues.indexOf(optionValues[i])) {
+    			return optionValues[i];
+    		}
+    	}
+
+		return null;
     },
 	"initializeHTMLDBRefreshButtons": function (parent) {
 		if ((undefined === parent) || (null === parent)) {
@@ -3987,11 +4044,19 @@ var HTMLDB = {
 		HTMLDB.resetForm(formElement);
 		var formObject = HTMLDB.convertFormToObject(formElement);
 		var defaults = HTMLDB.getHTMLDBParameter(eventTarget, "add-option-form-defaults");
+
 		formObject = HTMLDB.parseObjectDefaults(formObject, defaults);
 		HTMLDB.renderFormElement(formElement, formObject);
 		HTMLDB.doParentElementToggle(formElement);
+
 		formElement.dispatchEvent(new CustomEvent("htmldbadd", {detail: {}}));
 		eventTarget.dispatchEvent(new CustomEvent("htmldbaddoptionclick", {detail: {}}));
+
+		if (undefined !== eventTarget.HTMLDBInitials) {
+			eventTarget.HTMLDBInitials.renderValue = undefined;
+		}
+
+		eventTarget.HTMLDBInitials.selectNewOption = true;
 	},
 	"doSaveButtonClick": function (event) {
 		var eventTarget = HTMLDB.getEventTarget(event);

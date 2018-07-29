@@ -38,6 +38,10 @@ var SpritPanelHTMLDB = {
 			SpritPanelHTMLDB.doSelectizeSetValue(this, event);
 		});
 
+		$("select.htmldb-field").on("htmldbreset", function (event) {
+			SpritPanelHTMLDB.doSelectizeReset(this, event);
+		});
+
 		$("select.htmldb-field").on("htmldbaddoptionclick", function (event) {
 			SpritPanelHTMLDB.showEditDialog(this, event);
 		});
@@ -81,6 +85,11 @@ var SpritPanelHTMLDB = {
 	"doSelectizeSetValue": function (sender, event) {
 		if (sender.selectize) {
 			sender.selectize.setValue(event.detail.value);
+		}
+	},
+	"doSelectizeReset": function (sender, event) {
+		if (sender.selectize) {
+			sender.selectize.clear(true);
 		}
 	},
 	"showError": function (event) {
