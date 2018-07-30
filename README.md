@@ -267,6 +267,7 @@ htmldb_row2_columnName: columnName new value
 | [`htmldb-section`](docs/htmldb-section.md) | A container for the elements, that automatically rendered by the related `htmldb-table`. |
 | [`htmldb-select`](docs/htmldb-select.md) | A select element that automatically populated with the related `htmldb-table`. |
 | [`htmldb-table`](docs/htmldb-table.md) | Data source element that retrieves and stores data from the server. Also, it validates and posts data to the server. |
+| [`htmldb-table-validation`](docs/htmldb-table-validation.md) | A container element for conditions validated locally before writing a record to `htmldb-table` element. |
 | [`htmldb-template`](docs/htmldb-template.md) | A container element for the templates, that are automatically rendered by related `htmldb-table`. |
 | [`htmldb-toggle`](docs/htmldb-toggle.md) | A special container for the form fields that automatically displayed or hided for a certain condition. |
 
