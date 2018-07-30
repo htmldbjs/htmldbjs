@@ -404,6 +404,9 @@ var HTMLDB = {
 					tableElement.setAttribute("data-htmldb-loading", 0);
 					HTMLDB.hideLoader(tableElementId, "read");
 					HTMLDB.initializeLocalTable(tableElement);
+					HTMLDB.callReadQueueCallbacks(tableElement);
+					HTMLDB.removeFromReadingQueue(tableElementId);
+					HTMLDB.processReadQueue();
 				}
 			} else {
 				funcIndexedDBLoadCallback = function (event) {
@@ -411,6 +414,9 @@ var HTMLDB = {
 					HTMLDB.hideLoader(tableElementId, "read");
 					HTMLDB.initializeLocalTable(tableElement);
 					functionDone(tableElementId);
+					HTMLDB.callReadQueueCallbacks(tableElement);
+					HTMLDB.removeFromReadingQueue(tableElementId);
+					HTMLDB.processReadQueue();
 				}
 			}
 
@@ -646,8 +652,8 @@ var HTMLDB = {
         }
         return true;
 	},
-	"getColumnNames": function (p1, p2) {
-		var elTHead = document.getElementById(p1 + "_reader_thead");
+	"getColumnNames": function (tableElementId, sortColumns) {
+		var elTHead = document.getElementById(tableElementId + "_reader_thead");
 		var arrTH = elTHead.children[0].children;
 		var elTH = null;
 		var lTHCount = arrTH.length;
@@ -658,11 +664,26 @@ var HTMLDB = {
 			arrReturn.push(elTH.innerHTML);
 		}
 
-		if (true === p2) {
+		if (true === sortColumns) {
 			arrReturn.sort();
 		}
 
 		return arrReturn;
+	},
+	"setColumnNames": function (tableElementId, object) {
+
+		columnContent = "<tr>";
+
+		for (var key in object){
+		    if (object.hasOwnProperty(key)) {
+		    	columnContent += ("<th>" + key + "</th>");
+		    }
+		}
+
+		columnContent += "</tr>";
+
+		document.getElementById(tableElementId + "_reader_thead").innerHTML = columnContent;
+		document.getElementById(tableElementId + "_writer_thead").innerHTML = columnContent;
 	},
 	"getTableFieldActiveValue": function (tableElementId, column) {
 		var tableElement = document.getElementById(tableElementId);
@@ -1274,7 +1295,7 @@ var HTMLDB = {
 
 		for (var i = 0; i < resultCount; i++) {
 			object = result[i];
-			id = object.getAttribute("id");
+			id = object["id"];
 			if (tableElement.filterFunction &&
 					!tableElement.filterFunction(object)) {
 				continue;
@@ -1295,6 +1316,7 @@ var HTMLDB = {
 			content += "</tr>";
 			if (0 == i) {
 				activeId = id;
+				HTMLDB.setColumnNames(tableElement.getAttribute("id"), object);
 			}
 		}
 
@@ -4493,17 +4515,17 @@ var HTMLDB = {
 			var lRowCount = arrList.r.length;
 			var lColumnCount = arrList.c.length;
 			var strRowContent = "";
-			var strColumnContent = "";
+			var columnContent = "";
 			var strPropertyName = "";
 			var elTR = null;
 
-			strColumnContent = "<tr>";
+			columnContent = "<tr>";
 
 			for (j = 0; j < lColumnCount; j++) {
-				strColumnContent += ("<th>" + arrColumns[j] + "</th>");
+				columnContent += ("<th>" + arrColumns[j] + "</th>");
 			}
 
-			strColumnContent += "</tr>";
+			columnContent += "</tr>";
 
 			var activeId = 0;
 
@@ -4539,10 +4561,10 @@ var HTMLDB = {
 				strRowContent += "</tr>";
 			}
 
-			theadHTMLDB.innerHTML = strColumnContent;
+			theadHTMLDB.innerHTML = columnContent;
 			tbodyHTMLDB.innerHTML += strRowContent;
 			document.getElementById(elDIV.getAttribute("id") + "_writer_thead").innerHTML
-					= strColumnContent;
+					= columnContent;
 			elDIV.setAttribute("data-htmldb-active-id", activeId);
 		}
 
