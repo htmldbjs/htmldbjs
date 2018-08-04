@@ -8,6 +8,7 @@ var HTMLDB = {
 	"indexedDBConnection": null,
 	"indexedDBTables": [],
 	"initialize": function () {
+		HTMLDB.initializeHTMLDBIndexedDB();
 		HTMLDB.initializeHTMLDBTables();
 		HTMLDB.initializeHTMLDBFormTables();
 		HTMLDB.initializeHTMLDBTemplates();
@@ -151,6 +152,120 @@ var HTMLDB = {
 			return false;
 		}
 
+		HTMLDB.validateLocal(tableElementId, object, function(tableElementId, responseText) {
+			var responseObject = null;
+			try {
+				responseObject = JSON.parse(responseText);
+			} catch(e) {
+	        	throw(new Error("HTMLDB table "
+	        			+ tableElementId
+	        			+ " could not be validated: Not valid JSON format"));
+				return false;
+			}
+
+			if (responseObject.errorCount > 0) {
+				if (functionDone) {
+					functionDone(tableElementId, responseText);
+				} else {
+					HTMLDB.showError(tableElementId, responseObject.lastError);
+				}
+			} else {
+				var validateURL = HTMLDB.getHTMLDBParameter(tableElement, "validate-url");
+				validateURL = HTMLDB.evaluateHTMLDBExpression(validateURL);
+
+				if (validateURL != "") {
+					HTMLDB.validateRemote(tableElementId, object, functionDone);
+				} else if (functionDone) {
+					functionDone(tableElementId, responseText);
+				}
+			}
+		});
+	},
+	"validateLocal": function (tableElementId, object, functionDone) {
+		var tableElement = document.getElementById(tableElementId);
+        var validations = document.body.querySelectorAll(".htmldb-table-validation");
+        var validationCount = validations.length;
+        var validation = null;
+        var validationResponse = {
+        	"errorCount": 0,
+        	"messageCount": 0,
+        	"lastError": "",
+        	"lastMessage": ""
+        };
+        var currentResponse = {
+        	"errorCount": 0,
+        	"messageCount": 0,
+        	"lastError": "",
+        	"lastMessage": ""	
+        }
+        for (var i = 0; i < validationCount; i++) {
+            validation = validations[i];
+            if (HTMLDB.getHTMLDBParameter(validation, "table")
+            		== tableElement.getAttribute("id")) {
+            	currentResponse = checkTableValidation(
+            			tableElement,
+            			object,
+            			validation);
+            	validationResponse.errorCount += currentResponse.errorCount;
+            	validationResponse.messageCount += currentResponse.messageCount;
+            	validationResponse.lastError += currentResponse.lastError;
+            	validationResponse.lastMessage += currentResponse.lastMessage;
+            }
+        }
+
+        if (functionDone) {
+        	functionDone(tableElementId, JSON.stringify(validationResponse));
+        }
+
+        return;
+	},
+	"checkTableValidation": function (tableElement, object, validationElement) {
+		var validationItems = validationElement.children;
+		var validationItemCount = validationItems.length;
+		var validationItem = null;
+		var filter = "";
+		var functionBody = "";
+		var filterFunction = null;
+		var currentResponse = {
+        	"errorCount": 0,
+        	"messageCount": 0,
+        	"lastError": "",
+        	"lastMessage": ""
+        }
+
+		for (var i = 0; i < validationItemCount; i++) {
+			validationItem = validationItems[i];
+			filter = HTMLDB.getHTMLDBParameter(validationItem, "validation");
+
+			if ("" == filter) {
+				continue;
+			}
+
+			functionBody = "success=false;";
+			functionBody += HTMLDB.generateFilterFunctionBlock(
+					filter,
+					tableElement);
+			functionBody += "return success;";
+
+			try {
+				filterFunction = new Function("object", functionBody);
+				if (!filterFunction(object)) {
+					currentResponse.errorCount += 1;
+					currentResponse.lastError += validationItem.innerHTML;
+				}
+			} catch (e) {
+	        	throw(new Error("HTMLDB table "
+	        			+ tableElement.getAttribute("id")
+	        			+ " validation function could not be created."));
+				return currentResponse;
+			}
+
+		}
+
+		return currentResponse;
+	},
+	"validateRemote": function (tableElementId, object, functionDone) {
+		var tableElement = document.getElementById(tableElementId);
 		var validateURL = HTMLDB.getHTMLDBParameter(tableElement, "validate-url");
 		validateURL = HTMLDB.evaluateHTMLDBExpression(validateURL);
 
@@ -580,8 +695,10 @@ var HTMLDB = {
 		var writerStore = writerTransaction.objectStore(
 				"htmldb_" + tableElement.getAttribute("id") + "_writer");
 
-		readerStore.put(object);
-		writerStore.put(object);
+		object["id"] = id;
+
+		readerStore.put(object, id);
+		writerStore.put(object, id);
 	},
 	"delete": function (tableElementId, p2, p3) {
 		var elDIV = document.getElementById(tableElementId);
@@ -791,7 +908,7 @@ var HTMLDB = {
     		HTMLDB.markRows(writerTable, "updating");
     		HTMLDB.write(element.getAttribute("id"),
     				false,
-    				function (tableElementId, response) {
+    				function (tableElementId, responseText) {
 	    		var writerTable = document.getElementById(
 	    				tableElementId
 	    				+ "_writer_tbody");
@@ -1258,6 +1375,11 @@ var HTMLDB = {
         	throw(new Error("HTMLDB IndexedDB not initialized."));
 			return false;
 		}
+
+		if (!HTMLDB.checkIfIndexedDBTableExists(tableElement.getAttribute("id"))) {
+			HTMLDB.doIndexedDBUpgradeNeeded();
+		}
+
 		var database = HTMLDB.indexedDBConnection.result;
 		var readerTransaction = database.transaction(
 				("htmldb_" + tableElement.getAttribute("id") + "_reader"),
@@ -1321,11 +1443,12 @@ var HTMLDB = {
 		}
 
 		document.getElementById(
-				tableElementId
+				tableElement.getAttribute("id")
 				+ "_"
 				+ tablePrefix
 				+ "_tbody").innerHTML
 				= content;
+
 		tableElement.setAttribute("data-htmldb-active-id", activeId);
 	},
 	"resetForm": function (form) {
@@ -2892,7 +3015,7 @@ var HTMLDB = {
         	throw(new Error("HTMLDB child table "
         			+ tableElementId
         			+ " filter function could not be created."));
-			return false;			
+			return false;
 		}
 
 		var rows = document.getElementById(
@@ -3465,7 +3588,7 @@ var HTMLDB = {
 			functionBody += "success=true;";
 		}
 
-		functionBody += "return success;"
+		functionBody += "return success;";
 		return functionBody;
 	},
 	"generateFilterFunctionBlock": function (filter, parent) {
@@ -4027,13 +4150,42 @@ var HTMLDB = {
 		var indexedDBTableCount = HTMLDB.indexedDBTables.length;
 
 		for (var i = 0; i < indexedDBTableCount; i++) {
-			database.createObjectStore(
-					("htmldb_" + HTMLDB.indexedDBTables[i] + "_reader"),
-					{keyPath: "id"});
-			database.createObjectStore(
-					("htmldb_" + HTMLDB.indexedDBTables[i] + "_writer"),
-					{keyPath: "id"});
+			if (!database.objectStoreNames.contains(
+					"htmldb_"
+					+ HTMLDB.indexedDBTables[i]
+					+ "_reader")) {
+				database.createObjectStore(
+						("htmldb_" + HTMLDB.indexedDBTables[i] + "_reader"));
+			}
+			if (!database.objectStoreNames.contains(
+					"htmldb_"
+					+ HTMLDB.indexedDBTables[i]
+					+ "_writer")) {
+				database.createObjectStore(
+						("htmldb_" + HTMLDB.indexedDBTables[i] + "_writer"));
+			}
 		}
+	},
+	"checkIfIndexedDBTableExists": function (tableName) {
+		if (null == HTMLDB.indexedDBConnection) {
+        	throw(new Error("HTMLDB IndexedDB not initialized."));
+			return false;
+		}
+
+		var database = HTMLDB.indexedDBConnection.result;
+		var hasReaderTable = false;
+		var hasWriterTable = false;
+
+		hasReaderTable = database.objectStoreNames.contains(
+				"htmldb_"
+				+ tableName
+				+ "_reader");
+		hasWriterTable = database.objectStoreNames.contains(
+				"htmldb_"
+				+ tableName
+				+ "_writer");
+
+		return (hasReaderTable && hasWriterTable);
 	},
 	"doAddButtonClick": function (event) {
 		var eventTarget = HTMLDB.getEventTarget(event);
@@ -4109,13 +4261,13 @@ var HTMLDB = {
 
 		var object = HTMLDB.convertFormToObject(form);
 
-		HTMLDB.validate(tableElementId, object, function (DIVId, response) {
+		HTMLDB.validate(tableElementId, object, function (tableElementId, responseText) {
 			var responseObject = null;
 			try {
-				responseObject = JSON.parse(response);
+				responseObject = JSON.parse(responseText);
 			} catch(e) {
 	        	throw(new Error("HTMLDB table "
-	        			+ DIVId
+	        			+ tableElementId
 	        			+ " could not be validated: Not valid JSON format"));
 				return false;
 			}

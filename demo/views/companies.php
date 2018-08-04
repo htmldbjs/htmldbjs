@@ -137,7 +137,7 @@
         </div>
     </div>
     <div id="companyTypesHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>company/readcompanytype" data-htmldb-readonly="1" data-htmldb-priority="0"></div>
-    <div id="companyHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>companies/read" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>companies/validate" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>companies/write" data-htmldb-readonly="1" data-htmldb-priority="0" data-htmldb-redirect="<?php echo $_SPRIT['URL_PREFIX']; ?>company/last" data-htmldb-loader="divLoader"></div>
+    <div id="companyHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>companies/read" data-htmldb-validate-url1="<?php echo $_SPRIT['URL_PREFIX']; ?>companies/validate" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>companies/write" data-htmldb-readonly="1" data-htmldb-priority="0" data-htmldb-redirect1="<?php echo $_SPRIT['URL_PREFIX']; ?>company/last" data-htmldb-loader="divLoader" data-htmldb-local="1"></div>
     <div id="sessionHTMLDB" class="htmldb-table" data-htmldb-read-url="<?php echo $_SPRIT['URL_PREFIX']; ?>companies/readsession" data-htmldb-validate-url="<?php echo $_SPRIT['URL_PREFIX']; ?>companies/validatesession" data-htmldb-write-url="<?php echo $_SPRIT['URL_PREFIX']; ?>companies/writesession" data-htmldb-priority="0"></div>
     <script type="text/html" id="tbodyObjectListTemplate" class="htmldb-template" data-htmldb-table="companyHTMLDB" data-htmldb-template-target="tbodyObjectList">
         <tr class="tr{{id}}" data-object-id="{{id}}">

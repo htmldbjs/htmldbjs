@@ -12,6 +12,9 @@
             <div class="divContentPanel z-depth-1 white">
                 <form id="formCompany" name="formCompany" method="post" class="form-horizontal htmldb-form" data-htmldb-table="companyHTMLDB">
                     <input type="hidden" class="htmldb-field" name="id" id="id" value="0" data-htmldb-field="id">
+                    <input type="hidden" class="htmldb-field" name="score" id="score" value="" data-htmldb-field="score">
+                    <input type="hidden" class="htmldb-field" name="consultant" id="consultant" value="" data-htmldb-field="consultant">
+                    <input type="hidden" class="htmldb-field" name="consultantDisplayText" id="consultantDisplayText" value="" data-htmldb-field="consultantDisplayText">
                     <div class="row">
                         <div class="col s12">
                             <label for="name"><?php echo __('Firma'); ?></label>
