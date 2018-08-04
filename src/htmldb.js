@@ -341,9 +341,9 @@ var HTMLDB = {
 				formContent += "<input class=\"htmldb_row\""
 						+ " type=\"hidden\" name=\""
 						+ "htmldb_row0_" + propertyName
-				 		+ "\" value=\""
-						+ object[propertyName]
-						+ "\" />";
+				 		+ "\" value='"
+						+ HTMLDB.addSingleQuoteSlashes(object[propertyName])
+						+ "' />";
         	}
     	}
 
@@ -4631,6 +4631,9 @@ var HTMLDB = {
 			eventTarget = event.target;
 		}
 		return eventTarget;
+	},
+	"addSingleQuoteSlashes": function (text) {
+	    return String(text).replace(/'/g, "\'");
 	},
 	"doReaderIframeDefaultLoad": function (event, readAll) {
 		var iframeHTMLDB = HTMLDB.getEventTarget(event);
