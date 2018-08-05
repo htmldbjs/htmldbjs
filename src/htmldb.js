@@ -546,8 +546,8 @@ var HTMLDB = {
 			}
 		}
 	},
-	"get": function (p1, p2) {
-		var elDIV = document.getElementById(p1);
+	"get": function (tableElementId, id) {
+		var elDIV = document.getElementById(tableElementId);
 		if (!elDIV) {
 			return;
 		}
@@ -559,9 +559,9 @@ var HTMLDB = {
 		var strJSON = "";
 		for (var i = 0; i < lColumnCount; i++) {
 			elTD = document.getElementById(
-					p1
+					tableElementId
 					+ "_reader_td"
-					+ p2
+					+ id
 					+ arrColumns[i]);
 
 			if (!elTD) {
@@ -603,7 +603,7 @@ var HTMLDB = {
 				+ lTRCount
 				+ "\" id=\""
 				+ tableElement.getAttribute("id")
-				+"_trn"
+				+"_writer_trn"
 				+ lTRCount
 				+"\">";
 		strTRContent += HTMLDB.generateTDHTML(
@@ -619,8 +619,27 @@ var HTMLDB = {
     		tbodyHTMLDB = document.getElementById(
     				tableElementId
     				+ "_reader_tbody");
+
+    		object["id"] = ("n" + lTRCount);
+
+			strTRContent = "<tr class=\"inserted"
+					+ ((className!="") ? (" " + className) : "")
+					+ "\" data-row-id=\"n"
+					+ lTRCount
+					+ "\" id=\""
+					+ tableElement.getAttribute("id")
+					+"_reader_trn"
+					+ lTRCount
+					+"\">";
+			strTRContent += HTMLDB.generateTDHTML(
+					tableElement,
+					"_reader",
+					object,
+					("n" + lTRCount));
+    		strTRContent += "</tr>";
+
     		tbodyHTMLDB.innerHTML += strTRContent;
-    		HTMLDB.updateLocal(tableElement, ("n" + lTRCount), object);
+    		HTMLDB.updateLocal(tableElement, object["id"], object);
     		HTMLDB.render(tableElement);
     	}
 	},
@@ -719,11 +738,11 @@ var HTMLDB = {
 		}
 	},
 	"render": function (tableElement, functionDone) {
-		var activeId = parseInt(HTMLDB.getActiveId(tableElement));
+		var activeId = (HTMLDB.getActiveId(tableElement));
 
 		HTMLDB.renderTemplates(tableElement);
 
-		if (activeId > 0) {
+		if (activeId != "") {
 			HTMLDB.renderPaginations(tableElement);
 			HTMLDB.renderSections(tableElement);
 			HTMLDB.renderForms(tableElement);
@@ -816,12 +835,12 @@ var HTMLDB = {
 			return HTMLDB.getFormFieldActiveValue(tableElementId, column);
 		}
 
-		var activeId = parseInt(
+		var activeId = (
 				HTMLDB.getHTMLDBParameter(
 				tableElement,
 				"active-id"));
 
-		if (isNaN(activeId) || (activeId < 1)) {
+		if (activeId == "") {
         	throw(new Error("HTMLDB table "
         			+ tableElementId
         			+ " is not active, or has no records."));
@@ -1862,7 +1881,7 @@ var HTMLDB = {
     "renderPaginationElement": function (element) {
 		var tableElementId = HTMLDB.getHTMLDBParameter(element, "table");
 		var tableElement = document.getElementById(tableElementId);
-		var activeId = parseInt(HTMLDB.getActiveId(tableElement));
+		var activeId = (HTMLDB.getActiveId(tableElement));
 		var refreshTableElementIds = "";
 		var refreshTables = [];
 		var refreshTableCount = 0;
@@ -1925,7 +1944,7 @@ var HTMLDB = {
 	        return false;	
 		}
 
-		if (activeId <= 0) {
+		if ("" == activeId) {
         	throw(new Error("HTMLDB pagination table "
         			+ tableElementId
         			+ " is not active, or has no records."));
@@ -2225,7 +2244,7 @@ var HTMLDB = {
 
 		paginationElement.classList.add("htmldb-loading");
 
-		var activeId = parseInt(HTMLDB.getActiveId(tableElement));
+		var activeId = (HTMLDB.getActiveId(tableElement));
 		var sessionObject = HTMLDB.get(tableElement.getAttribute("id"), activeId);
 
 		if (undefined === sessionObject["page"]) {
@@ -2766,7 +2785,7 @@ var HTMLDB = {
 
 		input.classList.add("htmldb-loading");
 
-		var activeId = parseInt(HTMLDB.getActiveId(tableElement));
+		var activeId = (HTMLDB.getActiveId(tableElement));
 		var sessionObject = HTMLDB.get(tableElement.getAttribute("id"), activeId);
 
 		if (undefined === sessionObject[inputField]) {
@@ -2829,7 +2848,7 @@ var HTMLDB = {
     		sortingASC = false;
     	}
 
-		var activeId = parseInt(HTMLDB.getActiveId(tableElement));
+		var activeId = (HTMLDB.getActiveId(tableElement));
 		var sessionObject = HTMLDB.get(tableElement.getAttribute("id"), activeId);
 
 		if (undefined === sessionObject[sortField]) {
@@ -3026,7 +3045,7 @@ var HTMLDB = {
 		var object = null;
 		var id = 0;
 		var content = "";
-		var activeId = 0;
+		var activeId = "";
 
 		for (var i = 0; i < rowCount; i++) {
 			row = rows[i];
@@ -3052,7 +3071,7 @@ var HTMLDB = {
 
 			content += "</tr>";
 
-			if (0 == activeId) {
+			if ("" == activeId) {
 				activeId = id;
 			}
 		}
@@ -4682,7 +4701,7 @@ var HTMLDB = {
 
 			columnContent += "</tr>";
 
-			var activeId = 0;
+			var activeId = "";
 
 			for (var i = 0; i < lRowCount; i++) {
 				elTR = document.getElementById(
