@@ -328,6 +328,8 @@ In some cases, it is required to use other table fields and/or element variables
 
 In the example above, there is a form and two `htmldb-table` instances called `companyTable` and `myFirstTable` respectively. Also, the form has two inputs. The first input is a hidden input that holds predefined `company_id` value from `companyTable`. In this case, `data-htmldb-reset-value` attribute must be specified with the value `{{companyTable.id}}`. So, `company_id` input value will be automatically reset to the `id` value of the active record in `companyTable` instance.
 
+<br/>
+
 ## Using Javascript Functions and Variables in Mustache Templates
 
 Using Javascript variables and functions in mustache templates can be a time-saver. It is very easy to use global Javascript functions and variables in HTMLDB mustache templates.
