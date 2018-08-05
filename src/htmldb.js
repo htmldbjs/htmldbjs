@@ -3272,6 +3272,10 @@ var HTMLDB = {
 				continue;
 			}
 
+			if (":" == foreignTableId[0]) {
+				continue;
+			}
+
 			if (foreignTableId != "") {
 				tables.push(foreignTableId);
 			}
@@ -3941,6 +3945,7 @@ var HTMLDB = {
     },
     "evaluateHTMLDBExpression": function (expression, tableElementId) {
 		var tokens = String(expression).split("{{");
+		var token = "";
 		var subTokens = null;
 		var content = "";
 		var tokenCount = 0;
@@ -3965,7 +3970,8 @@ var HTMLDB = {
 				position++;
 			}
 
-			subTokens = (String(content).substr(0, (position))).split(".");
+			token = String(content).substr(0, (position));
+			subTokens = String(token).split(".");
 
 			if (subTokens.length > 1) {
 				foreignTableId = subTokens[0];
@@ -3984,6 +3990,8 @@ var HTMLDB = {
 				value = HTMLDB.evaluateHTMLDBGlobalObject(
 						foreignTableId,
 						column);
+			} else if (":" == content[0]) {
+				value = HTMLDB.evaluateHTMLDBJSCode(token);
 			} else if (foreignTableId != "") {
 				value = HTMLDB.getTableFieldActiveValue(
 						foreignTableId,
@@ -4005,6 +4013,19 @@ var HTMLDB = {
 		}
 
 		return returnValue;
+    },
+    "evaluateHTMLDBJSCode": function (code) {
+    	code = String(code).substring(1);
+    	var functionBody = ("return " + code + ";");
+		var codeFunction = null;
+
+		try {
+			codeFunction = new Function(functionBody);
+			return codeFunction();
+		} catch (e) {
+        	throw(new Error(code + " could not be evaluated."));
+			return false;
+		}
     },
     "evaluateHTMLDBGlobalObject": function (globalObject, parameter) {
     	globalObject = globalObject.toLowerCase();
