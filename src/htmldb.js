@@ -697,7 +697,7 @@ var HTMLDB = {
     		HTMLDB.render(tableElement);
     	}
 	},
-	"updateLocal": function (tableElement, id, object) {
+	"updateLocal": function (tableElement, id, object, updateOnlyReaderTable) {
 		if (null == HTMLDB.indexedDBConnection) {
         	throw(new Error("HTMLDB IndexedDB not initialized."));
 			return false;
@@ -717,7 +717,10 @@ var HTMLDB = {
 		object["id"] = id;
 
 		readerStore.put(object, id);
-		writerStore.put(object, id);
+
+		if (true !== updateOnlyReaderTable) {
+			writerStore.put(object, id);
+		}
 	},
 	"delete": function (tableElementId, p2, p3) {
 		var elDIV = document.getElementById(tableElementId);
@@ -1791,6 +1794,11 @@ var HTMLDB = {
         }
 
         var tableElement = HTMLDB.exploreHTMLDBTable(element);
+        var activeId = HTMLDB.getActiveId(tableElement);
+
+        if ("0" == activeId) {
+        	return false;
+        }
 
         if ((element.HTMLDBInitials !== undefined)
         		&& (element.HTMLDBInitials.attributes !== undefined)) {
@@ -4706,6 +4714,10 @@ var HTMLDB = {
 				return false;
 			}
 
+			if (HTMLDB.isHTMLDBParameter(elDIV, "local")) {
+				HTMLDB.clearLocalTable(elDIV);
+			}
+
 			var arrColumns = arrList.c;
 			var lRowCount = arrList.r.length;
 			var lColumnCount = arrList.c.length;
@@ -4713,6 +4725,7 @@ var HTMLDB = {
 			var columnContent = "";
 			var strPropertyName = "";
 			var elTR = null;
+			var rowObject = {};
 
 			columnContent = "<tr>";
 
@@ -4744,7 +4757,13 @@ var HTMLDB = {
 						+ "_reader_tr"
 						+ arrList.r[i][0])
 						+ "\">";
+
+				rowObject = {};
+
 				for (j = 0; j < lColumnCount; j++) {
+
+					rowObject[arrColumns[j]] = arrList.r[i][j];
+
 				    strRowContent += ("<td id=\""
 				    		+ (strHTMLDBDIVID + "_reader_td" + arrList.r[i][0])
 				    		+ (arrColumns[j])
@@ -4754,6 +4773,10 @@ var HTMLDB = {
 				}
 
 				strRowContent += "</tr>";
+
+				if (HTMLDB.isHTMLDBParameter(elDIV, "local")) {
+					HTMLDB.updateLocal(elDIV, arrList.r[i][0], rowObject, true);
+				}
 			}
 
 			theadHTMLDB.innerHTML = columnContent;
@@ -4787,6 +4810,26 @@ var HTMLDB = {
 			HTMLDB.removeFromReadingQueue(elDIV.getAttribute("id"));
 			HTMLDB.processReadQueue();
 		}, 150);
+	},
+	"clearLocalTable": function (tableElement) {
+		if (null == HTMLDB.indexedDBConnection) {
+        	throw(new Error("HTMLDB IndexedDB not initialized."));
+			return false;
+		}
+		var database = HTMLDB.indexedDBConnection.result;
+		var readerTransaction = database.transaction(
+				("htmldb_" + tableElement.getAttribute("id") + "_reader"),
+				"readwrite");
+		var writerTransaction = database.transaction(
+				("htmldb_" + tableElement.getAttribute("id") + "_writer"),
+				"readwrite");
+		var readerStore = readerTransaction.objectStore(
+				"htmldb_" + tableElement.getAttribute("id") + "_reader");
+		var writerStore = writerTransaction.objectStore(
+				"htmldb_" + tableElement.getAttribute("id") + "_writer");
+
+		readerStore.clear();
+		writerStore.clear();
 	}
 }
 HTMLDB.initialize();

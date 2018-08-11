@@ -14,7 +14,7 @@
                     <input type="hidden" class="htmldb-field" name="id" id="id" value="0" data-htmldb-field="id">
                     <input type="hidden" class="htmldb-field" name="score" id="score" value="" data-htmldb-field="score">
                     <input type="hidden" class="htmldb-field" name="consultant" id="consultant" value="" data-htmldb-field="consultant">
-                    <input type="hidden" class="htmldb-field" name="guid" id="guid" value="" data-htmldb-field="guid" data-htmldb-reset-value="{{:Math.sin(Math.PI / 2)}}">
+                    <input type="hidden" class="htmldb-field" name="guid" id="guid" value="" data-htmldb-field="guid" data-htmldb-reset-value="{{:HTMLDB.generateGUID();}}">
                     <input type="hidden" class="htmldb-field" name="consultantDisplayText" id="consultantDisplayText" value="" data-htmldb-field="consultantDisplayText">
                     <div class="row">
                         <div class="col s12">
