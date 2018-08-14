@@ -127,6 +127,25 @@ var HTMLDB = {
 			return false;
 		}
 	},
+	"updateTableFilterFunction": function(tableElement) {
+		tableElement.filterFunction = null;
+		if (HTMLDB.hasHTMLDBParameter(tableElement, "filter")) {
+			var functionBody = HTMLDB.generateTableFilterFunctionString(
+					tableElement);
+
+			try {
+				tableElement.filterFunction
+						= new Function(
+						"object",
+						functionBody);
+			} catch (e) {
+	        	throw(new Error("HTMLDB table "
+	        			+ tableElementId
+	        			+ " filter function could not be created."));
+				return false;
+			}
+		}
+	},
 	"validate": function (tableElementId, object, functionDone) {
 		var tableElement = document.getElementById(tableElementId);
 		if (!tableElement) {
@@ -1438,14 +1457,19 @@ var HTMLDB = {
 		var id = 0;
 		var content = "";
 		var activeId = 0;
+		var columnsExtracted = false;
+
+		HTMLDB.updateTableFilterFunction(tableElement);
 
 		for (var i = 0; i < resultCount; i++) {
 			object = result[i];
 			id = object["id"];
+
 			if (tableElement.filterFunction &&
 					!tableElement.filterFunction(object)) {
 				continue;
 			}
+
 			content += "<tr class=\"refreshed\" data-row-id=\""
 					+ id
 					+ "\" id=\""
@@ -1460,9 +1484,11 @@ var HTMLDB = {
 					object,
 					id);
 			content += "</tr>";
-			if (0 == i) {
+
+			if (!columnsExtracted) {
 				activeId = id;
 				HTMLDB.setColumnNames(tableElement.getAttribute("id"), object);
+				columnsExtracted = true;
 			}
 		}
 
@@ -2983,7 +3009,6 @@ var HTMLDB = {
 	},
 	"readChildTable": function (tableElementId, functionDone) {
 		var tableElement = document.getElementById(tableElementId);
-		var functionBody = "";
 
 		if (!tableElement) {
         	throw(new Error("HTMLDB table "
@@ -3032,21 +3057,6 @@ var HTMLDB = {
 				document.getElementById(parentTableId
 				+ "_reader_thead").innerHTML;
 
-		functionBody = HTMLDB.generateChildTableFilterFunctionString(
-				tableElement);
-
-		try {
-			tableElement.filterFunction
-					= new Function(
-					"object",
-					functionBody);
-		} catch (e) {
-        	throw(new Error("HTMLDB child table "
-        			+ tableElementId
-        			+ " filter function could not be created."));
-			return false;
-		}
-
 		var rows = document.getElementById(
 				parentTableId
 				+ "_reader_tbody").children;
@@ -3057,11 +3067,14 @@ var HTMLDB = {
 		var content = "";
 		var activeId = "";
 
+		HTMLDB.updateTableFilterFunction(tableElement);
+
 		for (var i = 0; i < rowCount; i++) {
 			row = rows[i];
 			id = HTMLDB.getHTMLDBParameter(row, "data-row-id");
 			object = HTMLDB.convertRowToObject(parentTableId, row);
-			if (!tableElement.filterFunction(object)) {
+			if (tableElement.filterFunction
+					&& !tableElement.filterFunction(object)) {
 				continue;
 			}
 
@@ -3107,6 +3120,14 @@ var HTMLDB = {
 					+ id),
 					"");
 			object[property] = column.innerHTML;
+		}
+		return object;
+	},
+	"convertListRowToObject": function (listRow, columns) {
+		var object = {};
+		var columnCount = columns.length;
+		for (var i = 0; i < columnCount; i++) {
+			object[columns[i]] = listRow[i];
 		}
 		return object;
 	},
@@ -3604,7 +3625,7 @@ var HTMLDB = {
 
 		return (functionHeader + functionBody);
 	},
-	"generateChildTableFilterFunctionString": function (tableElement) {
+	"generateTableFilterFunctionString": function (tableElement) {
 		var filter = HTMLDB.getHTMLDBParameter(tableElement, "filter");
 		var functionBody = "";
 
@@ -4684,13 +4705,13 @@ var HTMLDB = {
 	},
 	"doReaderIframeDefaultLoad": function (event, readAll) {
 		var iframeHTMLDB = HTMLDB.getEventTarget(event);
-		var elDIV = iframeHTMLDB.parentNode.parentNode;
-		var strHTMLDBDIVID = iframeHTMLDB.parentNode.parentNode.getAttribute("id");
+		var tableElement = iframeHTMLDB.parentNode.parentNode;
+		var tableElementId = iframeHTMLDB.parentNode.parentNode.getAttribute("id");
 		var tbodyHTMLDB = document.getElementById(
-				strHTMLDBDIVID
+				tableElementId
 				+ "_reader_tbody");
 		var theadHTMLDB = document.getElementById(
-				strHTMLDBDIVID
+				tableElementId
 				+ "_reader_thead");
 		var eventTarget = HTMLDB.getEventTarget(event);
 		iframeWindow = top.frames[iframeHTMLDB.getAttribute("id")];
@@ -4707,14 +4728,14 @@ var HTMLDB = {
 				arrList = JSON.parse(strResponse);
 			} catch(e) {
 	        	throw(new Error("HTMLDB table "
-	        			+ elDIV.getAttribute("id")
+	        			+ tableElement.getAttribute("id")
 	        			+ " could not be read: Not valid JSON format from URL "
 	        			+ eventTarget.src));
 				return false;
 			}
 
-			if (HTMLDB.isHTMLDBParameter(elDIV, "local")) {
-				HTMLDB.clearLocalTable(elDIV);
+			if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
+				HTMLDB.clearLocalTable(tableElement);
 			}
 
 			var arrColumns = arrList.c;
@@ -4735,78 +4756,82 @@ var HTMLDB = {
 			columnContent += "</tr>";
 
 			var activeId = "";
+			var activeIdAssigned = false;
+
+			HTMLDB.updateTableFilterFunction(tableElement);
 
 			for (var i = 0; i < lRowCount; i++) {
+
+				rowObject = HTMLDB.convertListRowToObject(arrList.r[i], arrList.c);
+
+				if (tableElement.filterFunction
+						&& !tableElement.filterFunction(object)) {
+					continue;
+				}
+
 				elTR = document.getElementById(
-						strHTMLDBDIVID
+						tableElementId
 						+ "_reader_tr"
 						+ arrList.r[i][0]);
 				if (elTR) {
 					elTR.parentNode.removeChild(elTR);
 				}
 
-				if (0 == i) {
+				if (!activeIdAssigned) {
 					activeId = arrList.r[i][0];
+					activeIdAssigned = true;
 				}
 
 				strRowContent += "<tr class=\"refreshed\" data-row-id=\""
 						+ arrList.r[i][0]
 						+ "\" id=\""
-						+ (strHTMLDBDIVID
+						+ (tableElementId
 						+ "_reader_tr"
 						+ arrList.r[i][0])
 						+ "\">";
 
-				rowObject = {};
-
-				for (j = 0; j < lColumnCount; j++) {
-
-					rowObject[arrColumns[j]] = arrList.r[i][j];
-
-				    strRowContent += ("<td id=\""
-				    		+ (strHTMLDBDIVID + "_reader_td" + arrList.r[i][0])
-				    		+ (arrColumns[j])
-				    		+ "\">"
-				    		+ arrList.r[i][j]
-				    		+ "</td>");
-				}
+				strRowContent += HTMLDB.generateTDHTML(
+						tableElement,
+						"_reader",
+						rowObject,
+						arrList.r[i][0]);
 
 				strRowContent += "</tr>";
 
-				if (HTMLDB.isHTMLDBParameter(elDIV, "local")) {
-					HTMLDB.updateLocal(elDIV, arrList.r[i][0], rowObject, true);
+				if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
+					HTMLDB.updateLocal(tableElement, arrList.r[i][0], rowObject, true);
 				}
 			}
 
 			theadHTMLDB.innerHTML = columnContent;
 			tbodyHTMLDB.innerHTML += strRowContent;
-			document.getElementById(elDIV.getAttribute("id") + "_writer_thead").innerHTML
+			document.getElementById(tableElement.getAttribute("id") + "_writer_thead").innerHTML
 					= columnContent;
-			elDIV.setAttribute("data-htmldb-active-id", activeId);
+			tableElement.setAttribute("data-htmldb-active-id", activeId);
 		}
 
-		var iframeFormDefaultName = (elDIV.getAttribute("id") + "_iframe_");
+		var iframeFormDefaultName = (tableElement.getAttribute("id") + "_iframe_");
 		var iframeFormGUID = iframeHTMLDB.getAttribute("id").substr(
 				iframeFormDefaultName.length);
-		HTMLDB.removeIframeAndForm(elDIV.getAttribute("id"), iframeFormGUID);
+		HTMLDB.removeIframeAndForm(tableElement.getAttribute("id"), iframeFormGUID);
 
-		if ((readAll === false) && elDIV.doHTMLDBRead) {
-			elDIV.doHTMLDBRead(elDIV);
-		} else if ((readAll === true) && elDIV.doHTMLDBReadAll) {
-			elDIV.doHTMLDBReadAll(elDIV);
+		if ((readAll === false) && tableElement.doHTMLDBRead) {
+			tableElement.doHTMLDBRead(tableElement);
+		} else if ((readAll === true) && tableElement.doHTMLDBReadAll) {
+			tableElement.doHTMLDBReadAll(tableElement);
 		}
 
-		elDIV.setAttribute("data-htmldb-loading", 0);
-		HTMLDB.hideLoader(strHTMLDBDIVID, "read");
+		tableElement.setAttribute("data-htmldb-loading", 0);
+		HTMLDB.hideLoader(tableElementId, "read");
 
-		elDIV.dispatchEvent(
+		tableElement.dispatchEvent(
 				new CustomEvent(
 				"htmldbread",
 				{detail: {}}));
 
 		setTimeout(function () {
-			HTMLDB.callReadQueueCallbacks(elDIV);
-			HTMLDB.removeFromReadingQueue(elDIV.getAttribute("id"));
+			HTMLDB.callReadQueueCallbacks(tableElement);
+			HTMLDB.removeFromReadingQueue(tableElement.getAttribute("id"));
 			HTMLDB.processReadQueue();
 		}, 150);
 	},
