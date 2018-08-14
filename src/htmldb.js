@@ -509,7 +509,7 @@ var HTMLDB = {
 		HTMLDB.showLoader(tableElementId, "read");
 
 		if (null == HTMLDB.indexedDBConnection) {
-			HTMLDB.indexedDBConnection = indexedDB.open("htmldb", 1);
+			HTMLDB.indexedDBConnection = HTMLDB.indexedDB.open("htmldb", 1);
 			HTMLDB.indexedDBConnection.onupgradeneeded
 					= HTMLDB.doIndexedDBUpgradeNeeded;
 
