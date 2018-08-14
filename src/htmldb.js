@@ -946,6 +946,19 @@ var HTMLDB = {
     		});
     	}
 	},
+	"canWriteTable": function (tableElementId) {
+		var writerTable = document.getElementById(tableElementId + "_writer_tbody");
+
+		if (!writerTable) {
+			return false;
+		}
+
+    	if (0 == writerTable.children.length) {
+    		return false;
+		}
+
+		return true;
+	},
 	"doTableWrite": function (tableElement) {
 		if (HTMLDB.isHTMLDBParameter(tableElement, "write-only")) {
 			return true;
