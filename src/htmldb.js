@@ -1223,9 +1223,6 @@ var HTMLDB = {
         var tableElementCount = tableElements.length;
         var tableElement = null;
         var priority = 0;
-        var local = false;
-
-        HTMLDB.indexedDBTables = [];
 
         for (var i = 0; i < tableElementCount; i++) {
         	tableElement = tableElements[i];
@@ -1245,9 +1242,6 @@ var HTMLDB = {
         	if (isNaN(priority)) {
         		priority = 0;
         		tableElement.setAttribute("data-htmldb-priority", priority);
-        	}
-        	if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
-        		HTMLDB.indexedDBTables.push(tableElement.getAttribute("id"));
         	}
         }
 
@@ -1275,9 +1269,12 @@ var HTMLDB = {
         var tableElement = null;
         var local = false;
 
-        for (var i = 0; ((i < tableElementCount) && !local); i++) {
+        HTMLDB.indexedDBTables = [];
+
+        for (var i = 0; i < tableElementCount; i++) {
         	tableElement = tableElements[i];
         	if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
+        		HTMLDB.indexedDBTables.push(tableElement.getAttribute("id"));
         		local = true;
         	}
         }
@@ -1405,10 +1402,6 @@ var HTMLDB = {
 		if (null == HTMLDB.indexedDBConnection) {
         	throw(new Error("HTMLDB IndexedDB not initialized."));
 			return false;
-		}
-
-		if (!HTMLDB.checkIfIndexedDBTableExists(tableElement.getAttribute("id"))) {
-			HTMLDB.doIndexedDBUpgradeNeeded();
 		}
 
 		var database = HTMLDB.indexedDBConnection.result;
@@ -4822,20 +4815,23 @@ var HTMLDB = {
         	throw(new Error("HTMLDB IndexedDB not initialized."));
 			return false;
 		}
-		var database = HTMLDB.indexedDBConnection.result;
-		var readerTransaction = database.transaction(
-				("htmldb_" + tableElement.getAttribute("id") + "_reader"),
-				"readwrite");
-		var writerTransaction = database.transaction(
-				("htmldb_" + tableElement.getAttribute("id") + "_writer"),
-				"readwrite");
-		var readerStore = readerTransaction.objectStore(
-				"htmldb_" + tableElement.getAttribute("id") + "_reader");
-		var writerStore = writerTransaction.objectStore(
-				"htmldb_" + tableElement.getAttribute("id") + "_writer");
 
-		readerStore.clear();
-		writerStore.clear();
+		if (HTMLDB.checkIfIndexedDBTableExists(tableElement.getAttribute("id"))) {
+			var database = HTMLDB.indexedDBConnection.result;
+			var readerTransaction = database.transaction(
+					("htmldb_" + tableElement.getAttribute("id") + "_reader"),
+					"readwrite");
+			var writerTransaction = database.transaction(
+					("htmldb_" + tableElement.getAttribute("id") + "_writer"),
+					"readwrite");
+			var readerStore = readerTransaction.objectStore(
+					"htmldb_" + tableElement.getAttribute("id") + "_reader");
+			var writerStore = writerTransaction.objectStore(
+					"htmldb_" + tableElement.getAttribute("id") + "_writer");
+
+			readerStore.clear();
+			writerStore.clear();
+		}
 	}
 }
 HTMLDB.initialize();
