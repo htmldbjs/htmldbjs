@@ -840,19 +840,19 @@ var HTMLDB = {
 
 		columnElementId = (tableElementId + "_reader_td" + activeId + column);
 
-		if (!document.getElementById(columnElementId)) {
-        	throw(new Error("HTMLDB table "
-        			+ tableElementId
-        			+ " column "
-        			+ column
-        			+ " not found."));
-			return false;
+		var value = "";
+
+		if (document.getElementById(columnElementId)) {
+			value = document.getElementById(
+					tableElementId
+					+ "_reader_td"
+					+ activeId + column).innerHTML;
+
+		} else {
+			value = "";
 		}
 
-		return document.getElementById(
-				tableElementId
-				+ "_reader_td"
-				+ activeId + column).innerHTML;
+		return value;
 	},
 	"getFormFieldActiveValue": function (formElementId, field) {
 		var formElement = document.getElementById(formElementId);
@@ -1513,7 +1513,9 @@ var HTMLDB = {
 				+ "_tbody").innerHTML
 				= content;
 
-		tableElement.setAttribute("data-htmldb-active-id", activeId);
+		if ("reader" == tablePrefix) {
+			tableElement.setAttribute("data-htmldb-active-id", activeId);			
+		}
 	},
 	"resetForm": function (form) {
 		var elements = form.elements;
