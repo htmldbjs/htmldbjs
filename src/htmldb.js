@@ -871,7 +871,21 @@ var HTMLDB = {
 	},
 	"setActiveId": function (tableElement, id) {
 		tableElement.setAttribute("data-htmldb-active-id", id);
+		HTMLDB.updateReadQueueByParentTable(tableElement);
 		HTMLDB.render(tableElement);
+	},
+	"updateReadQueueByParentTable": function (tableElement) {
+		var childTableIds = HTMLDB.extractChildTables();
+		var childTableIdCount = 0;
+		var childTableElement = null;
+		if (childTableIds[tableElement.getAttribute("id")] !== undefined) {
+			childTableIds = childTableIds[tableElement.getAttribute("id")];
+			childTableIdCount = childTableIds.length;
+			for (var i = 0; i < childTableIdCount; i++) {
+				childTableElement = document.getElementById(childTableIds[i]);
+				HTMLDB.updateReadQueue(childTableElement);
+			}
+		}
 	},
 	"getActiveId": function (tableElement) {
 		return tableElement.getAttribute("data-htmldb-active-id");
