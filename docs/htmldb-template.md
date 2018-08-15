@@ -38,7 +38,7 @@ A container element for the templates, that are automatically rendered by relate
 
 | Event Name | Description  |
 | ---- | ---- |
-| `htmldbrender` | Triggered when an htmldb-template element has been rendered. |
+| `htmldbrender` | Triggered when an htmldb-template element has been rendered.<br><br>`Event.detail.targets` holds the list of target elements rendered. |
 
 #### Variables
 

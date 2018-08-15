@@ -57,30 +57,33 @@ var SpritPanelHTMLDB = {
 		}
 	},
 	"doTemplateRender": function (sender, event) {
-		var targetId = HTMLDB.getHTMLDBParameter(sender, "template-target");
+		var targets = event.detail.targets;
 		var target = null;
+		var targetCount = targets.length;
 
-		if ("" == targetId) {
+		if (0 == targetCount) {
 			return;
 		}
 
-		target = document.getElementById(targetId);
+		for (var i = 0; i < targetCount; i++) {
+			target = document.getElementById(targets[i]);
 
-		if (!target) {
-			return;
+			if (!target) {
+				return;
+			}
+
+			$(".htmldb-button-edit", target).on("click", function (event) {
+				SpritPanelHTMLDB.showEditDialog(this, event);
+			});
+
+			$(".htmldb-button-save", target).on("htmldbsave", function (event) {
+				SpritPanelHTMLDB.doSave(this);
+			});
+
+			$(".htmldb-button-add", target).on("click", function (event) {
+				SpritPanelHTMLDB.showEditDialog(this, event);
+			});
 		}
-
-		$(".htmldb-button-edit", target).on("click", function (event) {
-			SpritPanelHTMLDB.showEditDialog(this, event);
-		});
-
-		$(".htmldb-button-save", target).on("htmldbsave", function (event) {
-			SpritPanelHTMLDB.doSave(this);
-		});
-
-		$(".htmldb-button-add", target).on("click", function (event) {
-			SpritPanelHTMLDB.showEditDialog(this, event);
-		});
 	},
 	"doSelectizeSetValue": function (sender, event) {
 		if (sender.selectize) {

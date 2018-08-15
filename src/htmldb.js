@@ -1106,7 +1106,7 @@ var HTMLDB = {
 				templateElement.dispatchEvent(
 						new CustomEvent(
 						"htmldbrender",
-						{detail: {}}));
+						{detail: {"targets": tableElement.HTMLDBTemplateTargets}}));
 			}
 		}
 	},
