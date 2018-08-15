@@ -3243,6 +3243,15 @@ var HTMLDB = {
         		parents[tableElement.getAttribute("id")]
         				= parents[tableElement.getAttribute("id")].concat(expressionTables);
         	}
+
+        	expressionTables = HTMLDB.extractHTMLDBExpressionTables(
+        			HTMLDB.getHTMLDBParameter(
+        			tableElement,
+        			"filter"));
+        	if (expressionTables.length > 0) {
+        		parents[tableElement.getAttribute("id")]
+        				= parents[tableElement.getAttribute("id")].concat(expressionTables);
+        	}
         }
 
         return parents;
