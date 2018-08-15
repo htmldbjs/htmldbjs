@@ -704,10 +704,10 @@ var HTMLDB = {
 
 		object["id"] = id;
 
-		readerStore.put(object, id);
+		readerStore.put(object, HTMLDB.addLeadingZeros(id, 16));
 
 		if (true !== updateOnlyReaderTable) {
-			writerStore.put(object, id);
+			writerStore.put(object, HTMLDB.addLeadingZeros(id, 16));
 		}
 	},
 	"delete": function (tableElementId, p2, p3) {
@@ -4857,6 +4857,11 @@ var HTMLDB = {
 			readerStore.clear();
 			writerStore.clear();
 		}
+	},
+	"addLeadingZeros": function (text, digitCount) {
+  		var s = String(text);
+  		while (s.length < (digitCount || 2)) {s = "0" + s;}
+  		return s;
 	}
 }
 HTMLDB.initialize();
