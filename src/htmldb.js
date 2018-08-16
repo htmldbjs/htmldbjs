@@ -655,25 +655,38 @@ var HTMLDB = {
 
 		var elTR = document.getElementById(tableElementId + "_writer_tr" + id);
 
-		if (!elTR) {
-			return;
-		}
-
 		var tbodyHTMLDB = document.getElementById(
 				tableElementId
 				+ "_writer_tbody");
-		strTRContent = HTMLDB.generateTDHTML(
+
+		var innerContent += HTMLDB.generateTDHTML(
 				tableElement,
 				"_writer",
 				object,
 				id);
+		var outerContentHeader = "";
+		var outerContentFooter = "";
 
-		elTR.innerHTML = strTRContent;
-		if (-1 == elTR.className.indexOf("inserted")) {
-			elTR.className = "updated"
-					+ ((className!="")
-					? (" " + className)
-					: "");
+		if (!elTR) {
+			outerContentHeader = "<tr class=\"updated"
+					+ ((className!="") ? (" " + className) : "")
+					+ "\" data-row-id=\""
+					+ id
+					+ "\" id=\""
+					+ tableElement.getAttribute("id")
+					+"_writer_tr"
+					+ id
+					+"\">";
+    		outerContentFooter = "</tr>";
+    		tbodyHTMLDB.innerHTML += (outerContentHeader + innerContent + outerContentFooter);
+		} else {
+			elTR.innerHTML = strTRContent;
+			if (-1 == elTR.className.indexOf("inserted")) {
+				elTR.className = "updated"
+						+ ((className!="")
+						? (" " + className)
+						: "");
+			}
 		}
 
     	if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
