@@ -541,39 +541,42 @@ var HTMLDB = {
 	},
 	"get": function (tableElementId, id) {
 		var elDIV = document.getElementById(tableElementId);
+
 		if (!elDIV) {
-			return;
+			return {};
 		}
 
+		var elTR = document.getElementById(tableElementId
+					+ "_reader_tr"
+					+ id);
+		var prefixLength = String(tableElementId + "_reader_td" + id).length;
+
+		if (!elTR) {
+			return {};
+		}
+
+		var elTDList = elTR.children;
 		var elTD = null;
+		var elTDCount = elTDList.length;
+		var JSONString = "";
 
-		var arrColumns = HTMLDB.getColumnNames(elDIV.getAttribute("id"));
-		var lColumnCount = arrColumns.length;
-		var strJSON = "";
-		for (var i = 0; i < lColumnCount; i++) {
-			elTD = document.getElementById(
-					tableElementId
-					+ "_reader_td"
-					+ id
-					+ arrColumns[i]);
+		for (var i = 0; i < elTDCount; i++) {
+			elTD = elTDList[i];
 
-			if (!elTD) {
-				continue;
+			if (JSONString != "") {
+				JSONString += ",";
 			}
 
-			if (strJSON != "") {
-				strJSON += ",";
-			}
-
-			strJSON += "\""
-					+ arrColumns[i]
+			JSONString += "\""
+					+ String(elTD.getAttribute("id")).substring(prefixLength)
 					+ "\":\""
 					+ HTMLDB.ejs(elTD.innerHTML)
 					+ "\"";
 		}
-		strJSON = "{" + strJSON + "}";
 
-		return JSON.parse(strJSON);
+		JSONString = "{" + JSONString + "}";
+
+		return JSON.parse(JSONString);
 	},
 	"insert": function (tableElementId, object, className) {
 		var tableElement = document.getElementById(tableElementId);
