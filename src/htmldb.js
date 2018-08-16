@@ -4816,7 +4816,7 @@ var HTMLDB = {
 				rowObject = HTMLDB.convertListRowToObject(arrList.r[i], arrList.c);
 
 				if (tableElement.filterFunction
-						&& !tableElement.filterFunction(object)) {
+						&& !tableElement.filterFunction(rowObject)) {
 					continue;
 				}
 
