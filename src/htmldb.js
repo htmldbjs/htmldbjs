@@ -686,7 +686,7 @@ var HTMLDB = {
     		outerContentFooter = "</tr>";
     		tbodyHTMLDB.innerHTML += (outerContentHeader + innerContent + outerContentFooter);
 		} else {
-			elTR.innerHTML = strTRContent;
+			elTR.innerHTML = innerContent;
 			if (-1 == elTR.className.indexOf("inserted")) {
 				elTR.className = "updated"
 						+ ((className!="")
@@ -703,11 +703,11 @@ var HTMLDB = {
 			tbodyHTMLDB = document.getElementById(
 					tableElementId
 					+ "_reader_tbody");
-			strTRContent = HTMLDB.generateTDHTML(
+			innerContent = HTMLDB.generateTDHTML(
 					tableElement,
 					"_reader",
 					object, id);
-			elTR.innerHTML = strTRContent;
+			elTR.innerHTML = innerContent;
     		HTMLDB.updateLocal(tableElement, id, object);
     		HTMLDB.render(tableElement);
     	}
