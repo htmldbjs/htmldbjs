@@ -4680,6 +4680,7 @@ var HTMLDB = {
 		var selectionCount = 0;
 		var selection = "";
 		var selectionCSV = "";
+		var inputDate = 0;
 
 		tagName = String(input.tagName).toLowerCase();
 		inputType = String(input.getAttribute("type")).toLowerCase();
@@ -4690,6 +4691,9 @@ var HTMLDB = {
 					return (input.checked ? 1 : 0);
 				} else if ("radio" == inputType) {
 					return ((input.checked) ? input.value : "");
+				} else if ("date" == inputType) {
+					inputDate = new Date(parseInt(input.value));
+					return inputDate.getTime();
 				} else {
 					return input.value;
 				}
