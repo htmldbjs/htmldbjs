@@ -659,7 +659,7 @@ var HTMLDB = {
 				tableElementId
 				+ "_writer_tbody");
 
-		var innerContent += HTMLDB.generateTDHTML(
+		var innerContent = HTMLDB.generateTDHTML(
 				tableElement,
 				"_writer",
 				object,
