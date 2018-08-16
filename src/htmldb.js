@@ -4026,7 +4026,7 @@ var HTMLDB = {
     "generateDateTimeGUID": function (prefix) {
         var now = new Date();
         var token0 = String(now.getTime());
-        var token1 = String(Math.floor(1000 + Math.random() * 9000));
+        var token1 = String(Math.floor(100 + Math.random() * 900));
         
         if (!prefix) {
         	prefix = "";
