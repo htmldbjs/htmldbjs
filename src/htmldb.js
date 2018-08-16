@@ -588,6 +588,11 @@ var HTMLDB = {
 			className = "";
 		}
 
+		if ((object["id"] !== undefined)
+				&& ((0 != object["id"]) || ("" != object["id"]))) {
+			return HTMLDB.update(tableElementId, object["id"], object, className);
+		}
+
 		var tbodyHTMLDB = document.getElementById(
 				tableElementId
 				+ "_writer_tbody");
@@ -650,7 +655,7 @@ var HTMLDB = {
 			className = "";
 		}
 
-		if (0 == id) {
+		if ((0 == id) || ("" == id)) {
 			return HTMLDB.insert(tableElementId, object, className);
 		}
 
