@@ -4692,7 +4692,7 @@ var HTMLDB = {
 				} else if ("radio" == inputType) {
 					return ((input.checked) ? input.value : "");
 				} else if ("date" == inputType) {
-					inputDate = new Date(parseInt(input.value));
+					inputDate = new Date(input.value);
 					return inputDate.getTime();
 				} else {
 					return input.value;
