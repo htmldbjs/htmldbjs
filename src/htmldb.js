@@ -4035,75 +4035,80 @@ var HTMLDB = {
         return prefix + token0 + token1;
     },
     "evaluateHTMLDBExpression": function (expression, tableElementId) {
-		var tokens = String(expression).split("{{");
-		var token = "";
-		var subTokens = null;
-		var content = "";
-		var tokenCount = 0;
+    	var expressionLength = String(expression).length;
+    	var currentCharacter = "";
+    	var previousCharacter = "";
+    	var index = 0;
+    	var inMustacheText = false;
+    	var mustacheExpression = "";
+    	var mustacheTokens = [];
+    	var returnValue = "";
 		var foreignTableId = "";
 		var column = "";
-		var text = "";
-		var position = 0;
 
-		if (tokens.length <= 1) {
-			return expression;
-		}
+    	while (index < expressionLength) {
+    		currentCharacter = expression[index];
 
-		tokenCount = tokens.length;
-		var value = "";
+    		if (("{" == previousCharacter)
+    				&& ("{" == currentCharacter)) {
+    			inMustacheText = true;
+    			returnValue = String(returnValue).substr(0,
+    					(String(returnValue).length - 1));
+    		} else if (("}" == previousCharacter)
+    				&& ("}" == currentCharacter)) {
+    			inMustacheText = false;
+    			mustacheExpression = String(mustacheExpression).substr(0,
+    					(String(mustacheExpression).length - 1));
+    			mustacheTokens = String(mustacheExpression).split(".");
 
-		for (var i = 1; (i < tokenCount); i++) {
-			content = tokens[i];
-			position = 1;
+				if (mustacheTokens.length > 1) {
+					foreignTableId = mustacheTokens[0];
+					column = mustacheTokens[1];
+				} else {
+					foreignTableId = "";
+					column = mustacheTokens[0];
+				}
 
-			while (("}" != content[position - 1])
-					&& ("}" != content[position])) {
-				position++;
-			}
+				if ((tableElementId !== undefined)
+						&& ("" == foreignTableId)) {
+					foreignTableId = tableElementId;
+				}
 
-			token = String(content).substr(0, (position));
-			subTokens = String(token).split(".");
+				if ("$" == foreignTableId[0]) {
+					returnValue += HTMLDB.evaluateHTMLDBGlobalObject(
+							foreignTableId,
+							column);
+				} else if (":" == mustacheExpression[0]) {
+					returnValue += HTMLDB.evaluateHTMLDBJSCode(
+							mustacheExpression);
+				} else if (foreignTableId != "") {
+					returnValue += HTMLDB.getTableFieldActiveValue(
+							foreignTableId,
+							column);
+				} else {
+					returnValue += ("{{" + mustacheExpression + "}}");
+				}
 
-			if (subTokens.length > 1) {
-				foreignTableId = subTokens[0];
-				column = subTokens[1];
-			} else {
-				foreignTableId = "";
-				column = subTokens[0];
-			}
+				mustacheExpression = "";
 
-			if ((tableElementId !== undefined)
-					&& ("" == foreignTableId)) {
-				foreignTableId = tableElementId;
-			}
+    		} else {
+    			if (inMustacheText) {
+    				mustacheExpression += currentCharacter;
+    			} else {
+    				returnValue += currentCharacter;
+    			}
+    		}
 
-			if ("$" == foreignTableId[0]) {
-				value = HTMLDB.evaluateHTMLDBGlobalObject(
-						foreignTableId,
-						column);
-			} else if (":" == content[0]) {
-				value = HTMLDB.evaluateHTMLDBJSCode(token);
-			} else if (foreignTableId != "") {
-				value = HTMLDB.getTableFieldActiveValue(
-						foreignTableId,
-						column);
-			} else {
-				value = ("{{" + content);
-			}
+    		index++;
 
-			text = String(content).substr(position + 2);
-			text = String(text).replace(/(?:\r\n|\r|\n)/g, "");
+    		previousCharacter = currentCharacter;
+    	}
 
-			content = value + HTMLDB.as(text);
+    	if (mustacheExpression.length > 0) {
+    		returnValue += mustacheExpression;
+    	}
 
-			tokens[i] = content;
-		}
-
-		if (tokens.length > 1) {
-			returnValue = tokens.join("");
-		}
-
-		return returnValue;
+    	return returnValue;
     },
     "evaluateHTMLDBJSCode": function (code) {
     	code = String(code).substring(1);
