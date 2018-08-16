@@ -779,6 +779,11 @@ var HTMLDB = {
         var tableElement = null;
         for (var i = 0; i < tableElementCount; i++) {
         	tableElement = tableElements[i];
+
+        	if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
+        		continue;
+        	}
+
         	if (document.getElementById(
         			tableElement.getAttribute("id")
         			+ "_writer_tbody").children.length > 0) {
