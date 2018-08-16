@@ -726,10 +726,10 @@ var HTMLDB = {
 
 		object["id"] = id;
 
-		readerStore.put(object, HTMLDB.addLeadingZeros(id, 16));
+		readerStore.put(object, HTMLDB.addLeadingZeros(id, 20));
 
 		if (true !== updateOnlyReaderTable) {
-			writerStore.put(object, HTMLDB.addLeadingZeros(id, 16));
+			writerStore.put(object, HTMLDB.addLeadingZeros(id, 20));
 		}
 	},
 	"delete": function (tableElementId, p2, p3) {
