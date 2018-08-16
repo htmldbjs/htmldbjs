@@ -591,22 +591,23 @@ var HTMLDB = {
 		var tbodyHTMLDB = document.getElementById(
 				tableElementId
 				+ "_writer_tbody");
-		var lTRCount = tbodyHTMLDB.children.length;
+
+		var newId = HTMLDB.generateDateTimeGUID();
 
 		var strTRContent = "<tr class=\"inserted"
 				+ ((className!="") ? (" " + className) : "")
 				+ "\" data-row-id=\"n"
-				+ lTRCount
+				+ newId
 				+ "\" id=\""
 				+ tableElement.getAttribute("id")
 				+"_writer_trn"
-				+ lTRCount
+				+ newId
 				+"\">";
 		strTRContent += HTMLDB.generateTDHTML(
 				tableElement,
 				"_writer",
 				object,
-				("n" + lTRCount));
+				("n" + newId));
     	strTRContent += "</tr>";
 
     	tbodyHTMLDB.innerHTML += strTRContent;
@@ -616,22 +617,22 @@ var HTMLDB = {
     				tableElementId
     				+ "_reader_tbody");
 
-    		object["id"] = ("n" + lTRCount);
+    		object["id"] = ("n" + newId);
 
 			strTRContent = "<tr class=\"inserted"
 					+ ((className!="") ? (" " + className) : "")
 					+ "\" data-row-id=\"n"
-					+ lTRCount
+					+ newId
 					+ "\" id=\""
 					+ tableElement.getAttribute("id")
 					+"_reader_trn"
-					+ lTRCount
+					+ newId
 					+"\">";
 			strTRContent += HTMLDB.generateTDHTML(
 					tableElement,
 					"_reader",
 					object,
-					("n" + lTRCount));
+					("n" + newId));
     		strTRContent += "</tr>";
 
     		tbodyHTMLDB.innerHTML += strTRContent;
@@ -4021,6 +4022,17 @@ var HTMLDB = {
         }
 
         return prefix + token0 + token1 + token2;
+    },
+    "generateDateTimeGUID": function (prefix) {
+        var now = new Date();
+        var token0 = String(now.getTime());
+        var token1 = String(Math.floor(1000 + Math.random() * 9000));
+        
+        if (!prefix) {
+        	prefix = "";
+        }
+
+        return prefix + token0 + token1;
     },
     "evaluateHTMLDBExpression": function (expression, tableElementId) {
 		var tokens = String(expression).split("{{");
