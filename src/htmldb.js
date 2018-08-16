@@ -4745,6 +4745,7 @@ var HTMLDB = {
 			break;
 			case "textarea":
 				input.innerHTML = value;
+				input.value = value;
 			break;
 			case "select":
 				input.HTMLDBInitials.previousValue = input.value;
