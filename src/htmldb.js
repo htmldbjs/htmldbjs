@@ -530,6 +530,11 @@ var HTMLDB = {
 		HTMLDB.hideLoader(tableElementId, "read");
 		HTMLDB.initializeLocalTable(tableElement);
 
+		tableElement.dispatchEvent(
+				new CustomEvent(
+				"htmldbread",
+				{detail: {}}));
+
 		if (functionDone) {
 			functionDone(tableElementId);
 		}
