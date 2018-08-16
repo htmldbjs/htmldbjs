@@ -2366,6 +2366,8 @@ var HTMLDB = {
 			return object;
 		}
 
+		defaults = HTMLDB.evaluateHTMLDBExpression(defaults);
+
 		try {
 			defaultsObject = JSON.parse(defaults);
 		} catch(e) {
