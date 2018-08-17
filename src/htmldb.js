@@ -1511,6 +1511,9 @@ var HTMLDB = {
 		var content = "";
 		var activeId = 0;
 		var columnsExtracted = false;
+		var writerTable = ((tablePrefix == "writer") ? true : false);
+		var newObject = false;
+		var className = "";
 
 		HTMLDB.updateTableFilterFunction(tableElement);
 
@@ -1523,7 +1526,17 @@ var HTMLDB = {
 				continue;
 			}
 
-			content += "<tr class=\"refreshed\" data-row-id=\""
+			newObject = HTMLDB.isNewObject(object);
+
+			if (writerTable) {
+				className = ((newObject) ? "inserted" : "updated");
+			} else {
+				className = "refreshed";
+			}
+
+			content += "<tr class=\""
+					+ className
+					+ "\" data-row-id=\""
 					+ id
 					+ "\" id=\""
 					+ (tableElement.getAttribute("id")
@@ -4994,6 +5007,10 @@ var HTMLDB = {
 		}
 
 		if (0 == parseInt(object["id"])) {
+			return true;
+		}
+
+		if ("n" == object["id"][0]) {
 			return true;
 		}
 
