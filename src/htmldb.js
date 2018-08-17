@@ -4456,8 +4456,12 @@ var HTMLDB = {
 			element.dispatchEvent(new CustomEvent(
 					"htmldbgetvalue",
 					{detail: {}}));
+		}
+
+		for (var i = 0; i < elementCount; i++) {
+			element = elements[i];
 			object[element.getAttribute("data-htmldb-field")]
-					= HTMLDB.getInputValue(element);
+					= HTMLDB.getInputValue(element);	
 		}
 
 		return object;
