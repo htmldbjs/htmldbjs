@@ -588,9 +588,8 @@ var HTMLDB = {
 			className = "";
 		}
 
-		if ((object["id"] !== undefined)
-				&& ((0 != object["id"]) || ("" != object["id"]))) {
-			return HTMLDB.update(tableElementId, object["id"], object, className);
+		if (!HTMLDB.isNewObject(object)) {
+			return HTMLDB.update(tableElementId, object["id"], object, className);			
 		}
 
 		var tbodyHTMLDB = document.getElementById(
@@ -655,7 +654,9 @@ var HTMLDB = {
 			className = "";
 		}
 
-		if ((0 == id) || ("" == id)) {
+		object["id"] = id;
+
+		if (HTMLDB.isNewObject(object)) {
 			return HTMLDB.insert(tableElementId, object, className);
 		}
 
@@ -4961,6 +4962,21 @@ var HTMLDB = {
 			readerStore.clear();
 			writerStore.clear();
 		}
+	},
+	"isNewObject": function (object) {
+		if (object["id"] === undefined) {
+			return true;
+		}
+
+		if ("" == object["id"]) {
+			return true;
+		}
+
+		if (0 == parseInt(object["id"])) {
+			return true;
+		}
+
+		return false;
 	},
 	"addLeadingZeros": function (text, digitCount) {
   		var s = String(text);
