@@ -1933,6 +1933,8 @@ var HTMLDB = {
     	var valueTemplate = "";
     	var tableElement = null;
     	var value = "";
+    	var inputValues = [];
+
     	for (var i = 0; i < inputCount; i++) {
     		input = inputs[i];
     		field = HTMLDB.getHTMLDBParameter(input, "field");
@@ -1959,9 +1961,14 @@ var HTMLDB = {
     		}
 
 			HTMLDB.setInputValue(input, value);
+			inputValues[i] = value;
+    	}
+
+    	for (var i = 0; i < inputCount; i++) {
+			input = inputs[i];
 			input.dispatchEvent(new CustomEvent(
 					"htmldbsetvalue",
-					{detail: {"value": value}}));
+					{detail: {"value": inputValues[i]}}));
     	}
     },
     "renderPaginationElement": function (element) {
