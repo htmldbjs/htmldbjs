@@ -3003,6 +3003,11 @@ var HTMLDB = {
 		var refreshTable = null;
 		for (var i = 0; i < refreshTableCount; i++) {
 			refreshTableId = refreshTables[i];
+
+			if ("" == String(refreshTableId).trim()) {
+				continue;
+			}
+
 			refreshTable = document.getElementById(refreshTableId);
 			if (!refreshTable) {
 				throw(new Error("HTMLDB table "
