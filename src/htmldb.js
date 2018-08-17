@@ -1166,6 +1166,7 @@ var HTMLDB = {
             }
         }
         HTMLDB.initializeHTMLDBEditButtons(null, tableElement);
+		HTMLDB.initializeHTMLDBInputs();
 	},
 	"renderSelects": function (tableElement) {
         var selects = document.body.querySelectorAll("select.htmldb-field");
