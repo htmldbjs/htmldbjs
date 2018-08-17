@@ -2872,7 +2872,12 @@ var HTMLDB = {
 
 		input.classList.add("htmldb-loading");
 
-		var activeId = (HTMLDB.getActiveId(tableElement));
+		var activeId = HTMLDB.getHTMLDBParameter(input, "edit-id");
+
+		if ("" == String(activeId).trim()) {
+			activeId = (HTMLDB.getActiveId(tableElement));
+		}
+
 		var sessionObject = HTMLDB.get(tableElement.getAttribute("id"), activeId);
 
 		if (undefined === sessionObject[inputField]) {

@@ -18,7 +18,7 @@ An action button is used for editing a specific record. When `htmldb-button-edit
 | -------------------------- | ----------------------------------------- |
 | `data-htmldb-table` | Specifies parent table, that holds the record to be edited.<br><br>`Default Value: ""`<br>`Required` |
 | `data-htmldb-form` | Specifies the form, that will be populated with the record in `data-htmldb-table` table specified by `data-htmldb-edit-id` value.<br><br>`Default Value: ""`<br>`Required` |
-| `data-htmldb-edit-id` | Specified the unique id value of the record to be edited.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-edit-id` | Specifies the unique id value of the record to be edited.<br><br>`Default Value: ""`<br>`Required` |
 
 #### Events
 
