@@ -535,6 +535,12 @@ var HTMLDB = {
 				"htmldbread",
 				{detail: {}}));
 
+		setTimeout(function () {
+			HTMLDB.callReadQueueCallbacks(tableElement);
+			HTMLDB.removeFromReadingQueue(tableElement.getAttribute("id"));
+			HTMLDB.processReadQueue();
+		}, 150);
+
 		if (functionDone) {
 			functionDone(tableElementId);
 		}
@@ -905,8 +911,8 @@ var HTMLDB = {
 	"setActiveId": function (tableElement, id, silent) {
 		tableElement.setAttribute("data-htmldb-active-id", id);
 		if (silent !== true) {
-			HTMLDB.updateReadQueueByParentTable(tableElement);
 			HTMLDB.render(tableElement);
+			HTMLDB.updateReadQueueByParentTable(tableElement);
 		}
 	},
 	"updateReadQueueByParentTable": function (tableElement) {
@@ -1011,9 +1017,6 @@ var HTMLDB = {
 		HTMLDB.updateReadQueue(tableElement);
 	},
 	"updateReadQueue": function (tableElement) {
-		if (HTMLDB.isInReadQueue(tableElement)) {
-			return;
-		}
 		var tableIds = [];
 		var tableId = "";
 		var tableIdCount = 0;
@@ -1053,8 +1056,8 @@ var HTMLDB = {
 				= callbackFunction;
 	},
 	"isInReadQueue": function (tableElement) {
-		for (var tables in HTMLDB.readQueue){
-		    if (tables.indexOf(tableElement.getAttribute("id")) != -1) {
+		for (var priority in HTMLDB.readQueue){
+		    if (HTMLDB.readQueue[priority].indexOf(tableElement.getAttribute("id")) != -1) {
 		    	return true;
 		    }
 		}
@@ -3257,6 +3260,11 @@ var HTMLDB = {
 		for (var i = 0; i < readingQueueCount; i++) {
 			tableElementId = HTMLDB.readingQueue[i];
 			tableElement = document.getElementById(tableElementId);
+
+			if (HTMLDB.isInReadQueue(tableElement)) {
+				continue;
+			}
+
 			if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
 				HTMLDB.readLocal(tableElementId);
 			} else {
