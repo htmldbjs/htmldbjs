@@ -4402,7 +4402,11 @@ var HTMLDB = {
 			return false;			
 		}
 
-		var object = HTMLDB.convertFormToObject(form);
+		var object = {};
+		var defaults = HTMLDB.getHTMLDBParameter(eventTarget, "form-defaults");
+
+		object = HTMLDB.parseObjectDefaults(object, defaults);
+		object = HTMLDB.convertFormToObject(form, object);
 
 		HTMLDB.validate(tableElementId, object, function (tableElementId, responseText) {
 			var responseObject = null;
@@ -4425,11 +4429,15 @@ var HTMLDB = {
 			}
 		});
 	},
-	"convertFormToObject": function (form) {
+	"convertFormToObject": function (form, defaultObject) {
 		var elements = form.querySelectorAll(".htmldb-field");
 		var elementCount = elements.length;
 		var element = null;
 		var object = {};
+
+		if (defaultObject !== undefined) {
+			object = defaultObject;
+		}
 
 		for (var i = 0; i < elementCount; i++) {
 			element = elements[i];
