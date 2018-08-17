@@ -902,10 +902,12 @@ var HTMLDB = {
 
 		return object[field];
 	},
-	"setActiveId": function (tableElement, id) {
+	"setActiveId": function (tableElement, id, silent) {
 		tableElement.setAttribute("data-htmldb-active-id", id);
-		HTMLDB.updateReadQueueByParentTable(tableElement);
-		HTMLDB.render(tableElement);
+		if (silent !== true) {
+			HTMLDB.updateReadQueueByParentTable(tableElement);
+			HTMLDB.render(tableElement);
+		}
 	},
 	"updateReadQueueByParentTable": function (tableElement) {
 		var childTableIds = HTMLDB.extractChildTables();
