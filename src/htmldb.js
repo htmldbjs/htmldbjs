@@ -4707,9 +4707,14 @@ var HTMLDB = {
 				}
 			break;
 
+			case "button":
+				return input.value;
+			break;
+
 			case "textarea":
 				return input.value;
 			break;
+
 			case "select":
 				if (-1 == input.selectedIndex) {
 					return "";
