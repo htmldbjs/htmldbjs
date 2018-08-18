@@ -216,7 +216,7 @@ Please note that data loaded from the server must be URL encoded. Raw data from 
 
 ```
 
-HTMLDB uses decodeURIComponent function to decode URL encoded data.
+HTMLDB uses `decodeURIComponent` function to decode URL encoded data.
 
 
 <br/>
