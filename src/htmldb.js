@@ -174,7 +174,7 @@ var HTMLDB = {
 		HTMLDB.validateLocal(tableElementId, object, function(tableElementId, responseText) {
 			var responseObject = null;
 			try {
-				responseObject = JSON.parse(String(responseText).trim());
+				responseObject = JSON.parse(String(decodeURIComponent(responseText)).trim());
 			} catch(e) {
 	        	throw(new Error("HTMLDB table "
 	        			+ tableElementId
@@ -4453,7 +4453,7 @@ var HTMLDB = {
 		HTMLDB.validate(tableElementId, object, function (tableElementId, responseText) {
 			var responseObject = null;
 			try {
-				responseObject = JSON.parse(String(responseText).trim());
+				responseObject = JSON.parse(String(decodeURIComponent(responseText)).trim());
 			} catch(e) {
 	        	throw(new Error("HTMLDB table "
 	        			+ tableElementId
@@ -4864,7 +4864,7 @@ var HTMLDB = {
 			var arrList = [];
 
 			try {
-				arrList = JSON.parse(String(strResponse).trim());
+				arrList = JSON.parse(String(decodeURIComponent(strResponse)).trim());
 			} catch(e) {
 	        	throw(new Error("HTMLDB table "
 	        			+ tableElement.getAttribute("id")
