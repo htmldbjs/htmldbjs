@@ -52,7 +52,7 @@ Firstly, create an HTMLDB table. HTMLDB tables are like database tables, they ha
 
 In the above example, we use a container `<div>` element for storing server side data (e.g. friends) in HTML format. This `<div>` must have a unique id attribute. By using a special class name `htmldb-table`, we specify this `<div>` as an HTMLDB table. Additionally, we use special attributes starting with `data-htmldb-` to define properties of HTMLDB elements. In this case we use `data-htmldb-read-url` for specifying the source URL of HTMLDB table that friends data will be loaded.
 
-Let's assume friends data loaded from the server are as follows:
+Let's assume friends data (URL decoded) loaded from the server are as follows:
 
 ```javascript
 {
@@ -65,9 +65,15 @@ Let's assume friends data loaded from the server are as follows:
         ["3", "Monica", "Geller"],
         ["4", "Chandler", "Bing"],
         ["5", "Joey", "Tribbiani"],
-        ["6", "Ross", "Geller"],
+        ["6", "Ross", "Geller"]
     ]
 }
+```
+
+Please note that data loaded from the server must be URL encoded. Raw data from the server will be as follows:
+
+```
+%7B%22c%22%3A%5B%22id%22%2C%22firstname%22%2C%22lastname%22%5D%2C%22r%22%3A%5B%5B%221%22%2C%22Rachel%22%2C%22Green%22%5D%2C%5B%222%22%2C%22Phoebe%22%2C%22Buffay%22%5D%2C%5B%223%22%2C%20%22Monica%22%2C%22Geller%22%5D%2C%5B%224%22%2C%22Chandler%22%2C%22Bing%22%5D%2C%5B%225%22%2C%22Joey%22%2C%22Tribbiani%22%5D%2C%5B%226%22%2C%22Ross%22%2C%22Geller%22%5D%5D%7D
 ```
 
 Let's list our friends with a template.
