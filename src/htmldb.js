@@ -174,7 +174,7 @@ var HTMLDB = {
 		HTMLDB.validateLocal(tableElementId, object, function(tableElementId, responseText) {
 			var responseObject = null;
 			try {
-				responseObject = JSON.parse(responseText);
+				responseObject = JSON.parse(String(responseText).trim());
 			} catch(e) {
 	        	throw(new Error("HTMLDB table "
 	        			+ tableElementId
@@ -2396,7 +2396,7 @@ var HTMLDB = {
 		defaults = HTMLDB.evaluateHTMLDBExpression(defaults);
 
 		try {
-			defaultsObject = JSON.parse(defaults);
+			defaultsObject = JSON.parse(String(defaults).trim());
 		} catch(e) {
         	throw(new Error("HTMLDB defaults attribute value "
         			+ "has no valid JSON format"));
@@ -4453,7 +4453,7 @@ var HTMLDB = {
 		HTMLDB.validate(tableElementId, object, function (tableElementId, responseText) {
 			var responseObject = null;
 			try {
-				responseObject = JSON.parse(responseText);
+				responseObject = JSON.parse(String(responseText).trim());
 			} catch(e) {
 	        	throw(new Error("HTMLDB table "
 	        			+ tableElementId
@@ -4864,7 +4864,7 @@ var HTMLDB = {
 			var arrList = [];
 
 			try {
-				arrList = JSON.parse(strResponse);
+				arrList = JSON.parse(String(strResponse).trim());
 			} catch(e) {
 	        	throw(new Error("HTMLDB table "
 	        			+ tableElement.getAttribute("id")
