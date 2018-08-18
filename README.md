@@ -70,12 +70,6 @@ Let's assume friends data (URL decoded) loaded from the server are as follows:
 }
 ```
 
-Please note that data loaded from the server must be URL encoded. Raw data from the server will be as follows:
-
-```
-%7B%22c%22%3A%5B%22id%22%2C%22firstname%22%2C%22lastname%22%5D%2C%22r%22%3A%5B%5B%221%22%2C%22Rachel%22%2C%22Green%22%5D%2C%5B%222%22%2C%22Phoebe%22%2C%22Buffay%22%5D%2C%5B%223%22%2C%20%22Monica%22%2C%22Geller%22%5D%2C%5B%224%22%2C%22Chandler%22%2C%22Bing%22%5D%2C%5B%225%22%2C%22Joey%22%2C%22Tribbiani%22%5D%2C%5B%226%22%2C%22Ross%22%2C%22Geller%22%5D%5D%7D
-```
-
 Let's list our friends with a template.
 
 ```html
@@ -213,6 +207,17 @@ A typical HTMLDB request is a JSON string with the following format:
     ]
 }
 ```
+
+Please note that data loaded from the server must be URL encoded. Raw data from the server will be as follows:
+
+```
+
+%7B%22c%22%3A%5B%22id%22%2C%22column0%22%2C%22column1%22%2C%22column2%22%2C%22columnName%22%5D%2C%22r%22%3A%5B%5B%221%22%2C%22This%20is%20column0%20value%22%2C%22Column%201%20Value%22%2C%22Column%202%20Value%22%2C%22Last%20column%20value%22%5D%2C%5B%222%22%2C%22This%20is%20column0%20value%22%2C%22Column%201%20Value%22%2C%22Column%202%20Value%22%2C%22Last%20column%20value%22%5D%2C%5B%223%22%2C%22This%20is%20column0%20value%22%2C%22Column%201%20Value%22%2C%22Column%202%20Value%22%2C%22Last%20column%20value%22%5D%5D%7D
+
+```
+
+HTMLDB uses decodeURIComponent function to decode URL encoded data.
+
 
 <br/>
 
