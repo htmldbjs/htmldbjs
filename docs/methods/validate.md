@@ -2,7 +2,7 @@
 
 An action button is used for adding a new record to the specified table. When `htmldb-button-add` button is clicked related forms are reset.
 
-#### Definition
+#### Description
 
 ```javascript
 HTMLDB.initialize(tableElementId, functionDone)
