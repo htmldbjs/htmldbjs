@@ -4873,80 +4873,88 @@ var HTMLDB = {
 				return false;
 			}
 
-			if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
-				HTMLDB.clearLocalTable(tableElement);
-			}
-
-			var arrColumns = arrList.c;
-			var lRowCount = arrList.r.length;
-			var lColumnCount = arrList.c.length;
-			var strRowContent = "";
-			var columnContent = "";
-			var strPropertyName = "";
-			var elTR = null;
-			var rowObject = {};
-
-			columnContent = "<tr>";
-
-			for (j = 0; j < lColumnCount; j++) {
-				columnContent += ("<th>" + arrColumns[j] + "</th>");
-			}
-
-			columnContent += "</tr>";
-
-			var activeId = "";
-			var activeIdAssigned = false;
-
-			HTMLDB.updateTableFilterFunction(tableElement);
-
-			for (var i = 0; i < lRowCount; i++) {
-
-				rowObject = HTMLDB.convertListRowToObject(arrList.r[i], arrList.c);
-
-				if (tableElement.filterFunction
-						&& !tableElement.filterFunction(rowObject)) {
-					continue;
-				}
-
-				elTR = document.getElementById(
-						tableElementId
-						+ "_reader_tr"
-						+ arrList.r[i][0]);
-				if (elTR) {
-					elTR.parentNode.removeChild(elTR);
-				}
-
-				if (!activeIdAssigned) {
-					activeId = arrList.r[i][0];
-					activeIdAssigned = true;
-				}
-
-				strRowContent += "<tr class=\"refreshed\" data-row-id=\""
-						+ arrList.r[i][0]
-						+ "\" id=\""
-						+ (tableElementId
-						+ "_reader_tr"
-						+ arrList.r[i][0])
-						+ "\">";
-
-				strRowContent += HTMLDB.generateTDHTML(
-						tableElement,
-						"_reader",
-						rowObject,
-						arrList.r[i][0]);
-
-				strRowContent += "</tr>";
+			if ((arrList.errorCount !== undefined) && (arrList.errorCount > 0)) {
+				HTMLDB.showError(tableElementId, arrList.lastError);
+			} else if ((arrList.messageCount !== undefined) && (arrList.messageCount > 0)) {
+				HTMLDB.showMessage(tableElementId, arrList.lastMessage);
+			} else if (arrList.r !== undefined) {
 
 				if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
-					HTMLDB.updateLocal(tableElement, arrList.r[i][0], rowObject, true);
+					HTMLDB.clearLocalTable(tableElement);
 				}
-			}
 
-			theadHTMLDB.innerHTML = columnContent;
-			tbodyHTMLDB.innerHTML += strRowContent;
-			document.getElementById(tableElement.getAttribute("id") + "_writer_thead").innerHTML
-					= columnContent;
-			tableElement.setAttribute("data-htmldb-active-id", activeId);
+				var arrColumns = arrList.c;
+				var lRowCount = arrList.r.length;
+				var lColumnCount = arrList.c.length;
+				var strRowContent = "";
+				var columnContent = "";
+				var strPropertyName = "";
+				var elTR = null;
+				var rowObject = {};
+
+				columnContent = "<tr>";
+
+				for (j = 0; j < lColumnCount; j++) {
+					columnContent += ("<th>" + arrColumns[j] + "</th>");
+				}
+
+				columnContent += "</tr>";
+
+				var activeId = "";
+				var activeIdAssigned = false;
+
+				HTMLDB.updateTableFilterFunction(tableElement);
+
+				for (var i = 0; i < lRowCount; i++) {
+
+					rowObject = HTMLDB.convertListRowToObject(arrList.r[i], arrList.c);
+
+					if (tableElement.filterFunction
+							&& !tableElement.filterFunction(rowObject)) {
+						continue;
+					}
+
+					elTR = document.getElementById(
+							tableElementId
+							+ "_reader_tr"
+							+ arrList.r[i][0]);
+					if (elTR) {
+						elTR.parentNode.removeChild(elTR);
+					}
+
+					if (!activeIdAssigned) {
+						activeId = arrList.r[i][0];
+						activeIdAssigned = true;
+					}
+
+					strRowContent += "<tr class=\"refreshed\" data-row-id=\""
+							+ arrList.r[i][0]
+							+ "\" id=\""
+							+ (tableElementId
+							+ "_reader_tr"
+							+ arrList.r[i][0])
+							+ "\">";
+
+					strRowContent += HTMLDB.generateTDHTML(
+							tableElement,
+							"_reader",
+							rowObject,
+							arrList.r[i][0]);
+
+					strRowContent += "</tr>";
+
+					if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
+						HTMLDB.updateLocal(tableElement, arrList.r[i][0], rowObject, true);
+					}
+				}
+
+				theadHTMLDB.innerHTML = columnContent;
+				tbodyHTMLDB.innerHTML += strRowContent;
+				document.getElementById(tableElement.getAttribute("id") + "_writer_thead").innerHTML
+						= columnContent;
+				tableElement.setAttribute("data-htmldb-active-id", activeId);
+
+			}
 		}
 
 		var iframeFormDefaultName = (tableElement.getAttribute("id") + "_iframe_");
