@@ -4998,6 +4998,9 @@ var HTMLDB = {
 			return false;
 		}
 
+		HTMLDB.clearReaderTable(tableElement.getAttribute("id"));
+		HTMLDB.clearWriterTable(tableElement.getAttribute("id"));
+
 		if (HTMLDB.checkIfIndexedDBTableExists(tableElement.getAttribute("id"))) {
 			var database = HTMLDB.indexedDBConnection.result;
 			var readerTransaction = database.transaction(
