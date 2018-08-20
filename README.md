@@ -380,6 +380,16 @@ Using Javascript variables and functions in mustache templates can be a time-sav
 
 <br/>
 
+## Methods
+
+| Element Name | Description  |
+| ---- | ---- |
+| [`HTMLDB.read`](docs/methods/read.md) | An action button is used for adding a new record to the specified table. When `htmldb-button-add` button is clicked related forms are reset. |
+| [`HTMLDB.write`](docs/methods/write.md) | An action button is used for editing a specific record. When `htmldb-button-edit` button is clicked `htmldb-table` element's active id is set to the specified record. Additionally, all related form fields are populated with the values of the record. |
+| [`HTMLDB.validate`](docs/methods/validate.md) | An action button is used for refreshing all `htmldb-table` elements. |
+
+<br/>
+
 ## Contributing
 
 Please use the [issue tracker](https://github.com/htmldbjs/htmldbjs/issues) to report any bugs/typos or requests.
