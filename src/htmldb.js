@@ -5043,10 +5043,10 @@ var HTMLDB = {
   		return s;
 	},
 	"e": function (elementId) {
-		return HTMLDB.e(elementId);
+		return document.getElementById(elementId);
 	},
 	"q": function (selector) {
-		return HTMLDB.q(selector);
+		return document.body.querySelectorAll(selector);
 	}
 }
 HTMLDB.initialize();
