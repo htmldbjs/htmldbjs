@@ -4982,6 +4982,16 @@ var HTMLDB = {
 			HTMLDB.processReadQueue();
 		}, 150);
 	},
+	"clearReaderTable": function (tableElementId) {
+		var tbodyHTMLDB = document.getElementById(
+				tableElementId + "_reader_tbody");
+		tbodyHTMLDB.innerHTML = "";
+	},
+	"clearWriterTable": function (tableElementId) {
+		var tbodyHTMLDB = document.getElementById(
+				tableElementId + "_writer_tbody");
+		tbodyHTMLDB.innerHTML = "";
+	},
 	"clearLocalTable": function (tableElement) {
 		if (null == HTMLDB.indexedDBConnection) {
         	throw(new Error("HTMLDB IndexedDB not initialized."));
