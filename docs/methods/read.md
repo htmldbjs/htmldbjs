@@ -10,10 +10,10 @@ HTMLDB.read(tableElement, functionDone)
 
 #### Parameters
 
-| Attribute Name             | Description                               |
+| Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `tableElement` | `htmldb-table` element to be read. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Required` |
-| `functionDone`| Specifies the function to be called after completing read operation. |
+| `tableElement` | `htmldb-table` element to be read. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
+| `functionDone`| Specifies the function to be called after completing read operation.<br><br>`Accepts: Function` |
 
 #### Returns
 
