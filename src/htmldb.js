@@ -98,10 +98,11 @@ var HTMLDB = {
 		var funcIframeLoadCallback = HTMLDB.doReaderIframeLoad;
 
 		if (functionDone) {
-			funcIframeLoadCallback = function (evEvent) {
+			funcIframeLoadCallback = function (event) {
+				var tableElement = HTMLDB.getEventTarget(event).parentNode.parentNode;
 				tableElement.setAttribute("data-htmldb-loading", 0);
 				HTMLDB.hideLoader(tableElement, "read");
-				HTMLDB.doReaderIframeDefaultLoad(evEvent, true);
+				HTMLDB.doReaderIframeDefaultLoad(event, true);
 				functionDone(tableElement);
 			}
 		}
@@ -321,7 +322,8 @@ var HTMLDB = {
 		var funcIframeLoadCallback = HTMLDB.doValidatorIframeLoad;
 
 		if (functionDone) {
-			funcIframeLoadCallback = function () {
+			funcIframeLoadCallback = function (event) {
+				var tableElement = HTMLDB.getEventTarget(event).parentNode.parentNode;
 				tableElement.setAttribute("data-htmldb-loading", 0);
 				HTMLDB.hideLoader(tableElement, "validate");
 				iframeWindow = top.frames[
@@ -449,7 +451,8 @@ var HTMLDB = {
 		var funcIframeLoadCallback = HTMLDB.doWriterIframeLoad;
 
 		if (functionDone) {
-			funcIframeLoadCallback = function () {
+			funcIframeLoadCallback = function (event) {
+				var tableElement = HTMLDB.getEventTarget(event).parentNode.parentNode;
 				tableElement.setAttribute("data-htmldb-loading", 0);
 				HTMLDB.hideLoader(tableElement, "write");
 				iframeWindow = top.frames[
@@ -1499,16 +1502,22 @@ var HTMLDB = {
 		var writerStore = writerTransaction.objectStore(
 				"htmldb_" + tableElementId + "_writer");
 		var readerRequest = readerStore.getAll();
-		readerRequest.onsuccess = function() {
+		readerRequest.onsuccess = function(event) {
+			var eventTarget = HTMLDB.getEventTarget(event);
+			var tableElementId = eventTarget.source.name.substr(7, -7);
+			var tableElement = HTMLDB.e(tableElementId);
 			HTMLDB.initializeLocalTableRows(
 					tableElement,
 					"reader",
-					readerRequest.result);
+					eventTarget.result);
 			HTMLDB.render(tableElement);
 		}
 
 		var writerRequest = writerStore.getAll();
-		writerRequest.onsuccess = function() {
+		writerRequest.onsuccess = function(event) {
+			var eventTarget = HTMLDB.getEventTarget(event);
+			var tableElementId = eventTarget.source.name.substr(7, -7);
+			var tableElement = HTMLDB.e(tableElementId);
 			HTMLDB.initializeLocalTableRows(
 					tableElement,
 					"writer",
