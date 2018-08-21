@@ -836,7 +836,7 @@ var HTMLDB = {
 		var columns = new Array();
 
 		for (var j = 0; j < elementTHCount; j++) {
-			elementTH = elementsTH[j];
+			elementTH = elementsTH[j];			
 			columns.push(elementTH.innerHTML);
 		}
 
@@ -1750,9 +1750,9 @@ var HTMLDB = {
         		}
 
         		functionHeader = "var success=false;"
-        				+ "var object=HTMLDB.get(\""
+        				+ "var object=HTMLDB.get(HTMLDB.e(\""
         				+ tableElementId
-        				+ "\", HTMLDB.getActiveId(HTMLDB.e(\""
+        				+ "\"), HTMLDB.getActiveId(HTMLDB.e(\""
         				+ tableElementId
         				+ "\")));";
         	}
@@ -2915,7 +2915,7 @@ var HTMLDB = {
 			activeId = (HTMLDB.getActiveId(tableElement));
 		}
 
-		var sessionObject = HTMLDB.get(tableElement.getAttribute("id"), activeId);
+		var sessionObject = HTMLDB.get(tableElement, activeId);
 
 		if (undefined === sessionObject[inputField]) {
 			throw(new Error("HTMLDB input table "
