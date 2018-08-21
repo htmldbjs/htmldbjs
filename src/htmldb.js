@@ -539,7 +539,7 @@ var HTMLDB = {
 
 		setTimeout(function () {
 			HTMLDB.callReadQueueCallbacks(tableElement);
-			HTMLDB.removeFromReadingQueue(tableElement.getAttribute("id"));
+			HTMLDB.removeFromReadingQueue(tableElement);
 			HTMLDB.processReadQueue();
 		}, 150);
 
