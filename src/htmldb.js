@@ -3715,9 +3715,9 @@ var HTMLDB = {
 		}
 
 		functionBody += ";generatedId=HTMLDB.evaluateHTMLDBExpression("
-				+ "HTMLDB.evaluateHTMLDBExpressionWithObject(HTMLDB.e(\""
+				+ "HTMLDB.evaluateHTMLDBExpressionWithObject(\""
 				+ targetElementId
-				+ "\"),object));"
+				+ "\",object));"
 				+ "generatedIdListIndex=generatedIdList.indexOf(generatedId);"
 				+ "if(-1==generatedIdListIndex){"
 				+ "generatedIdListIndex=generatedIdList.length;"
