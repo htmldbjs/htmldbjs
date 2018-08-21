@@ -12,11 +12,6 @@ HTMLDB.e(elementId)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `elementId` | `htmldb-table` element to be read. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Required` |
-| `functionDone`| Specifies the function to be called after completing read operation. |
-
-| Parameter Name             | Description                               |
-| -------------------------- | ----------------------------------------- |
 | `elementId` | Element id to be used to call document.getElementById function.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
