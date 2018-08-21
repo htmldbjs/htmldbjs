@@ -581,7 +581,7 @@ var HTMLDB = {
 			JSONString += "\""
 					+ String(elTD.getAttribute("id")).substring(prefixLength)
 					+ "\":\""
-					+ HTMLDB.ejs(elTD.innerHTML)
+					+ HTMLDB.encodeJSONString(elTD.innerHTML)
 					+ "\"";
 		}
 
@@ -3922,22 +3922,8 @@ var HTMLDB = {
 
 		return functionBlock;
 	},
-	"ss": function (p1) {
-		return (p1 + '').replace(/\\(.?)/g, function(s, n1) {
-	        switch (n1) {
-	            case '\\':
-	                return '\\';
-	            case '0':
-	                return '\u0000';
-	            case '':
-	                return '';
-	            default:
-	                return n1;
-			}
-    	});
-	},
-	"ejs": function (p1) {
-		return p1.replace(/\n/g, "\\n")
+	"encodeJSONString": function (text) {
+		return text.replace(/\n/g, "\\n")
 				.replace(/\"/g, '&quot;')
 				.replace(/\r/g, "\\r")
 				.replace(/\t/g, "\\t")
@@ -4066,7 +4052,7 @@ var HTMLDB = {
 			formContent += "<input class=\"htmldb_row\" type=\"hidden\" name=\""
 					+ "htmldb_row" + index + "_" + columns[i]
  					+ "\" value=\""
-					+ HTMLDB.ejs(value)
+					+ HTMLDB.encodeJSONString(value)
 					+ "\" />";
 		}
 
@@ -4342,7 +4328,7 @@ var HTMLDB = {
     		return element;
     	}
     },
-	"doReaderIframeLoad":function (event) {
+	"doReaderIframeLoad": function (event) {
 		HTMLDB.doReaderIframeDefaultLoad(event, false);
 		HTMLDB.render(HTMLDB.getEventTarget(event).parentNode.parentNode);
 	},
