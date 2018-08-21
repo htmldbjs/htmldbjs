@@ -323,7 +323,7 @@ var HTMLDB = {
 		if (functionDone) {
 			funcIframeLoadCallback = function () {
 				tableElement.setAttribute("data-htmldb-loading", 0);
-				HTMLDB.hideLoader(tableElementId, "validate");
+				HTMLDB.hideLoader(tableElement, "validate");
 				iframeWindow = top.frames[
 						tableElementId
 						+ "_iframe_"
