@@ -1,4 +1,4 @@
-### HTMLDB Methods
+## Methods
 
 <br>
 
