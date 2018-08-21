@@ -1918,7 +1918,7 @@ var HTMLDB = {
                 attributeValue = element.HTMLDBInitials.attributes[i].value;
                 content = HTMLDB.evaluateHTMLDBExpression(
                 		attributeValue,
-                		tableElement.getAttribute("id"));
+                		tableElement);
                 element.setAttribute(attributeName, content);
             }
         }
@@ -1936,7 +1936,7 @@ var HTMLDB = {
             		&& (element.HTMLDBInitials.content !== undefined)) {
                 content = HTMLDB.evaluateHTMLDBExpression(
                 		element.HTMLDBInitials.content,
-                		tableElement.getAttribute("id"));
+                		tableElement);
                 element.innerHTML = content;
             } else {
             	if (HTMLDB.hasHTMLDBParameter(element, "content")) {
@@ -1974,7 +1974,7 @@ var HTMLDB = {
     			tableElement = HTMLDB.exploreHTMLDBTable(form);
 	    		value = HTMLDB.evaluateHTMLDBExpression(
 	    				valueTemplate,
-	    				tableElement.getAttribute("id"));
+	    				tableElement);
     		} else {
 	    		value = HTMLDB.evaluateHTMLDBExpressionWithObject(
 	    				valueTemplate,
@@ -2570,18 +2570,18 @@ var HTMLDB = {
 		for (var i = 0; i < rowCount; i++) {
 			row = rows[i];
 			id = HTMLDB.getHTMLDBParameter(row, "data-row-id");
-			object = HTMLDB.convertRowToObject(tableElementId, row);
 			tableElement.setAttribute("data-htmldb-active-id", id);
+			object = HTMLDB.convertRowToObject(tableElement, row);
 			title = HTMLDB.evaluateHTMLDBExpression(
 					HTMLDB.getHTMLDBParameter(
 					select,
 					"option-title"),
-					tableElementId);
+					tableElement);
 			value = HTMLDB.evaluateHTMLDBExpression(
 					HTMLDB.getHTMLDBParameter(
 					select,
 					"option-value"),
-					tableElementId);
+					tableElement);
  			select.options[select.options.length]
  					= new Option(title, value);
 
@@ -4097,7 +4097,7 @@ var HTMLDB = {
 
         return prefix + token0 + token1;
     },
-    "evaluateHTMLDBExpression": function (expression, tableElement) {
+    "evaluateHTMLDBExpression": function (expression, parent) {
     	var expressionLength = String(expression).length;
     	var currentCharacter = "";
     	var previousCharacter = "";
@@ -4132,9 +4132,10 @@ var HTMLDB = {
 					column = mustacheTokens[0];
 				}
 
-				if ((tableElement !== undefined)
+				if ((parent !== undefined)
+						&& (parent !== null)
 						&& ("" == foreignTableId)) {
-					foreignTableId = tableElement.getAttribute("id");
+					foreignTableId = parent.getAttribute("id");
 				}
 
 				if ("$" == foreignTableId[0]) {
