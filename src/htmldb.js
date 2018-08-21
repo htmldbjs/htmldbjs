@@ -557,37 +557,15 @@ var HTMLDB = {
 
 		var tableElementId = tableElement.getAttribute("id");
 
-		var elTR = HTMLDB.e(tableElementId
+		var row = HTMLDB.e(tableElementId
 					+ "_reader_tr"
 					+ id);
-		var prefixLength = String(tableElementId + "_reader_td" + id).length;
 
-		if (!elTR) {
+		if (!row) {
 			return {};
 		}
 
-		var elTDList = elTR.children;
-		var elTD = null;
-		var elTDCount = elTDList.length;
-		var JSONString = "";
-
-		for (var i = 0; i < elTDCount; i++) {
-			elTD = elTDList[i];
-
-			if (JSONString != "") {
-				JSONString += ",";
-			}
-
-			JSONString += "\""
-					+ String(elTD.getAttribute("id")).substring(prefixLength)
-					+ "\":\""
-					+ HTMLDB.encodeJSONString(elTD.innerHTML)
-					+ "\"";
-		}
-
-		JSONString = "{" + JSONString + "}";
-
-		return JSON.parse(JSONString);
+		return HTMLDB.convertRowToObject(tableElement, row);
 	},
 	"insert": function (tableElement, object, className) {
 		if (!tableElement) {
@@ -3922,7 +3900,7 @@ var HTMLDB = {
 
 		return functionBlock;
 	},
-	"encodeJSONString": function (text) {
+	"escapeJSONString": function (text) {
 		return text.replace(/\n/g, "\\n")
 				.replace(/\"/g, '&quot;')
 				.replace(/\r/g, "\\r")
@@ -4052,7 +4030,7 @@ var HTMLDB = {
 			formContent += "<input class=\"htmldb_row\" type=\"hidden\" name=\""
 					+ "htmldb_row" + index + "_" + columns[i]
  					+ "\" value=\""
-					+ HTMLDB.encodeJSONString(value)
+					+ HTMLDB.escapeJSONString(value)
 					+ "\" />";
 		}
 
