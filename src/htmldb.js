@@ -1504,7 +1504,7 @@ var HTMLDB = {
 		var readerRequest = readerStore.getAll();
 		readerRequest.onsuccess = function(event) {
 			var eventTarget = HTMLDB.getEventTarget(event);
-			var tableElementId = eventTarget.source.name.substr(7, -7);
+			var tableElementId = eventTarget.source.name.slice(7, -7);
 			var tableElement = HTMLDB.e(tableElementId);
 			HTMLDB.initializeLocalTableRows(
 					tableElement,
@@ -1516,7 +1516,7 @@ var HTMLDB = {
 		var writerRequest = writerStore.getAll();
 		writerRequest.onsuccess = function(event) {
 			var eventTarget = HTMLDB.getEventTarget(event);
-			var tableElementId = eventTarget.source.name.substr(7, -7);
+			var tableElementId = eventTarget.source.name.slice(7, -7);
 			var tableElement = HTMLDB.e(tableElementId);
 			HTMLDB.initializeLocalTableRows(
 					tableElement,
