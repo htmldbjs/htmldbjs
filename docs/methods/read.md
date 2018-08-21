@@ -1,19 +1,20 @@
 ### `HTMLDB.read`
 
-An action button is used for adding a new record to the specified table. When `htmldb-button-add` button is clicked related forms are reset.
+This method reads records from server/indexedDB or parent table and populates `htmldb-table` element specified by `tableElement`.
 
 #### Description
 
 ```javascript
-HTMLDB.read(tableElementId, functionDone)
+HTMLDB.read(tableElement, functionDone)
 ```
 
 #### Parameters
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `tableElementId` | Specifies parent form, that new record will be entered.<br><br>`Default Value: ""`<br>`Required` |
-| `functionDone`| Specifies new record defaults in JSON format. This attribute value must be specified between `'` single quotation marks. Because, double quotation marks are required for the definition of JSON object properties.<br><br>`Default Value: ""` |
+| `tableElement` | `htmldb-table` element to be read. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Required` |
+| `functionDone`| Specifies the function to be called after completing read operation. |
 
 #### Returns
 
+This method returns `true` if the read operation has been successfully initiated, returns `false` otherwise.

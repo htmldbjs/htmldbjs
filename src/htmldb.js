@@ -127,6 +127,8 @@ var HTMLDB = {
         			+ "."));
 			return false;
 		}
+
+		return true;
 	},
 	"updateTableFilterFunction": function(tableElement) {
 		tableElement.filterFunction = null;
