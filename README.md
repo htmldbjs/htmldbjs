@@ -384,7 +384,7 @@ Using Javascript variables and functions in mustache templates can be a time-sav
 
 HTMLDB provides methods for accessing HTMLDB elements using JavaScript. You can click the following link to view HTMLDB methods.
 
-[List of HTMLDB Methods](docs/methods/README.md)
+[List of HTMLDB Methods](docs/methods/)
 
 <br/>
 
