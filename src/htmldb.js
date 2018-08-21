@@ -835,8 +835,8 @@ var HTMLDB = {
 		var elementTHCount = elementsTH.length;
 		var columns = new Array();
 
-		for (var j = 0; j < lTHCount; j++) {
-			elementTH = elementsTH[j];			
+		for (var j = 0; j < elementTHCount; j++) {
+			elementTH = elementsTH[j];
 			columns.push(elementTH.innerHTML);
 		}
 
