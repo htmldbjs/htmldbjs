@@ -3524,7 +3524,7 @@ var HTMLDB = {
     		return;
     	}
 	},
-	"createHelperElements": function (element) {
+	"createHelperElements": function (tableElement) {
         var tableHTML = "";
         var iframeHTML = "";
         var formHTML = "";

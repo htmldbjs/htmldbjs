@@ -1,6 +1,8 @@
 ### `HTMLDB.createHelperElements`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method creates HTMLDB helper elements during initialization process.
+
+Please note that this method is used for inner operations, there is no need to call directly.
 
 #### Description
 
@@ -12,8 +14,8 @@ HTMLDB.createHelperElements(element)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `element` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `tableElement` | Specifies the `htmldb-table` element. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.

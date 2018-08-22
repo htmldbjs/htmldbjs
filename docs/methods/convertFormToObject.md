@@ -1,6 +1,6 @@
 ### `HTMLDB.convertFormToObject`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method converts `htmldb-field` elements within the `form` to a key-value associated JavaScript object.
 
 #### Description
 
@@ -12,9 +12,9 @@ HTMLDB.convertFormToObject(form, defaultObject)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `form` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `defaultObject` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `form` | Specifies the `htmldb-form` element, that contains `htmldb-field` elements, will be converted.<br><br>`Accepts: DOM Element`<br>`Required` |
+| `defaultObject` | Specifies the default `htmldb-field` values as a JavaScript key-value associated object.<br><br>`Accepts: Object`<br>`Optional` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns constructed JavaScript object based on `htmldb-field` element values.
