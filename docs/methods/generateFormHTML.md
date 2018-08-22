@@ -2,17 +2,21 @@
 
 This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
 
+Please note that this method is used for inner operations, there is no need to call directly.
+
 #### Description
 
 ```javascript
-HTMLDB.generateFormHTML(text)
+HTMLDB.generateFormHTML(tableElement, iframeFormGUID, row)
 ```
 
 #### Parameters
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `text` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `tableElement` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `iframeFormGUID` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `row` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 

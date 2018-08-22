@@ -5,14 +5,15 @@ This method adds zeros at the beginning of a given `text` to construct a string 
 #### Description
 
 ```javascript
-HTMLDB.renderElementWithObject(text)
+HTMLDB.renderElementWithObject(element, object)
 ```
 
 #### Parameters
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `text` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `element` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `object` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 

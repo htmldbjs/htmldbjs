@@ -5,14 +5,17 @@ This method adds zeros at the beginning of a given `text` to construct a string 
 #### Description
 
 ```javascript
-HTMLDB.generateTDHTML(text)
+HTMLDB.generateTDHTML(tableElement, prefix, object, id)
 ```
 
 #### Parameters
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `text` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `tableElement` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `prefix` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `object` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `id` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 

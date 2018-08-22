@@ -130,7 +130,7 @@ var HTMLDB = {
 
 		return true;
 	},
-	"updateTableFilterFunction": function(tableElement) {
+	"updateTableFilterFunction": function (tableElement) {
 		tableElement.filterFunction = null;
 		if (HTMLDB.hasHTMLDBParameter(tableElement, "filter")) {
 			var functionBody = HTMLDB.generateTableFilterFunctionString(
@@ -4832,7 +4832,7 @@ var HTMLDB = {
 	"addSingleQuoteSlashes": function (text) {
 	    return String(text).replace(/'/g, "\'");
 	},
-	"doReaderIframeDefaultLoad": function (event, readAll) {
+	"doReaderIframeDefaultLoad": function (event) {
 		var iframeHTMLDB = HTMLDB.getEventTarget(event);
 		var tableElement = iframeHTMLDB.parentNode.parentNode;
 		var tableElementId = iframeHTMLDB.parentNode.parentNode.getAttribute("id");
@@ -4951,12 +4951,6 @@ var HTMLDB = {
 		var iframeFormGUID = iframeHTMLDB.getAttribute("id").substr(
 				iframeFormDefaultName.length);
 		HTMLDB.removeIframeAndForm(tableElement, iframeFormGUID);
-
-		if ((readAll === false) && tableElement.doHTMLDBRead) {
-			tableElement.doHTMLDBRead(tableElement);
-		} else if ((readAll === true) && tableElement.doHTMLDBReadAll) {
-			tableElement.doHTMLDBReadAll(tableElement);
-		}
 
 		tableElement.setAttribute("data-htmldb-loading", 0);
 		HTMLDB.hideLoader(tableElement, "read");

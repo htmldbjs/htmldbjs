@@ -5,14 +5,15 @@ This method adds zeros at the beginning of a given `text` to construct a string 
 #### Description
 
 ```javascript
-HTMLDB.doActiveFormFieldUpdate(text)
+HTMLDB.doActiveFormFieldUpdate(input, field)
 ```
 
 #### Parameters
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `text` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `input` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `field` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 

@@ -5,14 +5,14 @@ This method adds zeros at the beginning of a given `text` to construct a string 
 #### Description
 
 ```javascript
-HTMLDB.initializeHTMLDBIndexedDB(text)
+HTMLDB.initializeHTMLDBIndexedDB(functionDone)
 ```
 
 #### Parameters
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `text` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `functionDone` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 

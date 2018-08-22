@@ -5,14 +5,15 @@ This method adds zeros at the beginning of a given `text` to construct a string 
 #### Description
 
 ```javascript
-HTMLDB.registerFormElementEvent(text)
+HTMLDB.registerFormElementEvent(element, functionEvent)
 ```
 
 #### Parameters
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `text` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `element` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `functionEvent` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 

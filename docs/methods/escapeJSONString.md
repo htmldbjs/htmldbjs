@@ -1,11 +1,11 @@
-### `HTMLDB.encodeJSONString`
+### `HTMLDB.escapeJSONString`
 
 This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
 
 #### Description
 
 ```javascript
-HTMLDB.encodeJSONString(text)
+HTMLDB.escapeJSONString(text)
 ```
 
 #### Parameters
