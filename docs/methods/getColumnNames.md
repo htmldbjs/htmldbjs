@@ -12,7 +12,7 @@ HTMLDB.getColumnNames(tableElement, sortColumns)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `tableElement` | Specifies the `htmldb-table` element that contains the columns to be returned. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
+| `tableElement` | Specifies the `htmldb-table` element that contains the columns will be returned. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
 | `sortColumns` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns

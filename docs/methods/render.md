@@ -12,7 +12,7 @@ HTMLDB.render(tableElement, functionDone)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `tableElement` | Specifies the `htmldb-table` element whose visible data elements (eg. `htmldb-section`, `htmldb-template`, `htmldb-form`) to be rendered. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
+| `tableElement` | Specifies the `htmldb-table` element whose visible data elements (eg. `htmldb-section`, `htmldb-template`, `htmldb-form`) will be rendered. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
 | `functionDone` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
