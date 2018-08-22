@@ -1,6 +1,8 @@
 ### `HTMLDB.deleteMarkedRows`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method deletes the rows from the `parent` that contains the class specified by `className`.
+
+Please note that this method is used for inner operations, there is no need to call directly.
 
 #### Description
 
@@ -12,9 +14,9 @@ HTMLDB.deleteMarkedRows(parent, className)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `parent` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `className` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `parent` | Specifies the element whose rows will be deleted.<br><br>`Accepts: DOM Element`<br>`Required` |
+| `className` | Specifies the class name will be used to choose rows to be deleted.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.
