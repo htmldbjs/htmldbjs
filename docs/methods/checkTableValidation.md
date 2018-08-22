@@ -1,6 +1,6 @@
 ### `HTMLDB.checkTableValidation`
 
-This method validates `tableElement` element, for the given `object`, using `validationElement`.
+This method validates `tableElement`, for the given `object`, using `validationElement`.
 
 Please note that this method is used for inner operations, there is no need to call directly.
 
