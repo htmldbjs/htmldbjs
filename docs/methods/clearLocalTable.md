@@ -1,6 +1,8 @@
 ### `HTMLDB.clearLocalTable`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method clears all the records stored in the indexedDB object store for the given `tableElement`.
+
+Please note that this method is used for inner operations, there is no need to call directly.
 
 #### Description
 
@@ -16,4 +18,4 @@ HTMLDB.clearLocalTable(tableElement)
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.
