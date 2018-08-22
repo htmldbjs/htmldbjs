@@ -12,7 +12,7 @@ HTMLDB.doWriterIframeLoad(event)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `event` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `event` | Specifies event object that contains the event details from the event handler.<br><br>`Accepts: Event Object`<br>`Required` |
 
 #### Returns
 
