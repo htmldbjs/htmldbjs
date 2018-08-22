@@ -1,6 +1,6 @@
 ### `HTMLDB.doReaderIframeLoad`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method is an event handler triggered by inner operations.
 
 Please note that this method is used for inner operations, there is no need to call directly.
 
@@ -18,4 +18,4 @@ HTMLDB.doReaderIframeLoad(event)
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.

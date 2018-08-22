@@ -1,6 +1,6 @@
 ### `HTMLDB.doActiveFormFieldUpdate`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method is an event handler triggered by inner operations.
 
 Please note that this method is used for inner operations, there is no need to call directly.
 
@@ -14,9 +14,9 @@ HTMLDB.doActiveFormFieldUpdate(input, field)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `input` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `field` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `input` | Specifies the updated `input` element.<br><br>`Accepts: DOM Element`<br>`Required` |
+| `field` | Specifies the field name.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.
