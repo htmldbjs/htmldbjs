@@ -12,7 +12,7 @@ HTMLDB.setActiveId(tableElement, id, silent)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `tableElement` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `tableElement` | Specifies the `htmldb-table` element whose active id will be set. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
 | `id` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
 | `silent` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
 

@@ -12,7 +12,7 @@ HTMLDB.checkIfIndexedDBTableExists(tableElement)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `tableElement` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `tableElement` | Specifies `htmldb-table` element to be checked. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
 
 #### Returns
 

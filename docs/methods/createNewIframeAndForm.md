@@ -12,7 +12,7 @@ HTMLDB.createNewIframeAndForm(tableElement, guid)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `tableElement` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `tableElement` | Specifies the `htmldb-table` element that contains the `row` element. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
 | `guid` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns

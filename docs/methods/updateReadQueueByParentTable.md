@@ -12,7 +12,7 @@ HTMLDB.updateReadQueueByParentTable(tableElement)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `tableElement` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `tableElement` | Specifies the `htmldb-table` element whose child tables will be added to read queue. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
 
 #### Returns
 

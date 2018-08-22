@@ -12,7 +12,7 @@ HTMLDB.generateTDHTML(tableElement, prefix, object, id)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `tableElement` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `tableElement` | Specifies the `htmldb-table` element whose table row contents to be generated. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
 | `prefix` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
 | `object` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
 | `id` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |

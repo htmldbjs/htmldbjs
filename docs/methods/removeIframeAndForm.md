@@ -12,7 +12,7 @@ HTMLDB.removeIframeAndForm(tableElement, guid)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `tableElement` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `tableElement` | Specifies the `htmldb-table` element contains the iframe (for getting data from the server) and the form (for posting data to the server) specified by the `guid`. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
 | `guid` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns

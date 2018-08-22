@@ -12,7 +12,7 @@ HTMLDB.showMessage(tableElement, messageText)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `tableElement` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `tableElement` | Specifies the target `htmldb-table` element. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
 | `messageText` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns

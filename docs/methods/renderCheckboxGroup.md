@@ -5,14 +5,14 @@ This method adds zeros at the beginning of a given `text` to construct a string 
 #### Description
 
 ```javascript
-HTMLDB.renderCheckboxGroup(tableElement)
+HTMLDB.renderCheckboxGroup(checkboxGroup)
 ```
 
 #### Parameters
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `tableElement` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `checkboxGroup` | Specifies the `htmldb-table` element whose checkbox group will be rendered. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
 
 #### Returns
 
