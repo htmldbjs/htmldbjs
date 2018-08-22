@@ -1,6 +1,6 @@
 ### `HTMLDB.evaluateHTMLDBJSCode`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method calculates the values and replaces mustache templates (between `{{:` and `}}`) based on JavaScript expression and returns the modified string.
 
 #### Description
 
@@ -12,7 +12,7 @@ HTMLDB.evaluateHTMLDBJSCode(code)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `code` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `code` | Specifies the code that contains JavaScript expression.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 

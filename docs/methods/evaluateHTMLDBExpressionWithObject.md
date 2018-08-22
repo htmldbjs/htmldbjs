@@ -1,6 +1,6 @@
 ### `HTMLDB.evaluateHTMLDBExpressionWithObject`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method calculates the values and replaces mustache templates (between `{{` and `}}`) based on given `object` and returns the modified string.
 
 #### Description
 
@@ -12,8 +12,8 @@ HTMLDB.evaluateHTMLDBExpressionWithObject(expression, object)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `expression` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `object` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `expression` | Specifies the expression contains mustache templates.<br><br>`Accepts: String`<br>`Required` |
+| `object` | Specifies the key-value associated JavaScript object that will be used as a source while calculating the values of mustache templates.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 

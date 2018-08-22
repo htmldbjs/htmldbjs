@@ -1,6 +1,6 @@
 ### `HTMLDB.evaluateHTMLDBExpression`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method calculates the values and replaces mustache templates (between `{{` and `}}`) and returns the modified string.
 
 #### Description
 
@@ -12,8 +12,8 @@ HTMLDB.evaluateHTMLDBExpression(expression, parent)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `expression` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `parent` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `expression` | Specifies the expression contains mustache templates.<br><br>`Accepts: String`<br>`Required` |
+| `parent` | Specifies the parent `htmldb-table` or `htmldb-form`. If not specified mustache templates are calculated based on global values.<br><br>`Accepts: DOM Element`<br>`Optional` |
 
 #### Returns
 

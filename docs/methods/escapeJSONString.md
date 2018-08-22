@@ -1,6 +1,6 @@
 ### `HTMLDB.escapeJSONString`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method modifies the special characters in `text`, so that it can be used in JSON.
 
 #### Description
 

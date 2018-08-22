@@ -1,6 +1,6 @@
 ### `HTMLDB.evaluateHTMLDBGlobalObject`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method calculates the values and replaces mustache templates (between `{{` and `}}`) of the global objects (eg. $URL) and returns the modified string.
 
 #### Description
 
@@ -12,8 +12,8 @@ HTMLDB.evaluateHTMLDBGlobalObject(globalObject, parameter)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `globalObject` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `parameter` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `globalObject` | Specifies the global object as string.<br><br>`Accepts: String`<br>`Required` |
+| `parameter` | Specifies the global object parameter as string.<br><br>`Accepts: String`<br>`Optional` |
 
 #### Returns
 
