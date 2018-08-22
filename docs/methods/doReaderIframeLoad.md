@@ -1,6 +1,6 @@
 ### `HTMLDB.doReaderIframeLoad`
 
-This method is an event handler triggered by inner operations.
+This method is an event handler for the events triggered by inner operations.
 
 Please note that this method is used for inner operations, there is no need to call directly.
 
