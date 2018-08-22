@@ -1,6 +1,6 @@
 ### `HTMLDB.extractFormToggleFields`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method returns an array listing `htmldb-field` names that is used in `filter` string.
 
 #### Description
 
@@ -12,9 +12,9 @@ HTMLDB.extractFormToggleFields(filter, parent)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `filter` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `parent` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `filter` | Specifies the filter expression contains mustache templates.<br><br>`Accepts: String`<br>`Required` |
+| `parent` | Specifies the container element whose fields will be explored.<br><br>`Accepts: DOM Element`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns an array listing `htmldb-field` names that is used in `filter` string.

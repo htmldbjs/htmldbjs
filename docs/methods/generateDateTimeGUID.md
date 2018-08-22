@@ -1,6 +1,6 @@
 ### `HTMLDB.generateDateTimeGUID`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method generates unique identification string based on integer value of current time (eg. "1534970823983154").
 
 #### Description
 
@@ -12,8 +12,8 @@ HTMLDB.generateDateTimeGUID(prefix)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `prefix` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `prefix` | Specifies the prefix to be used at the beginning of the GUID.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns generated GUID as string.

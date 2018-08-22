@@ -1,6 +1,6 @@
 ### `HTMLDB.extractToggleParentElement`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method returns container `htmldb-section` or `htmldb-form` element for the given `element`.
 
 #### Description
 
@@ -12,8 +12,8 @@ HTMLDB.extractToggleParentElement(element)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `element` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `element` | Specifies the toggle element whose container element will be returned.<br><br>`Accepts: DOM Element`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns container `htmldb-section` or `htmldb-form` element for the given `element`.

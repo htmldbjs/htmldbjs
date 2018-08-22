@@ -1,6 +1,6 @@
 ### `HTMLDB.extractHTMLDBExpressionTables`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method returns an array listing `htmldb-table` names that is used in `expression` string.
 
 #### Description
 
@@ -12,8 +12,8 @@ HTMLDB.extractHTMLDBExpressionTables(expression)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `expression` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `expression` | Specifies the expression that contains mustache templates.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns an array listing `htmldb-table` names that is used in `expression` string.
