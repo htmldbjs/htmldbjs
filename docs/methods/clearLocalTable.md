@@ -12,7 +12,7 @@ HTMLDB.clearLocalTable(tableElement)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `tableElement` | Specifies the `htmldb-table` element whose indexedDB object stores to be cleared. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
+| `tableElement` | Specifies the `htmldb-table` element whose indexedDB object stores will be cleared. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
 
 #### Returns
 
