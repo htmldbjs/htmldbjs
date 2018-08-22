@@ -1,6 +1,6 @@
 ### `HTMLDB.addSlashes`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method adds `\` characters in front of all single quote `'` and double quote `"` characters within the given `text`.
 
 #### Description
 

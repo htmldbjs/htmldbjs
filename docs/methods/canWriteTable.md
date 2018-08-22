@@ -1,6 +1,6 @@
 ### `HTMLDB.canWriteTable`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method checks whether an update or insert operation is made or not. All the records that has been updated and inserted stored in a different table called writer tables.
 
 #### Description
 
@@ -16,4 +16,4 @@ HTMLDB.canWriteTable(tableElement)
 
 #### Returns
 
-This method returns the modified string.
+This method returns `true` if at least one record inserted or updated within the given `tableElement`. Otherwise returns `false`.
