@@ -1,6 +1,6 @@
 ### `HTMLDB.exploreHTMLDBForm`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method finds container `htmldb-form` element for the given `element`.
 
 #### Description
 
@@ -12,8 +12,8 @@ HTMLDB.exploreHTMLDBForm(element)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `element` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `element` | Specifies the `element` whose container will be explored.<br><br>`Accepts: DOM Element`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns found container element or `false` in failure.
