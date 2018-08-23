@@ -40,7 +40,7 @@ Data source element that retrieves and stores data from the server. Also, it val
 
 HTMLDB proposes an easy way to specify filters as an attribute value. `/` symbol is used to seperate operators and operands. 
 
-For example,
+Following examples show the usage of filters:
 
 - `"deleted/eq/0/and/enabled/eq/1"`
 - `"customer_id/gt/0/or/supplier_id/gt/0"`

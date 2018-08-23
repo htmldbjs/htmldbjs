@@ -23,7 +23,7 @@ A container element for conditions validated locally before writing a record to 
 
 HTMLDB proposes an easy way to specify conditions as an attribute value. `/` symbol is used to seperate operators and operands. 
 
-For example,
+Following examples show the usage of conditions:
 
 - `"deleted/eq/0/and/enabled/eq/1"`
 - `"customer_id/gt/0/or/supplier_id/gt/0"`

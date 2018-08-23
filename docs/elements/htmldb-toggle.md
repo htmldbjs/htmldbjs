@@ -25,7 +25,7 @@ A special container for the form fields that automatically displayed or hided fo
 
 HTMLDB proposes an easy way to specify filters as an attribute value. `/` symbol is used to seperate operators and operands. 
 
-For example,
+Following examples show the usage of filters:
 
 - `"deleted/eq/0/and/enabled/eq/1"`
 - `"customer_id/gt/0/or/supplier_id/gt/0"`
