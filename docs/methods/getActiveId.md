@@ -1,6 +1,6 @@
 ### `HTMLDB.getActiveId`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method returns the active `id` of the given `tableElement`. HTMLDB uses active `id` values as a table cursor. When a table data retreived from the server, active `id` is set to the first `id` value. If an `htmldb-table` element value is set to another value, all related elements (`htmldb-table`, `htmldb-form`, `htmldb-template` and etc.) will be updated respectively.
 
 #### Description
 
@@ -16,4 +16,4 @@ HTMLDB.getActiveId(tableElement)
 
 #### Returns
 
-This method returns the modified string.
+This method returns the active `id` of the `tableElement`.
