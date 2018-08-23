@@ -1,6 +1,6 @@
 ### `HTMLDB.setInputValue`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method assigns the `value` to the given `input`.
 
 #### Description
 
@@ -12,9 +12,9 @@ HTMLDB.setInputValue(input, value)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `input` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `value` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `input` | Specifies the input whose value will be modified.<br><br>`Accepts: DOM Element`<br>`Required` |
+| `value` | Specifies the value to be assigned.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.

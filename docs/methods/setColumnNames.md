@@ -1,6 +1,6 @@
 ### `HTMLDB.setColumnNames`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method sets columns names using the `object` for the given `tableElement`.
 
 #### Description
 
@@ -13,8 +13,8 @@ HTMLDB.setColumnNames(tableElement, object)
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `tableElement` | Specifies the `htmldb-table` element whose column names will be set. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
-| `object` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `object` | Specifies the source object that will be used to extract column names.<br><br>`Accepts: Object`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.

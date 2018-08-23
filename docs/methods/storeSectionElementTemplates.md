@@ -1,6 +1,6 @@
 ### `HTMLDB.storeSectionElementTemplates`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method stores initial attribute values and contents of the given `element` for future use.
 
 #### Description
 
@@ -12,8 +12,8 @@ HTMLDB.storeSectionElementTemplates(element)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `element` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `element` | Specifies the element whose attribute values and contents and child values will be stored.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.

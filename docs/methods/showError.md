@@ -1,6 +1,6 @@
 ### `HTMLDB.showError`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method triggers `htmldbonerror` event for the `tableElement` with the `errorText`.
 
 #### Description
 
@@ -13,8 +13,8 @@ HTMLDB.showError(tableElement, errorText)
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `tableElement` | Specifies the target `htmldb-table` element. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
-| `errorText` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `errorText` | Specifies the error text.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.

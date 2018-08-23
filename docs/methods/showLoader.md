@@ -1,6 +1,6 @@
 ### `HTMLDB.showLoader`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method shows the loader of the `tableElement` with the `type`.
 
 #### Description
 
@@ -13,8 +13,8 @@ HTMLDB.showLoader(tableElement, type)
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `tableElement` | Specifies `htmldb-table` element whose loader will be shown. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
-| `type` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `type` | Specifies the type of the loader (eg. "read", "write" or "validate").<br><br>`Accepts: String`<br>`Optional` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.

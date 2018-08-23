@@ -1,6 +1,6 @@
 ### `HTMLDB.stop`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method stops the `tableElement` loading operations and hide related loaders immediately.
 
 #### Description
 
@@ -16,4 +16,4 @@ HTMLDB.stop(tableElement)
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.
