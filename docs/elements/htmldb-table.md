@@ -43,6 +43,7 @@ HTMLDB proposes an easy way to specify filters as an attribute value. `/` symbol
 For example,
 
 - `"deleted/eq/0/and/enabled/eq/1"`
+- `"customer_id/gt/0/or/supplier_id/gt/0"`
 - `"name/isnot/''"`
 - `"category/in/1,3,4"`
 - `"category/is/{{category_id}}"`
