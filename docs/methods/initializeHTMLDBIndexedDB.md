@@ -1,6 +1,6 @@
 ### `HTMLDB.initializeHTMLDBIndexedDB`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method initializes Browser's local DB indexedDB and creates all the object stores required.
 
 #### Description
 
@@ -12,8 +12,8 @@ HTMLDB.initializeHTMLDBIndexedDB(functionDone)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `functionDone` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `functionDone` | Specifies the callback function will be called after initialization process.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.

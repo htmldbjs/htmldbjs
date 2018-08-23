@@ -1,6 +1,6 @@
 ### `HTMLDB.initializeHTMLDBInputs`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method initializes `htmldb-input-save` elements.
 
 #### Description
 
@@ -12,8 +12,8 @@ HTMLDB.initializeHTMLDBInputs(parent)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `parent` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `parent` | Specifies the container element. If not specified, document.body is used for `parent` parameter.<br><br>`Accepts: DOM Element`<br>`Optional` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.
