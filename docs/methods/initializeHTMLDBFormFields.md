@@ -1,6 +1,6 @@
 ### `HTMLDB.initializeHTMLDBFormFields`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method initializes `htmldb-field` elements within the given `formElement`.
 
 #### Description
 
@@ -12,8 +12,8 @@ HTMLDB.initializeHTMLDBFormFields(formElement)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `formElement` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `formElement` | Specifies the container FORM element.<br><br>`Accepts: DOM Element`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.

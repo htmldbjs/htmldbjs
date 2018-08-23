@@ -1,6 +1,6 @@
 ### `HTMLDB.initializeHTMLDBEditButtons`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method initializes `htmldb-button-edit` elements within `parent` related to `tableElement`.
 
 #### Description
 
@@ -12,9 +12,9 @@ HTMLDB.initializeHTMLDBEditButtons(parent, tableElement)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `parent` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `parent` | Specifies the container element. If not specified, document.body is used for `parent` parameter.<br><br>`Accepts: DOM Element`<br>`Optional` |
 | `tableElement` | Specifies the `htmldb-table` element that is related to the edit buttons will be initialized. If this parameter specified, only the edit buttons related to this `htmldb-table` element will be initialized. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Optional` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.
