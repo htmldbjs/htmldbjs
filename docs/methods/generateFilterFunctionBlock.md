@@ -1,6 +1,8 @@
 ### `HTMLDB.generateFilterFunctionBlock`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method generates filter function body for the given `filter` and `parent`.
+
+Please note that this method is used for inner operations, there is no need to call directly.
 
 #### Description
 
@@ -12,9 +14,9 @@ HTMLDB.generateFilterFunctionBlock(filter, parent)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `filter` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `parent` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `filter` | Specifies the filter text (in format "deleted/eq/0/and/enabled/eq/1") that will be used to generate function body.<br><br>`Accepts: String`<br>`Required` |
+| `parent` | Specifies the parent element.<br><br>`Accepts: DOM Element`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns generated function body according to the `filter` value.
