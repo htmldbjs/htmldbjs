@@ -19,7 +19,6 @@ var HTMLDB = {
 			HTMLDB.initializeHTMLDBForms();
 			HTMLDB.initializeHTMLDBSelects();
 			HTMLDB.initializeHTMLDBToggles();
-			HTMLDB.initializeHTMLDBUpdaters();
 			HTMLDB.initializeReadQueue();
 			HTMLDB.resetWriterLoop();
 		});
@@ -1458,9 +1457,6 @@ var HTMLDB = {
         	paginationElement = paginationElements[i];
         	HTMLDB.validateHTMLDBPaginationDefinition(paginationElement);
         }
-	},
-	"initializeHTMLDBUpdaters": function (parent) {
-
 	},
 	"initializeLocalTable": function (tableElement) {
 		if (null == HTMLDB.indexedDBConnection) {
