@@ -1,6 +1,6 @@
 ### `HTMLDB.isNewObject`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method checks whether the given `object` is new or not.
 
 #### Description
 
@@ -16,4 +16,4 @@ HTMLDB.isNewObject(object)
 
 #### Returns
 
-This method returns the modified string.
+This method returns `true` if the `object` is new. Otherwise returns `false`.

@@ -1,6 +1,6 @@
 ### `HTMLDB.isLoading`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method checks whether there is an `htmldb-table` element in loading mode or not within the current page.
 
 #### Description
 
@@ -14,4 +14,4 @@ This method has no parameters.
 
 #### Returns
 
-This method returns the modified string.
+This method returns `true`, if at least one `htmldb-table` element is in loading mode. Otherwise returns `false`.

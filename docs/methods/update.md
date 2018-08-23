@@ -1,6 +1,6 @@
 ### `HTMLDB.update`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method updates the record specified by `id` in the `tableElement`.
 
 #### Description
 
@@ -13,10 +13,10 @@ HTMLDB.update(tableElement, id, object, className)
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `tableElement` | Specifies the `htmldb-table` element that contains the record will be updated. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
-| `id` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `object` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `className` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `id` | Specifies the `id` of the record to be updated.<br><br>`Accepts: String`<br>`Required` |
+| `object` | Specifies the object that contains new values.<br><br>`Accepts: Object`<br>`Required` |
+| `className` | Specifies the extra class name will be used to mark updated record.<br><br>`Accepts: String`<br>`Optional` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.

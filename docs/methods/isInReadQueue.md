@@ -1,6 +1,6 @@
 ### `HTMLDB.isInReadQueue`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method checks whether `tableElement` is in read queue or not.
 
 #### Description
 
@@ -16,4 +16,4 @@ HTMLDB.isInReadQueue(tableElement)
 
 #### Returns
 
-This method returns the modified string.
+This method returns `true` if `tableElement` is in read queue. Otherwise returns `false`.

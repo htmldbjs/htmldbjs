@@ -1,6 +1,6 @@
 ### `HTMLDB.insert`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method inserts record specified by `object` into `tableElement`.
 
 #### Description
 
@@ -13,9 +13,9 @@ HTMLDB.insert(tableElement, object, className)
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `tableElement` | Specifies the `htmldb-table` element that will contain the record will be inserted. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
-| `object` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `className` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `object` | Specifies the object to be inserted.<br><br>`Accepts: Object`<br>`Required` |
+| `className` | Specifies the extra class name will be used to mark inserted record.<br><br>`Accepts: String`<br>`Optional` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.

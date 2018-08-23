@@ -1,6 +1,6 @@
 ### `HTMLDB.isHTMLDBParameter`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method checks whether HTMLDB element has an attribute with the value of "true" or "1".
 
 #### Description
 
@@ -12,9 +12,9 @@ HTMLDB.isHTMLDBParameter(element, parameter)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `element` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `parameter` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `element` | Specifies the element whose attribute value will be checked.<br><br>`Accepts: DOM Element`<br>`Required` |
+| `parameter` | Specifies the name of the attribute.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns `true` if the attribute value specified by `parameter` is "true" or "1". Otherwise returns `false`.
