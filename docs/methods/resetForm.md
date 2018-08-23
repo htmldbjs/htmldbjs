@@ -1,6 +1,6 @@
 ### `HTMLDB.resetForm`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method resets the given `form`.
 
 #### Description
 
@@ -12,8 +12,8 @@ HTMLDB.resetForm(form)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `form` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `form` | Specifies the container `FORM` element whose child elements will be reset.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.
