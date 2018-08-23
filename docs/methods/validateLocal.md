@@ -14,7 +14,7 @@ HTMLDB.validateLocal(tableElement, object, functionDone)
 | -------------------------- | ----------------------------------------- |
 | `tableElement` | Specifies the `htmldb-table` element that contains the records will be validated locally. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
 | `object` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `functionDone` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `functionDone` | Specifies the function to be called after completing validate operation.<br><br>`Accepts: Function` |
 
 #### Returns
 

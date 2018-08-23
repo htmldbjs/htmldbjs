@@ -550,6 +550,8 @@ var HTMLDB = {
 		if (functionDone) {
 			functionDone(tableElement);
 		}
+
+		return true;
 	},
 	"get": function (tableElement, id) {
 		if (!tableElement) {
@@ -3187,6 +3189,7 @@ var HTMLDB = {
 				= content;
 		tableElement.setAttribute("data-htmldb-active-id", activeId);
 		HTMLDB.render(tableElement);
+		return true;
 	},
 	"convertRowToObject": function (tableElement, row) {
 		var object = {};

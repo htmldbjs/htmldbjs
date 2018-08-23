@@ -1,6 +1,6 @@
 ### `HTMLDB.registerFormElementEvent`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method attaches suitable event (eg. input, change, click) according to the form input specified by `element`.
 
 #### Description
 
@@ -12,9 +12,9 @@ HTMLDB.registerFormElementEvent(element, functionEvent)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `element` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `functionEvent` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `element` | Specifies the target element.<br><br>`Accepts: DOM Element`<br>`Required` |
+| `functionEvent` | Specifies the function to be called on event.<br><br>`Accepts: Function` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.

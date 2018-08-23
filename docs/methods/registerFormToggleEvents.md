@@ -1,6 +1,6 @@
 ### `HTMLDB.registerFormToggleEvents`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method finds and attaches suitable toggle events to the `form` elements.
 
 #### Description
 
@@ -12,8 +12,8 @@ HTMLDB.registerFormToggleEvents(form)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `form` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `form` | Specifies container form element that holds elements to be modified.<br><br>`Accepts: DOM Element`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.
