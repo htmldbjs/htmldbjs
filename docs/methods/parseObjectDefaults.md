@@ -1,6 +1,6 @@
 ### `HTMLDB.parseObjectDefaults`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method parses given JSON string `defaults` into `object`.
 
 #### Description
 
@@ -12,9 +12,9 @@ HTMLDB.parseObjectDefaults(object, defaults)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `object` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `defaults` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `object` | Specifies the JavaScript object to be modified.<br><br>`Accepts: Object`<br>`Required` |
+| `defaults` | Specifies the JSON string that will be parsed.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns modified object.

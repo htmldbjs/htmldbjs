@@ -1,6 +1,6 @@
 ### `HTMLDB.isNumeric`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method checks whether the given `text` is numeric (letter) or not.
 
 #### Description
 
@@ -12,8 +12,8 @@ HTMLDB.isNumeric(text)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `text` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `text` | Specifies the text to be checked.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns `true` if the given `text` is numeric. Otherwise returns `false`.
