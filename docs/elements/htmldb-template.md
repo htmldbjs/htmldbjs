@@ -32,7 +32,30 @@ A container element for the templates, that are automatically rendered by relate
 | -------------------------- | ----------------------------------------- |
 | `data-htmldb-table` | Specifies the parent table, that will be used to render this template.<br><br>`Default Value: ""`<br>`Required` |
 | `data-htmldb-template-target` | Specifies the target element id, which will be populated after rendering this template. Additionally this attribute accepts table fields and element variables in mustache template notation.<br><br>`Default Value: ""`<br>`Required` |
-| `data-htmldb-filter` | Specifies filter expression will be used while reading data from a parent HTMLDB table instance. <br><br>`Default Value: ""`. |
+| `data-htmldb-filter` | Specifies filter expression will be used while reading data from a parent HTMLDB table instance. Additionally, this attribute accepts mustache text notation.<br><br>`Default Value: ""`. |
+
+#### Filter Syntax
+
+HTMLDB proposes an easy way to specify filters as an attribute value. `/` symbol is used to seperate operators and operands. 
+
+For example,
+
+- `"deleted/eq/0/and/enabled/eq/1"`
+- `"name/isnot/''"`
+- `"category/in/1,3,4"`
+- `"category/is/{{category_id}}"`
+- `"invoice_date/lt/{{:new Date().getTime();}}"`
+
+#### Filter Operators
+
+- `is` or `eq` means "equal to".
+- `isnot` or `neq` means "not equal to".
+- `gt` means "greater than".
+- `gte` means "greater than or equal to".
+- `lt` means "less than".
+- `lte` means "less than or equal to".
+- `in` means "in comma `,` seperated values".
+- `notin` means "not in comma `,` seperated values".
 
 #### Events
 

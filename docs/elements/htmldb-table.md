@@ -16,7 +16,7 @@ Data source element that retrieves and stores data from the server. Also, it val
 
 | Attribute Name | Description |
 | ---- | ---- |
-| `data-htmldb-filter` | Specifies filter expression will be used while reading data from a parent HTMLDB table instance. This attribute is used with `data-htmldb-table`.<br><br>`Default Value: ""`<br> |
+| `data-htmldb-filter` | Specifies filter expression will be used while reading data from a parent HTMLDB table instance. This attribute is used with `data-htmldb-table`. Additionally, this attribute accepts mustache text notation.<br><br>`Default Value: ""`<br> |
 | `data-htmldb-loader` | Specifies the loader element id that will be shown on all read, validate and write operations.<br><br>`Default Value: ""` |
 | `data-htmldb-local` | Specifies whether HTMLDB table instance will store data in browser's local storage (IndexedDB) or not. Local HTMLDB table instances are not automatically retreive data from the server or post data to the server. It stores all the data in IndexedDB. Local HTMLDB table instances use `HTMLDB` as database name and HTMLDB table element `id` for object store name. Local HTMLDB table data can be accessible from all pages in the same domain.<br><br>`Default Value: "0"` |
 | `data-htmldb-priority` | Specifies the loading priority of the HTMLDB table.<br><br>`Default Value: "0"` |
@@ -35,6 +35,29 @@ Data source element that retrieves and stores data from the server. Also, it val
 | `data-htmldb-write-url` | Specifies the data post URL.<br><br>`Default Value: ""` |
 | `data-htmldb-write-only` | Specifies that HTMLDB table instance is write-only or not.<br><br>`Default Value: "0"` |
 | `id` | Specifies the name of the HTMLDB table.<br><br>`Default Value: ""`<br>`Required`<br>`Unique` |
+
+#### Filter Syntax
+
+HTMLDB proposes an easy way to specify filters as an attribute value. `/` symbol is used to seperate operators and operands. 
+
+For example,
+
+- `"deleted/eq/0/and/enabled/eq/1"`
+- `"name/isnot/''"`
+- `"category/in/1,3,4"`
+- `"category/is/{{category_id}}"`
+- `"invoice_date/lt/{{:new Date().getTime();}}"`
+
+#### Filter Operators
+
+- `is` or `eq` means "equal to".
+- `isnot` or `neq` means "not equal to".
+- `gt` means "greater than".
+- `gte` means "greater than or equal to".
+- `lt` means "less than".
+- `lte` means "less than or equal to".
+- `in` means "in comma `,` seperated values".
+- `notin` means "not in comma `,` seperated values".
 
 #### Events
 

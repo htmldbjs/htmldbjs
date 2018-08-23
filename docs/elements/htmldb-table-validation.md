@@ -17,7 +17,7 @@ A container element for conditions validated locally before writing a record to 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `data-htmldb-table` | Specifies table, to be validated according to the specified conditions. `Default Value: ""`<br>`Required` |
-| `data-htmldb-validation` | Specifies the condition to be validated. If condition satisfied, message will be displayed as an error. This attribute accepts mustache text notation.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-validation` | Specifies the condition to be validated. If condition satisfied, message will be displayed as an error. Additionally, this attribute accepts mustache text notation.<br><br>`Default Value: ""`<br>`Required` |
 
 #### Validation Syntax
 
@@ -28,6 +28,8 @@ For example,
 - `"deleted/eq/0/and/enabled/eq/1"`
 - `"name/isnot/''"`
 - `"category/in/1,3,4"`
+- `"category/is/{{category_id}}"`
+- `"invoice_date/lt/{{:new Date().getTime();}}"`
 
 #### Validation Operators
 

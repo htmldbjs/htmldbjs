@@ -19,8 +19,31 @@ A special container for the form fields that automatically displayed or hided fo
 
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `data-htmldb-filter` | Specifies the condition according to the values of the container form that make this element visible.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-filter` | Specifies the condition according to the values of the container form that make this element visible. Additionally, this attribute accepts mustache text notation.<br><br>`Default Value: ""`<br>`Required` |
  
+#### Filter Syntax
+
+HTMLDB proposes an easy way to specify filters as an attribute value. `/` symbol is used to seperate operators and operands. 
+
+For example,
+
+- `"deleted/eq/0/and/enabled/eq/1"`
+- `"name/isnot/''"`
+- `"category/in/1,3,4"`
+- `"category/is/{{category_id}}"`
+- `"invoice_date/lt/{{:new Date().getTime();}}"`
+
+#### Filter Operators
+
+- `is` or `eq` means "equal to".
+- `isnot` or `neq` means "not equal to".
+- `gt` means "greater than".
+- `gte` means "greater than or equal to".
+- `lt` means "less than".
+- `lte` means "less than or equal to".
+- `in` means "in comma `,` seperated values".
+- `notin` means "not in comma `,` seperated values".
+
 #### Events
 
 This element has no HTMLDB events.
