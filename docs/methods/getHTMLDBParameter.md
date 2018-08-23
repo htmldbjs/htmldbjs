@@ -1,6 +1,6 @@
 ### `HTMLDB.getHTMLDBParameter`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method gets the HTMLDB element attribute value.
 
 #### Description
 
@@ -12,9 +12,9 @@ HTMLDB.getHTMLDBParameter(element, parameter)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `element` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `parameter` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `element` | Specifies the element whose attribute value specified by `parameter` will be returned.<br><br>`Accepts: DOM Element`<br>`Required` |
+| `parameter` | Specifies the attribute name.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns the HTMLDB element attribute value.

@@ -1,6 +1,6 @@
 ### `HTMLDB.getTableFieldActiveValue`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method gets the current value of the `column` of the given `tableElement`.
 
 #### Description
 
@@ -13,8 +13,8 @@ HTMLDB.getTableFieldActiveValue(tableElement, column)
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `tableElement` | Specifies the `htmldb-table` element that contains the data will be returned. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
-| `column` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `column` | Specifies the column name.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns the current value of the `column` in the `tableElement`.
