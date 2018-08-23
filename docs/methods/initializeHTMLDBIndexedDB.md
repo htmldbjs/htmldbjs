@@ -1,6 +1,6 @@
 ### `HTMLDB.initializeHTMLDBIndexedDB`
 
-This method initializes Browser's local DB indexedDB and creates all the object stores required.
+This method initializes indexedDB and creates all the object stores required.
 
 #### Description
 
