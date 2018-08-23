@@ -1,6 +1,6 @@
 ### `HTMLDB.updateReadQueueCallbacks`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method adds a callback function for the `tableElement`.
 
 #### Description
 
@@ -13,8 +13,8 @@ HTMLDB.updateReadQueueCallbacks(tableElement, callbackFunction)
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `tableElement` | Specifies the `htmldb-table` element. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
-| `callbackFunction` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `callbackFunction` | Specifies the function will be called after reading `tableElement`.<br><br>`Accepts: Function`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.

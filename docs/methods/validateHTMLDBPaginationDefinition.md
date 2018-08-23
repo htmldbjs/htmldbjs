@@ -1,6 +1,8 @@
 ### `HTMLDB.validateHTMLDBPaginationDefinition`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method validates the definition of given `element` as an `htmldb-pagination`.
+
+Please note that this method is used for inner operations, there is no need to call directly.
 
 #### Description
 
@@ -12,8 +14,8 @@ HTMLDB.validateHTMLDBPaginationDefinition(element)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `element` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `element` | Specifies the element to be validated.<br><br>`Accepts: DOM Element`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns `true` on success, and returns `false` on failure.

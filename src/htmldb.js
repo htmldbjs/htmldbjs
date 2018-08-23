@@ -147,6 +147,8 @@ var HTMLDB = {
 				return false;
 			}
 		}
+
+		return true;
 	},
 	"validate": function (tableElement, object, functionDone) {
 		if (!tableElement) {
@@ -736,6 +738,8 @@ var HTMLDB = {
 		if (true !== updateOnlyReaderTable) {
 			writerStore.put(object, HTMLDB.addLeadingZeros(id, 20));
 		}
+
+		return true;
 	},
 	"delete": function (tableElement, id, className) {
 		if (!tableElement) {
@@ -3047,6 +3051,8 @@ var HTMLDB = {
 			}
 			HTMLDB.updateReadQueue(refreshTable);
 		}
+
+		return true;
 	},
 	"initializeReadQueue": function () {
         var tableElements = HTMLDB.q(".htmldb-table");
@@ -3500,6 +3506,8 @@ var HTMLDB = {
 	        	return false;	
         	}
         }
+
+        return true;
 	},
 	"validateHTMLDBTemplateDefinition": function (element) {
 		var tableElementId = HTMLDB.getHTMLDBParameter(element, "table");
@@ -3510,8 +3518,10 @@ var HTMLDB = {
     	if (("" == tableElementId)
     			|| (!HTMLDB.e(tableElementId))) {
         	throw(new Error(tableElementId + " HTMLDB table not found."));
-    		return;
+    		return false;
     	}
+
+    	return true;
 	},
 	"validateHTMLDBPaginationDefinition": function (element) {
 		var tableElementId = HTMLDB.getHTMLDBParameter(element, "table");
@@ -3520,8 +3530,10 @@ var HTMLDB = {
     			|| (!HTMLDB.e(tableElementId))) {
         	throw(new Error(tableElementId + " HTMLDB table referenced in "
         			+ "htmldb-pagination element, but not found."));
-    		return;
+    		return false;
     	}
+
+    	return true;
 	},
 	"createHelperElements": function (tableElement) {
         var tableHTML = "";

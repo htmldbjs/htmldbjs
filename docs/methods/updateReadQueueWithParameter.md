@@ -1,6 +1,6 @@
 ### `HTMLDB.updateReadQueueWithParameter`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method adds htmldb-table elements with the given `element` and `parameter`.
 
 #### Description
 
@@ -12,9 +12,9 @@ HTMLDB.updateReadQueueWithParameter(element, parameter)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `element` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `parameter` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `element` | Specifies the element whose `parameter` value will be used.<br><br>`Accepts: String`<br>`Required` |
+| `parameter` | Specifies the attribute name of the `element` that will be used.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns `true` on success, and returns `false` on failure.

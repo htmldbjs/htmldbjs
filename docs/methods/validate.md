@@ -1,6 +1,6 @@
 ### `HTMLDB.validate`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method validates the record specified by `object` to be inserted or updated in the `tableElement`.
 
 #### Description
 
@@ -13,10 +13,10 @@ HTMLDB.validate(tableElement, object, functionDone)
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `tableElement` | Specifies the `htmldb-table` element that contains the records will be validated. This parameter accepts any DOM element from `document.getElementById` or `HTMLDB.e`<br><br>`Accepts: DOM Element`<br>`Required` |
-| `object` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `functionDone` | Specifies the function to be called after completing validate operation.<br><br>`Accepts: Function` |
+| `object` | Specifies the object to be validated.<br><br>`Accepts: Object`<br>`Required` |
+| `functionDone` | Specifies the function to be called after completing the "validate" operation.<br><br>`Accepts: Function` |
 
 #### Returns
 
-This method returns the modified string.### `HTMLDB.initialize`
+This method returns `false` on failure.
 

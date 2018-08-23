@@ -1,6 +1,6 @@
 ### `HTMLDB.updateReadQueue`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method adds `tableElement` and its child elements in the read queue.
 
 #### Description
 
@@ -16,4 +16,4 @@ HTMLDB.updateReadQueue(tableElement)
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.

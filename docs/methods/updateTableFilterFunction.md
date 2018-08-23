@@ -1,6 +1,6 @@
 ### `HTMLDB.updateTableFilterFunction`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method re-generates the filter function of htmldb-table element specified by `tableElement`.
 
 #### Description
 
@@ -16,4 +16,4 @@ HTMLDB.updateTableFilterFunction(tableElement)
 
 #### Returns
 
-This method returns the modified string.
+This method returns `true` on success, and returns `false` on failure.
