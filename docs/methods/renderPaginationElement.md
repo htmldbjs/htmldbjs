@@ -1,6 +1,6 @@
 ### `HTMLDB.renderPaginationElement`
 
-This method renders specific `htmldb-pagination` element with the given `element`.
+This method renders a specific `htmldb-pagination` element with the given `element`.
 
 #### Description
 

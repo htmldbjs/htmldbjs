@@ -1,6 +1,6 @@
 ### `HTMLDB.renderSelectElement`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method renders a specific `htmldb-select` element with the given `select`.
 
 #### Description
 
@@ -12,8 +12,8 @@ HTMLDB.renderSelectElement(select)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `select` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `select` | Specifies the container `htmldb-select` element that will be rendered.<br><br>`Accepts: DOM Element`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.
