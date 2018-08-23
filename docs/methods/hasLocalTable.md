@@ -1,6 +1,6 @@
 ### `HTMLDB.hasLocalTable`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method checks whether there is a local `htmldb-table` element or not within the current page.
 
 #### Description
 
@@ -14,4 +14,4 @@ This method has no parameters.
 
 #### Returns
 
-This method returns the modified string.
+This method returns `true` if there is at least one local `htmldb-table` element within the current page. Otherwise returns `false`.

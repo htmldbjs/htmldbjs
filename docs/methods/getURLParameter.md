@@ -1,6 +1,6 @@
 ### `HTMLDB.getURLParameter`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method splits current page url using `/` character and returns the part specified by `index`. This method is used by $URL global variable.
 
 #### Description
 
@@ -12,8 +12,8 @@ HTMLDB.getURLParameter(index)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `index` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `index` | Specifies the index of the URL part to be returned.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method splits current page URL using `/` character and returns the part specified by `index`. 

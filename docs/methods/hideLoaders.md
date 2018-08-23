@@ -1,6 +1,6 @@
 ### `HTMLDB.hideLoaders`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method hides all the loaders within the current page.
 
 #### Description
 
@@ -14,4 +14,4 @@ This method has no parameters.
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.
