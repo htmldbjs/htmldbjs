@@ -1,6 +1,6 @@
 ### `HTMLDB.writeTables`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method checks all `htmldb-table` elements for inserted/updated and deleted records and then, writes all updated records to the server.
 
 #### Description
 
@@ -14,4 +14,4 @@ This method has no parameters.
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.
