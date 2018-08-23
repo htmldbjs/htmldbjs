@@ -1,6 +1,6 @@
 ### `HTMLDB.renderElementWithObject`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method renders container `element` and child elements that have attributes and contents including mustache templates with the given `object`.
 
 #### Description
 
@@ -12,9 +12,9 @@ HTMLDB.renderElementWithObject(element, object)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `element` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `object` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `element` | Specifies container element that will be rendered.<br><br>`Accepts: DOM Element`<br>`Required` |
+| `object` | Specifies the source object whose values will be used while rendering.<br><br>`Accepts: Object`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.

@@ -1,6 +1,6 @@
 ### `HTMLDB.renderCheckboxGroups`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method renders all `htmldb-checkbox-group` elements related to `tableElement`.
 
 #### Description
 
@@ -16,4 +16,4 @@ HTMLDB.renderCheckboxGroups(tableElement)
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.

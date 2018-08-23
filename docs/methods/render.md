@@ -1,6 +1,6 @@
 ### `HTMLDB.render`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method renders all related elements (eg. `htmldb-form`, `htmldb-section`, `htmldb-template`, `htmldb-pagination`) of `tableElement`.
 
 #### Description
 
@@ -17,4 +17,4 @@ HTMLDB.render(tableElement, functionDone)
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.

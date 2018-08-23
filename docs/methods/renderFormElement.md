@@ -1,6 +1,6 @@
 ### `HTMLDB.renderFormElement`
 
-This method adds zeros at the beginning of a given `text` to construct a string with the length of `digitCount`.
+This method renders all `form` inputs with the given `object`.
 
 #### Description
 
@@ -12,9 +12,9 @@ HTMLDB.renderFormElement(form, object)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `form` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
-| `object` | Specifies the text to be modified.<br><br>`Accepts: String`<br>`Required` |
+| `form` | Specifies container form whose input elements will be rendered.<br><br>`Accepts: DOM Element`<br>`Required` |
+| `object` | Specifies the source object whose values will be used while rendering.<br><br>`Accepts: String`<br>`Required` |
 
 #### Returns
 
-This method returns the modified string.
+This method returns nothing.
