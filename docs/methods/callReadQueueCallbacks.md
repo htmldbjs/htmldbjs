@@ -2,6 +2,8 @@
 
 This method calls all the callback functions after reading the htmldb-table element given with `tableElement`.
 
+Please note that this method is used for inner operations, there is no need to call directly.
+
 #### Description
 
 ```javascript

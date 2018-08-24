@@ -3540,7 +3540,7 @@ var HTMLDB = {
         var iframeHTML = "";
         var formHTML = "";
 
-        var elementId = element.getAttribute("id");
+        var elementId = tableElement.getAttribute("id");
 
 		tableHTML = "<table id=\""
 				+ elementId + "_reader"
@@ -3570,7 +3570,7 @@ var HTMLDB = {
 				+ elementId
 				+ "_form_container\"></div>";
 
-		element.innerHTML = tableHTML + iframeHTML + formHTML;
+		tableElement.innerHTML = tableHTML + iframeHTML + formHTML;
 	},
 	"isLetter": function (text) {
 		if (undefined == text) {
