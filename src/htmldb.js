@@ -970,7 +970,7 @@ var HTMLDB = {
     			continue;
     		}
     		HTMLDB.markRows(writerTable, "updating");
-    		HTMLDB.write(element.getAttribute("id"),
+    		HTMLDB.write(element,
     				false,
     				function (tableElement, responseText) {
 	    		var writerTable = HTMLDB.e(
