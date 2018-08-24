@@ -861,7 +861,7 @@ var HTMLDB = {
 		var tableElementId = tableElement.getAttribute("id");
 
 		if (tableElement.className.indexOf("htmldb-form") != -1) {
-			return HTMLDB.getFormFieldActiveValue(tableElementId, column);
+			return HTMLDB.getFormFieldActiveValue(tableElement, column);
 		}
 
 		var activeId = (
