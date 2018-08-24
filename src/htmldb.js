@@ -4126,7 +4126,7 @@ var HTMLDB = {
 
 				if ("$" == foreignTableId[0]) {
 					returnValue += HTMLDB.evaluateHTMLDBGlobalObject(
-							HTMLDB.e(foreignTableId),
+							foreignTableId,
 							column);
 				} else if (":" == mustacheExpression[0]) {
 					returnValue += HTMLDB.evaluateHTMLDBJSCode(
