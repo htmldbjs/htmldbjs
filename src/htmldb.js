@@ -53,7 +53,7 @@ var HTMLDB = {
 			return HTMLDB.readChildTable(tableElement, functionDone);
 		}
 
-		var parentForm = HTMLDB.getHTMLDBParameter(tableElement, "form");
+		var parentForm = HTMLDB.e(HTMLDB.getHTMLDBParameter(tableElement, "form"));
 
 		var readURL = HTMLDB.getHTMLDBParameter(tableElement, "read-url");
 		readURL = HTMLDB.evaluateHTMLDBExpression(readURL, parentForm);
