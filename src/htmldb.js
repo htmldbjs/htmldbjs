@@ -272,7 +272,7 @@ var HTMLDB = {
 
 			try {
 				filterFunction = new Function("object", functionBody);
-				if (!filterFunction(object)) {
+				if (filterFunction(object)) {
 					currentResponse.errorCount += 1;
 					currentResponse.lastError += validationItem.innerHTML;
 				}
