@@ -225,7 +225,7 @@ var HTMLDB = {
             validation = validations[i];
             if (HTMLDB.getHTMLDBParameter(validation, "table")
             		== tableElement.getAttribute("id")) {
-            	currentResponse = HTMLDB.checkTableValidation(
+            	currentResponse = checkTableValidation(
             			tableElement,
             			object,
             			validation);
@@ -272,7 +272,7 @@ var HTMLDB = {
 
 			try {
 				filterFunction = new Function("object", functionBody);
-				if (filterFunction(object)) {
+				if (!filterFunction(object)) {
 					currentResponse.errorCount += 1;
 					currentResponse.lastError += validationItem.innerHTML;
 				}
@@ -472,7 +472,9 @@ var HTMLDB = {
 						"redirect");
 				redirectURL = HTMLDB.evaluateHTMLDBExpression(redirectURL);
 				if (redirectURL != "") {
-					window.location = redirectURL;
+					setTimeout(function () {
+						window.location.href = redirectURL;
+					}, 250);
 				}
 			}
 		}
@@ -1005,7 +1007,9 @@ var HTMLDB = {
 		}
 		var redirectURL = HTMLDB.getHTMLDBParameter(tableElement, "redirect");
 		if (redirectURL != "") {
-			window.location.href = redirectURL;
+			setTimeout(function () {
+				window.location.href = redirectURL;
+			}, 250);
 		}
 		HTMLDB.e(
 				tableElement.getAttribute("id")
