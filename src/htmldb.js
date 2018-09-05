@@ -3926,6 +3926,28 @@ var HTMLDB = {
 				.replace(/\f/g, "\\f")
 				.replace(/\\/g, "\\");
 	},
+	"unescapeJSONString": function (text) {
+		return text.replace(/\\n/g, "\n")
+				.replace(/\\'/g, "'")
+				.replace(/\\r/g, "\r")
+				.replace(/\\t/g, "\t")
+				.replace(/\\f/g, "\f")
+				.replace(/\\\\/g, "\\");
+	},
+	"decodeHTMLEntities": function (text) {
+		var element = document.createElement('div');
+
+		if(text && typeof text === 'string') {
+			// strip script/html tags
+			text = text.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, "");
+			text = text.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, "");
+			element.innerHTML = text;
+			text = element.textContent;
+			element.textContent = "";
+		}
+
+		return text;
+	},
 	"createNewIframeAndForm": function (tableElement, guid) {
 		var tableElementId = tableElement.getAttribute("id");
 		var iframeContainer = HTMLDB.e(
@@ -3994,7 +4016,7 @@ var HTMLDB = {
         				+ id
         				+ strPropertyName
         				+ "\">"
-        				+ object[strPropertyName]
+        				+ HTMLDB.unescapeJSONString(object[strPropertyName])
         				+ "</td>");
         	}
     	}
@@ -4792,6 +4814,7 @@ var HTMLDB = {
 		var inputType = String(input.getAttribute("type")).toLowerCase();
 		var inputDate = 0;
 		var inputDateText = "";
+		value = HTMLDB.decodeHTMLEntities(value);
 		switch (tagName) {
 			case "input":
 				if ("checkbox" == inputType) {
