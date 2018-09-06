@@ -543,7 +543,12 @@ var HTMLDB = {
 		tableElement.dispatchEvent(
 				new CustomEvent(
 				"htmldbread",
-				{detail: {}}));
+				{detail: {"remote":false,"local":true}}));
+
+		tableElement.dispatchEvent(
+				new CustomEvent(
+				"htmldbreadlocal",
+				{detail: {"remote":false,"local":true}}));
 
 		setTimeout(function () {
 			HTMLDB.callReadQueueCallbacks(tableElement);
@@ -4996,7 +5001,12 @@ var HTMLDB = {
 		tableElement.dispatchEvent(
 				new CustomEvent(
 				"htmldbread",
-				{detail: {}}));
+				{detail: {"remote":true,"local":false}}));
+
+		tableElement.dispatchEvent(
+				new CustomEvent(
+				"htmldbreadremote",
+				{detail: {"remote":true,"local":false}}));
 
 		setTimeout(function () {
 			HTMLDB.callReadQueueCallbacks(tableElement);

@@ -66,7 +66,9 @@ Following examples show the usage of filters:
 | ---- | ---- |
 | `htmldberror` | Triggered when an error returned especially after validation process.<br><br>`Event.detail.errorText` holds the error text returned. |
 | `htmldbmessage` | Triggered when a message returned especially after validation process.<br><br>`Event.detail.messageText` holds the message text returned. |
-| `htmldbread` | Triggered when table is readed. |
+| `htmldbread` | Triggered when table is readed.<br><br>`Event.detail.remote` holds boolean value for the "read" events from server.<br>`Event.detail.local` holds boolean value for the "read" events from browser's local storage (indexedDB). |
+| `htmldbreadlocal` | Triggered when table is readed locally.<br><br>`Event.detail.remote` holds boolean value for the "read" events from server.<br>`Event.detail.local` holds boolean value for the "read" events from browser's local storage (indexedDB). |
+| `htmldbreadremote` | Triggered when table is readed remotely.<br><br>`Event.detail.remote` holds boolean value for the "read" events from server.<br>`Event.detail.local` holds boolean value for the "read" events from browser's local storage (indexedDB). |
 
 #### Variables
 
