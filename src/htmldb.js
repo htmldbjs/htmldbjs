@@ -3923,7 +3923,7 @@ var HTMLDB = {
 		return functionBlock;
 	},
 	"escapeJSONString": function (text) {
-		return text.replace(/\n/g, "\\n")
+		return String(text).replace(/\n/g, "\\n")
 				.replace(/\"/g, '&quot;')
 				.replace(/\r/g, "\\r")
 				.replace(/\t/g, "\\t")
@@ -3932,7 +3932,7 @@ var HTMLDB = {
 				.replace(/\\/g, "\\");
 	},
 	"unescapeJSONString": function (text) {
-		return text.replace(/\\n/g, "\n")
+		return String(text).replace(/\\n/g, "\n")
 				.replace(/\\'/g, "'")
 				.replace(/\\r/g, "\r")
 				.replace(/\\t/g, "\t")
