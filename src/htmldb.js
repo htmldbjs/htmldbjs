@@ -540,20 +540,20 @@ var HTMLDB = {
 		HTMLDB.hideLoader(tableElement, "read");
 		HTMLDB.initializeLocalTable(tableElement);
 
-		tableElement.dispatchEvent(
-				new CustomEvent(
-				"htmldbread",
-				{detail: {"remote":false,"local":true}}));
-
-		tableElement.dispatchEvent(
-				new CustomEvent(
-				"htmldbreadlocal",
-				{detail: {"remote":false,"local":true}}));
-
 		setTimeout(function () {
 			HTMLDB.callReadQueueCallbacks(tableElement);
 			HTMLDB.removeFromReadingQueue(tableElement);
 			HTMLDB.processReadQueue();
+
+			tableElement.dispatchEvent(
+					new CustomEvent(
+					"htmldbread",
+					{detail: {"remote":false,"local":true}}));
+
+			tableElement.dispatchEvent(
+					new CustomEvent(
+					"htmldbreadlocal",
+					{detail: {"remote":false,"local":true}}));
 		}, 150);
 
 		if (functionDone) {
@@ -4998,20 +4998,20 @@ var HTMLDB = {
 		tableElement.setAttribute("data-htmldb-loading", 0);
 		HTMLDB.hideLoader(tableElement, "read");
 
-		tableElement.dispatchEvent(
-				new CustomEvent(
-				"htmldbread",
-				{detail: {"remote":true,"local":false}}));
-
-		tableElement.dispatchEvent(
-				new CustomEvent(
-				"htmldbreadremote",
-				{detail: {"remote":true,"local":false}}));
-
 		setTimeout(function () {
 			HTMLDB.callReadQueueCallbacks(tableElement);
 			HTMLDB.removeFromReadingQueue(tableElement);
 			HTMLDB.processReadQueue();
+
+			tableElement.dispatchEvent(
+					new CustomEvent(
+					"htmldbread",
+					{detail: {"remote":true,"local":false}}));
+
+			tableElement.dispatchEvent(
+					new CustomEvent(
+					"htmldbreadremote",
+					{detail: {"remote":true,"local":false}}));
 		}, 150);
 	},
 	"clearReaderTable": function (tableElement) {
