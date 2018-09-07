@@ -5096,7 +5096,7 @@ var HTMLDB = {
 	"pause": function () {
 		HTMLDB.pausing = true;
 	},
-	"unpause": function () {
+	"resume": function () {
 		HTMLDB.pausing = false;
 	},
 	"isPaused": function () {

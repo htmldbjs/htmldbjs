@@ -1,11 +1,11 @@
-### `HTMLDB.unpause`
+### `HTMLDB.resume`
 
-This method un-pauses, previously paused operations.
+This method resumes, previously paused operations.
 
 #### Description
 
 ```javascript
-HTMLDB.unpause()
+HTMLDB.resume()
 ```
 
 #### Parameters
