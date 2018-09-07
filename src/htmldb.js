@@ -769,6 +769,10 @@ var HTMLDB = {
 		}
 	},
 	"render": function (tableElement, functionDone) {
+		if (HTMLDB.pausing) {
+			return;
+		}
+
 		var activeId = (HTMLDB.getActiveId(tableElement));
 
 		HTMLDB.renderTemplates(tableElement);
