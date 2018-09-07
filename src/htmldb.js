@@ -226,7 +226,7 @@ var HTMLDB = {
             validation = validations[i];
             if (HTMLDB.getHTMLDBParameter(validation, "table")
             		== tableElement.getAttribute("id")) {
-            	currentResponse = checkTableValidation(
+            	currentResponse = HTMLDB.checkTableValidation(
             			tableElement,
             			object,
             			validation);
