@@ -642,9 +642,22 @@ var HTMLDB = {
 					("n" + newId));
     		strTRContent += "</tr>";
 
-    		tbodyHTMLDB.innerHTML += strTRContent;
+			var canRender = true;
+			if (tableElement.filterFunction) {
+				if (!tableElement.filterFunction(object)) {
+					canRender = false;
+				}
+			}
+
+			if (canRender) {
+    			tbodyHTMLDB.innerHTML += strTRContent;				
+			}
+
     		HTMLDB.updateLocal(tableElement, object["id"], object);
-    		HTMLDB.render(tableElement);
+
+    		if (canRender) {
+    			HTMLDB.render(tableElement);
+    		}
     	}
 	},
 	"update": function (tableElement, id, object, className) {
@@ -707,6 +720,7 @@ var HTMLDB = {
     		if (!elTR) {
     			return;
     		}
+
 			tbodyHTMLDB = HTMLDB.e(
 					tableElementId
 					+ "_reader_tbody");
@@ -714,9 +728,23 @@ var HTMLDB = {
 					tableElement,
 					"_reader",
 					object, id);
-			elTR.innerHTML = innerContent;
+
+			var canRender = true;
+			if (tableElement.filterFunction) {
+				if (!tableElement.filterFunction(object)) {
+					canRender = false;
+				}
+			}
+
+			if (canRender) {
+				elTR.innerHTML = innerContent;				
+			}
+
     		HTMLDB.updateLocal(tableElement, id, object);
-    		HTMLDB.render(tableElement);
+
+    		if (canRender) {
+    			HTMLDB.render(tableElement);
+    		}
     	}
 	},
 	"updateLocal": function (tableElement, id, object, updateOnlyReaderTable) {
@@ -741,7 +769,16 @@ var HTMLDB = {
 
 		object["id"] = id;
 
-		readerStore.put(object, HTMLDB.addLeadingZeros(id, 20));
+		var canPutObject = true;
+		if (tableElement.filterFunction) {
+			if (!tableElement.filterFunction(object)) {
+				canPutObject = false;
+			}
+		}
+
+		if (canPutObject) {
+			readerStore.put(object, HTMLDB.addLeadingZeros(id, 20));
+		}
 
 		if (true !== updateOnlyReaderTable) {
 			writerStore.put(object, HTMLDB.addLeadingZeros(id, 20));
