@@ -7,7 +7,6 @@ var HTMLDB = {
 	"indexedDB": null,
 	"indexedDBConnection": null,
 	"indexedDBTables": [],
-	"pausing": false,
 	"initialize": function () {
 		HTMLDB.initializeHTMLDBIndexedDB(function () {
 			HTMLDB.initializeHTMLDBTables();
@@ -226,7 +225,7 @@ var HTMLDB = {
             validation = validations[i];
             if (HTMLDB.getHTMLDBParameter(validation, "table")
             		== tableElement.getAttribute("id")) {
-            	currentResponse = HTMLDB.checkTableValidation(
+            	currentResponse = checkTableValidation(
             			tableElement,
             			object,
             			validation);
@@ -273,7 +272,7 @@ var HTMLDB = {
 
 			try {
 				filterFunction = new Function("object", functionBody);
-				if (filterFunction(object)) {
+				if (!filterFunction(object)) {
 					currentResponse.errorCount += 1;
 					currentResponse.lastError += validationItem.innerHTML;
 				}
@@ -541,20 +540,15 @@ var HTMLDB = {
 		HTMLDB.hideLoader(tableElement, "read");
 		HTMLDB.initializeLocalTable(tableElement);
 
+		tableElement.dispatchEvent(
+				new CustomEvent(
+				"htmldbread",
+				{detail: {}}));
+
 		setTimeout(function () {
 			HTMLDB.callReadQueueCallbacks(tableElement);
 			HTMLDB.removeFromReadingQueue(tableElement);
 			HTMLDB.processReadQueue();
-
-			tableElement.dispatchEvent(
-					new CustomEvent(
-					"htmldbread",
-					{detail: {"remote":false,"local":true}}));
-
-			tableElement.dispatchEvent(
-					new CustomEvent(
-					"htmldbreadlocal",
-					{detail: {"remote":false,"local":true}}));
 		}, 150);
 
 		if (functionDone) {
@@ -591,9 +585,7 @@ var HTMLDB = {
 			className = "";
 		}
 
-		var elTR = HTMLDB.e(tableElementId + "_writer_tr" + object["id"]);
-
-		if (!HTMLDB.isNewObject(object) || (elTR != undefined)) {
+		if (!HTMLDB.isNewObject(object)) {
 			return HTMLDB.update(tableElement, object["id"], object, className);			
 		}
 
@@ -644,17 +636,7 @@ var HTMLDB = {
 					("n" + newId));
     		strTRContent += "</tr>";
 
-			var childRemoved = false;
-			if (tableElement.filterFunction) {
-				if (!tableElement.filterFunction(object)) {
-					childRemoved = true;
-				}
-			}
-
-			if (!childRemoved) {
-    			tbodyHTMLDB.innerHTML += strTRContent;				
-			}
-
+    		tbodyHTMLDB.innerHTML += strTRContent;
     		HTMLDB.updateLocal(tableElement, object["id"], object);
     		HTMLDB.render(tableElement);
     	}
@@ -672,11 +654,11 @@ var HTMLDB = {
 
 		object["id"] = id;
 
-		var elTR = HTMLDB.e(tableElementId + "_writer_tr" + id);
-
-		if (HTMLDB.isNewObject(object) && (elTR == undefined)) {
+		if (HTMLDB.isNewObject(object)) {
 			return HTMLDB.insert(tableElement, object, className);
 		}
+
+		var elTR = HTMLDB.e(tableElementId + "_writer_tr" + id);
 
 		var tbodyHTMLDB = HTMLDB.e(
 				tableElementId
@@ -719,7 +701,6 @@ var HTMLDB = {
     		if (!elTR) {
     			return;
     		}
-
 			tbodyHTMLDB = HTMLDB.e(
 					tableElementId
 					+ "_reader_tbody");
@@ -727,19 +708,7 @@ var HTMLDB = {
 					tableElement,
 					"_reader",
 					object, id);
-
-			var childRemoved = false;
-			if (tableElement.filterFunction) {
-				if (!tableElement.filterFunction(object)) {
-					tbodyHTMLDB.removeChild(elTR);
-					childRemoved = true;
-				}
-			}
-
-			if (!childRemoved) {
-				elTR.innerHTML = innerContent;				
-			}
-
+			elTR.innerHTML = innerContent;
     		HTMLDB.updateLocal(tableElement, id, object);
     		HTMLDB.render(tableElement);
     	}
@@ -766,18 +735,7 @@ var HTMLDB = {
 
 		object["id"] = id;
 
-		var childRemoved = false;
-		if (tableElement.filterFunction) {
-			if (!tableElement.filterFunction(object)) {
-				childRemoved = true;
-			}
-		}
-
-		if (childRemoved) {
-			readerStore.delete(HTMLDB.addLeadingZeros(id, 20));
-		} else {
-			readerStore.put(object, HTMLDB.addLeadingZeros(id, 20));
-		}
+		readerStore.put(object, HTMLDB.addLeadingZeros(id, 20));
 
 		if (true !== updateOnlyReaderTable) {
 			writerStore.put(object, HTMLDB.addLeadingZeros(id, 20));
@@ -805,10 +763,6 @@ var HTMLDB = {
 		}
 	},
 	"render": function (tableElement, functionDone) {
-		if (HTMLDB.pausing) {
-			return;
-		}
-
 		var activeId = (HTMLDB.getActiveId(tableElement));
 
 		HTMLDB.renderTemplates(tableElement);
@@ -988,11 +942,6 @@ var HTMLDB = {
 	    document.body.HTMLDBWriterTimer = HTMLDBWriterTimer;
 	},
 	"writeTables": function () {
-
-		if (HTMLDB.pausing) {
-			return;
-		}
-
     	var elements = HTMLDB.q(".htmldb-table");
     	var elementCount = elements.length;
     	var element = null;
@@ -1836,6 +1785,10 @@ var HTMLDB = {
         		parent.toggleFields = [];
         	}
 
+        	if (undefined === parent.toggleEventFields) {
+        		parent.toggleEventFields = [];
+        	}
+
         	parent.toggleFields = parent.toggleFields.concat(fields);
         }
 
@@ -1874,6 +1827,10 @@ var HTMLDB = {
 		if (0 == form.toggleFields.length) {
 			return;
 		}
+		if (undefined == form.toggleEventFields) {
+			form.toggleEventFields = [];
+		}
+
 		for (var i = 0; i < elementCount; i++) {
 			element = elements[i];
 			field = HTMLDB.getHTMLDBParameter(element, "field");
@@ -1883,9 +1840,14 @@ var HTMLDB = {
 			if (-1 == form.toggleFields.indexOf(field)) {
 				continue;
 			}
-			HTMLDB.registerFormElementEvent(element, function () {
-				HTMLDB.doParentElementToggle(form);
-			});
+
+			if (-1 == form.toggleEventFields.indexOf(field)) {
+				HTMLDB.registerFormElementEvent(element, function () {
+					HTMLDB.doParentElementToggle(form);
+				});
+
+				form.toggleEventFields.push(field);
+			}
 		}
 	},
 	"registerFormElementEvent": function (element, functionEvent) {
@@ -3315,10 +3277,6 @@ var HTMLDB = {
 			return;
 		}
 
-		if (HTMLDB.pausing) {
-			return;
-		}
-
 		HTMLDB.readingQueue = undefined;
 
 		while ((HTMLDB.readingQueue === undefined)
@@ -3973,7 +3931,8 @@ var HTMLDB = {
 		return functionBlock;
 	},
 	"escapeJSONString": function (text) {
-		return String(text).replace(/\n/g, "\\n")
+		text = String(text);
+		return text.replace(/\n/g, "\\n")
 				.replace(/\"/g, '&quot;')
 				.replace(/\r/g, "\\r")
 				.replace(/\t/g, "\\t")
@@ -3982,7 +3941,8 @@ var HTMLDB = {
 				.replace(/\\/g, "\\");
 	},
 	"unescapeJSONString": function (text) {
-		return String(text).replace(/\\n/g, "\n")
+		text = String(text);
+		return text.replace(/\\n/g, "\n")
 				.replace(/\\'/g, "'")
 				.replace(/\\r/g, "\r")
 				.replace(/\\t/g, "\t")
@@ -5048,20 +5008,15 @@ var HTMLDB = {
 		tableElement.setAttribute("data-htmldb-loading", 0);
 		HTMLDB.hideLoader(tableElement, "read");
 
+		tableElement.dispatchEvent(
+				new CustomEvent(
+				"htmldbread",
+				{detail: {}}));
+
 		setTimeout(function () {
 			HTMLDB.callReadQueueCallbacks(tableElement);
 			HTMLDB.removeFromReadingQueue(tableElement);
 			HTMLDB.processReadQueue();
-
-			tableElement.dispatchEvent(
-					new CustomEvent(
-					"htmldbread",
-					{detail: {"remote":true,"local":false}}));
-
-			tableElement.dispatchEvent(
-					new CustomEvent(
-					"htmldbreadremote",
-					{detail: {"remote":true,"local":false}}));
 		}, 150);
 	},
 	"clearReaderTable": function (tableElement) {
@@ -5132,15 +5087,6 @@ var HTMLDB = {
 	},
 	"q": function (selector) {
 		return document.body.querySelectorAll(selector);
-	},
-	"pause": function () {
-		HTMLDB.pausing = true;
-	},
-	"resume": function () {
-		HTMLDB.pausing = false;
-	},
-	"isPaused": function () {
-		return HTMLDB.pausing;
 	}
 }
 HTMLDB.initialize();
