@@ -591,7 +591,9 @@ var HTMLDB = {
 			className = "";
 		}
 
-		if (!HTMLDB.isNewObject(object)) {
+		var elTR = HTMLDB.e(tableElementId + "_writer_tr" + object["id"]);
+
+		if (!HTMLDB.isNewObject(object) || (elTR != undefined)) {
 			return HTMLDB.update(tableElement, object["id"], object, className);			
 		}
 
@@ -673,11 +675,11 @@ var HTMLDB = {
 
 		object["id"] = id;
 
-		if (HTMLDB.isNewObject(object)) {
+		var elTR = HTMLDB.e(tableElementId + "_writer_tr" + id);
+
+		if (HTMLDB.isNewObject(object) && (elTR == undefined)) {
 			return HTMLDB.insert(tableElement, object, className);
 		}
-
-		var elTR = HTMLDB.e(tableElementId + "_writer_tr" + id);
 
 		var tbodyHTMLDB = HTMLDB.e(
 				tableElementId
