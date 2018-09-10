@@ -1808,7 +1808,7 @@ var HTMLDB = {
 		if ("" == filter) {
 			return [];
 		}
-		for (var i = 0; i < tokenCount; i+=3) {
+		for (var i = 0; i < tokenCount; i+=4) {
 			property = HTMLDB.evaluateHTMLDBExpression(tokens[i]);
 			if (property != "") {
 				fields.push(property);
