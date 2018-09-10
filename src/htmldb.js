@@ -1600,8 +1600,10 @@ var HTMLDB = {
 				case "select-one":
 				case "select-multi":
 					elements[i].selectedIndex = -1;
-					elements[i].HTMLDBInitials.previousOptionValueCSV = undefined;
-					elements[i].HTMLDBInitials.selectNewOption = undefined;
+					if (elements[i].HTMLDBInitials != undefined) {
+						elements[i].HTMLDBInitials.previousOptionValueCSV = undefined;
+						elements[i].HTMLDBInitials.selectNewOption = undefined;
+					}
 				break;
 				default:
 				break;
