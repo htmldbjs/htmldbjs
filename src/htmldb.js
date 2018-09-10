@@ -1871,7 +1871,7 @@ var HTMLDB = {
 				var formElement = null;
 				var field = "";
 
-				for (var i = 0; i < elementCount; i++) {
+				for (var i = 0; i < formElementCount; i++) {
 					formElement = formElements[i];
 					field = HTMLDB.getHTMLDBParameter(formElement, "field");
 					if ("" == field) {
