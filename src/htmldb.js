@@ -1846,20 +1846,52 @@ var HTMLDB = {
 					HTMLDB.doParentElementToggle(form);
 				});
 
-				form.toggleEventFields.push(field);
+				if (-1 == form.toggleEventFields.indexOf(field)) {
+					form.toggleEventFields.push(field);
+				}
 			}
 		}
 	},
 	"registerFormElementEvent": function (element, functionEvent) {
 		var tagName = element.tagName.toLowerCase();
 		var type = element.type.toLowerCase();
+		var form = HTMLDB.exploreHTMLDBForm(element);
 		if (tagName == "input") {
-			if ((type == "checkbox") || (type == "radio")) {
+			if (type == "checkbox") {
 				if (element.addEventListener) {
 					element.addEventListener("click", functionEvent, true);
+					element.addEventListener("change", functionEvent, true);
 				} else if (element.attachEvent) {
 		            element.attachEvent("onclick", functionEvent);
+		            element.attachEvent("onchange", functionEvent);
 		        }
+			} else if (type == "radio") {
+				var formElements = form.elements;
+				var formElementCount = formElements.length;
+				var formElement = null;
+				var field = "";
+
+				for (var i = 0; i < elementCount; i++) {
+					formElement = formElements[i];
+					field = HTMLDB.getHTMLDBParameter(formElement, "field");
+					if ("" == field) {
+						continue;
+					}
+					if (formElement.name != element.name) {
+						continue;
+					}
+					if (-1 == form.toggleEventFields.indexOf(field)) {
+						if (formElement.addEventListener) {
+							formElement.addEventListener("click", functionEvent, true);
+							formElement.addEventListener("change", functionEvent, true);
+						} else if (formElement.attachEvent) {
+				            formElement.attachEvent("onclick", functionEvent);
+				            formElement.attachEvent("onchange", functionEvent);
+				        }
+
+				        form.toggleEventFields.push(field);
+					}
+				}
 			}
 		} else if (tagName == "select") {
 			if (element.addEventListener) {
