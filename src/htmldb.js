@@ -644,22 +644,19 @@ var HTMLDB = {
 					("n" + newId));
     		strTRContent += "</tr>";
 
-			var canRender = true;
+			var childRemoved = false;
 			if (tableElement.filterFunction) {
 				if (!tableElement.filterFunction(object)) {
-					canRender = false;
+					childRemoved = true;
 				}
 			}
 
-			if (canRender) {
+			if (!childRemoved) {
     			tbodyHTMLDB.innerHTML += strTRContent;				
 			}
 
     		HTMLDB.updateLocal(tableElement, object["id"], object);
-
-    		if (canRender) {
-    			HTMLDB.render(tableElement);
-    		}
+    		HTMLDB.render(tableElement);
     	}
 	},
 	"update": function (tableElement, id, object, className) {
@@ -731,22 +728,20 @@ var HTMLDB = {
 					"_reader",
 					object, id);
 
-			var canRender = true;
+			var childRemoved = false;
 			if (tableElement.filterFunction) {
 				if (!tableElement.filterFunction(object)) {
-					canRender = false;
+					tbodyHTMLDB.removeChild(elTR);
+					childRemoved = true;
 				}
 			}
 
-			if (canRender) {
+			if (!childRemoved) {
 				elTR.innerHTML = innerContent;				
 			}
 
     		HTMLDB.updateLocal(tableElement, id, object);
-
-    		if (canRender) {
-    			HTMLDB.render(tableElement);
-    		}
+    		HTMLDB.render(tableElement);
     	}
 	},
 	"updateLocal": function (tableElement, id, object, updateOnlyReaderTable) {
@@ -771,14 +766,16 @@ var HTMLDB = {
 
 		object["id"] = id;
 
-		var canPutObject = true;
+		var childRemoved = false;
 		if (tableElement.filterFunction) {
 			if (!tableElement.filterFunction(object)) {
-				canPutObject = false;
+				childRemoved = true;
 			}
 		}
 
-		if (canPutObject) {
+		if (childRemoved) {
+			readerStore.delete(HTMLDB.addLeadingZeros(id, 20));
+		} else {
 			readerStore.put(object, HTMLDB.addLeadingZeros(id, 20));
 		}
 
