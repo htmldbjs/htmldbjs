@@ -3700,7 +3700,8 @@ var HTMLDB = {
 			position = 1;
 
 			while (("}" != content[position - 1])
-					&& ("}" != content[position])) {
+					&& ("}" != content[position])
+					&& (position <= content.length)) {
 				position++;
 			}
 
