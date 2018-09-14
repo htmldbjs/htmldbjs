@@ -2951,8 +2951,8 @@ var HTMLDB = {
 
 		input.classList.add("htmldb-loading");
 
-		if (!HTMLDB.hasHTMLDBParameter(input, "parent-apply-loading-class")
-				|| HTMLDB.isHTMLDBParameter(input, "parent-apply-loading-class")) {
+		if (!HTMLDB.hasHTMLDBParameter(input, "parent-loading-class")
+				|| HTMLDB.isHTMLDBParameter(input, "parent-loading-class")) {
 			input.parentNode.classList.add("htmldb-loading");
 		}
 
@@ -2988,8 +2988,8 @@ var HTMLDB = {
 		HTMLDB.updateReadQueueCallbacks(tableElement, function () {
 			input.classList.remove("htmldb-loading");
 
-			if (!HTMLDB.hasHTMLDBParameter(input, "parent-apply-loading-class")
-					|| HTMLDB.isHTMLDBParameter(input, "parent-apply-loading-class")) {
+			if (!HTMLDB.hasHTMLDBParameter(input, "parent-loading-class")
+					|| HTMLDB.isHTMLDBParameter(input, "parent-loading-class")) {
 				input.parentNode.classList.remove("htmldb-loading");
 			}
 		});
@@ -3052,8 +3052,8 @@ var HTMLDB = {
 
 		button.classList.add("htmldb-loading");
 
-		if (!HTMLDB.hasHTMLDBParameter(button, "parent-apply-loading-class")
-				|| HTMLDB.isHTMLDBParameter(button, "parent-apply-loading-class")) {
+		if (!HTMLDB.hasHTMLDBParameter(button, "parent-loading-class")
+				|| HTMLDB.isHTMLDBParameter(button, "parent-loading-class")) {
 			button.parentNode.classList.add("htmldb-loading");
 		}
 
@@ -3089,8 +3089,8 @@ var HTMLDB = {
 		HTMLDB.updateReadQueueCallbacks(tableElement, function () {
 			button.classList.remove("htmldb-loading");
 
-			if (!HTMLDB.hasHTMLDBParameter(button, "parent-apply-loading-class")
-					|| HTMLDB.isHTMLDBParameter(button, "parent-apply-loading-class")) {
+			if (!HTMLDB.hasHTMLDBParameter(button, "parent-loading-class")
+					|| HTMLDB.isHTMLDBParameter(button, "parent-loading-class")) {
 				button.parentNode.classList.remove("htmldb-loading");
 			}
 		});
