@@ -14,6 +14,7 @@ A standalone input that automatically update the specific `htmldb-table` record.
         data-htmldb-input-field="company_name"
         data-htmldb-refresh-table="myTable2"
         data-htmldb-table-defaults='{"page":0}'
+        data-htmldb-parent-apply-loading-class="0"
         data-htmldb-save-delay="1000">
 ```
 
@@ -22,6 +23,7 @@ A standalone input that automatically update the specific `htmldb-table` record.
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `data-htmldb-edit-id` | Specifies the unique id value of the record to be edited. This attribute value is not required. If not specified the active value of the specified table will be edited.<br><br>`Default Value: ""` |
+| `data-htmldb-parent-apply-loading-class` | Specifies whether `htmldb-loading` will be applied to parent element or not.<br><br>`Default Value: "1"` |
 | `data-htmldb-table` | Specifies the parent table, to be updated.<br><br>`Default Value: ""`<br>`Required` |
 | `data-htmldb-save-delay` | Specifies the delay time between update operations. This attribute is very useful when using `htmldb-input-save` with text inputs.<br><br>`Default Value: "500"` |
 | `data-htmldb-input-field` | Specifies the field name in the `data-htmldb-table` to be updated.<br><br>`Default Value: ""`<br>`Required` |
