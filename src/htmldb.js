@@ -2951,10 +2951,7 @@ var HTMLDB = {
 
 		input.classList.add("htmldb-loading");
 
-		if (!HTMLDB.hasHTMLDBParameter(input, "parent-loading-class")
-				|| HTMLDB.isHTMLDBParameter(input, "parent-loading-class")) {
-			input.parentNode.classList.add("htmldb-loading");
-		}
+		HTMLDB.addParentLoadingClass(input);
 
 		var activeId = HTMLDB.getHTMLDBParameter(input, "edit-id");
 
@@ -2987,11 +2984,7 @@ var HTMLDB = {
 
 		HTMLDB.updateReadQueueCallbacks(tableElement, function () {
 			input.classList.remove("htmldb-loading");
-
-			if (!HTMLDB.hasHTMLDBParameter(input, "parent-loading-class")
-					|| HTMLDB.isHTMLDBParameter(input, "parent-loading-class")) {
-				input.parentNode.classList.remove("htmldb-loading");
-			}
+			HTMLDB.removeParentLoadingClass(input);
 		});
 
 		HTMLDB.insert(tableElement, sessionObject);
@@ -3052,10 +3045,7 @@ var HTMLDB = {
 
 		button.classList.add("htmldb-loading");
 
-		if (!HTMLDB.hasHTMLDBParameter(button, "parent-loading-class")
-				|| HTMLDB.isHTMLDBParameter(button, "parent-loading-class")) {
-			button.parentNode.classList.add("htmldb-loading");
-		}
+		HTMLDB.addParentLoadingClass(button);
 
 		if (sortingASC) {
 			button.classList.remove("htmldb-sorting-asc");
@@ -3088,11 +3078,7 @@ var HTMLDB = {
 
 		HTMLDB.updateReadQueueCallbacks(tableElement, function () {
 			button.classList.remove("htmldb-loading");
-
-			if (!HTMLDB.hasHTMLDBParameter(button, "parent-loading-class")
-					|| HTMLDB.isHTMLDBParameter(button, "parent-loading-class")) {
-				button.parentNode.classList.remove("htmldb-loading");
-			}
+			HTMLDB.removeParentLoadingClass(button);
 		});
 
 		HTMLDB.insert(tableElement, sessionObject);
@@ -5142,6 +5128,32 @@ var HTMLDB = {
 	},
 	"q": function (selector) {
 		return document.body.querySelectorAll(selector);
+	},
+	"addParentLoadingClass": function (element) {
+		if (!HTMLDB.hasHTMLDBParameter(element, "parent-loading-class")) {
+			var parentIndex = HTMLDB.getHTMLDBParameter(element, "parent-loading-class");
+			var parentElement = element;
+			while (parentIndex > 0) {
+				parentElement = parentElement.parentNode;
+				parentIndex--;
+			}
+			if (parentElement) {
+				parentElement.classList.add("htmldb-loading");
+			}
+		}
+	},
+	"removeParentLoadingClass": function (element) {
+		if (!HTMLDB.hasHTMLDBParameter(element, "parent-loading-class")) {
+			var parentIndex = HTMLDB.getHTMLDBParameter(element, "parent-loading-class");
+			var parentElement = element;
+			while (parentIndex > 0) {
+				parentElement = parentElement.parentNode;
+				parentIndex--;
+			}
+			if (parentElement) {
+				parentElement.classList.remove("htmldb-loading");
+			}
+		}
 	}
 }
 HTMLDB.initialize();
