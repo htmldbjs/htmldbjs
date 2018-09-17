@@ -83,6 +83,10 @@ var SpritPanelHTMLDB = {
 			$(".htmldb-button-add", target).on("click", function (event) {
 				SpritPanelHTMLDB.showEditDialog(this, event);
 			});
+
+			$(".trAction", target).on("click", function (e) {
+				SpritPanelHTMLDB.doActionTableRowClick(this, e);
+			});
 		}
 	},
 	"doSelectizeSetValue": function (sender, event) {
@@ -123,7 +127,7 @@ var SpritPanelHTMLDB = {
 		var form = null;
 		var tagName = element.tagName.toLowerCase();
 
-		if ("button" == tagName) {
+		if (("button" == tagName) || ("a" == tagName)) {
 			if ("" == HTMLDB.getHTMLDBParameter(element, "form")) {
 				throw(new Error("Button target form not specified."));
 				return false;
@@ -259,6 +263,49 @@ var SpritPanelHTMLDB = {
 		sender.dispatchEvent(new CustomEvent(
 				"change",
 				{detail: {}}));
+	},
+	"doActionTableRowClick": function (sender, e) {
+		var parent = e.target.parentNode;
+
+		if (!parent) {
+			return false;
+		}
+
+		if (undefined != parent.actionTableRowClicked
+				&& parent.actionTableRowClicked) {
+			return false;
+		}
+
+		if (!parent.classList.contains("trAction")) {
+			return false;
+		}
+
+		parent.actionTableRowClicked = true;
+
+		var actionButtons = $(".buttonTableRowAction", parent);
+		var actionButtonCount = actionButtons.length;
+		var actionButton = null;
+
+		if (actionButtonCount > 0) {
+			actionButton = actionButtons[0];
+
+			if (actionButton.tagName.toLowerCase() == "a") {
+				window.location = actionButton.href;
+			} else if ((actionButton.tagName.toLowerCase() == "button")) {
+				var clickEvent = document.createEvent('HTMLEvents');
+				clickEvent.initEvent("click", true, false);
+				actionButton.dispatchEvent(clickEvent);
+			} else if (actionButton.tagName.toLowerCase() == "input") {
+				if ((actionButton.type.toLowerCase() == "checkbox")
+						|| (actionButton.type.toLowerCase() == "checkbox")) {
+					actionButton.checked = !actionButton.checked;
+				}
+			}
+			
+			setTimeout(function () {
+				parent.actionTableRowClicked = false;
+			}, 1000);
+		}
 	}
 }
 SpritPanelHTMLDB.initialize();

@@ -473,8 +473,8 @@ var HTMLDB = {
 				redirectURL = HTMLDB.evaluateHTMLDBExpression(redirectURL);
 				if (redirectURL != "") {
 					setTimeout(function () {
-						window.location.href = redirectURL;
-					}, 250);
+						window.location = redirectURL;
+					}, 500);
 				}
 			}
 		}
@@ -1008,8 +1008,8 @@ var HTMLDB = {
 		var redirectURL = HTMLDB.getHTMLDBParameter(tableElement, "redirect");
 		if (redirectURL != "") {
 			setTimeout(function () {
-				window.location.href = redirectURL;
-			}, 250);
+				window.location = redirectURL;
+			}, 500);
 		}
 		HTMLDB.e(
 				tableElement.getAttribute("id")
@@ -2010,6 +2010,11 @@ var HTMLDB = {
     		input = inputs[i];
     		field = HTMLDB.getHTMLDBParameter(input, "field");
     		valueTemplate = HTMLDB.getHTMLDBParameter(input, "value");
+
+    		if ("" == valueTemplate) {
+    			valueTemplate = ("{{" + field + "}}");
+    		}
+
     		value = "";
 
     		if (undefined == object) {
