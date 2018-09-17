@@ -290,7 +290,7 @@ var SpritPanelHTMLDB = {
 			actionButton = actionButtons[0];
 
 			if (actionButton.tagName.toLowerCase() == "a") {
-				window.location = actionButton.href;
+				window.location.href = actionButton.href;
 			} else if ((actionButton.tagName.toLowerCase() == "button")) {
 				var clickEvent = document.createEvent('HTMLEvents');
 				clickEvent.initEvent("click", true, false);
