@@ -1986,15 +1986,17 @@ var HTMLDB = {
             } else {
             	if (HTMLDB.hasHTMLDBParameter(element, "content")) {
             		element.innerHTML
-            				= HTMLDB.getHTMLDBParameter(
+            				= HTMLDB.evaluateHTMLDBExpression(
+            				HTMLDB.getHTMLDBParameter(
             				element,
-            				"content");
+            				"content"), tableElement);
             	} else if (HTMLDB.hasHTMLDBParameter(element, "value")) {
             		HTMLDB.setInputValue(
             				element,
+            				HTMLDB.evaluateHTMLDBExpression(
             				HTMLDB.getHTMLDBParameter(
             				element,
-            				"value"));
+            				"value"), tableElement));
             	}
             }
         }
