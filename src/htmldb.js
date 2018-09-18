@@ -430,8 +430,8 @@ var HTMLDB = {
 				+ "_iframe_container").children.length;
 		HTMLDB.createNewIframeAndForm(tableElement, iframeFormGUID);
 
-		var strTarget = (tableElementId + "_iframe_" + iframeFormGUID);
-		if (!HTMLDB.e(strTarget)) {
+		var target = (tableElementId + "_iframe_" + iframeFormGUID);
+		if (!HTMLDB.e(target)) {
 			return;
 		}
 
@@ -443,7 +443,7 @@ var HTMLDB = {
 		var lTRCount = arrTR.length;
 		var formHTMLDB = HTMLDB.e(
 				tableElementId + "_form_" + iframeFormGUID);
-		var iframeHTMLDB = HTMLDB.e(strTarget);
+		var iframeHTMLDB = HTMLDB.e(target);
 		var iframeNewElement = iframeHTMLDB.cloneNode(true);
 		iframeHTMLDB.parentNode.replaceChild(iframeNewElement, iframeHTMLDB);
 		iframeHTMLDB = iframeNewElement;
@@ -459,7 +459,9 @@ var HTMLDB = {
 				tableElement.setAttribute("data-htmldb-loading", 0);
 				HTMLDB.hideLoader(tableElement, "write");
 				iframeWindow = top.frames[
-						tableElementId + "_iframe_" + iframeFormGUID];
+						tableElementId
+						+ "_iframe_"
+						+ iframeFormGUID];
 				var responseText = "";
 				if (iframeWindow.document) {
 					responseText = String(
@@ -1882,15 +1884,16 @@ var HTMLDB = {
 					if (formElement.name != element.name) {
 						continue;
 					}
-					if (-1 == form.toggleEventFields.indexOf(field)) {
-						if (formElement.addEventListener) {
-							formElement.addEventListener("click", functionEvent, true);
-							formElement.addEventListener("change", functionEvent, true);
-						} else if (formElement.attachEvent) {
-				            formElement.attachEvent("onclick", functionEvent);
-				            formElement.attachEvent("onchange", functionEvent);
-				        }
 
+					if (formElement.addEventListener) {
+						formElement.addEventListener("click", functionEvent, true);
+						formElement.addEventListener("change", functionEvent, true);
+					} else if (formElement.attachEvent) {
+			            formElement.attachEvent("onclick", functionEvent);
+			            formElement.attachEvent("onchange", functionEvent);
+			        }
+
+					if (-1 == form.toggleEventFields.indexOf(field)) {
 				        form.toggleEventFields.push(field);
 					}
 				}
