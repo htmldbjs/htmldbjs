@@ -4896,6 +4896,7 @@ var HTMLDB = {
 							+ "-"
 							+ (("0" + inputDate.getDate()).slice(-2));
 					input.defaultValue = inputDateText;
+					input.value = inputDateText;
 				} else {
 					input.value = value;
 				}
