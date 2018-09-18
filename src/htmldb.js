@@ -1990,13 +1990,13 @@ var HTMLDB = {
             				HTMLDB.getHTMLDBParameter(
             				element,
             				"content"), tableElement);
-            	} else if (HTMLDB.hasHTMLDBParameter(element, "value")) {
+            	} else if (HTMLDB.hasHTMLDBParameter(element, "htmldb-value")) {
             		HTMLDB.setInputValue(
             				element,
             				HTMLDB.evaluateHTMLDBExpression(
             				HTMLDB.getHTMLDBParameter(
             				element,
-            				"value"), tableElement));
+            				"htmldb-value"), tableElement));
             	}
             }
         }
@@ -2014,7 +2014,7 @@ var HTMLDB = {
     	for (var i = 0; i < inputCount; i++) {
     		input = inputs[i];
     		field = HTMLDB.getHTMLDBParameter(input, "field");
-    		valueTemplate = HTMLDB.getHTMLDBParameter(input, "value");
+    		valueTemplate = HTMLDB.getHTMLDBParameter(input, "htmldb-value");
 
     		if ("" == valueTemplate) {
     			valueTemplate = ("{{" + field + "}}");
