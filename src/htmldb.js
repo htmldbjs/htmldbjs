@@ -1498,6 +1498,7 @@ var HTMLDB = {
 			setTimeout(function () {
 				HTMLDB.callReadQueueCallbacks(tableElement);
 				HTMLDB.removeFromReadingQueue(tableElement);
+				HTMLDB.updateReadQueueByParentTable(tableElement);
 				HTMLDB.processReadQueue();
 
 				tableElement.dispatchEvent(
@@ -5083,6 +5084,7 @@ var HTMLDB = {
 		setTimeout(function () {
 			HTMLDB.callReadQueueCallbacks(tableElement);
 			HTMLDB.removeFromReadingQueue(tableElement);
+			HTMLDB.updateReadQueueByParentTable(tableElement);
 			HTMLDB.processReadQueue();
 
 			tableElement.dispatchEvent(
