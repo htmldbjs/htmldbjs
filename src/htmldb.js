@@ -546,27 +546,7 @@ var HTMLDB = {
 		HTMLDB.showLoader(tableElement, "read");
 		tableElement.setAttribute("data-htmldb-loading", 0);
 		HTMLDB.hideLoader(tableElement, "read");
-		HTMLDB.initializeLocalTable(tableElement);
-
-		setTimeout(function () {
-			HTMLDB.callReadQueueCallbacks(tableElement);
-			HTMLDB.removeFromReadingQueue(tableElement);
-			HTMLDB.processReadQueue();
-
-			tableElement.dispatchEvent(
-					new CustomEvent(
-					"htmldbread",
-					{detail: {"remote":false,"local":true}}));
-
-			tableElement.dispatchEvent(
-					new CustomEvent(
-					"htmldbreadlocal",
-					{detail: {"remote":false,"local":true}}));
-		}, 150);
-
-		if (functionDone) {
-			functionDone(tableElement);
-		}
+		HTMLDB.initializeLocalTable(tableElement, functionDone);
 
 		return true;
 	},
@@ -1474,7 +1454,7 @@ var HTMLDB = {
         	HTMLDB.validateHTMLDBPaginationDefinition(paginationElement);
         }
 	},
-	"initializeLocalTable": function (tableElement) {
+	"initializeLocalTable": function (tableElement, functionDone) {
 		if (null == HTMLDB.indexedDBConnection) {
         	throw(new Error("HTMLDB IndexedDB not initialized."));
 			return false;
@@ -1494,14 +1474,50 @@ var HTMLDB = {
 		var writerStore = writerTransaction.objectStore(
 				"htmldb_" + tableElementId + "_writer");
 		var readerRequest = readerStore.getAll();
+
+		if (functionDone) {
+			if (undefined == tableElement.HTMLDBInitials) {
+				tableElement.HTMLDBInitials = {
+					"functionDone": functionDone
+				}
+			} else {
+				tableElement.HTMLDBInitials.functionDone = functionDone;
+			}
+		}
+
 		readerRequest.onsuccess = function(event) {
 			var eventTarget = HTMLDB.getEventTarget(event);
 			var tableElementId = eventTarget.source.name.slice(7, -7);
 			var tableElement = HTMLDB.e(tableElementId);
+
 			HTMLDB.initializeLocalTableRows(
 					tableElement,
 					"reader",
 					eventTarget.result);
+
+			setTimeout(function () {
+				HTMLDB.callReadQueueCallbacks(tableElement);
+				HTMLDB.removeFromReadingQueue(tableElement);
+				HTMLDB.processReadQueue();
+
+				tableElement.dispatchEvent(
+						new CustomEvent(
+						"htmldbread",
+						{detail: {"remote":false,"local":true}}));
+
+				tableElement.dispatchEvent(
+						new CustomEvent(
+						"htmldbreadlocal",
+						{detail: {"remote":false,"local":true}}));
+			}, 150);
+
+			if (tableElement.HTMLDBInitials != undefined) {
+				if (tableElement.HTMLDBInitials.functionDone) {
+					tableElement.HTMLDBInitials.functionDone();
+					tableElement.HTMLDBInitials.functionDone = undefined;
+				}
+			}
+
 			HTMLDB.render(tableElement);
 		}
 
