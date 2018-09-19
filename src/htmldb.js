@@ -536,6 +536,12 @@ var HTMLDB = {
 			return false;
 		}
 
+		var parentTable = HTMLDB.getHTMLDBParameter(tableElement, "table");
+
+		if (parentTable != "") {
+			return HTMLDB.readChildTable(tableElement, functionDone);
+		}
+
 		tableElement.setAttribute("data-htmldb-loading", 1);
 		HTMLDB.showLoader(tableElement, "read");
 		tableElement.setAttribute("data-htmldb-loading", 0);
