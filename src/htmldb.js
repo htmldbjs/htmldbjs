@@ -878,13 +878,6 @@ var HTMLDB = {
 				tableElement,
 				"active-id"));
 
-		if (activeId == "") {
-        	throw(new Error("HTMLDB table "
-        			+ tableElementId
-        			+ " is not active, or has no records."));
-			return false;
-		}
-
 		columnElementId = (tableElementId + "_reader_td" + activeId + column);
 
 		var value = "";
