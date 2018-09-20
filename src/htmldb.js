@@ -226,7 +226,7 @@ var HTMLDB = {
             validation = validations[i];
             if (HTMLDB.getHTMLDBParameter(validation, "table")
             		== tableElement.getAttribute("id")) {
-            	currentResponse = checkTableValidation(
+            	currentResponse = HTMLDB.checkTableValidation(
             			tableElement,
             			object,
             			validation);
@@ -273,7 +273,7 @@ var HTMLDB = {
 
 			try {
 				filterFunction = new Function("object", functionBody);
-				if (!filterFunction(object)) {
+				if (filterFunction(object)) {
 					currentResponse.errorCount += 1;
 					currentResponse.lastError += validationItem.innerHTML;
 				}
@@ -579,7 +579,9 @@ var HTMLDB = {
 			className = "";
 		}
 
-		if (!HTMLDB.isNewObject(object)) {
+		var elTR = HTMLDB.e(tableElementId + "_writer_tr" + object["id"]);
+
+		if (!HTMLDB.isNewObject(object) || (elTR != undefined)) {
 			return HTMLDB.update(tableElement, object["id"], object, className);			
 		}
 
@@ -630,11 +632,21 @@ var HTMLDB = {
 					("n" + newId));
     		strTRContent += "</tr>";
 
-    		tbodyHTMLDB.innerHTML += strTRContent;
+			var childRemoved = false;
+			if (tableElement.filterFunction) {
+				if (!tableElement.filterFunction(object)) {
+					childRemoved = true;
+				}
+			}
+
+			if (!childRemoved) {
+    			tbodyHTMLDB.innerHTML += strTRContent;				
+			}
+
     		HTMLDB.updateLocal(tableElement, object["id"], object);
     		HTMLDB.render(tableElement);
     	}
-	},
+    },
 	"update": function (tableElement, id, object, className) {
 		if (!tableElement) {
 			return;
@@ -648,11 +660,11 @@ var HTMLDB = {
 
 		object["id"] = id;
 
-		if (HTMLDB.isNewObject(object)) {
+		var elTR = HTMLDB.e(tableElementId + "_writer_tr" + id);
+
+		if (HTMLDB.isNewObject(object) && (elTR == undefined)) {
 			return HTMLDB.insert(tableElement, object, className);
 		}
-
-		var elTR = HTMLDB.e(tableElementId + "_writer_tr" + id);
 
 		var tbodyHTMLDB = HTMLDB.e(
 				tableElementId
@@ -695,6 +707,7 @@ var HTMLDB = {
     		if (!elTR) {
     			return;
     		}
+
 			tbodyHTMLDB = HTMLDB.e(
 					tableElementId
 					+ "_reader_tbody");
@@ -702,7 +715,19 @@ var HTMLDB = {
 					tableElement,
 					"_reader",
 					object, id);
-			elTR.innerHTML = innerContent;
+
+			var childRemoved = false;
+			if (tableElement.filterFunction) {
+				if (!tableElement.filterFunction(object)) {
+					tbodyHTMLDB.removeChild(elTR);
+					childRemoved = true;
+				}
+			}
+
+			if (!childRemoved) {
+				elTR.innerHTML = innerContent;				
+			}
+
     		HTMLDB.updateLocal(tableElement, id, object);
     		HTMLDB.render(tableElement);
     	}
@@ -729,7 +754,18 @@ var HTMLDB = {
 
 		object["id"] = id;
 
-		readerStore.put(object, HTMLDB.addLeadingZeros(id, 20));
+		var childRemoved = false;
+		if (tableElement.filterFunction) {
+			if (!tableElement.filterFunction(object)) {
+				childRemoved = true;
+			}
+		}
+
+		if (childRemoved) {
+			readerStore.delete(HTMLDB.addLeadingZeros(id, 20));
+		} else {
+			readerStore.put(object, HTMLDB.addLeadingZeros(id, 20));
+		}
 
 		if (true !== updateOnlyReaderTable) {
 			writerStore.put(object, HTMLDB.addLeadingZeros(id, 20));
