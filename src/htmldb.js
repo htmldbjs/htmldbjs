@@ -771,6 +771,9 @@ var HTMLDB = {
 			writerStore.put(object, HTMLDB.addLeadingZeros(id, 20));
 		}
 
+		HTMLDB.updateReadQueueByParentTable(tableElement);
+		HTMLDB.processReadQueue();
+
 		return true;
 	},
 	"delete": function (tableElement, id, className) {
