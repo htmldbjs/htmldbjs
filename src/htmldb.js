@@ -198,7 +198,7 @@ var HTMLDB = {
 				var validateURL = HTMLDB.getHTMLDBParameter(tableElement, "validate-url");
 				validateURL = HTMLDB.evaluateHTMLDBExpression(validateURL);
 
-				if (validateURL != "") {
+				if (validateURL != "" && navigator.onLine) {
 					HTMLDB.validateRemote(tableElement, object, functionDone);
 				} else if (functionDone) {
 					functionDone(tableElement, responseText);
