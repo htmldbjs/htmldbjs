@@ -7,6 +7,7 @@ var HTMLDB = {
 	"indexedDB": null,
 	"indexedDBConnection": null,
 	"indexedDBTables": [],
+	"pausing": false,
 	"initialize": function () {
 		HTMLDB.initializeHTMLDBIndexedDB(function () {
 			HTMLDB.initializeHTMLDBTables();
@@ -756,6 +757,10 @@ var HTMLDB = {
 		}
 	},
 	"render": function (tableElement, functionDone) {
+		if (HTMLDB.pausing) {
+			return;
+		}
+
 		var activeId = (HTMLDB.getActiveId(tableElement));
 
 		HTMLDB.renderTemplates(tableElement);
@@ -928,6 +933,10 @@ var HTMLDB = {
 	    document.body.HTMLDBWriterTimer = HTMLDBWriterTimer;
 	},
 	"writeTables": function () {
+		if (HTMLDB.pausing) {
+			return;
+		}
+
     	var elements = HTMLDB.q(".htmldb-table");
     	var elementCount = elements.length;
     	var element = null;
@@ -3348,6 +3357,10 @@ var HTMLDB = {
 			return;
 		}
 
+		if (HTMLDB.pausing) {
+			return;
+		}
+
 		HTMLDB.readingQueue = undefined;
 
 		while ((HTMLDB.readingQueue === undefined)
@@ -5166,6 +5179,15 @@ var HTMLDB = {
 	},
 	"q": function (selector) {
 		return document.body.querySelectorAll(selector);
+	},
+	"pause": function () {
+		HTMLDB.pausing = true;
+	},
+	"resume": function () {
+		HTMLDB.pausing = false;
+	},
+	"isPaused": function () {
+		return HTMLDB.pausing;
 	},
 	"addParentLoadingClass": function (element) {
 		if (!HTMLDB.hasHTMLDBParameter(element, "parent-loading-class")) {
