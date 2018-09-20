@@ -12,7 +12,7 @@ HTMLDB.initializeHTMLDBIndexedDB(functionDone)
 
 | Parameter Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
-| `functionDone` | Specifies the callback function will be called after initialization process.<br><br>`Accepts: String`<br>`Required` |
+| `functionDone` | Specifies the callback function will be called after initialization process.<br><br>`Accepts: Function`<br>`Required` |
 
 #### Returns
 
