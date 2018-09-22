@@ -3563,6 +3563,8 @@ var HTMLDB = {
 	"getHTMLDBParameter": function (element, parameter) {
 		if (element.getAttribute("data-htmldb-" + parameter)) {
 			return element.getAttribute("data-htmldb-" + parameter);
+		} else if (element.getAttribute("data-" + parameter)) {
+			return element.getAttribute("data-" + parameter);
 		} else if (element.getAttribute("htmldb-" + parameter)) {
 			return element.getAttribute("htmldb-" + parameter);
 		} else if (element.getAttribute(parameter)) {
@@ -3581,6 +3583,8 @@ var HTMLDB = {
 	},
 	"hasHTMLDBParameter": function (element, parameter) {
 		if (element.getAttribute("data-htmldb-" + parameter)) {
+			return true;
+		} else if (element.getAttribute("data-" + parameter)) {
 			return true;
 		} else if (element.getAttribute("htmldb-" + parameter)) {
 			return true;
