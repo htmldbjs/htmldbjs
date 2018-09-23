@@ -5033,6 +5033,8 @@ var HTMLDB = {
 		var iframeHTMLDB = HTMLDB.getEventTarget(event);
 		var tableElement = iframeHTMLDB.parentNode.parentNode;
 		var tableElementId = iframeHTMLDB.parentNode.parentNode.getAttribute("id");
+		var previousActiveId = HTMLDB.getActiveId(tableElement);
+		var hasPreviousActiveId = false;
 		var tbodyHTMLDB = HTMLDB.e(
 				tableElementId
 				+ "_reader_tbody");
@@ -5114,6 +5116,10 @@ var HTMLDB = {
 						activeIdAssigned = true;
 					}
 
+					if (previousActiveId == responseObject.r[i][0]) {
+						hasPreviousActiveId = true;
+					}
+
 					strRowContent += "<tr class=\"refreshed\" data-row-id=\""
 							+ responseObject.r[i][0]
 							+ "\" id=\""
@@ -5139,8 +5145,12 @@ var HTMLDB = {
 				tbodyHTMLDB.innerHTML += strRowContent;
 				HTMLDB.e(tableElement.getAttribute("id") + "_writer_thead").innerHTML
 						= columnContent;
-				tableElement.setAttribute("data-htmldb-active-id", activeId);
 
+				if (hasPreviousActiveId) {
+					tableElement.setAttribute("data-htmldb-active-id", previousActiveId);
+				} else {
+					tableElement.setAttribute("data-htmldb-active-id", activeId);
+				}
 			}
 		}
 
