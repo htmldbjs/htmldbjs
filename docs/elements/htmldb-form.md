@@ -24,6 +24,8 @@ A container for the `htmldb-field` elements, that automatically updated by `html
 
 | Event Name | Description  |
 | ---- | ---- |
+| `htmldbadd` | Triggered when HTMLDB resets htmldb-form form element for adding new record. |
+| `htmldbedit` | Triggered when HTMLDB resets htmldb-form form element for editing a record. |
 | `htmldbreset` | Triggered when HTMLDB resets the htmldb-form form element. |
 
 #### Variables

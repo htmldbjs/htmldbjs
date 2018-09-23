@@ -4842,6 +4842,8 @@ var HTMLDB = {
 				HTMLDB.getHTMLDBParameter(
 				eventTarget,
 				"edit-id"));
+
+		formElement.dispatchEvent(new CustomEvent("htmldbedit", {detail: {}}));
 	},
 	"doSelectChange": function (event) {
 		var select = HTMLDB.getEventTarget(event);
