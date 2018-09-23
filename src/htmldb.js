@@ -4619,8 +4619,8 @@ var HTMLDB = {
 		var object = {};
 		var defaults = HTMLDB.getHTMLDBParameter(eventTarget, "form-defaults");
 
-		object = HTMLDB.parseObjectDefaults(object, defaults);
 		object = HTMLDB.convertFormToObject(form, object);
+		object = HTMLDB.parseObjectDefaults(object, defaults);
 
 		HTMLDB.validate(tableElement, object, function (tableElement, responseText) {
 			var responseObject = null;

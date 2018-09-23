@@ -200,10 +200,18 @@ var SpritPanelHTMLDB = {
 
 		$(sender).removeClass("disabled");
 
-		dialog = SpritPanelHTMLDB.extractFormDialog(form);
+		var closeOnSave = true;
 
-		if (dialog) {
-			hideDialog(dialog.id);
+		if ("0"== sender.getAttribute("data-close-on-save")) {
+			closeOnSave = false;
+		}
+
+		if (closeOnSave) {
+			dialog = SpritPanelHTMLDB.extractFormDialog(form);
+
+			if (dialog) {
+				hideDialog(dialog.id);
+			}
 		}
 	},
 	"renderSelectElement": function (sender, event) {
