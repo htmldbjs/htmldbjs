@@ -457,8 +457,6 @@ var HTMLDB = {
 		if (functionDone) {
 			funcIframeLoadCallback = function (event) {
 				var tableElement = HTMLDB.getEventTarget(event).parentNode.parentNode;
-				tableElement.setAttribute("data-htmldb-loading", 0);
-				HTMLDB.hideLoader(tableElement, "write");
 				iframeWindow = top.frames[
 						tableElementId
 						+ "_iframe_"
@@ -468,7 +466,8 @@ var HTMLDB = {
 					responseText = String(
 							iframeWindow.document.body.innerHTML).trim();
 				}
-				HTMLDB.removeIframeAndForm(tableElement, iframeFormGUID);
+
+				HTMLDB.doWriterIframeLoad(event);
 				functionDone(tableElement, responseText);
 				var redirectURL = HTMLDB.getHTMLDBParameter(
 						tableElement,
@@ -4860,6 +4859,7 @@ var HTMLDB = {
 		HTMLDB.hideLoader(tableElement, "write");
 		iframeWindow = top.frames[eventTarget.getAttribute("id")];
 		var responseText = "";
+
 		if (iframeWindow.document) {
 			responseText = String(iframeWindow.document.body.innerHTML).trim();
 		}
@@ -4870,8 +4870,23 @@ var HTMLDB = {
 				iframeFormDefaultName.length);
 		HTMLDB.removeIframeAndForm(tableElement, iframeFormGUID);
 
-		if (tableElement.doHTMLDBWrite) {
-			tableElement.doHTMLDBWrite(tableElement, responseText);
+		var responseObject = null;
+
+		try {
+			responseObject = JSON.parse(String(decodeURIComponent(responseText)).trim());
+		} catch(e) {
+        	throw(new Error("HTMLDB table "
+        			+ tableElement.getAttribute("id")
+        			+ " could not be written: Not valid JSON format"));
+			return false;
+		}
+
+		if ((responseObject.errorCount !== undefined)
+				&& (responseObject.errorCount > 0)) {
+			HTMLDB.showError(tableElement, responseObject.lastError);
+		} else if ((responseObject.messageCount !== undefined)
+				&& (responseObject.messageCount > 0)) {
+			HTMLDB.showMessage(tableElement, responseObject.lastMessage);
 		}
 	},
 	"doValidatorIframeLoad": function (event) {
