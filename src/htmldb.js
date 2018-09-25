@@ -4431,10 +4431,10 @@ var HTMLDB = {
     	if (element.className.indexOf("htmldb-form") != -1) {
     		return element;
     	}
-    	var element = element.parentNode;
-    	while (!exit && (-1 == element.className.indexOf("htmldb-form"))) {
-    		element = element.parentNode;
-    		if ("body" == element.tagName.toLowerCase()) {
+    	var parentElement = element.parentNode;
+    	while (!exit && (-1 == parentElement.className.indexOf("htmldb-form"))) {
+    		parentElement = parentElement.parentNode;
+    		if ("body" == parentElement.tagName.toLowerCase()) {
     			exit = true;
     		}
     	}
@@ -4442,7 +4442,7 @@ var HTMLDB = {
         	throw(new Error("HTMLDB form not found."));
 			return false;
     	} else {
-    		return element;
+    		return parentElement;
     	}
     },
     "exploreHTMLDBPagination": function (element) {
