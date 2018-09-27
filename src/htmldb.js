@@ -2357,6 +2357,10 @@ var HTMLDB = {
 		pageCount = parseInt(pageCount);
 		previousPage = (page - 1);
 
+		if (pageCount <= 1) {
+			return;
+		}
+
 		if (previousPage < 0) {
 			previousPage = 0;
 		}
@@ -5245,11 +5249,7 @@ var HTMLDB = {
   		return s;
 	},
 	"e": function (elementId) {
-		if ("" == elementId) {
-			return undefined;
-		} else {
-			return document.getElementById(elementId);
-		}
+		return document.getElementById(elementId);
 	},
 	"q": function (selector) {
 		return document.body.querySelectorAll(selector);
