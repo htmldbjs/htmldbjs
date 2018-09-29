@@ -467,9 +467,7 @@ var HTMLDB = {
 						"redirect");
 				redirectURL = HTMLDB.evaluateHTMLDBExpression(redirectURL);
 				if (redirectURL != "") {
-					setTimeout(function () {
-						window.location.href = redirectURL;
-					},500);
+					window.location.href = redirectURL;
 				}
 			}
 		}
@@ -1033,9 +1031,7 @@ var HTMLDB = {
 		}
 		var redirectURL = HTMLDB.getHTMLDBParameter(tableElement, "redirect");
 		if (redirectURL != "") {
-			setTimeout(function () {
-				window.location.href = redirectURL;
-			},500);
+			window.location.href = redirectURL;
 		}
 		HTMLDB.e(
 				tableElement.getAttribute("id")
