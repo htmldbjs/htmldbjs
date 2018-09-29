@@ -74,9 +74,7 @@ var HTMLDB = {
 			tbodyHTMLDB.innerHTML = "";
 		}
 
-		var iframeFormGUID = HTMLDB.e(
-				tableElementId
-				+ "_iframe_container").children.length;
+		var iframeFormGUID = HTMLDB.generateDateTimeGUID('read');
 		HTMLDB.createNewIframeAndForm(tableElement, iframeFormGUID);
 
 		var target = (tableElementId + "_iframe_" + iframeFormGUID);
@@ -300,9 +298,7 @@ var HTMLDB = {
 			return false;
 		}
 
-		var iframeFormGUID = HTMLDB.e(
-				tableElementId
-				+ "_iframe_container").children.length;
+		var iframeFormGUID = HTMLDB.generateDateTimeGUID('validate');
 		HTMLDB.createNewIframeAndForm(tableElement, iframeFormGUID);
 
 		var target = (tableElementId + "_iframe_" + iframeFormGUID);
@@ -425,10 +421,7 @@ var HTMLDB = {
 			return false;
 		}
 
-		var iframeFormGUID
-				= HTMLDB.e(
-				tableElementId
-				+ "_iframe_container").children.length;
+		var iframeFormGUID = HTMLDB.generateDateTimeGUID('write');
 		HTMLDB.createNewIframeAndForm(tableElement, iframeFormGUID);
 
 		var target = (tableElementId + "_iframe_" + iframeFormGUID);
