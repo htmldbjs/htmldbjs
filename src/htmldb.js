@@ -762,6 +762,7 @@ var HTMLDB = {
 		}
 
 		HTMLDB.updateReadQueueByParentTable(tableElement);
+		HTMLDB.updateReadQueueWithParameter(tableElement, "refresh-table");
 		HTMLDB.processReadQueue();
 
 		return true;
@@ -4882,6 +4883,12 @@ var HTMLDB = {
 		} else if ((responseObject.messageCount !== undefined)
 				&& (responseObject.messageCount > 0)) {
 			HTMLDB.showMessage(tableElement, responseObject.lastMessage);
+		}
+
+		if ((responseObject.errorCount === undefined)
+				|| ((responseObject.errorCount !== undefined)
+				&& (responseObject.errorCount == 0))) {
+			HTMLDB.updateReadQueueWithParameter(tableElement, "refresh-table");
 		}
 	},
 	"doValidatorIframeLoad": function (event) {
