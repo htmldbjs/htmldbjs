@@ -4931,7 +4931,14 @@ var HTMLDB = {
 				if ("checkbox" == inputType) {
 					return (input.checked ? 1 : 0);
 				} else if ("radio" == inputType) {
-					return ((input.checked) ? input.value : "");
+					var radioGroup = document.getElementsByName(input.name);
+					var radioValue = "";
+					for (var i = 0; i < radioGroup.length; i++){
+					    if (radioGroup[i].checked) {
+					        radioValue = radioGroup[i].value;
+					    }
+					}
+					return radioValue;
 				} else if ("date" == inputType) {
 					inputDate = new Date(input.value);
 					return inputDate.getTime();
