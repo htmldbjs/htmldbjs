@@ -4828,7 +4828,11 @@ var HTMLDB = {
 		var tableElementId = HTMLDB.getHTMLDBParameter(eventTarget, "table");
 		var formElementId = HTMLDB.getHTMLDBParameter(eventTarget, "form");
 
-		if ((tableElementId == "") && (formElementId != "")) {
+		if (tableElementId != "") {
+			tableElement = HTMLDB.e(tableElementId);
+		}
+
+		if (formElementId != "") {
 			formElement = HTMLDB.e(formElementId);
 			if (!formElement) {
 	        	throw(new Error("Edit button HTMLDB form "
@@ -4836,10 +4840,12 @@ var HTMLDB = {
 	        			+ " not found."));
 				return false;
 			}
-			tableElementId = HTMLDB.getHTMLDBParameter(formElement, "table");
-		}
 
-		tableElement = HTMLDB.e(tableElementId);
+			if (tableElementId == "") {
+				tableElementId = HTMLDB.getHTMLDBParameter(formElement, "table");
+			}
+		} 
+
 		if (!tableElement) {
         	throw(new Error("Edit button HTMLDB table "
         			+ tableElementId
@@ -4853,7 +4859,9 @@ var HTMLDB = {
 				eventTarget,
 				"edit-id"));
 
-		formElement.dispatchEvent(new CustomEvent("htmldbedit", {detail: {}}));
+		if (formElement) {
+			formElement.dispatchEvent(new CustomEvent("htmldbedit", {detail: {}}));
+		}
 	},
 	"doSelectChange": function (event) {
 		var select = HTMLDB.getEventTarget(event);
