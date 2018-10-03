@@ -2587,6 +2587,14 @@ var HTMLDB = {
     	var tables = [];
     	var tableCount = 0;
 
+    	if (!input) {
+    		return;
+    	}
+
+    	if ("" == field) {
+    		return;
+    	}
+
     	var form = HTMLDB.exploreHTMLDBForm(input);
     	var formId = form.getAttribute("id");
     	var tableElement = null;
