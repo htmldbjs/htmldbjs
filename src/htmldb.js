@@ -4661,8 +4661,10 @@ var HTMLDB = {
 
 		for (var i = 0; i < elementCount; i++) {
 			element = elements[i];
-			object[element.getAttribute("data-htmldb-field")]
-					= HTMLDB.getInputValue(element);	
+			if (HTMLDB.hasHTMLDBParameter("htmldb-field")) {
+				object[element.getAttribute("data-htmldb-field")]
+						= HTMLDB.getInputValue(element);
+			}
 		}
 
 		return object;
