@@ -35,6 +35,7 @@ A standalone input that automatically update the specific `htmldb-table` record.
 
 | Event Name | Description  |
 | ---- | ---- |
+| `htmldbbeforesave` | Triggered when an htmldb-button-save button clicked just before collecting form values. |
 | `htmldbsave` | Triggered when an htmldb-input-save input has been saved. |
 
 #### Variables

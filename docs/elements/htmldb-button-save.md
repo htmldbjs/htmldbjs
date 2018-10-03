@@ -22,6 +22,7 @@ An action button is used for saving current values of the specified form.
 
 | Event Name | Description  |
 | ---- | ---- |
+| `htmldbbeforesave` | Triggered when an htmldb-button-save button clicked just before collecting form values. |
 | `htmldbsave` | Triggered when an htmldb-button-save button clicked. |
 
 #### Variables

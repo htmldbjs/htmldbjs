@@ -3001,6 +3001,8 @@ var HTMLDB = {
 		var input = HTMLDB.getEventTarget(event);
 		clearTimeout(input.tmSaveDelay);
 
+		input.dispatchEvent(new CustomEvent("htmldbbeforesave", {detail: {}}));
+
     	var inputValue = HTMLDB.getInputValue(input);
 
     	var tableElementId = HTMLDB.getHTMLDBParameter(input, "table");
@@ -4587,6 +4589,10 @@ var HTMLDB = {
 		if (!eventTarget) {
 			eventTarget = event.target;
 		}
+
+		eventTarget.dispatchEvent(new CustomEvent(
+				"htmldbbeforesave",
+				{detail: {}}));
 
 		var formId = HTMLDB.getHTMLDBParameter(eventTarget, "form");
 		var form = null;
