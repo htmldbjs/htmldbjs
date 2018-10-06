@@ -4828,10 +4828,6 @@ var HTMLDB = {
 		var tableElementId = HTMLDB.getHTMLDBParameter(eventTarget, "table");
 		var formElementId = HTMLDB.getHTMLDBParameter(eventTarget, "form");
 
-		if (tableElementId != "") {
-			tableElement = HTMLDB.e(tableElementId);
-		}
-
 		if (formElementId != "") {
 			formElement = HTMLDB.e(formElementId);
 			if (!formElement) {
@@ -4844,7 +4840,11 @@ var HTMLDB = {
 			if (tableElementId == "") {
 				tableElementId = HTMLDB.getHTMLDBParameter(formElement, "table");
 			}
-		} 
+		}
+
+		if (tableElementId != "") {
+			tableElement = HTMLDB.e(tableElementId);
+		}
 
 		if (!tableElement) {
         	throw(new Error("Edit button HTMLDB table "
