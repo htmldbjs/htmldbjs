@@ -4846,7 +4846,7 @@ var HTMLDB = {
 			tableElement = HTMLDB.e(tableElementId);
 		}
 
-		if (!tableElement) {
+		if (null == tableElement) {
         	throw(new Error("Edit button HTMLDB table "
         			+ tableElementId
         			+ " not found."));
