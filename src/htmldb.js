@@ -5005,9 +5005,11 @@ var HTMLDB = {
 		var inputType = String(input.getAttribute("type")).toLowerCase();
 		var inputDate = 0;
 		var inputDateText = "";
-		value = HTMLDB.decodeHTMLEntities(value);
+
 		switch (tagName) {
 			case "input":
+				value = HTMLDB.decodeHTMLEntities(value);
+
 				if ("checkbox" == inputType) {
 					input.checked = ("1" == value);
 				} else if ("radio" == inputType) {
