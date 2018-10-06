@@ -5276,7 +5276,11 @@ var HTMLDB = {
   		return s;
 	},
 	"e": function (elementId) {
-		return document.getElementById(elementId);
+		if ("" == elementId) {
+			return undefined;
+		} else {
+			return document.getElementById(elementId);
+		}
 	},
 	"q": function (selector) {
 		return document.body.querySelectorAll(selector);
