@@ -72,19 +72,27 @@ var SpritPanelHTMLDB = {
 				return;
 			}
 
-			$(".htmldb-button-edit", target).on("click", function (event) {
+			$(".htmldb-button-edit", target)
+					.off("click.spritpanelhtmldb")
+					.on("click.spritpanelhtmldb", function (event) {
 				SpritPanelHTMLDB.showEditDialog(this, event);
 			});
 
-			$(".htmldb-button-save", target).on("htmldbsave", function (event) {
+			$(".htmldb-button-save", target)
+					.off("htmldbsave.spritpanelhtmldb")
+					.on("htmldbsave.spritpanelhtmldb", function (event) {
 				SpritPanelHTMLDB.doSave(this);
 			});
 
-			$(".htmldb-button-add", target).on("click", function (event) {
+			$(".htmldb-button-add", target)
+					.off("click.spritpanelhtmldb")
+					.on("click.spritpanelhtmldb", function (event) {
 				SpritPanelHTMLDB.showEditDialog(this, event);
 			});
 
-			$(".trAction", target).on("click", function (e) {
+			$(".trAction", target)
+					.off("click.spritpanelhtmldb")
+					.on("click.spritpanelhtmldb", function (e) {
 				SpritPanelHTMLDB.doActionTableRowClick(this, e);
 			});
 		}
