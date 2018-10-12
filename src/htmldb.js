@@ -48,8 +48,6 @@ var HTMLDB = {
 			return true;
 		}
 
-		HTMLDB.clearErrorsAndMessages(tableElement);
-
 		var parentTable = HTMLDB.getHTMLDBParameter(tableElement, "table");
 
 		if (parentTable != "") {
