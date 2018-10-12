@@ -48,6 +48,8 @@ var HTMLDB = {
 			return true;
 		}
 
+		HTMLDB.clearErrorsAndMessages(tableElement);
+
 		var parentTable = HTMLDB.getHTMLDBParameter(tableElement, "table");
 
 		if (parentTable != "") {
@@ -4629,6 +4631,8 @@ var HTMLDB = {
 		object = HTMLDB.convertFormToObject(form, object);
 		object = HTMLDB.parseObjectDefaults(object, defaults);
 
+		HTMLDB.clearErrorsAndMessages(tableElement);
+
 		HTMLDB.validate(tableElement, object, function (tableElement, responseText) {
 			var responseObject = null;
 			try {
@@ -4820,6 +4824,21 @@ var HTMLDB = {
 		}
 		tableElement.dispatchEvent(new CustomEvent("htmldbmessage",
 				{detail:{"messageText":messageText}}));
+	},
+	"clearErrorsAndMessages": function (tableElement) {
+		var tableElementId = tableElement.getAttribute("id");
+		var containers = HTMLDB.q(".htmldb-error,.htmldb-message");
+		var containerCount = containers.length;
+		var container = null;
+		for (var i = 0; i < containerCount; i++) {
+			container = containers[i];
+			if (HTMLDB.getHTMLDBParameter(
+					container,
+					"table")
+					== tableElementId) {
+				container.innerHTML = "";
+			}
+		}
 	},
 	"doEditButtonClick": function (event) {
 		var tableElement = null;
