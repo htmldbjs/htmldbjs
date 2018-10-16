@@ -99,7 +99,15 @@ var SpritPanelHTMLDB = {
 	},
 	"doSelectizeSetValue": function (sender, event) {
 		if (sender.selectize) {
-			sender.selectize.setValue(event.detail.value);
+			if (undefined == sender.attributes['multiple']) {
+				sender.selectize.setValue(event.detail.value);
+			} else {
+				var selections = strValue.split(",");
+				var selectionCount = selections.length;
+				for (var i = 0; i < selectionCount; i++) {
+					sender.selectize.addItem(selections[i]);
+				}
+			}
 		}
 	},
 	"doSelectizeReset": function (sender, event) {
