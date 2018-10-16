@@ -99,6 +99,7 @@ var SpritPanelHTMLDB = {
 	},
 	"doSelectizeSetValue": function (sender, event) {
 		if (sender.selectize) {
+			sender.selectize.clear(true);
 			if (undefined == sender.attributes['multiple']) {
 				sender.selectize.setValue(event.detail.value);
 			} else {
