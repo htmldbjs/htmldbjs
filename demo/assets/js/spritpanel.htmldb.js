@@ -102,7 +102,7 @@ var SpritPanelHTMLDB = {
 			if (undefined == sender.attributes['multiple']) {
 				sender.selectize.setValue(event.detail.value);
 			} else {
-				var selections = strValue.split(",");
+				var selections = String(event.detail.value).split(",");
 				var selectionCount = selections.length;
 				for (var i = 0; i < selectionCount; i++) {
 					sender.selectize.addItem(selections[i]);
