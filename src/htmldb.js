@@ -3007,6 +3007,8 @@ var HTMLDB = {
 	},
 	"doSaveInputEventNow": function (event) {
 		var input = HTMLDB.getEventTarget(event);
+		input = HTMLDB.exploreHTMLDBElement(input, "htmldb-input-save");
+
 		clearTimeout(input.tmSaveDelay);
 
 		input.dispatchEvent(new CustomEvent("htmldbbeforesave", {detail: {}}));
@@ -4409,6 +4411,26 @@ var HTMLDB = {
 
 		return returnValue;
     },
+    "exploreHTMLDBElement": function (child,  className) {
+    	var exit = false;
+
+    	if (child.className.indexOf(className) != -1) {
+    		return child;
+    	}
+    	var parentElement = child.parentNode;
+    	while (!exit && (-1 == parentElement.className.indexOf(className))) {
+    		parentElement = parentElement.parentNode;
+    		if ("body" == parentElement.tagName.toLowerCase()) {
+    			exit = true;
+    		}
+    	}
+    	if (exit) {
+        	throw(new Error("HTMLDB " + className + " element not found."));
+			return false;
+    	} else {
+    		return parentElement;
+    	}
+    },
     "exploreHTMLDBTable": function (element) {
     	var exit = false;
     	var parent = HTMLDB.getHTMLDBParameter(element, "table");
@@ -4430,66 +4452,13 @@ var HTMLDB = {
     	return parentElement;
     },
     "exploreHTMLDBForm": function (element) {
-    	var exit = false;
-
-    	if (element.className.indexOf("htmldb-form") != -1) {
-    		return element;
-    	}
-    	var parentElement = element.parentNode;
-    	while (!exit && (-1 == parentElement.className.indexOf("htmldb-form"))) {
-    		parentElement = parentElement.parentNode;
-    		if ("body" == parentElement.tagName.toLowerCase()) {
-    			exit = true;
-    		}
-    	}
-    	if (exit) {
-        	throw(new Error("HTMLDB form not found."));
-			return false;
-    	} else {
-    		return parentElement;
-    	}
+    	return HTMLDB.exploreHTMLDBElement(element, "htmldb-form");
     },
     "exploreHTMLDBPagination": function (element) {
-    	var exit = false;
-
-    	var className = (" " + element.className + " ");
-    	if (className.indexOf(" htmldb-pagination ") != -1) {
-    		return element;
-    	}
-    	var element = element.parentNode;
-    	className = (" " + element.className + " ");
-    	while (!exit && (-1 == className.indexOf(" htmldb-pagination "))) {
-    		element = element.parentNode;
-    		className = (" " + element.className + " ");
-    		if ("body" == element.tagName.toLowerCase()) {
-    			exit = true;
-    		}
-    	}
-    	if (exit) {
-        	throw(new Error("HTMLDB pagination not found."));
-			return false;
-    	} else {
-    		return element;
-    	}
+    	return HTMLDB.exploreHTMLDBElement(element, " htmldb-pagination ");
     },
     "exploreHTMLDBCheckboxGroup": function (element) {
-    	var exit = false;
-    	if (element.className.indexOf("htmldb-checkbox-group") != -1) {
-    		return element;
-    	}
-    	var element = element.parentNode;
-    	while (!exit && (-1 == element.className.indexOf("htmldb-checkbox-group"))) {
-    		element = element.parentNode;
-    		if ("body" == element.tagName.toLowerCase()) {
-    			exit = true;
-    		}
-    	}
-    	if (exit) {
-        	throw(new Error("HTMLDB checkbox group element not found."));
-			return false;
-    	} else {
-    		return element;
-    	}
+		return HTMLDB.exploreHTMLDBElement(element, "htmldb-checkbox-group");
     },
 	"doReaderIframeLoad": function (event) {
 		HTMLDB.doReaderIframeDefaultLoad(event, false);
@@ -4597,6 +4566,8 @@ var HTMLDB = {
 		if (!eventTarget) {
 			eventTarget = event.target;
 		}
+
+		eventTarget = HTMLDB.exploreHTMLDBElement(eventTarget, "htmldb-button-save");
 
 		eventTarget.dispatchEvent(new CustomEvent(
 				"htmldbbeforesave",
