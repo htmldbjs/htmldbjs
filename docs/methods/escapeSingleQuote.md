@@ -1,11 +1,11 @@
-### `HTMLDB.escapeJSONString`
+### `HTMLDB.escapeSingleQuote`
 
-This method modifies the special characters in `text`, so that it can be used in JSON.
+This method converts `'` characters to `&#039;` within the given `text`.
 
 #### Description
 
 ```javascript
-HTMLDB.escapeJSONString(text)
+HTMLDB.escapeSingleQuote(text)
 ```
 
 #### Parameters
