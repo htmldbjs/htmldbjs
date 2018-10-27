@@ -363,7 +363,7 @@ var HTMLDB = {
                         + " type=\"hidden\" name=\""
                         + "htmldb_row0_" + propertyName
                         + "\" value='"
-                        + HTMLDB.encodeHTMLEntities(object[propertyName])
+                        + HTMLDB.escapeSingleQuote(object[propertyName])
                         + "' />";
             }
         }
@@ -3735,9 +3735,6 @@ var HTMLDB = {
             return ((text.length === 1) && text.match(/[0-9]/));
         }
     },
-    "addSlashes": function (text) {
-        return (text + '').replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
-    },
     "generateTemplateRenderFunctionString": function (templateElement, tableElementId, targetElementId) {
         var tableElement = HTMLDB.e(tableElementId);
         var templateContent = templateElement.innerHTML;
@@ -3790,7 +3787,7 @@ var HTMLDB = {
             content = tokens[0];
             text = content;
             text = String(text).replace(/(?:\r\n|\r|\n)/g, "");
-            functionBody += "+\"" + HTMLDB.addSlashes(text) + "\"";
+            functionBody += "+'" + HTMLDB.escapeSingleQuote(text) + "'";
         }
 
         for (var i = 1; (i < tokenCount); i++) {
@@ -3861,7 +3858,7 @@ var HTMLDB = {
             text = String(content).substr(position + 2);
             text = String(text).replace(/(?:\r\n|\r|\n)/g, "");
 
-            functionBody += "+\"" + HTMLDB.addSlashes(text) + "\"";
+            functionBody += "+'" + HTMLDB.escapeSingleQuote(text) + "'";
         }
 
         functionBody += ";generatedId=HTMLDB.evaluateHTMLDBExpression("
@@ -4063,24 +4060,6 @@ var HTMLDB = {
 
         return functionBlock;
     },
-    "escapeJSONString": function (text) {
-        text = String(text);
-        return text.replace(/\n/g, "\\n")
-                .replace(/\"/g, '&quot;')
-                .replace(/\r/g, "\\r")
-                .replace(/\t/g, "\\t")
-                .replace(/\f/g, "\\f")
-                .replace(/\\/g, "\\");
-    },
-    "unescapeJSONString": function (text) {
-        text = String(text);
-        return text.replace(/\\n/g, "\n")
-                .replace(/\\'/g, "'")
-                .replace(/\\r/g, "\r")
-                .replace(/\\t/g, "\t")
-                .replace(/\\f/g, "\f")
-                .replace(/\\\\/g, "\\");
-    },
     "encodeHTMLEntities": function (text) {
         text = String(text);
 
@@ -4178,7 +4157,7 @@ var HTMLDB = {
                         + id
                         + strPropertyName
                         + "\">"
-                        + HTMLDB.unescapeJSONString(HTMLDB.decodeHTMLEntities(object[strPropertyName]))
+                        + HTMLDB.decodeHTMLEntities(object[strPropertyName])
                         + "</td>");
             }
         }
@@ -4230,9 +4209,9 @@ var HTMLDB = {
 
             formContent += "<input class=\"htmldb_row\" type=\"hidden\" name=\""
                     + "htmldb_row" + index + "_" + columns[i]
-                    + "\" value=\""
-                    + HTMLDB.encodeHTMLEntities(value)
-                    + "\" />";
+                    + "\" value='"
+                    + HTMLDB.escapeSingleQuote(value)
+                    + "' />";
         }
 
         form.innerHTML += formContent;
@@ -4414,7 +4393,7 @@ var HTMLDB = {
             text = String(content).substr(position + 2);
             text = String(text).replace(/(?:\r\n|\r|\n)/g, "");
 
-            content = value + HTMLDB.addSlashes(text);
+            content = value + HTMLDB.encodeHTMLEntities(text);
 
             tokens[i] = content;
         }
@@ -5065,8 +5044,8 @@ var HTMLDB = {
         }
         return eventTarget;
     },
-    "addSingleQuoteSlashes": function (text) {
-        return String(text).replace(/'/g, "\'");
+    "escapeSingleQuote": function (text) {
+        return String(text).replace(/'/g, "&#039;");
     },
     "doReaderIframeDefaultLoad": function (event) {
         var iframeHTMLDB = HTMLDB.getEventTarget(event);
