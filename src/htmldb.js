@@ -4448,7 +4448,7 @@ var HTMLDB = {
         return HTMLDB.exploreHTMLDBElement(element, "htmldb-form");
     },
     "exploreHTMLDBPagination": function (element) {
-        return HTMLDB.exploreHTMLDBElement(element, " htmldb-pagination ");
+        return HTMLDB.exploreHTMLDBElement(element, "htmldb-pagination");
     },
     "exploreHTMLDBCheckboxGroup": function (element) {
         return HTMLDB.exploreHTMLDBElement(element, "htmldb-checkbox-group");
