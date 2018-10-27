@@ -4406,13 +4406,19 @@ var HTMLDB = {
     },
     "exploreHTMLDBElement": function (child,  className) {
         var exit = false;
+        var elementClassName = "";
 
-        if (child.className.indexOf(className) != -1) {
+        elementClassName = (" " + child.className + " ");
+        className = (" " + className + " ");
+
+        if (elementClassName.indexOf(className) != -1) {
             return child;
         }
         var parentElement = child.parentNode;
-        while (!exit && (-1 == parentElement.className.indexOf(className))) {
+        elementClassName = (" " + parentElement.className + " ");
+        while (!exit && (-1 == elementClassName.indexOf(className))) {
             parentElement = parentElement.parentNode;
+            elementClassName = (" " + parentElement.className + " ");
             if ("body" == parentElement.tagName.toLowerCase()) {
                 exit = true;
             }
