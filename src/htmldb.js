@@ -4387,7 +4387,7 @@ var HTMLDB = {
             if (object[column] !== undefined) {
                 value = object[column];
             } else {
-                value = ("{{" + content);
+                value = ("{{" + column + "}}");
             }
 
             text = String(content).substr(position + 2);
