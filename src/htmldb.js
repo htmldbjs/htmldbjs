@@ -4393,7 +4393,7 @@ var HTMLDB = {
             text = String(content).substr(position + 2);
             text = String(text).replace(/(?:\r\n|\r|\n)/g, "");
 
-            content = value + HTMLDB.encodeHTMLEntities(text);
+            content = (value + text);
 
             tokens[i] = content;
         }
