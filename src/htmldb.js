@@ -5024,6 +5024,9 @@ var HTMLDB = {
                 input.value = value;
             break;
             case "select":
+                if (undefined === input.HTMLDBInitials) {
+                    input.HTMLDBInitials = {};
+                }
                 input.HTMLDBInitials.previousValue = input.value;
                 input.value = value;
             break;
