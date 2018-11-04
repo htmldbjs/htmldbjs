@@ -146,11 +146,11 @@ var SpritPanelHTMLDB = {
 		var tagName = element.tagName.toLowerCase();
 
 		if (("button" == tagName) || ("a" == tagName)) {
-			if ("" == HTMLDB.getHTMLDBParameter(element, "form")) {
-				throw(new Error("Button target form not specified."));
-				return false;
-			}
 			formId = HTMLDB.getHTMLDBParameter(element, "form");
+			if ("" == formId) {
+				form = HTMLDB.exploreHTMLDBForm(element);
+				formId = form.getAttribute("id");
+			}
 		} else if ("select" == tagName) {
 			if ("" == HTMLDB.getHTMLDBParameter(element, "add-option-form")) {
 				throw(new Error("Select add option form not specified."));
