@@ -4651,7 +4651,7 @@ var HTMLDB = {
         var object = {};
         var defaults = "";
 
-        if (form !== undefined) {
+        if ((form !== null) && (form !== undefined)) {
             defaults = HTMLDB.getHTMLDBParameter(eventTarget, "form-defaults");
             object = HTMLDB.convertFormToObject(form, object);
             object = HTMLDB.parseObjectDefaults(object, defaults);
