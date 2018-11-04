@@ -5,7 +5,7 @@ A container element for checkbox inputs. `htmldb-checkbox-group` makes it possib
 #### Syntax
 
 ```html
-<ul id="ulCheckboxGroup1" class="htmldb-checkbox-group" data-htmldb-table="myTable">
+<ul id="ulCheckboxGroup1" class="htmldb-checkbox-group" data-htmldb-table="myTable" data-htmldb-checkbox-group-defaults="">
 
     <li>
 
@@ -56,6 +56,7 @@ A container element for checkbox inputs. `htmldb-checkbox-group` makes it possib
 | -------------------------- | ----------------------------------------- |
 | `data-htmldb-table` | Specifies the parent table. <br><br>`Default Value: ""`<br>`Required` |
 | `id` | Specifies the unique identifier of the checkbox group. <br><br>`Default Value: ""`<br>`Required`<br>`Unique` |
+| `data-htmldb-checkbox-group-defaults`| Specifies record defaults in JSON format. This attribute value must be specified between `'` single quotation marks. Because, double quotation marks are required for the definition of JSON object properties.<br><br>`Default Value: ""` |
 
 #### Events
 

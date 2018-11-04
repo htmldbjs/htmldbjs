@@ -4653,6 +4653,7 @@ var HTMLDB = {
 
         var objectArray = [];
         var object = {};
+        var groupDefaults = "";
         var defaults = "";
 
         if ((form !== null) && (form !== undefined)) {
@@ -4666,6 +4667,7 @@ var HTMLDB = {
             var checkedCheckboxCount = checkedCheckboxes.length;
             var checkedCheckbox = null;
             var editId = 0;
+            groupDefaults = HTMLDB.getHTMLDBParameter(checkboxGroup, "checkbox-group-defaults");
 
             for (var i = 0; i < checkedCheckboxCount; i++) {
                 checkedCheckbox = checkedCheckboxes[i];
@@ -4677,6 +4679,7 @@ var HTMLDB = {
                 } else {
                     object = HTMLDB.get(tableElement, editId);
                 }
+                object = HTMLDB.parseObjectDefaults(object, groupDefaults);
                 object = HTMLDB.parseObjectDefaults(object, defaults);
                 objectArray.push(object);
             }
