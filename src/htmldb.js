@@ -4631,7 +4631,7 @@ var HTMLDB = {
         var tableElementId = "";
         var tableElement = null;
 
-        if (form !== undefined) {
+        if ((form !== null) && (form !== undefined)) {
             tableElementId = HTMLDB.getHTMLDBParameter(form, "table");
             tableElement = HTMLDB.e(tableElementId);
             if (!tableElement) {
