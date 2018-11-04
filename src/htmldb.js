@@ -168,14 +168,35 @@ var HTMLDB = {
             return false;
         }
 
-        if (object["id"] == undefined) {
-            throw(new Error("HTMLDB table "
-                    + tableElementId
-                    + " rows must have unique id field."));
-            return false;
+        var objectArray = [];
+
+        if (HTMLDB.isObject(object)) {
+            if (object["id"] == undefined) {
+                throw(new Error("HTMLDB table "
+                        + tableElementId
+                        + " validation object id attribute not found."));
+                return false;
+            }
+            objectArray.push(object);
+        } else {
+            objectArray = object;
+            if (0 == objectArray.length) {
+                throw(new Error("HTMLDB table "
+                        + tableElementId
+                        + " validation object array is empty."));
+                return false;
+            } else {
+                object = objectArray[0];
+                if (object["id"] == undefined) {
+                    throw(new Error("HTMLDB table "
+                            + tableElementId
+                            + " validation object id attribute not found."));
+                    return false;
+                }
+            }
         }
 
-        HTMLDB.validateLocal(tableElement, object, function(tableElement, responseText) {
+        HTMLDB.validateLocal(tableElement, objectArray, function(tableElement, responseText) {
             var responseObject = null;
             try {
                 responseObject = JSON.parse(String(decodeURIComponent(responseText)).trim());
@@ -197,14 +218,14 @@ var HTMLDB = {
                 validateURL = HTMLDB.evaluateHTMLDBExpression(validateURL);
 
                 if (validateURL != "" && navigator.onLine) {
-                    HTMLDB.validateRemote(tableElement, object, functionDone);
+                    HTMLDB.validateRemote(tableElement, objectArray, functionDone);
                 } else if (functionDone) {
                     functionDone(tableElement, responseText);
                 }
             }
         });
     },
-    "validateLocal": function (tableElement, object, functionDone) {
+    "validateLocal": function (tableElement, objectArray, functionDone) {
         var validations = HTMLDB.q(".htmldb-table-validation");
         var validationCount = validations.length;
         var validation = null;
@@ -218,20 +239,25 @@ var HTMLDB = {
             "errorCount": 0,
             "messageCount": 0,
             "lastError": "",
-            "lastMessage": ""   
+            "lastMessage": ""
         }
-        for (var i = 0; i < validationCount; i++) {
-            validation = validations[i];
-            if (HTMLDB.getHTMLDBParameter(validation, "table")
-                    == tableElement.getAttribute("id")) {
-                currentResponse = HTMLDB.checkTableValidation(
-                        tableElement,
-                        object,
-                        validation);
-                validationResponse.errorCount += currentResponse.errorCount;
-                validationResponse.messageCount += currentResponse.messageCount;
-                validationResponse.lastError += currentResponse.lastError;
-                validationResponse.lastMessage += currentResponse.lastMessage;
+
+        var objectCount = objectArray.length;
+
+        for (var i = 0; i < objectCount; i++) {
+            for (var j = 0; j < validationCount; j++) {
+                validation = validations[j];
+                if (HTMLDB.getHTMLDBParameter(validation, "table")
+                        == tableElement.getAttribute("id")) {
+                    currentResponse = HTMLDB.checkTableValidation(
+                            tableElement,
+                            objectArray[i],
+                            validation);
+                    validationResponse.errorCount += currentResponse.errorCount;
+                    validationResponse.messageCount += currentResponse.messageCount;
+                    validationResponse.lastError += currentResponse.lastError;
+                    validationResponse.lastMessage += currentResponse.lastMessage;
+                }
             }
         }
 
@@ -286,7 +312,7 @@ var HTMLDB = {
 
         return currentResponse;
     },
-    "validateRemote": function (tableElement, object, functionDone) {
+    "validateRemote": function (tableElement, objectArray, functionDone) {
         var tableElementId = tableElement.getAttribute("id");
         var validateURL = HTMLDB.getHTMLDBParameter(tableElement, "validate-url");
         validateURL = HTMLDB.evaluateHTMLDBExpression(validateURL);
@@ -347,24 +373,33 @@ var HTMLDB = {
         }
 
         formHTMLDB.innerHTML = "";
-
-        var formContent = "<input class=\"htmldb_action\""
-                + " type=\"hidden\" name=\""
-                + "htmldb_action0"
-                + "\" value=\""
-                + ((0 == object["id"]) ? "inserted" : "updated")
-                + "\" />";
-
         var propertyName = "";
+        var formContent = "";
 
-        for (var propertyName in object) {
-            if (object.hasOwnProperty(propertyName)) {
-                formContent += "<input class=\"htmldb_row\""
-                        + " type=\"hidden\" name=\""
-                        + "htmldb_row0_" + propertyName
-                        + "\" value='"
-                        + HTMLDB.escapeSingleQuote(object[propertyName])
-                        + "' />";
+        var objectCount = objectArray.length;
+        var object = null;
+
+        for (var i = 0; i < objectCount; i++) {
+            object = objectArray[i];
+
+            formContent = "<input class=\"htmldb_action\""
+                    + " type=\"hidden\" name=\""
+                    + "htmldb_action" + i
+                    + "\" value=\""
+                    + ((0 == object["id"]) ? "inserted" : "updated")
+                    + "\" />";
+
+            propertyName = "";
+
+            for (propertyName in object) {
+                if (object.hasOwnProperty(propertyName)) {
+                    formContent += "<input class=\"htmldb_row\""
+                            + " type=\"hidden\" name=\""
+                            + "htmldb_row" + i + "_" + propertyName
+                            + "\" value='"
+                            + HTMLDB.escapeSingleQuote(object[propertyName])
+                            + "' />";
+                }
             }
         }
 
@@ -3735,6 +3770,10 @@ var HTMLDB = {
             return ((text.length === 1) && text.match(/[0-9]/));
         }
     },
+    "isObject": function (variable) {
+        if (variable === null) { return false;}
+        return ((typeof variable === 'function') || (typeof variable === 'object'));
+    },
     "generateTemplateRenderFunctionString": function (templateElement, tableElementId, targetElementId) {
         var tableElement = HTMLDB.e(tableElementId);
         var templateContent = templateElement.innerHTML;
@@ -4573,35 +4612,79 @@ var HTMLDB = {
                 {detail: {}}));
 
         var formId = HTMLDB.getHTMLDBParameter(eventTarget, "form");
+        var checkboxGroupId = HTMLDB.getHTMLDBParameter(eventTarget, "checkbox-group");
         var form = null;
+        var checkboxGroup = null;
 
-        if (formId != "") {
+        if (("" == formId) && ("" == checkboxGroupId)) {
+            form = HTMLDB.exploreHTMLDBForm(eventTarget);
+        } else if (formId != "") {
             form = HTMLDB.e(formId);
             if (!form) {
                 throw(new Error("Save button HTMLDB form not found."));
                 return false;
             }
         } else {
-            form = HTMLDB.exploreHTMLDBForm(eventTarget);           
+            checkboxGroup = HTMLDB.e(checkboxGroupId);
+            if (!checkboxGroup) {
+                throw(new Error("Save button HTMLDB checbox group not found."));
+                return false;
+            }
         }
 
-        var tableElementId = HTMLDB.getHTMLDBParameter(form, "table");
-        var tableElement = HTMLDB.e(tableElementId);
+        var tableElementId = "";
+        var tableElement = null;
 
-        if (!tableElement) {
-            throw(new Error(formId + " form HTMLDB table not found."));
-            return false;           
+        if (form !== undefined) {
+            tableElementId = HTMLDB.getHTMLDBParameter(form, "table");
+            tableElement = HTMLDB.e(tableElementId);
+            if (!tableElement) {
+                throw(new Error(formId + " form HTMLDB table not found."));
+                return false;
+            }
+        } else {
+            tableElementId = HTMLDB.getHTMLDBParameter(checkboxGroup, "table");
+            tableElement = HTMLDB.e(tableElementId);
+            if (!tableElement) {
+                throw(new Error(formId + " checkbox group HTMLDB table not found."));
+                return false;
+            }
         }
 
+        var objectArray = [];
         var object = {};
-        var defaults = HTMLDB.getHTMLDBParameter(eventTarget, "form-defaults");
+        var defaults = "";
 
-        object = HTMLDB.convertFormToObject(form, object);
-        object = HTMLDB.parseObjectDefaults(object, defaults);
+        if (form !== undefined) {
+            defaults = HTMLDB.getHTMLDBParameter(eventTarget, "form-defaults");
+            object = HTMLDB.convertFormToObject(form, object);
+            object = HTMLDB.parseObjectDefaults(object, defaults);
+            objectArray.push(object);
+        } else {
+            var checkedCheckboxes = checkboxGroup.querySelectorAll(
+                    ".htmldb-checkbox:checked");
+            var checkedCheckboxCount = checkedCheckboxes.length;
+            var checkedCheckbox = null;
+            var editId = 0;
+
+            for (var i = 0; i < checkedCheckboxCount; i++) {
+                checkedCheckbox = checkedCheckboxes[i];
+                object = {};
+                editId = parseInt(HTMLDB.getHTMLDBParameter(checkedCheckbox, "checkbox-id"));
+                defaults = HTMLDB.getHTMLDBParameter(checkedCheckbox, "checkbox-defaults");
+                if (isNaN(object) || (0 == editId)) {
+                    object = {"id":0};
+                } else {
+                    object = HTMLDB.get(tableElement, editId);
+                }
+                object = HTMLDB.parseObjectDefaults(object, defaults);
+                objectArray.push(object);
+            }
+        }
 
         HTMLDB.clearErrorsAndMessages(tableElement);
 
-        HTMLDB.validate(tableElement, object, function (tableElement, responseText) {
+        HTMLDB.validate(tableElement, objectArray, function (tableElement, responseText) {
             var responseObject = null;
             try {
                 responseObject = JSON.parse(String(decodeURIComponent(responseText)).trim());
@@ -4615,7 +4698,15 @@ var HTMLDB = {
                 HTMLDB.showError(tableElement, responseObject.lastError);
             } else {
                 HTMLDB.showMessage(tableElement, responseObject.lastMessage);
-                HTMLDB.insert(tableElement, object);
+
+                var objectCount = objectArray.length;
+                var object = {};
+
+                for (var i = 0; i < objectCount; i++) {
+                    object = objectArray[i];
+                    HTMLDB.insert(tableElement, object);
+                }
+
                 eventTarget.dispatchEvent(new CustomEvent(
                         "htmldbsave",
                         {detail: {}}));
