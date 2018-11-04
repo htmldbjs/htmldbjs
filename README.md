@@ -269,6 +269,7 @@ htmldb_row2_columnName: columnName new value
 | [`htmldb-button-save`](docs/elements/htmldb-button-save.md) | An action button is used for saving current values of the specified form. |
 | [`htmldb-button-sort`](docs/elements/htmldb-button-sort.md) | An action button is used for updating the sorting preferences. |
 | [`htmldb-checkbox-group`](docs/elements/htmldb-checkbox-group.md) | A container element for checkbox inputs. `htmldb-checkbox-group` makes it possible to select/update/delete multiple records. |
+| [`htmldb-checkbox`](docs/elements/htmldb-checkbox.md) | A checkbox input item in `htmldb-checkbox-group`, that enables to select/update/delete multiple records. |
 | [`htmldb-error`](docs/elements/htmldb-error.md) | A container element for the errors. |
 | [`htmldb-field`](docs/elements/htmldb-field.md) | An input element, that holds the current values of the `htmldb-form` fields. |
 | [`htmldb-form`](docs/elements/htmldb-form.md) | A container for the `htmldb-field` elements, that automatically updated by `htmldb-table`. |
