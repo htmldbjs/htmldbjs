@@ -3795,12 +3795,12 @@ var HTMLDB = {
         functionHeader = "if(tableElement.getAttribute(\"id\")!=\""
                 + tableElementId
                 + "\")return;var generatedCode"
-                + "=\"\";"
+                + "='';"
                 + "var rowCount=rows.length;"
                 + "var rowId=0;"
                 + "var object=null;"
                 + "var generatedIdList=[];"
-                + "var generatedId=\"\";"
+                + "var generatedId='';"
                 + "var generatedIdListIndex=0;"
                 + "var generatedIdListCount=0;"
                 + "var generatedCodeList=[];"
@@ -3818,7 +3818,7 @@ var HTMLDB = {
         }
 
         functionBody = "generatedCode"
-                + "=\"\"";
+                + "=''";
 
         tokenCount = tokens.length;
 
@@ -3908,7 +3908,7 @@ var HTMLDB = {
                 + "if(-1==generatedIdListIndex){"
                 + "generatedIdListIndex=generatedIdList.length;"
                 + "generatedIdList[generatedIdListIndex]=generatedId;"
-                + "generatedCodeList[generatedIdListIndex]=\"\";"
+                + "generatedCodeList[generatedIdListIndex]='';"
                 + "}generatedCodeList[generatedIdListIndex]+=generatedCode;}"
                 + "generatedIdListCount=generatedIdList.length;"
                 + "for(var i=0;i<generatedIdListCount;i++){"
