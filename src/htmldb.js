@@ -170,7 +170,7 @@ var HTMLDB = {
 
         var objectArray = [];
 
-        if (HTMLDB.isObject(object)) {
+        if (object[0] === undefined) {
             if (object["id"] == undefined) {
                 throw(new Error("HTMLDB table "
                         + tableElementId
@@ -3769,10 +3769,6 @@ var HTMLDB = {
         } else {
             return ((text.length === 1) && text.match(/[0-9]/));
         }
-    },
-    "isObject": function (variable) {
-        if (variable === null) { return false;}
-        return ((typeof variable === 'function') || (typeof variable === 'object'));
     },
     "generateTemplateRenderFunctionString": function (templateElement, tableElementId, targetElementId) {
         var tableElement = HTMLDB.e(tableElementId);
