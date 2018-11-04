@@ -2555,6 +2555,10 @@ var HTMLDB = {
 
         defaults = HTMLDB.evaluateHTMLDBExpression(defaults);
 
+        if ("'" == defaults[0]) {
+            defaults = defaults.slice(1,-1);
+        }
+
         try {
             defaultsObject = JSON.parse(String(defaults).trim());
         } catch(e) {
@@ -3850,11 +3854,11 @@ var HTMLDB = {
             }
 
             if (foreignTableId != "") {
-                functionBody += "+HTMLDB.getTableFieldActiveValue(HTMLDB.e(\""
+                functionBody += "+HTMLDB.evaluateHTMLDBExpression(\"{{"
                         + foreignTableId
-                        + "\"),\""
+                        + "."
                         + column
-                        + "\")";
+                        + "}}\")";
             } else {
                 /*
                 functionBody += "+HTMLDB.e(\""
