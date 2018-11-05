@@ -1674,6 +1674,7 @@ var HTMLDB = {
         var elements = form.elements;
         var elementCount = elements.length;
         var fieldType = "";
+        var resetValue = "";
         form.reset();
         for (var i = 0; i < elementCount; i++) {
             fieldType = elements[i].type.toLowerCase();
@@ -1704,12 +1705,13 @@ var HTMLDB = {
                 break;
             }
 
-            elements[i].dispatchEvent(new CustomEvent("htmldbreset", {detail: {}}));
-
             if (HTMLDB.hasHTMLDBParameter(elements[i], "reset-value")) {
-                HTMLDB.setInputValue(elements[i],
-                        HTMLDB.evaluateHTMLDBExpression(
-                        HTMLDB.getHTMLDBParameter(elements[i], "reset-value")));
+                resetValue = HTMLDB.evaluateHTMLDBExpression(
+                        HTMLDB.getHTMLDBParameter(elements[i], "reset-value"));
+                HTMLDB.setInputValue(elements[i], resetValue);
+                elements[i].dispatchEvent(new CustomEvent("htmldbreset", {detail: {"value": resetValue}}));
+            } else {
+                elements[i].dispatchEvent(new CustomEvent("htmldbreset", {detail: {"value": ""}}));
             }
         }
         form.dispatchEvent(new CustomEvent("htmldbreset", {detail: {}}));

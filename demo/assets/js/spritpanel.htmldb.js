@@ -116,6 +116,9 @@ var SpritPanelHTMLDB = {
 		if (sender.selectize) {
 			sender.selectize.clear(true);
 		}
+		if (event.detail.value != "") {
+			SpritPanelHTMLDB.doSelectizeSetValue(sender, event);
+		}
 	},
 	"showError": function (event) {
 		showErrorDialog(event.detail.errorText);
