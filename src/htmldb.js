@@ -829,12 +829,12 @@ var HTMLDB = {
         var activeId = (HTMLDB.getActiveId(tableElement));
 
         HTMLDB.renderTemplates(tableElement);
+        HTMLDB.renderSelects(tableElement);
 
         if (activeId != "") {
             HTMLDB.renderPaginations(tableElement);
             HTMLDB.renderSections(tableElement);
             HTMLDB.renderForms(tableElement);
-            HTMLDB.renderSelects(tableElement);
             HTMLDB.renderCheckboxGroups(tableElement);
         }
 
