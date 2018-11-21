@@ -4952,6 +4952,10 @@ var HTMLDB = {
         if (addOptionCaption != "") {
             if (addOptionCaption == HTMLDB.getInputValue(select)) {
                 HTMLDB.doAddOptionClick(event);
+                resetValue = HTMLDB.evaluateHTMLDBExpression(
+                        HTMLDB.getHTMLDBParameter(select, "reset-value"));
+                HTMLDB.setInputValue(select, resetValue);
+                select.dispatchEvent(new CustomEvent("htmldbreset", {detail: {"value": resetValue}}));
             }
         }
     },
