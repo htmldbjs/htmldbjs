@@ -216,7 +216,7 @@ var SpritPanelHTMLDB = {
 		table = document.getElementById(tableId);
 
 		if (HTMLDB.getHTMLDBParameter(table, "redirect") != "") {
-			return true;
+			HTMLDB.showLoader(tableElement, "write");
 		}
 
 		$(sender).removeClass("disabled");
