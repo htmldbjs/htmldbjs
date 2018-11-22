@@ -1347,6 +1347,7 @@ var HTMLDB = {
         HTMLDB.indexedDBConnection = indexedDB.open("htmldb", 1);
         HTMLDB.indexedDBConnection.onupgradeneeded
                 = HTMLDB.doIndexedDBUpgradeNeeded;
+
         HTMLDB.indexedDBConnection.onsuccess = functionDone;
     },
     "initializeHTMLDBTables": function () {
@@ -4532,6 +4533,7 @@ var HTMLDB = {
                         ("htmldb_" + HTMLDB.indexedDBTables[i] + "_writer"));
             }
         }
+
     },
     "checkIfIndexedDBTableExists": function (tableElement) {
         if (null == HTMLDB.indexedDBConnection) {
