@@ -3440,6 +3440,10 @@ var HTMLDB = {
         return maxPriority;
     },
     "processReadQueue": function () {
+        var HTMLDBReadQueueProcessTimer
+                = document.body.HTMLDBReadQueueProcessTimer;
+        clearTimeout(HTMLDBReadQueueProcessTimer);
+
         if (undefined === HTMLDB.readQueue) {
             return;
         }
@@ -3449,7 +3453,10 @@ var HTMLDB = {
         }
 
         if (!HTMLDB.isIdle()) {
-            return;
+            HTMLDBReadQueueProcessTimer = setTimeout(function () {
+                HTMLDB.processReadQueue();
+            }, 1000);
+            document.body.HTMLDBReadQueueProcessTimer = HTMLDBReadQueueProcessTimer;
         }
 
         if (HTMLDB.pausing) {
