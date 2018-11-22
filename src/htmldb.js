@@ -967,8 +967,17 @@ var HTMLDB = {
     },
     "setActiveId": function (tableElement, id, silent) {
         tableElement.setAttribute("data-htmldb-active-id", id);
-        if (silent !== true) {
-            HTMLDB.render(tableElement);
+        if (silent !== true && !HTMLDB.pausing) {
+            HTMLDB.renderSelects(tableElement);
+            if (id != "") {
+                HTMLDB.renderPaginations(tableElement);
+                HTMLDB.renderSections(tableElement);
+                HTMLDB.renderForms(tableElement);
+                HTMLDB.renderCheckboxGroups(tableElement);
+            }
+            if (tableElement.doHTMLDBRender) {
+                tableElement.doHTMLDBRender(tableElement);
+            }
             HTMLDB.updateReadQueueByParentTable(tableElement);
         }
     },
