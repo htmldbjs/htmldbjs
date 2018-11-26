@@ -5154,6 +5154,12 @@ var HTMLDB = {
         HTMLDB.readQueueCallbacks = [];
     },
     "callReadQueueCallbacks": function (tableElement) {
+        if (0 == HTMLDB.readQueue.length) {
+            document.body.dispatchEvent(
+                    new CustomEvent(
+                    "htmldbreadqueuecomplete",
+                    {detail: {}}));
+        }
         if (undefined === HTMLDB.readQueueCallbacks[tableElement.getAttribute("id")]) {
             return;
         }
@@ -5162,13 +5168,6 @@ var HTMLDB = {
             callbackFunction
                     = HTMLDB.readQueueCallbacks[tableElement.getAttribute("id")].shift();
             callbackFunction();
-        }
-
-        if (0 == HTMLDB.readQueue.length) {
-            document.body.dispatchEvent(
-                    new CustomEvent(
-                    "htmldbreadqueuecomplete",
-                    {detail: {}}));
         }
     },
     "getEventTarget": function (event) {
