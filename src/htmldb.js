@@ -3449,6 +3449,10 @@ var HTMLDB = {
         }
 
         if (0 == HTMLDB.readQueue.length) {
+            document.body.dispatchEvent(
+                    new CustomEvent(
+                    "htmldbreadqueuecomplete",
+                    {detail: {}}));
             return;
         }
 
