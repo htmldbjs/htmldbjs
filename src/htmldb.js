@@ -3386,6 +3386,7 @@ var HTMLDB = {
                 + "_reader_tbody").innerHTML
                 = content;
         tableElement.setAttribute("data-htmldb-active-id", activeId);
+        HTMLDB.removeFromReadingQueue(tableElement);
         HTMLDB.render(tableElement);
         return true;
     },
