@@ -5156,6 +5156,19 @@ var HTMLDB = {
     },
     "callReadQueueCallbacks": function (tableElement) {
         if ((0 == HTMLDB.readQueue.length)
+                && (0 == HTMLDB.readingQueue.length)
+                && HTMLDB.isIdle()) {
+            var HTMLDBCompleteTimer = document.body.HTMLDBCompleteTimer;
+            clearTimeout(HTMLDBCompleteTimer);
+            HTMLDBCompleteTimer = setTimeout(function () {
+                document.body.dispatchEvent(
+                        new CustomEvent(
+                        "htmldbreadqueuecomplete",
+                        {detail: {}}));
+            }, 300);
+            document.body.HTMLDBCompleteTimer = HTMLDBCompleteTimer;
+        }
+        if ((0 == HTMLDB.readQueue.length)
                 && (0 == HTMLDB.readingQueue.length)) {
             document.body.dispatchEvent(
                     new CustomEvent(
