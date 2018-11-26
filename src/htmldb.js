@@ -5154,7 +5154,8 @@ var HTMLDB = {
         HTMLDB.readQueueCallbacks = [];
     },
     "callReadQueueCallbacks": function (tableElement) {
-        if (0 == HTMLDB.readQueue.length) {
+        if ((0 == HTMLDB.readQueue.length)
+                && (0 == HTMLDB.readingQueue.length)) {
             document.body.dispatchEvent(
                     new CustomEvent(
                     "htmldbreadqueuecomplete",
