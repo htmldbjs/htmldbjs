@@ -3478,6 +3478,7 @@ var HTMLDB = {
 
         tableElementId = "";
         tableElement = null;
+        var processedTableCount = 0;
 
         for (var i = 0; i < readingQueueCount; i++) {
             tableElementId = HTMLDB.readingQueue[i];
@@ -3489,9 +3490,15 @@ var HTMLDB = {
 
             if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
                 HTMLDB.readLocal(tableElement);
+                processedTableCount++;
             } else {
                 HTMLDB.read(tableElement);
+                processedTableCount++;
             }
+        }
+
+        if (0 == processedTableCount) {
+            HTMLDB.processReadQueue();
         }
     },
     "removeFromReadingQueue": function (tableElement) {
