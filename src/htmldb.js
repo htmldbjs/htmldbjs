@@ -2057,12 +2057,13 @@ var HTMLDB = {
             return false;
         }
 
+        var attributeName = "";
+        var attributeValue = "";
+        var content = "";
+
         if ((element.HTMLDBInitials !== undefined)
                 && (element.HTMLDBInitials.attributes !== undefined)) {
             var attributeCount = element.HTMLDBInitials.attributes.length;
-            var attributeName = "";
-            var attributeValue = "";
-            var content = "";
             for (var i = 0; i < attributeCount; i++) {
                 attributeName = element.HTMLDBInitials.attributes[i].name;
                 attributeValue = element.HTMLDBInitials.attributes[i].value;
@@ -2087,14 +2088,14 @@ var HTMLDB = {
                 content = HTMLDB.evaluateHTMLDBExpression(
                         element.HTMLDBInitials.content,
                         tableElement);
-                element.innerHTML = content;
+                HTMLDB.setElementContent(element, content);
             } else {
                 if (HTMLDB.hasHTMLDBParameter(element, "content")) {
-                    element.innerHTML
-                            = HTMLDB.evaluateHTMLDBExpression(
+                    content = HTMLDB.evaluateHTMLDBExpression(
                             HTMLDB.getHTMLDBParameter(
                             element,
                             "content"), tableElement);
+                    HTMLDB.setElementContent(element, content);
                 } else if (HTMLDB.hasHTMLDBParameter(element, "htmldb-value")) {
                     HTMLDB.setInputValue(
                             element,
@@ -2104,6 +2105,19 @@ var HTMLDB = {
                             "htmldb-value"), tableElement));
                 }
             }
+        }
+    },
+    "setElementContent": function (element, content) {
+        if (!element) {
+            return;
+        }
+        switch (String(element.tagName).toLowerCase()) {
+            case "img":
+                element.src = content;
+            break;
+            default:
+                element.innerHTML = content;
+            break;
         }
     },
     "renderFormElement": function (form, object) {
