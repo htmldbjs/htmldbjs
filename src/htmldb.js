@@ -3485,29 +3485,26 @@ var HTMLDB = {
             HTMLDB.readingQueue = HTMLDB.readQueue.shift();
         }
 
-        readingQueueCount = 0;
-        if (HTMLDB.readingQueue) {
-            readingQueueCount = HTMLDB.readingQueue.length;
-        }
-
-        tableElementId = "";
-        tableElement = null;
+        var tableElementId = "";
+        var tableElement = null;
         var processedTableCount = 0;
 
-        for (var i = 0; i < readingQueueCount; i++) {
-            tableElementId = HTMLDB.readingQueue[i];
-            tableElement = HTMLDB.e(tableElementId);
+        if (HTMLDB.readingQueue) {         
+            for (var i = 0; i < HTMLDB.readingQueue.length; i++) {
+                tableElementId = HTMLDB.readingQueue[i];
+                tableElement = HTMLDB.e(tableElementId);
 
-            if (HTMLDB.isInReadQueue(tableElement)) {
-                continue;
-            }
+                if (HTMLDB.isInReadQueue(tableElement)) {
+                    continue;
+                }
 
-            if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
-                HTMLDB.readLocal(tableElement);
-                processedTableCount++;
-            } else {
-                HTMLDB.read(tableElement);
-                processedTableCount++;
+                if (HTMLDB.isHTMLDBParameter(tableElement, "local")) {
+                    HTMLDB.readLocal(tableElement);
+                    processedTableCount++;
+                } else {
+                    HTMLDB.read(tableElement);
+                    processedTableCount++;
+                }
             }
         }
 
