@@ -4,6 +4,7 @@ var HTMLDB = {
     "readingQueue": [],
     "readQueueCallbacks": [],
     "activeFormFields": [],
+    "activeToggleFields": [],
     "indexedDB": null,
     "indexedDBConnection": null,
     "indexedDBTables": [],
@@ -1236,7 +1237,6 @@ var HTMLDB = {
             form = forms[i];
             if (HTMLDB.getHTMLDBParameter(form, "table") == tableElement.getAttribute("id")) {
                 HTMLDB.renderFormElement(form);
-                HTMLDB.doParentElementToggle(form);
             }
         }
         HTMLDB.initializeHTMLDBEditButtons(null, tableElement);
@@ -1823,6 +1823,7 @@ var HTMLDB = {
         var parentCount = 0;
         var filter = "";
         var fields = [];
+        var fieldCount = 0;
         var tableElementId = "";
         var tableElement = null;
         var functionHeader = "";
@@ -1830,6 +1831,8 @@ var HTMLDB = {
         var functionFooter = "";
 
         functionFooter = "return success;"
+
+        HTMLDB.activeToggleFields = [];
 
         for (var i = 0; i < toggleCount; i++) {
             toggle = toggles[i];
@@ -1882,10 +1885,20 @@ var HTMLDB = {
                         functionHeader
                         + functionBody
                         + functionFooter);
+                toggle.toggleEventFields = fields;
             } catch(e) {
                 throw(new Error("HTMLDB toggle (index: " + i + ") "
                         + " toggle function could not be created."));
                 return false;
+            }
+
+            fieldCount = fields.length;
+
+            for (var j = 0; j < fieldCount; j++) {
+                if (undefined === HTMLDB.activeToggleFields[fields[j]]) {
+                    HTMLDB.activeToggleFields[fields[j]] = [];
+                }
+                HTMLDB.activeToggleFields[fields[j]].push(toggle);
             }
 
             parents.push(parent);
@@ -1951,8 +1964,8 @@ var HTMLDB = {
             }
 
             if (-1 == form.toggleEventFields.indexOf(field)) {
-                HTMLDB.registerFormElementEvent(element, function () {
-                    HTMLDB.doParentElementToggle(form);
+                HTMLDB.registerFormElementEvent(element, function (e) {
+                    HTMLDB.doActiveElementToggle(HTMLDB.getEventTarget(e));
                 });
 
                 if (-1 == form.toggleEventFields.indexOf(field)) {
@@ -2012,6 +2025,11 @@ var HTMLDB = {
         }
     },
     "doParentElementToggle": function (parent) {
+        if (true === parent.toggling) {
+            return;
+        }
+
+        parent.toggling = true;
         var toggles = parent.querySelectorAll(".htmldb-toggle");
         var toggleCount = toggles.length;
         var toggle = null;
@@ -2021,7 +2039,33 @@ var HTMLDB = {
                 if (toggle.toggleFunction()) {
                     toggle.style.display = "block";
                 } else {
-                    toggle.style.display = "none";                  
+                    toggle.style.display = "none";
+                }
+            }
+        }
+
+        setTimeout(function () {
+            parent.toggling = false;
+        }, 500);
+    },
+    "doActiveElementToggle": function (element) {
+        var field = HTMLDB.getHTMLDBParameter(element, "field");
+
+        if (undefined === HTMLDB.activeToggleFields[field]) {
+            return;
+        }
+
+        var toggles = HTMLDB.activeToggleFields[field];
+        var toggleCount = toggles.length;
+        var toggle = null;
+
+        for (var i = 0; i < toggleCount; i++) {
+            toggle = toggles[i];
+            if (toggle.toggleFunction) {
+                if (toggle.toggleFunction()) {
+                    toggle.style.display = "block";
+                } else {
+                    toggle.style.display = "none";
                 }
             }
         }
@@ -4607,7 +4651,6 @@ var HTMLDB = {
         var defaults = HTMLDB.getHTMLDBParameter(eventTarget, "form-defaults");
         formObject = HTMLDB.parseObjectDefaults(formObject, defaults);
         HTMLDB.renderFormElement(formElement, formObject);
-        HTMLDB.doParentElementToggle(formElement);
         formElement.dispatchEvent(new CustomEvent("htmldbadd", {detail: {}}));
     },
     "doAddOptionClick": function (event) {
@@ -4626,7 +4669,6 @@ var HTMLDB = {
 
         formObject = HTMLDB.parseObjectDefaults(formObject, defaults);
         HTMLDB.renderFormElement(formElement, formObject);
-        HTMLDB.doParentElementToggle(formElement);
 
         formElement.dispatchEvent(new CustomEvent("htmldbadd", {detail: {}}));
         eventTarget.dispatchEvent(new CustomEvent("htmldbaddoptionclick", {detail: {}}));
@@ -5168,6 +5210,8 @@ var HTMLDB = {
                 input.value = value;
             break;
         }
+
+        HTMLDB.doActiveElementToggle(input);
     },
     "removeReadQueueCallbacks": function () {
         HTMLDB.readQueueCallbacks = [];
