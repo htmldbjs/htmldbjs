@@ -2046,7 +2046,7 @@ var HTMLDB = {
 
         setTimeout(function () {
             parent.toggling = false;
-        }, 500);
+        }, 50);
     },
     "doActiveElementToggle": function (element) {
         if (true === element.toggling) {
@@ -2056,10 +2056,11 @@ var HTMLDB = {
         element.toggling = true;
         var field = HTMLDB.getHTMLDBParameter(element, "field");
 
-        if (("" == field)
-                || (undefined === HTMLDB.activeToggleFields[field])) {
+        if (("" == field) || (undefined === HTMLDB.activeToggleFields[field])) {
             return;
         }
+
+        console.log(field);
 
         var toggles = HTMLDB.activeToggleFields[field];
         var toggleCount = toggles.length;
@@ -2078,7 +2079,7 @@ var HTMLDB = {
 
         setTimeout(function () {
             element.toggling = false;
-        }, 500);
+        }, 50);
     },
     "extractToggleParentElement": function (element) {
         var exit = false;
