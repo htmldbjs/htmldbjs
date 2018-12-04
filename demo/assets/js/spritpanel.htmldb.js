@@ -287,7 +287,7 @@ var SpritPanelHTMLDB = {
 	"doSelectizeChange": function (sender, value) {
 		var form = HTMLDB.extractToggleParentElement(sender);
 		var field = HTMLDB.getHTMLDBParameter(sender, "field");
-		HTMLDB.doParentElementToggle(form);
+		HTMLDB.doActiveElementToggle(sender);
 		HTMLDB.doActiveFormFieldUpdate(form, field);
 		sender.dispatchEvent(new CustomEvent(
 				"change",
