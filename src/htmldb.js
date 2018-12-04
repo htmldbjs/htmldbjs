@@ -2056,11 +2056,10 @@ var HTMLDB = {
         element.toggling = true;
         var field = HTMLDB.getHTMLDBParameter(element, "field");
 
-        if (("" == field) || (undefined === HTMLDB.activeToggleFields[field])) {
+        if (("" == field)
+                || (undefined === HTMLDB.activeToggleFields[field])) {
             return;
         }
-
-        console.log(field);
 
         var toggles = HTMLDB.activeToggleFields[field];
         var toggleCount = toggles.length;
