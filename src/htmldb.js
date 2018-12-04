@@ -2060,8 +2060,6 @@ var HTMLDB = {
             return;
         }
 
-        console.log(field);
-
         var toggles = HTMLDB.activeToggleFields[field];
         var toggleCount = toggles.length;
         var toggle = null;
