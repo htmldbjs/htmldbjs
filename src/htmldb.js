@@ -434,14 +434,14 @@ var HTMLDB = {
 
         if (true === delayed) {
             // Delayed Write
-            clearTimeout(tableElement.tmWriteTimer);
+            clearTimeout(tableElement.HTMLDBWriteTimer);
             lWriteDelay = parseInt(
                     tableElement.getAttribute("data-write-delay"));
             if (isNaN(lWriteDelay)) {
                 lWriteDelay = 2000;
             }
-            tableElement.tmWriteTimer = setTimeout(function () {
-                clearTimeout(tableElement.tmWriteTimer);
+            tableElement.HTMLDBWriteTimer = setTimeout(function () {
+                clearTimeout(tableElement.HTMLDBWriteTimer);
                 HTMLDB.write(tableElement, false, functionDone);
             }, lWriteDelay);
             return;
@@ -4262,9 +4262,9 @@ var HTMLDB = {
         iframe.className = "deleted";
         form.className = "deleted";
 
-        clearTimeout(tableElement.tmRemoveIframeFormTimer);
-        tableElement.tmRemoveIframeFormTimer = setTimeout(function () {
-            clearTimeout(tableElement.tmRemoveIframeFormTimer);
+        clearTimeout(tableElement.HTMLDBRemoveIframeFormTimer);
+        tableElement.HTMLDBRemoveIframeFormTimer = setTimeout(function () {
+            clearTimeout(tableElement.HTMLDBRemoveIframeFormTimer);
             var iframeList = iframeContainer.getElementsByClassName("deleted");
             while (iframeList.length > 0) {
                 iframeContainer.removeChild(iframeList[0]);
@@ -4807,14 +4807,33 @@ var HTMLDB = {
         });
     },
     "convertFormToObject": function (form, defaultObject) {
-        var elements = form.querySelectorAll(".htmldb-field");
-        var elementCount = elements.length;
-        var element = null;
+
+        clearTimeout(form.HTMLDBFormToObjectTimeoutTimer);
+        form.HTMLDBFormToObjectTimeoutTimer = setTimeout(function () {
+            clearTimeout(form.HTMLDBFormToObjectTimeoutTimer);
+            form.HTMLDBFormToObjectCache = undefined;
+            console.log("cache removed");
+        }, 500);
+
         var object = {};
 
         if (defaultObject !== undefined) {
             object = defaultObject;
         }
+
+        if (form.HTMLDBFormToObjectCache !== undefined) {
+            var propertyName = "";
+            for (propertyName in form.HTMLDBFormToObjectCache) {
+                if (form.HTMLDBFormToObjectCache.hasOwnProperty(propertyName)) {
+                    object[propertyName] = form.HTMLDBFormToObjectCache[propertyName];
+                }
+            }
+            return form.HTMLDBFormToObjectCache;
+        }
+
+        var elements = form.querySelectorAll(".htmldb-field");
+        var elementCount = elements.length;
+        var element = null;
 
         for (var i = 0; i < elementCount; i++) {
             element = elements[i];
@@ -4831,7 +4850,9 @@ var HTMLDB = {
             }
         }
 
+        form.HTMLDBFormToObjectCache = object;
         return object;
+
     },
     "showLoader": function (tableElement, type) {
         var loader = HTMLDB.getHTMLDBParameter(
