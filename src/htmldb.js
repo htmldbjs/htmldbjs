@@ -4821,13 +4821,17 @@ var HTMLDB = {
         }
 
         if (form.HTMLDBFormToObjectCache !== undefined) {
-            var propertyName = "";
-            for (propertyName in form.HTMLDBFormToObjectCache) {
-                if (form.HTMLDBFormToObjectCache.hasOwnProperty(propertyName)) {
-                    object[propertyName] = form.HTMLDBFormToObjectCache[propertyName];
+            if (defaultObject !== undefined) {
+                var propertyName = "";
+                for (propertyName in form.HTMLDBFormToObjectCache) {
+                    if (form.HTMLDBFormToObjectCache.hasOwnProperty(propertyName)) {
+                        object[propertyName] = form.HTMLDBFormToObjectCache[propertyName];
+                    }
                 }
+                return object;
+            } else {
+                return form.HTMLDBFormToObjectCache;
             }
-            return form.HTMLDBFormToObjectCache;
         }
 
         var elements = form.querySelectorAll(".htmldb-field");
