@@ -4812,7 +4812,6 @@ var HTMLDB = {
         form.HTMLDBFormToObjectTimeoutTimer = setTimeout(function () {
             clearTimeout(form.HTMLDBFormToObjectTimeoutTimer);
             form.HTMLDBFormToObjectCache = undefined;
-            console.log("cache removed");
         }, 500);
 
         var object = {};
