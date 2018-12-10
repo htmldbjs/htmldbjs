@@ -4828,7 +4828,6 @@ var HTMLDB = {
                         object[propertyName] = form.HTMLDBFormToObjectCache[propertyName];
                     }
                 }
-                return object;
             } else {
                 return form.HTMLDBFormToObjectCache;
             }
