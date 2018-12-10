@@ -2046,7 +2046,7 @@ var HTMLDB = {
 
         setTimeout(function () {
             parent.toggling = false;
-        }, 50);
+        }, 100);
     },
     "doActiveElementToggle": function (element) {
         if (true === element.toggling) {
@@ -2077,7 +2077,7 @@ var HTMLDB = {
 
         setTimeout(function () {
             element.toggling = false;
-        }, 50);
+        }, 100);
     },
     "extractToggleParentElement": function (element) {
         var exit = false;
@@ -4812,7 +4812,7 @@ var HTMLDB = {
         form.HTMLDBFormToObjectTimeoutTimer = setTimeout(function () {
             clearTimeout(form.HTMLDBFormToObjectTimeoutTimer);
             form.HTMLDBFormToObjectCache = undefined;
-        }, 500);
+        }, 100);
 
         var object = {};
 
