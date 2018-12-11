@@ -216,7 +216,7 @@ var SpritPanelHTMLDB = {
 		table = document.getElementById(tableId);
 
 		if (HTMLDB.getHTMLDBParameter(table, "redirect") != "") {
-			HTMLDB.showLoader(tableElement, "write");
+			return true;
 		}
 
 		$(sender).removeClass("disabled");
@@ -244,8 +244,23 @@ var SpritPanelHTMLDB = {
             sender.selectize.destroy();
         }
 
-        if (sender.HTMLDBInitials !== undefined) {
-        	sender.innerHTML = sender.HTMLDBInitials.content;
+        var initialOptions = [];
+        var initialOption = null;
+        var initialOptionCount = 0;
+
+        if (undefined !== sender.HTMLDBInitials) {
+         	if (undefined !== sender.HTMLDBInitials.content) {
+				sender.innerHTML = sender.HTMLDBInitials.content;
+         	} else if (undefined !== sender.HTMLDBInitials.initialOptions) {
+                initialOptions = sender.HTMLDBInitials.initialOptions;
+                initialOptionCount = initialOptions.length;
+                for (var i = 0; i < initialOptionCount; i++) {
+		            initialOption = initialOptions[i];
+		            sender.options[sender.options.length]
+		                    = new Option(initialOption.text,
+		                    initialOption.value);
+                }
+            }
         }
 
         if (sender.multiple) {
@@ -287,7 +302,7 @@ var SpritPanelHTMLDB = {
 	"doSelectizeChange": function (sender, value) {
 		var form = HTMLDB.extractToggleParentElement(sender);
 		var field = HTMLDB.getHTMLDBParameter(sender, "field");
-		HTMLDB.doActiveElementToggle(sender);
+		HTMLDB.doActiveElementToggle(form);
 		HTMLDB.doActiveFormFieldUpdate(form, field);
 		sender.dispatchEvent(new CustomEvent(
 				"change",

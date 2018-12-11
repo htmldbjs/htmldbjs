@@ -10,11 +10,11 @@ var HTMLDB = {
     "indexedDBTables": [],
     "pausing": false,
     "initialize": function () {
+        HTMLDB.initializeHTMLDBSelects();
         HTMLDB.initializeHTMLDBIndexedDB(function () {
             HTMLDB.initializeHTMLDBTables();
             HTMLDB.initializeHTMLDBFormTables();
             HTMLDB.initializeHTMLDBTemplates();
-            HTMLDB.initializeHTMLDBSelects();
             HTMLDB.initializeHTMLDBButtons();
             HTMLDB.initializeHTMLDBInputs();
             HTMLDB.initializeHTMLDBPaginations();
@@ -1558,7 +1558,7 @@ var HTMLDB = {
         var readerRequest = readerStore.getAll();
 
         if (functionDone) {
-            if (undefined == tableElement.HTMLDBInitials) {
+            if (undefined === tableElement.HTMLDBInitials) {
                 tableElement.HTMLDBInitials = {
                     "functionDone": functionDone
                 }
@@ -1815,25 +1815,20 @@ var HTMLDB = {
     "initializeHTMLDBSelects": function () {
         var selects = HTMLDB.q("select.htmldb-field");
         var selectCount = selects.length;
-        var select = null;
         var initialOptions = [];
-        var optionCount = 0;
-        var option = null;
-        for (var i = 0; i < selectCount; i++) {
-            select = selects[i];
-            optionCount = select.options.length;
+        var i,j;
+        for (i = 0; i < selectCount; i++) {
             initialOptions = [];
-            for (var j = 0; j < optionCount; j++) {
-                option = select.options[j];
+            for (j = 0; j < selects[i].options.length; j++) {
                 initialOptions.push({
-                    "text": option.text,
-                    "value": option.value
+                    "text": selects[i].options[j].text,
+                    "value": selects[i].options[j].value
                 });
             }
-            if (undefined === select.HTMLDBInitials) {
-                select.HTMLDBInitials = {};
+            if (undefined === selects[i].HTMLDBInitials) {
+                selects[i].HTMLDBInitials = {};
             }
-            select.HTMLDBInitials.initialOptions = initialOptions;
+            selects[i].HTMLDBInitials.initialOptions = initialOptions;
         }
     },
     "initializeHTMLDBToggles": function () {
@@ -1971,7 +1966,7 @@ var HTMLDB = {
         if (0 == form.toggleFields.length) {
             return;
         }
-        if (undefined == form.toggleEventFields) {
+        if (undefined === form.toggleEventFields) {
             form.toggleEventFields = [];
         }
 
@@ -2216,7 +2211,7 @@ var HTMLDB = {
 
             value = "";
 
-            if (undefined == object) {
+            if (undefined === object) {
                 tableElement = HTMLDB.exploreHTMLDBTable(form);
                 value = HTMLDB.evaluateHTMLDBExpression(
                         valueTemplate,
@@ -2227,7 +2222,7 @@ var HTMLDB = {
                         object);
             }
 
-            if (undefined == input.HTMLDBInitials) {
+            if (undefined === input.HTMLDBInitials) {
                 input.HTMLDBInitials = {
                     "renderValue": value
                 }
@@ -2847,7 +2842,7 @@ var HTMLDB = {
 
         optionValueCSV = "";
 
-        for (var i = 0; i < rowCount; i++) {
+        for (i = 0; i < rowCount; i++) {
             row = rows[i];
             id = HTMLDB.getHTMLDBParameter(row, "data-row-id");
             tableElement.setAttribute("data-htmldb-active-id", id);
@@ -3893,14 +3888,14 @@ var HTMLDB = {
         tableElement.innerHTML = tableHTML + iframeHTML + formHTML;
     },
     "isLetter": function (text) {
-        if (undefined == text) {
+        if (undefined === text) {
             return false;
         } else {
             return ((text.length === 1) && text.match(/[a-z_]/i));
         }
     },
     "isNumeric": function (text) {
-        if (undefined == text) {
+        if (undefined === text) {
             return false;
         } else {
             return ((text.length === 1) && text.match(/[0-9]/));
