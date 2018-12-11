@@ -14,12 +14,12 @@ var HTMLDB = {
             HTMLDB.initializeHTMLDBTables();
             HTMLDB.initializeHTMLDBFormTables();
             HTMLDB.initializeHTMLDBTemplates();
+            HTMLDB.initializeHTMLDBSelects();
             HTMLDB.initializeHTMLDBButtons();
             HTMLDB.initializeHTMLDBInputs();
             HTMLDB.initializeHTMLDBPaginations();
             HTMLDB.initializeHTMLDBSections();
             HTMLDB.initializeHTMLDBForms();
-            HTMLDB.initializeHTMLDBSelects();
             HTMLDB.initializeHTMLDBToggles();
             HTMLDB.initializeReadQueue();
             HTMLDB.resetWriterLoop();
@@ -1822,6 +1822,7 @@ var HTMLDB = {
         for (var i = 0; i < selectCount; i++) {
             select = selects[i];
             optionCount = select.options.length;
+            initialOptions = [];
             for (var j = 0; j < optionCount; j++) {
                 option = select.options[j];
                 initialOptions.push({
@@ -1829,9 +1830,10 @@ var HTMLDB = {
                     "value": option.value
                 });
             }
-        }
-        select.HTMLDBInitials = {
-            "initialOptions": initialOptions
+            if (undefined === select.HTMLDBInitials) {
+                select.HTMLDBInitials = {};
+            }
+            select.HTMLDBInitials.initialOptions = initialOptions;
         }
     },
     "initializeHTMLDBToggles": function () {
