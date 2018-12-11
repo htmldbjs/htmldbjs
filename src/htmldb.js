@@ -1813,6 +1813,26 @@ var HTMLDB = {
         }
     },
     "initializeHTMLDBSelects": function () {
+        var selects = HTMLDB.q("select.htmldb-field");
+        var selectCount = selects.length;
+        var select = null;
+        var initialOptions = [];
+        var optionCount = 0;
+        var option = null;
+        for (var i = 0; i < selectCount; i++) {
+            select = selects[i];
+            optionCount = select.options.length;
+            for (var j = 0; j < optionCount; j++) {
+                option = select.options[j];
+                initialOptions.push({
+                    "text": option.text,
+                    "value": option.value
+                });
+            }
+        }
+        select.HTMLDBInitials = {
+            "initialOptions": initialOptions
+        }
     },
     "initializeHTMLDBToggles": function () {
         var toggles = HTMLDB.q(".htmldb-toggle");
@@ -2777,6 +2797,15 @@ var HTMLDB = {
         var previousOptionValueCSV = "";
         var addNewCaption = HTMLDB.getHTMLDBParameter(select, "add-option-caption");
         var addNewFormId = HTMLDB.getHTMLDBParameter(select, "add-option-form");
+        var initialOptions = [];
+        var initialOption = null;
+        var initialOptionCount = 0;
+
+        if (undefined !== select.HTMLDBInitials) {
+            if (undefined !== select.HTMLDBInitials.initialOptions) {
+                initialOptions = select.HTMLDBInitials.initialOptions;
+            }
+        }
 
         if ((addNewCaption != "") && ("" == addNewFormId)) {
             throw(new Error("HTMLDB select element "
@@ -2803,6 +2832,15 @@ var HTMLDB = {
                         "onchange",
                         HTMLDB.doSelectChange);
             }
+        }
+
+        initialOptionCount = initialOptions.length;
+
+        for (var i = 0; i < initialOptionCount; i++) {
+            initialOption = initialOptions[i];
+            select.options[select.options.length]
+                    = new Option(initialOption.text,
+                    initialOption.value);
         }
 
         optionValueCSV = "";
@@ -2848,6 +2886,7 @@ var HTMLDB = {
         }
 
         select.HTMLDBInitials = {
+            "initialOptions": initialOptions,
             "content":select.innerHTML,
             "optionValueCSV": optionValueCSV,
             "previousOptionValueCSV": previousOptionValueCSV
