@@ -5047,6 +5047,13 @@ var HTMLDB = {
             return false;
         }
 
+        if ("" == HTMLDB.getHTMLDBParameter(
+                eventTarget,
+                "edit-id")) {
+            throw(new Error("Edit button data-htmldb-edit-id attribute not specified."));
+            return false;   
+        }
+
         HTMLDB.setActiveId(
                 tableElement,
                 HTMLDB.getHTMLDBParameter(
