@@ -2191,31 +2191,33 @@ var HTMLDB = {
         }
     },
     "renderFormElement": function (form, object) {
-        var inputs = form.querySelectorAll(".htmldb-field");
+        var inputs = form.querySelectorAll("input.htmldb-field,select.htmldb-field,textarea.htmldb-field");
         var inputCount = inputs.length;
         var input = null;
         var field = "";
         var valueTemplate = "";
-        var tableElement = null;
+        var tableElement = HTMLDB.exploreHTMLDBTable(form);
         var value = "";
         var inputValues = [];
+        var activeId = HTMLDB.getActiveId(tableElement);
+
+        if (undefined === object) {
+            object = HTMLDB.get(tableElement, activeId);
+        }
 
         for (var i = 0; i < inputCount; i++) {
             input = inputs[i];
             field = HTMLDB.getHTMLDBParameter(input, "field");
             valueTemplate = HTMLDB.getHTMLDBParameter(input, "htmldb-value");
 
-            if ("" == valueTemplate) {
-                valueTemplate = ("{{" + field + "}}");
-            }
-
             value = "";
 
-            if (undefined === object) {
-                tableElement = HTMLDB.exploreHTMLDBTable(form);
-                value = HTMLDB.evaluateHTMLDBExpression(
-                        valueTemplate,
-                        tableElement);
+            if (("" == valueTemplate)
+                    || (valueTemplate == ("{{" + field + "}}"))) {
+                valueTemplate = ("{{" + field + "}}");
+                if (undefined !== object[field]) {
+                    value = object[field];
+                }
             } else {
                 value = HTMLDB.evaluateHTMLDBExpressionWithObject(
                         valueTemplate,
@@ -4599,6 +4601,7 @@ var HTMLDB = {
     "exploreHTMLDBTable": function (element) {
         var exit = false;
         var parent = HTMLDB.getHTMLDBParameter(element, "table");
+
         while (!exit && ("" == parent)) {
             element = element.parentNode;
             parent = HTMLDB.getHTMLDBParameter(element, "table");
