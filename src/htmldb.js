@@ -968,8 +968,10 @@ var HTMLDB = {
     },
     "setActiveId": function (tableElement, id, silent) {
         tableElement.setAttribute("data-htmldb-active-id", id);
+
         if (silent !== true && !HTMLDB.pausing) {
             HTMLDB.renderSelects(tableElement);
+
             if (id != "") {
                 HTMLDB.renderPaginations(tableElement);
                 HTMLDB.renderSections(tableElement);
@@ -1233,12 +1235,14 @@ var HTMLDB = {
         var forms = HTMLDB.q(".htmldb-form");
         var formCount = forms.length;
         var form = null;
+
         for (var i = 0; i < formCount; i++) {
             form = forms[i];
             if (HTMLDB.getHTMLDBParameter(form, "table") == tableElement.getAttribute("id")) {
                 HTMLDB.renderFormElement(form);
             }
         }
+
         HTMLDB.initializeHTMLDBEditButtons(null, tableElement);
         HTMLDB.initializeHTMLDBInputs();
     },
