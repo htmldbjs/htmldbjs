@@ -107,12 +107,12 @@ var SpritPanelHTMLDB = {
 		if (sender.selectize) {
 			sender.selectize.clear(true);
 			if (undefined == sender.attributes['multiple']) {
-				sender.selectize.setValue(event.detail.value);
+				sender.selectize.setValue(event.detail.value, true);
 			} else {		
 				var selections = String(event.detail.value).split(",");
 				var selectionCount = selections.length;
 				for (var i = 0; i < selectionCount; i++) {
-					sender.selectize.addItem(selections[i]);
+					sender.selectize.addItem(selections[i], true);
 				}
 			}
 		}
