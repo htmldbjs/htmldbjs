@@ -98,12 +98,17 @@ var SpritPanelHTMLDB = {
 		}
 	},
 	"doSelectizeSetValue": function (sender, event) {
+        if (true === sender.SpritPanelHTMLDBSettingValue) {
+        	return;
+        }
+
+        sender.SpritPanelHTMLDBSettingValue = true;
+
 		if (sender.selectize) {
 			sender.selectize.clear(true);
 			if (undefined == sender.attributes['multiple']) {
 				sender.selectize.setValue(event.detail.value);
-			} else {
-				
+			} else {		
 				var selections = String(event.detail.value).split(",");
 				var selectionCount = selections.length;
 				for (var i = 0; i < selectionCount; i++) {
@@ -111,6 +116,10 @@ var SpritPanelHTMLDB = {
 				}
 			}
 		}
+
+		setTimeout(function () {
+			sender.SpritPanelHTMLDBSettingValue = false;
+		}, 500);
 	},
 	"doSelectizeReset": function (sender, event) {
 		if (sender.selectize) {
