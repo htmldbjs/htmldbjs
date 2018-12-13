@@ -4140,50 +4140,50 @@ var HTMLDB = {
                     functionBlock += "(object[\""
                             + property
                             + "\"]"
-                            + "=="
+                            + "==\""
                             + constant
-                            + ")";
+                            + "\")";
                 break;
                 case "isnot":
                 case "neq":
                     functionBlock += "(object[\""
                             + property
                             + "\"]"
-                            + "!="
+                            + "!=\""
                             + constant
-                            + ")";
+                            + "\")";
                 break;
                 case "gt":
                     functionBlock += "(object[\""
                             + property
                             + "\"]"
-                            + ">"
+                            + ">\""
                             + constant
-                            + ")";
+                            + "\")";
                 break;
                 case "gte":
                     functionBlock += "(object[\""
                             + property
                             + "\"]"
-                            + ">="
+                            + ">=\""
                             + constant
-                            + ")";
+                            + "\")";
                 break;
                 case "lt":
                     functionBlock += "(object[\""
                             + property
                             + "\"]"
-                            + "<"
+                            + "<\""
                             + constant
-                            + ")";
+                            + "\")";
                 break;
                 case "lte":
                     functionBlock += "(object[\""
                             + property
                             + "\"]"
-                            + "<="
+                            + "<=\""
                             + constant
-                            + ")";
+                            + "\")";
                 break;
                 case "in":
                     functionBlock += "(-1!=String(\","
