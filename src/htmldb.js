@@ -142,7 +142,7 @@ var HTMLDB = {
                         functionBody);
             } catch (e) {
                 throw(new Error("HTMLDB table "
-                        + tableElementId
+                        + tableElement.id
                         + " filter function could not be created."));
                 return false;
             }
