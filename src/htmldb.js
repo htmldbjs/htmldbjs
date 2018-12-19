@@ -3229,10 +3229,10 @@ var HTMLDB = {
         HTMLDB.updateReadQueueCallbacks(tableElement, function () {
             input.classList.remove("htmldb-loading");
             HTMLDB.removeParentLoadingClass(input);
+            HTMLDB.updateReadQueueWithParameter(input, "refresh-table");
         });
 
         HTMLDB.insert(tableElement, sessionObject);
-        HTMLDB.updateReadQueueWithParameter(input, "refresh-table");
         input.dispatchEvent(new CustomEvent("htmldbsave", {detail: {}}));
     },
     "doSortButtonClick": function (event) {
@@ -3323,10 +3323,10 @@ var HTMLDB = {
         HTMLDB.updateReadQueueCallbacks(tableElement, function () {
             button.classList.remove("htmldb-loading");
             HTMLDB.removeParentLoadingClass(button);
+            HTMLDB.updateReadQueueWithParameter(button, "refresh-table");
         });
 
         HTMLDB.insert(tableElement, sessionObject);
-        HTMLDB.updateReadQueueWithParameter(button, "refresh-table");
         button.dispatchEvent(new CustomEvent("htmldbsort", {detail: {}}));
     },
     "updateReadQueueWithParameter": function (element, parameter) {
