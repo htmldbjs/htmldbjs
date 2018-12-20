@@ -4132,6 +4132,9 @@ var HTMLDB = {
 
             if ("" == constant) {
                 constant = 0;
+            } else if ((constant.charAt(0) === '"' && constant.charAt(constant.length -1) === '"')
+                    || (constant.charAt(0) === "'" && constant.charAt(constant.length -1) === "'")) {
+                constant = String(constant).substr(1,(constant.length-2));
             }
 
             switch (operator) {
@@ -4140,62 +4143,62 @@ var HTMLDB = {
                     functionBlock += "(object[\""
                             + property
                             + "\"]"
-                            + "==\""
-                            + constant
-                            + "\")";
+                            + "=='"
+                            + HTMLDB.escapeSingleQuote(constant)
+                            + "')";
                 break;
                 case "isnot":
                 case "neq":
                     functionBlock += "(object[\""
                             + property
                             + "\"]"
-                            + "!=\""
-                            + constant
-                            + "\")";
+                            + "!='"
+                            + HTMLDB.escapeSingleQuote(constant)
+                            + "')";
                 break;
                 case "gt":
                     functionBlock += "(object[\""
                             + property
                             + "\"]"
-                            + ">\""
-                            + constant
-                            + "\")";
+                            + ">'"
+                            + HTMLDB.escapeSingleQuote(constant)
+                            + "')";
                 break;
                 case "gte":
                     functionBlock += "(object[\""
                             + property
                             + "\"]"
-                            + ">=\""
-                            + constant
-                            + "\")";
+                            + ">='"
+                            + HTMLDB.escapeSingleQuote(constant)
+                            + "')";
                 break;
                 case "lt":
                     functionBlock += "(object[\""
                             + property
                             + "\"]"
-                            + "<\""
-                            + constant
-                            + "\")";
+                            + "<'"
+                            + HTMLDB.escapeSingleQuote(constant)
+                            + "')";
                 break;
                 case "lte":
                     functionBlock += "(object[\""
                             + property
                             + "\"]"
-                            + "<=\""
-                            + constant
-                            + "\")";
+                            + "<='"
+                            + HTMLDB.escapeSingleQuote(constant)
+                            + "')";
                 break;
                 case "in":
-                    functionBlock += "(-1!=String(\","
-                            + constant
-                            + ",\").indexOf(\",\"+object[\""
+                    functionBlock += "(-1!=String(',"
+                            + HTMLDB.escapeSingleQuote(constant)
+                            + ",').indexOf(\",\"+object[\""
                             + property
                             + "\"]+\",\"))";
                 break;
                 case "notin":
-                    functionBlock += "(-1==String(\","
-                            + constant
-                            + ",\").indexOf(\",\"+object[\""
+                    functionBlock += "(-1==String(',"
+                            + HTMLDB.escapeSingleQuote(constant)
+                            + ",').indexOf(\",\"+object[\""
                             + property
                             + "\"]+\",\"))";
                 break;
