@@ -2643,9 +2643,13 @@ var HTMLDB = {
                 = page;
 
         HTMLDB.insert(tableElement, sessionObject);
-        HTMLDB.updateReadQueueWithParameter(
-                paginationElement,
-                "refresh-table");
+
+        HTMLDB.updateReadQueueCallbacks(tableElement, function () {
+            HTMLDB.updateReadQueueWithParameter(
+                    paginationElement,
+                    "refresh-table");
+        });
+
         paginationElement.dispatchEvent(new CustomEvent(
                 "htmldbpageclick",
                 {detail: {"page":page}}));
