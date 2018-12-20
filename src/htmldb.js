@@ -4132,8 +4132,9 @@ var HTMLDB = {
 
             if ("" == constant) {
                 constant = 0;
-            } else if ((constant.charAt(0) === '"' && constant.charAt(constant.length -1) === '"')
-                    || (constant.charAt(0) === "'" && constant.charAt(constant.length -1) === "'")) {
+            } else if ((constant.length >= 2)
+                    && ((constant.charAt(0) === '"' && constant.charAt(constant.length -1) === '"')
+                    || (constant.charAt(0) === "'" && constant.charAt(constant.length -1) === "'"))) {
                 constant = String(constant).substr(1,(constant.length-2));
             }
 
