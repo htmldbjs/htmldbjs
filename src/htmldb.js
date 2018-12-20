@@ -4135,7 +4135,7 @@ var HTMLDB = {
             } else if ((constant.length >= 2)
                     && ((constant.charAt(0) === '"' && constant.charAt(constant.length -1) === '"')
                     || (constant.charAt(0) === "'" && constant.charAt(constant.length -1) === "'"))) {
-                constant = String(constant).substr(1,(constant.length-2));
+                constant = String(constant).slice(1, -1);
             }
 
             switch (operator) {
