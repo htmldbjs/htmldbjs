@@ -5143,21 +5143,6 @@ var HTMLDB = {
                 select.dispatchEvent(new CustomEvent("htmldbreset", {detail: {"value": resetValue}}));
             }
         }
-
-        if (HTMLDB.isHTMLDBParameter(select, "option-table-update-id")) {
-            if (select.selectedIndex != -1) {
-                if (select.options[select.selectedIndex].HTMLDBInitials
-                        !== undefined) {
-                    if (select.options[select.selectedIndex].HTMLDBInitials.id
-                            !== undefined) {
-                        HTMLDB.setActiveId(
-                                HTMLDB.e(
-                                HTMLDB.getHTMLDBParameter(select, "option-table")),
-                                select.options[select.selectedIndex].HTMLDBInitials.id);
-                    }
-                }
-            }
-        }
     },
     "doWriterIframeLoad": function (event) {
         var eventTarget = HTMLDB.getEventTarget(event);

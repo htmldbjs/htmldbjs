@@ -10,7 +10,6 @@ A select element that automatically populated with the related `htmldb-table`.
         class="htmldb-select htmldb-field"
         data-htmldb-field="company_type"
         data-htmldb-option-table="companyTypes"
-        data-htmldb-option-table-update-id="1"
         data-htmldb-option-value="{{id}}"
         data-htmldb-option-title="{{company_type}}"></select>
 ```
@@ -24,7 +23,6 @@ A select element that automatically populated with the related `htmldb-table`.
 | `data-htmldb-add-option-form-defaults`| Specifies new record form defaults in JSON format. This attribute value must be specified between `'` single quotation marks. Because, double quotation marks are required for the definition of JSON object properties.<br><br>`Default Value: ""` |
 | `data-htmldb-field` | Specifies the field name. The parent table name is specified in the container form.<br><br>`Default Value: ""` |
 | `data-htmldb-option-table` | Specifies the table that holds the options.<br><br>`Default Value: ""`<br>`Required` |
-| `data-htmldb-option-table-update-id` | Specifies whether option table active id will be set after change or not.<br><br>`Default Value: "0"` |
 | `data-htmldb-option-title` | Specifies the title field name of the options in the `data-htmldb-option-table`. This attribute accepts mustache text notation.<br><br>`Default Value: ""`<br>`Required` |
 | `data-htmldb-option-value` | Specifies the value field name of the options in the `data-htmldb-option-table`. This attribute accepts mustache text notation.<br><br>`Default Value: ""`<br>`Required` |
 
