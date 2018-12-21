@@ -2828,6 +2828,9 @@ var HTMLDB = {
         if (addNewCaption != "") {
             select.options[0]
                     = new Option((" " + addNewCaption), addNewCaption);
+            
+            select.option[0].HTMLDBInitials = {};
+            select.option[0].HTMLDBInitials.id = 0;
 
             if (select.addEventListener) {
                 select.addEventListener(
@@ -2842,12 +2845,19 @@ var HTMLDB = {
         }
 
         initialOptionCount = initialOptions.length;
+        var index = 0;
 
         for (var i = 0; i < initialOptionCount; i++) {
             initialOption = initialOptions[i];
-            select.options[select.options.length]
+
+            index = select.options.length;
+
+            select.options[index]
                     = new Option(initialOption.text,
                     initialOption.value);
+
+            select.option[index].HTMLDBInitials = {};
+            select.option[index].HTMLDBInitials.id = initialOption.value;
         }
 
         optionValueCSV = "";
@@ -2867,8 +2877,14 @@ var HTMLDB = {
                     select,
                     "option-value"),
                     tableElement);
-            select.options[select.options.length]
+
+            index = select.options.length;
+
+            select.options[index]
                     = new Option(title, value);
+
+            select.option[index].HTMLDBInitials = {};
+            select.option[index].HTMLDBInitials.id = object.id;
 
             if (optionValueCSV != "") {
                 optionValueCSV += ",";
@@ -5125,6 +5141,21 @@ var HTMLDB = {
                         HTMLDB.getHTMLDBParameter(select, "reset-value"));
                 HTMLDB.setInputValue(select, resetValue);
                 select.dispatchEvent(new CustomEvent("htmldbreset", {detail: {"value": resetValue}}));
+            }
+        }
+
+        if (HTMLDB.isHTMLDBParameter(select, "option-table-update-id")) {
+            if (select.selectedIndex != -1) {
+                if (select.options[select.selectedIndex].HTMLDBInitials
+                        !== undefined) {
+                    if (select.options[select.selectedIndex].HTMLDBInitials.id
+                            !== undefined) {
+                        HTMLDB.setActiveId(
+                                HTMLDB.e(
+                                HTMLDB.getHTMLDBParameter(select, "option-table")),
+                                select.options[select.selectedIndex].HTMLDBInitials.id);
+                    }
+                }
             }
         }
     },
