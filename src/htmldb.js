@@ -2829,8 +2829,8 @@ var HTMLDB = {
             select.options[0]
                     = new Option((" " + addNewCaption), addNewCaption);
             
-            select.option[0].HTMLDBInitials = {};
-            select.option[0].HTMLDBInitials.id = 0;
+            select.options[0].HTMLDBInitials = {};
+            select.options[0].HTMLDBInitials.id = 0;
 
             if (select.addEventListener) {
                 select.addEventListener(
@@ -2856,8 +2856,8 @@ var HTMLDB = {
                     = new Option(initialOption.text,
                     initialOption.value);
 
-            select.option[index].HTMLDBInitials = {};
-            select.option[index].HTMLDBInitials.id = initialOption.value;
+            select.options[index].HTMLDBInitials = {};
+            select.options[index].HTMLDBInitials.id = initialOption.value;
         }
 
         optionValueCSV = "";
@@ -2883,8 +2883,8 @@ var HTMLDB = {
             select.options[index]
                     = new Option(title, value);
 
-            select.option[index].HTMLDBInitials = {};
-            select.option[index].HTMLDBInitials.id = object.id;
+            select.options[index].HTMLDBInitials = {};
+            select.options[index].HTMLDBInitials.id = object.id;
 
             if (optionValueCSV != "") {
                 optionValueCSV += ",";
