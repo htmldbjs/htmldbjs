@@ -2236,7 +2236,7 @@ var HTMLDB = {
                 input.HTMLDBInitials.renderValue = value;
             }
 
-            HTMLDB.setInputValue(input, value);
+            HTMLDB.setInputValue(input, value, true);
             inputValues[i] = value;
         }
 
@@ -2245,6 +2245,7 @@ var HTMLDB = {
             input.dispatchEvent(new CustomEvent(
                     "htmldbsetvalue",
                     {detail: {"value": inputValues[i]}}));
+            HTMLDB.doActiveElementToggle(input);
         }
     },
     "renderPaginationElement": function (element) {
@@ -5272,7 +5273,7 @@ var HTMLDB = {
 
         return "";
     },
-    "setInputValue": function (input, value) {
+    "setInputValue": function (input, value, silent) {
         var tagName = String(input.tagName).toLowerCase();
         var inputType = String(input.getAttribute("type")).toLowerCase();
         var inputDate = 0;
@@ -5317,7 +5318,9 @@ var HTMLDB = {
             break;
         }
 
-        HTMLDB.doActiveElementToggle(input);
+        if (true !== silent) {
+            HTMLDB.doActiveElementToggle(input);
+        }
     },
     "removeReadQueueCallbacks": function () {
         HTMLDB.readQueueCallbacks = [];
