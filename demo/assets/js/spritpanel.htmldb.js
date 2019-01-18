@@ -3,9 +3,9 @@ var SpritPanelHTMLDB = {
 		SpritPanelHTMLDB.initializeHTMLDBEvents();
 		SpritPanelHTMLDB.initializeSelectElements();
 	},
-	"validate": function() {
+	"validate": function () {
 		if (!document.getElementById("divErrorDialog")) {
-	    	throw(new Error("Sprit Panel HTMLDB error dialog not found."));
+			throw (new Error("Sprit Panel HTMLDB error dialog not found."));
 			return false;
 		}
 	},
@@ -73,28 +73,28 @@ var SpritPanelHTMLDB = {
 			}
 
 			$(".htmldb-button-edit", target)
-					.off("click.spritpanelhtmldb")
-					.on("click.spritpanelhtmldb", function (event) {
-				SpritPanelHTMLDB.showEditDialog(this, event);
-			});
+				.off("click.spritpanelhtmldb")
+				.on("click.spritpanelhtmldb", function (event) {
+					SpritPanelHTMLDB.showEditDialog(this, event);
+				});
 
 			$(".htmldb-button-save", target)
-					.off("htmldbsave.spritpanelhtmldb")
-					.on("htmldbsave.spritpanelhtmldb", function (event) {
-				SpritPanelHTMLDB.doSave(this);
-			});
+				.off("htmldbsave.spritpanelhtmldb")
+				.on("htmldbsave.spritpanelhtmldb", function (event) {
+					SpritPanelHTMLDB.doSave(this);
+				});
 
 			$(".htmldb-button-add", target)
-					.off("click.spritpanelhtmldb")
-					.on("click.spritpanelhtmldb", function (event) {
-				SpritPanelHTMLDB.showEditDialog(this, event);
-			});
+				.off("click.spritpanelhtmldb")
+				.on("click.spritpanelhtmldb", function (event) {
+					SpritPanelHTMLDB.showEditDialog(this, event);
+				});
 
 			$(".trAction", target)
-					.off("click.spritpanelhtmldb")
-					.on("click.spritpanelhtmldb", function (e) {
-				SpritPanelHTMLDB.doActionTableRowClick(this, e);
-			});
+				.off("click.spritpanelhtmldb")
+				.on("click.spritpanelhtmldb", function (e) {
+					SpritPanelHTMLDB.doActionTableRowClick(this, e);
+				});
 		}
 	},
 	"doSelectizeSetValue": function (sender, event) {
@@ -102,7 +102,7 @@ var SpritPanelHTMLDB = {
 			sender.selectize.clear(true);
 			if (undefined == sender.attributes['multiple']) {
 				sender.selectize.setValue(event.detail.value);
-			} else {		
+			} else {
 				var selections = String(event.detail.value).split(",");
 				var selectionCount = selections.length;
 				for (var i = 0; i < selectionCount; i++) {
@@ -135,7 +135,7 @@ var SpritPanelHTMLDB = {
 		dialog = SpritPanelHTMLDB.extractFormDialog(form);
 
 		if (dialog) {
-			showDialog(dialog.id);			
+			showDialog(dialog.id);
 		}
 	},
 	"extractElementForm": function (element) {
@@ -155,7 +155,7 @@ var SpritPanelHTMLDB = {
 			}
 		} else if ("select" == tagName) {
 			if ("" == HTMLDB.getHTMLDBParameter(element, "add-option-form")) {
-				throw(new Error("Select add option form not specified."));
+				throw (new Error("Select add option form not specified."));
 				return false;
 			}
 			formId = HTMLDB.getHTMLDBParameter(element, "add-option-form");
@@ -164,7 +164,7 @@ var SpritPanelHTMLDB = {
 		var form = document.getElementById(formId);
 
 		if (!form) {
-			throw(new Error(tagName + " target form " + formId + " not found."));
+			throw (new Error(tagName + " target form " + formId + " not found."));
 			return false;
 		}
 
@@ -178,7 +178,7 @@ var SpritPanelHTMLDB = {
 		var parent = form.parentNode;
 
 		while ((-1 == parent.className.indexOf("htmldb-dialog-edit"))
-				&& (parent.tagName.toLowerCase() != "body")) {
+			&& (parent.tagName.toLowerCase() != "body")) {
 			parent = parent.parentNode;
 		}
 
@@ -222,7 +222,7 @@ var SpritPanelHTMLDB = {
 
 		var closeOnSave = true;
 
-		if ("0"== sender.getAttribute("data-close-on-save")) {
+		if ("0" == sender.getAttribute("data-close-on-save")) {
 			closeOnSave = false;
 		}
 
@@ -239,64 +239,72 @@ var SpritPanelHTMLDB = {
 			return false;
 		}
 
-        if (sender.selectize) {
-            sender.selectize.destroy();
-        }
+		var initialValue = undefined;
 
-        var initialOptions = [];
-        var initialOption = null;
-        var initialOptionCount = 0;
+		if (sender.selectize) {
+			initialValue = sender.selectize.getValue();
+			sender.selectize.destroy();
+		}
 
-        if (undefined !== sender.HTMLDBInitials) {
-         	if (undefined !== sender.HTMLDBInitials.content) {
+		var initialOptions = [];
+		var initialOption = null;
+		var initialOptionCount = 0;
+
+		if (undefined !== sender.HTMLDBInitials) {
+			if (undefined !== sender.HTMLDBInitials.content) {
 				sender.innerHTML = sender.HTMLDBInitials.content;
-         	} else if (undefined !== sender.HTMLDBInitials.initialOptions) {
-                initialOptions = sender.HTMLDBInitials.initialOptions;
-                initialOptionCount = initialOptions.length;
-                for (var i = 0; i < initialOptionCount; i++) {
-		            initialOption = initialOptions[i];
-		            sender.options[sender.options.length]
-		                    = new Option(initialOption.text,
-		                    initialOption.value);
-                }
-            }
-        }
+			} else if (undefined !== sender.HTMLDBInitials.initialOptions) {
+				initialOptions = sender.HTMLDBInitials.initialOptions;
+				initialOptionCount = initialOptions.length;
+				for (var i = 0; i < initialOptionCount; i++) {
+					initialOption = initialOptions[i];
+					sender.options[sender.options.length]
+						= new Option(initialOption.text,
+							initialOption.value);
+				}
+			}
+		}
 
-        if (sender.multiple) {
+		if (sender.multiple) {
 
-            $(sender).selectize({
-	    		preload: false,
-                plugins: ["remove_button"],
-                create: true,
-                createFilter: function(input) {
-                    return false;
-                },
-				onChange: function(value) {
-      				SpritPanelHTMLDB.doSelectizeChange(sender, value);
-    			}
-            });
+			$(sender).selectize({
+				preload: false,
+				plugins: ["remove_button"],
+				create: true,
+				createFilter: function (input) {
+					return false;
+				},
+				onChange: function (value) {
+					SpritPanelHTMLDB.doSelectizeChange(sender, value);
+				}
+			});
 
-            if ($(".selectize-input.items", sender.parentNode).hasClass('ui-sortable')) {
-                $(".selectize-input.items", sender.parentNode).sortable("destroy");
-            }
+			if ($(".selectize-input.items", sender.parentNode).hasClass('ui-sortable')) {
+				$(".selectize-input.items", sender.parentNode).sortable("destroy");
+			}
 
-            $(".selectize-input.items", sender.parentNode).sortable({
-                axis: "x",
-                opacity: 0.7,
-                placeholder: "item"
-            });
+			$(".selectize-input.items", sender.parentNode).sortable({
+				axis: "x",
+				opacity: 0.7,
+				placeholder: "item"
+			});
 
-        } else {
+		} else {
 
-	        $(sender).selectize({
-	    		preload: false,
-	    		create: false,
-				onChange: function(value) {
-      				SpritPanelHTMLDB.doSelectizeChange(sender, value);
-    			}
-	        });
+			$(sender).selectize({
+				preload: false,
+				create: false,
+				onChange: function (value) {
+					SpritPanelHTMLDB.doSelectizeChange(sender, value);
+				}
+			});
 
-        }
+		}
+
+		if (initialValue !== undefined) {
+			sender.selectize.setValue(initialValue, false);
+		}
+
 	},
 	"doSelectizeChange": function (sender, value) {
 		var form = HTMLDB.extractToggleParentElement(sender);
@@ -304,8 +312,8 @@ var SpritPanelHTMLDB = {
 		HTMLDB.doActiveElementToggle(form);
 		HTMLDB.doActiveFormFieldUpdate(form, field);
 		sender.dispatchEvent(new CustomEvent(
-				"change",
-				{detail: {}}));
+			"change",
+			{ detail: {} }));
 	},
 	"doActionTableRowClick": function (sender, e) {
 		var parent = e.target.parentNode;
@@ -315,7 +323,7 @@ var SpritPanelHTMLDB = {
 		}
 
 		if (undefined != parent.actionTableRowClicked
-				&& parent.actionTableRowClicked) {
+			&& parent.actionTableRowClicked) {
 			return false;
 		}
 
@@ -340,11 +348,11 @@ var SpritPanelHTMLDB = {
 				actionButton.dispatchEvent(clickEvent);
 			} else if (actionButton.tagName.toLowerCase() == "input") {
 				if ((actionButton.type.toLowerCase() == "checkbox")
-						|| (actionButton.type.toLowerCase() == "checkbox")) {
+					|| (actionButton.type.toLowerCase() == "checkbox")) {
 					actionButton.checked = !actionButton.checked;
 				}
 			}
-			
+
 			setTimeout(function () {
 				parent.actionTableRowClicked = false;
 			}, 1000);
