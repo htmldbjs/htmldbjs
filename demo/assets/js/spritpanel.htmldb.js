@@ -177,16 +177,12 @@ var SpritPanelHTMLDB = {
 
 		var parent = form.parentNode;
 
-		while ((-1 == parent.className.indexOf("htmldb-dialog-edit"))
+		while ((!parent.classList.contains("htmldb-dialog-edit"))
 			&& (parent.tagName.toLowerCase() != "body")) {
 			parent = parent.parentNode;
 		}
 
-		if (parent.tagName.toLowerCase == "body") {
-			return false;
-		}
-
-		if (-1 == parent.className.indexOf("htmldb-dialog-edit")) {
+		if (!parent.classList.contains("htmldb-dialog-edit")) {
 			return false;
 		}
 
