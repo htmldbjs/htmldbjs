@@ -182,6 +182,10 @@ var SpritPanelHTMLDB = {
 			parent = parent.parentNode;
 		}
 
+		if (parent.tagName.toLowerCase == "body") {
+			return false;
+		}
+
 		if (-1 == parent.className.indexOf("htmldb-dialog-edit")) {
 			return false;
 		}
