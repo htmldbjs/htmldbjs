@@ -4354,7 +4354,7 @@ var HTMLDB = {
                         + id
                         + strPropertyName
                         + "\">"
-                        + HTMLDB.decodeHTMLEntities(object[strPropertyName])
+                        + object[strPropertyName]
                         + "</td>");
             }
         }
@@ -5279,9 +5279,7 @@ var HTMLDB = {
         var inputDate = 0;
         var inputDateText = "";
 
-        if (!HTMLDB.isHTMLDBParameter(input, "contains-html")) {
-            value = HTMLDB.decodeHTMLEntities(value);
-        }
+        value = value.replace(/&amp;/g, "&");
 
         switch (tagName) {
             case "input":
