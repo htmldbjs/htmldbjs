@@ -5279,7 +5279,7 @@ var HTMLDB = {
         var inputDate = 0;
         var inputDateText = "";
 
-        value = value.replace(/&amp;/g, "&");
+        value = String(value).replace(/&amp;/g, "&");
 
         switch (tagName) {
             case "input":
