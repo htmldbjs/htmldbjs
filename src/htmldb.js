@@ -831,11 +831,11 @@ var HTMLDB = {
 
         HTMLDB.renderTemplates(tableElement);
         HTMLDB.renderSelects(tableElement);
+        HTMLDB.renderForms(tableElement);
 
         if (activeId != "") {
             HTMLDB.renderPaginations(tableElement);
             HTMLDB.renderSections(tableElement);
-            HTMLDB.renderForms(tableElement);
             HTMLDB.renderCheckboxGroups(tableElement);
         }
 
@@ -2221,6 +2221,8 @@ var HTMLDB = {
                 valueTemplate = ("{{" + field + "}}");
                 if (undefined !== object[field]) {
                     value = object[field];
+                } else {
+                    value = "";
                 }
             } else {
                 value = HTMLDB.evaluateHTMLDBExpressionWithObject(
