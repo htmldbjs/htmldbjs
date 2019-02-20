@@ -831,11 +831,11 @@ var HTMLDB = {
 
         HTMLDB.renderTemplates(tableElement);
         HTMLDB.renderSelects(tableElement);
+        HTMLDB.renderSections(tableElement);
         HTMLDB.renderForms(tableElement);
 
         if (activeId != "") {
             HTMLDB.renderPaginations(tableElement);
-            HTMLDB.renderSections(tableElement);
             HTMLDB.renderCheckboxGroups(tableElement);
         }
 
@@ -2125,25 +2125,20 @@ var HTMLDB = {
         }
 
         var tableElement = HTMLDB.exploreHTMLDBTable(element);
-        var activeId = HTMLDB.getActiveId(tableElement);
-
-        if ("0" == activeId) {
-            return false;
-        }
 
         var attributeName = "";
         var attributeValue = "";
         var content = "";
 
         if ((element.HTMLDBInitials !== undefined)
-                && (element.HTMLDBInitials.attributes !== undefined)) {
+            && (element.HTMLDBInitials.attributes !== undefined)) {
             var attributeCount = element.HTMLDBInitials.attributes.length;
             for (var i = 0; i < attributeCount; i++) {
                 attributeName = element.HTMLDBInitials.attributes[i].name;
                 attributeValue = element.HTMLDBInitials.attributes[i].value;
                 content = HTMLDB.evaluateHTMLDBExpression(
-                        attributeValue,
-                        tableElement);
+                    attributeValue,
+                    tableElement);
                 element.setAttribute(attributeName, content);
             }
         }
@@ -2158,25 +2153,44 @@ var HTMLDB = {
 
         if (0 == childrenCount) {
             if ((element.HTMLDBInitials !== undefined)
-                    && (element.HTMLDBInitials.content !== undefined)) {
+                && (element.HTMLDBInitials.content !== undefined)) {
                 content = HTMLDB.evaluateHTMLDBExpression(
-                        element.HTMLDBInitials.content,
-                        tableElement);
+                    element.HTMLDBInitials.content,
+                    tableElement);
+
+                if ("" == content) {
+                    content = HTMLDB.getHTMLDBParameter(element, "default-content");
+                }
+
                 HTMLDB.setElementContent(element, content);
             } else {
                 if (HTMLDB.hasHTMLDBParameter(element, "content")) {
                     content = HTMLDB.evaluateHTMLDBExpression(
-                            HTMLDB.getHTMLDBParameter(
+                        HTMLDB.getHTMLDBParameter(
                             element,
                             "content"), tableElement);
+
+                    if ("" == content) {
+                        content = HTMLDB.getHTMLDBParameter(element, "default-content");
+                    }
+
                     HTMLDB.setElementContent(element, content);
                 } else if (HTMLDB.hasHTMLDBParameter(element, "htmldb-value")) {
+
+                    content = HTMLDB.getHTMLDBParameter(
+                        element,
+                        "htmldb-value");
+
+                    if ("" == content) {
+                        content = HTMLDB.getHTMLDBParameter(element, "reset-value");
+                    }
+
                     HTMLDB.setInputValue(
-                            element,
-                            HTMLDB.evaluateHTMLDBExpression(
+                        element,
+                        HTMLDB.evaluateHTMLDBExpression(
                             HTMLDB.getHTMLDBParameter(
-                            element,
-                            "htmldb-value"), tableElement));
+                                element,
+                                "htmldb-value"), tableElement));
                 }
             }
         }
