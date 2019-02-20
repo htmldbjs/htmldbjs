@@ -2222,11 +2222,7 @@ var HTMLDB = {
                 if (undefined !== object[field]) {
                     value = object[field];
                 } else {
-                    if (HTMLDB.hasHTMLDBParameter(input, "reset-value")) {
-                        value = HTMLDB.getHTMLDBParameter(input, "reset-value");
-                    } else {
-                        value = "";
-                    }
+                    value = HTMLDB.getHTMLDBParameter(input, "reset-value");
                 }
             } else {
                 value = HTMLDB.evaluateHTMLDBExpressionWithObject(
