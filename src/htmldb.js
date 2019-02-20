@@ -4139,14 +4139,6 @@ var HTMLDB = {
                     tokens[index],
                     HTMLDB.e(tableFormId));
 
-            functionBlock += "if(undefined===object[\"" + property + "\"]){"
-                    + "throw(new Error(\"HTMLDB"
-                    + (isForm ? " form " : " table ")
-                    + parent.getAttribute("id")
-                    + " has unknown filter field:"
-                    + property
-                    + "\"));return;}";
-
             functionBlock += ("success=(success" + andor);
 
             index++;
