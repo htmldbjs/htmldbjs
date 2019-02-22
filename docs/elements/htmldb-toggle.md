@@ -20,6 +20,9 @@ A special container for the form fields that automatically displayed or hided fo
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `data-htmldb-filter` | Specifies the condition according to the values of the container form that make this element visible. Additionally, this attribute accepts mustache text notation.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-display-style` | Specifies the display style that will be assigned into `style.display` property when element is visible.<br><br>`Default Value: "block"` |
+| `data-htmldb-toggle-on-class` | Specifies the CSS class names that will be assigned into element's class attribute when element is visible.<br><br>`Default Value: ""` |
+| `data-htmldb-toggle-off-class` | Specifies the CSS class names that will be assigned into element's class attribute when element is not visible.<br><br>`Default Value: ""` |
  
 #### Filter Syntax
 

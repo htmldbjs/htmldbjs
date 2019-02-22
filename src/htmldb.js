@@ -2058,9 +2058,9 @@ var HTMLDB = {
             toggle = toggles[i];
             if (toggle.toggleFunction) {
                 if (toggle.toggleFunction()) {
-                    toggle.style.display = "block";
+                    HTMLDB.assignToggleOnStyles(toggle);
                 } else {
-                    toggle.style.display = "none";
+                    HTMLDB.assignToggleOffStyles(toggle);
                 }
             }
         }
@@ -2068,6 +2068,93 @@ var HTMLDB = {
         setTimeout(function () {
             parent.toggling = false;
         }, 100);
+    },
+    "assignToggleOnStyles": function (element) {
+        if (!element) {
+            return;
+        }
+
+        var toggleOnStyle = HTMLDB.getHTMLDBParameter(element,
+                "data-htmldb-display-style");
+        var toggleOnClasses = HTMLDB.getHTMLDBParameter(element,
+                "data-htmldb-toggle-on-class");
+        var toggleOffClasses = HTMLDB.getHTMLDBParameter(element,
+                "data-htmldb-toggle-off-class");
+
+        var classList = [];
+        var classListCount = 0;
+
+        if (toggleOffClasses != "") {
+            classList = String(toggleOffClasses).split(" ");
+            classListCount = classList.length;
+            for (var i = 0; i < classListCount; i++) {
+                if ("" == classList[i]) {
+                    continue;
+                }
+                element.classList.remove(classList[i]);
+            }
+        }
+
+        if (toggleOnClasses != "") {
+            classList = String(toggleOnClasses).split(" ");
+            classListCount = classList.length;
+            for (var i = 0; i < classListCount; i++) {
+                if ("" == classList[i]) {
+                    continue;
+                }
+                element.classList.add(classList[i]);
+            }
+        }
+
+        if (toggleOnStyle != "") {
+            element.style.display = toggleOnStyle;
+        }
+
+        if (("" == toggleOnClasses)
+                && ("" == toggleOnStyle)) {
+            element.style.display = "block";
+        }
+    },
+    "assignToggleOffStyles": function (element) {
+        if (!element) {
+            return;
+        }
+
+        var toggleOnStyle = HTMLDB.getHTMLDBParameter(element,
+                "data-htmldb-display-style");
+        var toggleOnClasses = HTMLDB.getHTMLDBParameter(element,
+                "data-htmldb-toggle-on-class");
+        var toggleOffClasses = HTMLDB.getHTMLDBParameter(element,
+                "data-htmldb-toggle-off-class");
+
+        var classList = [];
+        var classListCount = 0;
+
+        if (toggleOnClasses != "") {
+            classList = String(toggleOnClasses).split(" ");
+            classListCount = classList.length;
+            for (var i = 0; i < classListCount; i++) {
+                if ("" == classList[i]) {
+                    continue;
+                }
+                element.classList.remove(classList[i]);
+            }
+        }
+
+        if (toggleOffClasses != "") {
+            classList = String(toggleOffClasses).split(" ");
+            classListCount = classList.length;
+            for (var i = 0; i < classListCount; i++) {
+                if ("" == classList[i]) {
+                    continue;
+                }
+                element.classList.add(classList[i]);
+            }
+        }
+
+        if ("" == toggleOffClasses) {
+            element.style.display = "none";
+        }
     },
     "doActiveElementToggle": function (element) {
         if (true === element.toggling) {
@@ -2089,9 +2176,9 @@ var HTMLDB = {
             toggle = toggles[i];
             if (toggle.toggleFunction) {
                 if (toggle.toggleFunction()) {
-                    toggle.style.display = "block";
+                    HTMLDB.assignToggleOnStyles(toggle);
                 } else {
-                    toggle.style.display = "none";
+                    HTMLDB.assignToggleOffStyles(toggle);
                 }
             }
         }
