@@ -2343,6 +2343,8 @@ var HTMLDB = {
             inputValues[i] = value;
         }
 
+        form.HTMLDBFormToObjectCache = undefined;
+
         for (var i = 0; i < inputCount; i++) {
             input = inputs[i];
             input.dispatchEvent(new CustomEvent(
