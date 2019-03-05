@@ -2230,6 +2230,17 @@ var HTMLDB = {
             }
         }
 
+        switch (String(element.tagName).toLowerCase()) {
+            case "a":
+                if (HTMLDB.hasHTMLDBParameter(element, "href")) {
+                    element.setAttribute("href",
+                            HTMLDB.getHTMLDBParameter(
+                            element,
+                            "href"));
+                }
+            break;
+        }
+
         var childrenCount = element.children.length;
         var children = null;
 
