@@ -28,7 +28,7 @@ A container for the elements, that automatically rendered by the related `htmldb
 | `data-htmldb-table` | Specifies the parent table, that will automatically update the mustache text templates in the `htmldb-section` element.<br><br>`Default Value: ""`<br>`Required` |
 | `data-htmldb-content` | Specifies the mustache text template that will be copied into the inner HTML of the element in the `htmldb-section` element.<br><br>`Default Value: ""` |
 | `data-htmldb-default-content` | Specifies the text that will be copied into the inner HTML whether `data-htmldb-content` is null.<br><br>`Default Value: ""` |
-| `data-htmldb-href` | Specifies the mustache template that will be copied to `href` attribute of `A` tag.<br><br>`Default Value: ""` |
+| `data-htmldb-href` | Specifies the mustache template that will be copied to `href` attribute of an `A` HTML element.<br><br>`Default Value: ""` |
 
 #### Events
 
