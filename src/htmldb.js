@@ -1728,6 +1728,7 @@ var HTMLDB = {
                 elements[i].dispatchEvent(new CustomEvent("htmldbreset", {detail: {"value": ""}}));
             }
         }
+        form.HTMLDBFormToObjectCache = undefined;
         form.dispatchEvent(new CustomEvent("htmldbreset", {detail: {}}));
     },
     "initializeHTMLDBSections": function () {
