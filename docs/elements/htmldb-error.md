@@ -14,6 +14,7 @@ A container element for the errors.
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `data-htmldb-table` | Specifies the parent table, whose errors will be printed in this element.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-error-class` | Specifies the class name will be applied when error is shown.<br><br>`Default Value: ""` |
 
 #### Events
 

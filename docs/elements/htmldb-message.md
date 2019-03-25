@@ -14,6 +14,7 @@ A container element for the messages.
 | Attribute Name             | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `data-htmldb-table` | Specifies the parent table, whose messages will be printed in this element.<br><br>`Default Value: ""`<br>`Required` |
+| `data-htmldb-message-class` | Specifies the class name will be applied when message is shown.<br><br>`Default Value: ""` |
 
 #### Events
 

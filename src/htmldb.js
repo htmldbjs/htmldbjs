@@ -5140,6 +5140,11 @@ var HTMLDB = {
                     "table")
                     == tableElementId) {
                 container.innerHTML = errorText;
+
+                if (HTMLDB.hasHTMLDBParameter(container, "error-class")) {
+                    container.classList.add(HTMLDB.getHTMLDBParameter(container, "error-class"));
+                }
+
                 container.dispatchEvent(new CustomEvent(
                         "htmldberror", {
                         detail: {
@@ -5166,6 +5171,11 @@ var HTMLDB = {
                     "table")
                     == tableElementId) {
                 container.innerHTML = messageText;
+
+                if (HTMLDB.hasHTMLDBParameter(container, "message-class")) {
+                    container.classList.add(HTMLDB.getHTMLDBParameter(container, "message-class"));
+                }
+
                 container.dispatchEvent(new CustomEvent(
                         "htmldbmessage", {
                         detail: {
@@ -5188,6 +5198,15 @@ var HTMLDB = {
                     container,
                     "table")
                     == tableElementId) {
+
+                if (HTMLDB.hasHTMLDBParameter(container, "message-class")) {
+                    container.classList.remove(HTMLDB.getHTMLDBParameter(container, "message-class"));
+                }
+
+                if (HTMLDB.hasHTMLDBParameter(container, "error-class")) {
+                    container.classList.remove(HTMLDB.getHTMLDBParameter(container, "error-class"));
+                }
+
                 container.innerHTML = "";
             }
         }
