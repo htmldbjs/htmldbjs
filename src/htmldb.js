@@ -5126,6 +5126,9 @@ var HTMLDB = {
         }
     },
     "showError": function (tableElement, errorText) {
+        if (undefined == errorText) {
+            return;
+        }
         if ("" == errorText) {
             return;
         }
@@ -5157,6 +5160,9 @@ var HTMLDB = {
                 {detail:{"errorText":errorText}}));
     },
     "showMessage": function (tableElement, messageText) {
+        if (undefined == messageText) {
+            return;
+        }
         if ("" == messageText) {
             return;
         }
