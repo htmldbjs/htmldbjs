@@ -58,6 +58,17 @@ Following examples show the usage of filters:
 - `in` means "in comma `,` seperated values".
 - `notin` means "not in comma `,` seperated values".
 
+#### Special Template Variables
+
+- `__index__` is replaced with current index value.
+- `__count__` is replaced with list count.
+- `__is_first__` is replaced with `1` if the current record is the first item of the list, otherwise replaced with `0`.
+- `__is_not_first__` is replaced with `1` if the current record IS NOT the first item of the list, otherwise replaced with `0`.
+- `__is_last__` is replaced with `1` if the current record is the last item of the list, otherwise replaced with `0`.
+- `__is_not_last__` is replaced with `1` if the current record IS NOT the last item of the list, otherwise replaced with `0`.
+- `__is_even__` is replaced with `1` if the current is even, otherwise replaced with `0`.
+- `__is_odd__` is replaced with `1` if the current is odd, otherwise replaced with `0`.
+
 #### Events
 
 | Event Name | Description  |

@@ -4140,28 +4140,64 @@ var HTMLDB = {
                         + "\").innerHTML";
                 */
 
-                functionBody += "+object[\""
-                        + column
-                        + "\"]";
+                switch (column) {
+                    case '__is_first__':
+                        functionBody += "+((currentRow==0)?'1':'0')";
+                    break;
 
-                if (-1 == columnHistory.indexOf("," + tableElementId
-                        + "."
-                        + column
-                        + ",")) {
-                    functionHeader += "if(undefined===object[\""
-                            + column
-                            + "\"]){"
-                            + "throw(new Error(\"An unknown field "
-                            + tableElementId
-                            + "."
-                            + column
-                            + " is used in template."
-                            + "\"));return;}";
-                    columnHistory += (","
-                            + tableElementId
-                            + "."
-                            + column
-                            + ",");
+                    case '__is_not_first__':
+                        functionBody += "+((currentRow!=0)?'1':'0')";
+                    break;
+
+                    case '__is_last__':
+                        functionBody += "+((currentRow==rowCount)?'1':'0')";
+                    break;
+
+                    case '__is_not_last__':
+                        functionBody += "+((currentRow!=rowCount)?'1':'0')";
+                    break;
+
+                    case '__is_even__':
+                        functionBody += "+(HTMLDB.isEven(currentRow)?'1':'0')";
+                    break;
+
+                    case '__is_odd__':
+                        functionBody += "+(HTMLDB.isEven(currentRow)?'0':'1')";
+                    break;
+
+                    case '__index__':
+                        functionBody += "+(String(currentRow))";
+                    break;
+
+                    case '__count__':
+                        functionBody += "+(String(rowCount))";
+                    break;
+
+                    default:
+                        functionBody += "+object[\""
+                                + column
+                                + "\"]";
+
+                        if (-1 == columnHistory.indexOf("," + tableElementId
+                                + "."
+                                + column
+                                + ",")) {
+                            functionHeader += "if(undefined===object[\""
+                                    + column
+                                    + "\"]){"
+                                    + "throw(new Error(\"An unknown field "
+                                    + tableElementId
+                                    + "."
+                                    + column
+                                    + " is used in template."
+                                    + "\"));return;}";
+                            columnHistory += (","
+                                    + tableElementId
+                                    + "."
+                                    + column
+                                    + ",");
+                        }
+                    break;
                 }
             }
 
@@ -4365,6 +4401,19 @@ var HTMLDB = {
         }
 
         return functionBlock;
+    },
+    "isEven": function (value) {
+	    value = parseInt(value);
+
+        if (isNaN(value)) {
+            value = 0;
+        }
+
+        if (value % 2 == 0) {
+            return true;
+        } else {
+            return false;
+        }
     },
     "encodeHTMLEntities": function (text) {
         text = String(text);
