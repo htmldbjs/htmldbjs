@@ -4131,15 +4131,6 @@ var HTMLDB = {
                         + column
                         + "}}\")";
             } else {
-                /*
-                functionBody += "+HTMLDB.e(\""
-                        + tableElementId
-                        + "_reader_td\"+rows[currentRow].getAttribute(\""
-                        + "data-row-id\")+\""
-                        + column
-                        + "\").innerHTML";
-                */
-
                 switch (column) {
                     case '__is_first__':
                         functionBody += "+((currentRow==0)?'1':'0')";
