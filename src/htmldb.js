@@ -4141,11 +4141,11 @@ var HTMLDB = {
                     break;
 
                     case '__is_last__':
-                        functionBody += "+((currentRow==rowCount)?'1':'0')";
+                        functionBody += "+((currentRow==(rowCount-1))?'1':'0')";
                     break;
 
                     case '__is_not_last__':
-                        functionBody += "+((currentRow!=rowCount)?'1':'0')";
+                        functionBody += "+((currentRow!=(rowCount-1))?'1':'0')";
                     break;
 
                     case '__is_even__':
