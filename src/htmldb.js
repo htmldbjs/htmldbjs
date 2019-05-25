@@ -5702,10 +5702,18 @@ var HTMLDB = {
                 + "_writer_tbody");
         tbodyHTMLDB.innerHTML = "";
     },
-    "clearLocalTable": function (tableElement) {
+    "clearLocalTable": function (tableElement, omitReaderTable, omitWriterTable) {
         if (null == HTMLDB.indexedDBConnection) {
             throw(new Error("HTMLDB IndexedDB not initialized."));
             return false;
+        }
+
+        if (undefined === omitReaderTable) {
+            omitReaderTable = false;
+        }
+
+        if (undefined === omitWriterTable) {
+            omitWriterTable = false;
         }
 
         HTMLDB.clearReaderTable(tableElement);
@@ -5714,19 +5722,24 @@ var HTMLDB = {
         if (HTMLDB.checkIfIndexedDBTableExists(tableElement)) {
             var tableElementId = tableElement.getAttribute("id");
             var database = HTMLDB.indexedDBConnection.result;
-            var readerTransaction = database.transaction(
-                    ("htmldb_" + tableElementId + "_reader"),
-                    "readwrite");
-            var writerTransaction = database.transaction(
-                    ("htmldb_" + tableElementId + "_writer"),
-                    "readwrite");
-            var readerStore = readerTransaction.objectStore(
-                    "htmldb_" + tableElementId + "_reader");
-            var writerStore = writerTransaction.objectStore(
-                    "htmldb_" + tableElementId + "_writer");
+            
+            if (!omitReaderTable) {
+                var readerTransaction = database.transaction(
+                        ("htmldb_" + tableElementId + "_reader"),
+                        "readwrite");
+                var readerStore = readerTransaction.objectStore(
+                        "htmldb_" + tableElementId + "_reader");
+                readerStore.clear();
+            }
 
-            readerStore.clear();
-            writerStore.clear();
+            if (!omitWriterTable) {
+                var writerTransaction = database.transaction(
+                        ("htmldb_" + tableElementId + "_writer"),
+                        "readwrite");
+                var writerStore = writerTransaction.objectStore(
+                        "htmldb_" + tableElementId + "_writer");
+                writerStore.clear();
+            }
         }
     },
     "isNewObject": function (object) {
