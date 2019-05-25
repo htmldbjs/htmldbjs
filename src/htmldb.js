@@ -5716,8 +5716,13 @@ var HTMLDB = {
             omitWriterTable = false;
         }
 
-        HTMLDB.clearReaderTable(tableElement);
-        HTMLDB.clearWriterTable(tableElement);
+        if (!omitReaderTable) {
+            HTMLDB.clearReaderTable(tableElement);
+        }
+
+        if (!omitWriterTable) {
+            HTMLDB.clearWriterTable(tableElement);
+        }
 
         if (HTMLDB.checkIfIndexedDBTableExists(tableElement)) {
             var tableElementId = tableElement.getAttribute("id");
