@@ -1000,6 +1000,30 @@ var HTMLDB = {
     "getActiveId": function (tableElement) {
         return tableElement.getAttribute("data-htmldb-active-id");
     },
+    "getTableRowCount": function (tableElement) {
+        return HTMLDB.getReaderTableCount(tableElement)
+                + HTMLDB.getWriterTableCount(tableElement);
+    },
+    "getReaderTableRowCount": function (tableElement) {
+        var tbodyElement = HTMLDB.e(tableElement.getAttribute("id")
+                + "_reader_tbody");
+        
+        if (!tbodyElement) {
+            return 0;
+        }
+
+        return tbodyElement.children.length;
+    },
+    "getWriterTableRowCount": function (tableElement) {
+        var tbodyElement = HTMLDB.e(tableElement.getAttribute("id")
+                + "_writer_tbody");
+        
+        if (!tbodyElement) {
+            return 0;
+        }
+
+        return tbodyElement.children.length;
+    },
     "resetWriterLoop": function () {
         var HTMLDBWriterTimer = document.body.HTMLDBWriterTimer;
         clearTimeout(HTMLDBWriterTimer);
