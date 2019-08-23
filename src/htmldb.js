@@ -5815,7 +5815,7 @@ var HTMLDB = {
         return HTMLDB.pausing;
     },
     "addParentLoadingClass": function (element) {
-        if (!HTMLDB.hasHTMLDBParameter(element, "parent-loading-class")) {
+        if (HTMLDB.hasHTMLDBParameter(element, "parent-loading-class")) {
             var parentIndex = HTMLDB.getHTMLDBParameter(element, "parent-loading-class");
             var parentElement = element;
             while (parentIndex > 0) {
@@ -5828,7 +5828,7 @@ var HTMLDB = {
         }
     },
     "removeParentLoadingClass": function (element) {
-        if (!HTMLDB.hasHTMLDBParameter(element, "parent-loading-class")) {
+        if (HTMLDB.hasHTMLDBParameter(element, "parent-loading-class")) {
             var parentIndex = HTMLDB.getHTMLDBParameter(element, "parent-loading-class");
             var parentElement = element;
             while (parentIndex > 0) {
