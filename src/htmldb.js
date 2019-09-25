@@ -315,6 +315,7 @@ var HTMLDB = {
     },
     "validateRemote": function (tableElement, objectArray, functionDone) {
         var tableElementId = tableElement.getAttribute("id");
+        var overriddenURL = HTMLDB.getHTMLDBParameter(tableElement, "overridden-validate-url");
         var validateURL = HTMLDB.getHTMLDBParameter(tableElement, "validate-url");
         validateURL = HTMLDB.evaluateHTMLDBExpression(validateURL);
 
@@ -323,6 +324,11 @@ var HTMLDB = {
                     + tableElementId
                     + " validate URL attribute is empty."));
             return false;
+        }
+
+        if (overriddenURL != "") {
+            validateURL = overriddenURL;
+            HTMLDB.setHTMLDBParameter(tableElement, "overridden-validate-url", "");
         }
 
         var iframeFormGUID = HTMLDB.generateDateTimeGUID('validate');
@@ -4946,6 +4952,8 @@ var HTMLDB = {
         var checkboxGroupId = HTMLDB.getHTMLDBParameter(eventTarget, "checkbox-group");
         var form = null;
         var checkboxGroup = null;
+        var isValidateOnly = HTMLDB.isHTMLDBParameter(eventTarget, "validate-only");
+        var validateURL = HTMLDB.getHTMLDBParameter(eventTarget, "validate-url");
 
         if (("" == formId) && ("" == checkboxGroupId)) {
             form = HTMLDB.exploreHTMLDBForm(eventTarget);
@@ -5018,6 +5026,10 @@ var HTMLDB = {
 
         HTMLDB.clearErrorsAndMessages(tableElement);
 
+        if (validateURL != "") {
+            HTMLDB.setHTMLDBParameter(tableElement, "overridden-validat-url", validateURL);
+        }
+
         HTMLDB.validate(tableElement, objectArray, function (tableElement, responseText) {
             var responseObject = null;
             try {
@@ -5038,7 +5050,9 @@ var HTMLDB = {
 
                 for (var i = 0; i < objectCount; i++) {
                     object = objectArray[i];
-                    HTMLDB.insert(tableElement, object);
+                    if (!isValidateOnly) {
+                        HTMLDB.insert(tableElement, object);
+                    }
                 }
 
                 eventTarget.dispatchEvent(new CustomEvent(
