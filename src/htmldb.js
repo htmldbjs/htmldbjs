@@ -999,8 +999,12 @@ var HTMLDB = {
             childTableIdCount = childTableIds.length;
             for (var i = 0; i < childTableIdCount; i++) {
                 childTableElement = HTMLDB.e(childTableIds[i]);
-                HTMLDB.updateReadQueue(childTableElement);
+                HTMLDB.updateReadQueue(childTableElement, true);
             }
+
+			if (childTableIdCount > 0) {
+				HTMLDB.processReadQueue();
+			}
         }
     },
     "getActiveId": function (tableElement) {
@@ -1117,7 +1121,7 @@ var HTMLDB = {
                 = "";
         HTMLDB.updateReadQueue(tableElement);
     },
-    "updateReadQueue": function (tableElement) {
+    "updateReadQueue": function (tableElement, skipProcess) {
         var tableIds = [];
         var tableId = "";
         var tableIdCount = 0;
@@ -1146,7 +1150,9 @@ var HTMLDB = {
             HTMLDB.readQueue[priority].push(tableId);
         }
 
-        HTMLDB.processReadQueue();
+		if (!(true === skipProcess)) {
+        	HTMLDB.processReadQueue();
+		}
     },
     "updateReadQueueCallbacks": function (tableElement, callbackFunction) {
         if (undefined === HTMLDB.readQueueCallbacks[tableElement.getAttribute("id")]) {
@@ -1208,6 +1214,7 @@ var HTMLDB = {
 
         for (var i = 0; i < templateElementCount; i++) {
             templateElement = templateElements[i];
+
             if (tableElement.getAttribute("id")
                     != HTMLDB.getHTMLDBParameter(templateElement, "table")) {
                 continue;
@@ -1240,12 +1247,12 @@ var HTMLDB = {
             */
 
             if (templateElement.renderFunction) {
-                templateElement.renderFunction(tableElement, rows);
-                HTMLDB.initializeHTMLDBButtons(targetElement);
-                templateElement.dispatchEvent(
-                        new CustomEvent(
-                        "htmldbrender",
-                        {detail: {"targets": tableElement.HTMLDBTemplateTargets}}));
+				templateElement.renderFunction(tableElement, rows);
+				HTMLDB.initializeHTMLDBButtons(targetElement);
+				templateElement.dispatchEvent(
+						new CustomEvent(
+						"htmldbrender",
+						{detail: {"targets": tableElement.HTMLDBTemplateTargets}}));
             }
         }
     },
@@ -3751,10 +3758,14 @@ var HTMLDB = {
         var tableElementId = "";
         var tableElement = null;
         var processedTableCount = 0;
+		var currentReadingQueueCount = 0;
+		var currentReadingQueue = [];
 
-        if (HTMLDB.readingQueue) {         
-            for (var i = 0; i < HTMLDB.readingQueue.length; i++) {
-                tableElementId = HTMLDB.readingQueue[i];
+        if (HTMLDB.readingQueue) {
+			currentReadingQueue = HTMLDB.readingQueue.slice();
+			currentReadingQueueCount = currentReadingQueue.length;
+            for (var i = 0; i < currentReadingQueueCount; i++) {
+                tableElementId = currentReadingQueue[i];
                 tableElement = HTMLDB.e(tableElementId);
 
                 if (HTMLDB.isInReadQueue(tableElement)) {
