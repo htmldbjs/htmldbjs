@@ -1619,8 +1619,8 @@ var HTMLDB = {
                     eventTarget.result);
 
             setTimeout(function () {
-                HTMLDB.callReadQueueCallbacks(tableElement);
                 HTMLDB.removeFromReadingQueue(tableElement);
+                HTMLDB.callReadQueueCallbacks(tableElement);
                 HTMLDB.updateReadQueueByParentTable(tableElement);
                 HTMLDB.processReadQueue();
 
@@ -5562,13 +5562,6 @@ var HTMLDB = {
             }, 300);
             document.body.HTMLDBCompleteTimer = HTMLDBCompleteTimer;
         }
-        if ((0 == HTMLDB.readQueue.length)
-                && (0 == HTMLDB.readingQueue.length)) {
-            document.body.dispatchEvent(
-                    new CustomEvent(
-                    "htmldbreadqueuecomplete",
-                    {detail: {}}));
-        }
         if (undefined === HTMLDB.readQueueCallbacks[tableElement.getAttribute("id")]) {
             return;
         }
@@ -5723,8 +5716,8 @@ var HTMLDB = {
         HTMLDB.hideLoader(tableElement, "read");
 
         setTimeout(function () {
-            HTMLDB.callReadQueueCallbacks(tableElement);
             HTMLDB.removeFromReadingQueue(tableElement);
+            HTMLDB.callReadQueueCallbacks(tableElement);
             HTMLDB.updateReadQueueByParentTable(tableElement);
             HTMLDB.processReadQueue();
 
