@@ -65,6 +65,7 @@ Following examples show the usage of filters:
 
 | Event Name | Description  |
 | ---- | ---- |
+| `htmldbbeforeredirect` | Triggered before redirect operation after `write` process performed.<br><br>`Event.detail.redirectURL` holds redirect URL. |
 | `htmldberror` | Triggered when an error returned especially after validation process.<br><br>`Event.detail.errorText` holds the error text returned. |
 | `htmldbmessage` | Triggered when a message returned especially after validation process.<br><br>`Event.detail.messageText` holds the message text returned. |
 | `htmldbread` | Triggered when table is readed.<br><br>`Event.detail.remote` holds boolean value for the "read" events from server.<br>`Event.detail.local` holds boolean value for the "read" events from browser's local storage (indexedDB). |

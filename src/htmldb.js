@@ -509,6 +509,10 @@ var HTMLDB = {
                         "redirect");
                 redirectURL = HTMLDB.evaluateHTMLDBExpression(redirectURL);
                 if (redirectURL != "") {
+                    tableElement.dispatchEvent(
+                            new CustomEvent(
+                            "htmldbbeforeredirect",
+                            {detail: {"redirectURL":redirectURL}}));
                     window.location.href = redirectURL;
                 }
             }
@@ -1113,6 +1117,10 @@ var HTMLDB = {
         }
         var redirectURL = HTMLDB.getHTMLDBParameter(tableElement, "redirect");
         if (redirectURL != "") {
+            tableElement.dispatchEvent(
+                    new CustomEvent(
+                    "htmldbbeforeredirect",
+                    {detail: {"redirectURL":redirectURL}}));
             window.location.href = redirectURL;
         }
         HTMLDB.e(
