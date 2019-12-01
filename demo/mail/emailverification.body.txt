@@ -1,6 +1,0 @@
-Değerli {{title}} {{firstName}} {{lastName}};
-ideaport.org.tr adresine kayıt işleminizi tamamlamak için lütfen aşağıdaki bağlantıya tıklayarak e-posta adresinizi onaylayınız.
-
-http://etkilesim.ideaport.org.tr/verify_registration/{{sessionKey}}
-
-Bu e-posta {{emailFromName}} tarafından {{emailAddress}} adresine gönderilmiştir.
