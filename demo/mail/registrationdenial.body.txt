@@ -1,6 +1,0 @@
-Değerli {{title}} {{firstName}} {{lastName}};
-
-Girmiş olduğunuz bilgilerin geçerliliği teyit edilememektedir. Bundan dolayı ya kayıt formunu "yeniden doldurarak" kayıt yaptırmanızı
-ya da ideaport ile ilgili gelişmeleri doğrudan www.ideaport.org.tr internet sitemiz ya da https://www.youtube.com/channel/UCZlKmeFbS8LnQMArHURS9Ow üzerinden takip etmenizi rica ederiz.
-
-Bu e-posta {{emailFromName}} tarafından {{emailAddress}} adresine gönderilmiştir.
