@@ -3560,7 +3560,7 @@ var HTMLDB = {
             }
         }
 
-        indices.sort();
+        indices.sort(HTMLDB.compareInteger);
 
         for (var i = 0; i < tableElementCount; i++) {
             tableElement = tableElements[i];
@@ -3581,6 +3581,9 @@ var HTMLDB = {
         HTMLDB.readQueue = priorities;
 
         HTMLDB.processReadQueue();
+    },
+    "compareInteger": function (a, b) {
+        return (a - b);
     },
     "readChildTable": function (tableElement, functionDone) {
         if (!tableElement) {
