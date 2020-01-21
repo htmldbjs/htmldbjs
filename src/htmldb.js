@@ -502,18 +502,34 @@ var HTMLDB = {
                             iframeWindow.document.body.innerHTML).trim();
                 }
 
+                var responseObject = {};
+                var hasErrors = false;
+
+                try {
+                    responseObject = JSON.parse(String(decodeURIComponent(responseText)).trim());
+                } catch (e) {
+                }
+
+                if ((responseObject.errorCount !== undefined)
+                        && (responseObject.errorCount > 0)) {
+                    hasErrors = true;
+                }
+
                 HTMLDB.doWriterIframeLoad(event);
                 functionDone(tableElement, responseText);
-                var redirectURL = HTMLDB.getHTMLDBParameter(
-                        tableElement,
-                        "redirect");
-                redirectURL = HTMLDB.evaluateHTMLDBExpression(redirectURL);
-                if (redirectURL != "") {
-                    tableElement.dispatchEvent(
-                            new CustomEvent(
-                            "htmldbbeforeredirect",
-                            {detail: {"redirectURL":redirectURL}}));
-                    window.location.href = redirectURL;
+
+                if (!hasErrors)
+                    var redirectURL = HTMLDB.getHTMLDBParameter(
+                            tableElement,
+                            "redirect");
+                    redirectURL = HTMLDB.evaluateHTMLDBExpression(redirectURL);
+                    if (redirectURL != "") {
+                        tableElement.dispatchEvent(
+                                new CustomEvent(
+                                "htmldbbeforeredirect",
+                                {detail: {"redirectURL":redirectURL}}));
+                        window.location.href = redirectURL;
+                    }
                 }
             }
         }
@@ -1090,8 +1106,24 @@ var HTMLDB = {
                         + "_writer_tbody");
                 HTMLDB.deleteMarkedRows(writerTable, "updating");
                 // If there is a record to be written, write them first...
+
+                var responseObject = {};
+                var hasErrors = false;
+
+                try {
+                    responseObject = JSON.parse(String(decodeURIComponent(responseText)).trim());
+                } catch (e) {
+                }
+
+                if ((responseObject.errorCount !== undefined)
+                    && (responseObject.errorCount > 0)) {
+                    hasErrors = true;
+                }
+
                 if (0 == writerTable.children.length) {
-                    HTMLDB.doTableWrite(tableElement);
+                    if (!hasErrors) {
+                        HTMLDB.doTableWrite(tableElement);
+                    }
                 } else {
                     HTMLDB.writeTables();
                 }
