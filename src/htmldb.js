@@ -518,7 +518,7 @@ var HTMLDB = {
                 HTMLDB.doWriterIframeLoad(event);
                 functionDone(tableElement, responseText);
 
-                if (!hasErrors)
+                if (!hasErrors) {
                     var redirectURL = HTMLDB.getHTMLDBParameter(
                             tableElement,
                             "redirect");
