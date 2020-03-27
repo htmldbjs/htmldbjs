@@ -4530,6 +4530,12 @@ var HTMLDB = {
         var iframe = null;
         var form = null;
 
+        var method = HTMLDB.getHTMLDBParameter(tableElement, "method");
+
+        if ("" == method) {
+            method = "post";
+        }
+
         iframe = document.createElement("iframe");
         iframe.src = "";
         iframe.style.display = "none";
@@ -4543,7 +4549,7 @@ var HTMLDB = {
         form.style.display = "none";
         form.id = (tableElementId + "_form_" + guid);
         form.name = (tableElementId + "_form_" + guid);
-        form.method = "post";
+        form.method = method;
         form.target = (tableElementId + "_iframe_" + guid);
         form.setAttribute("data-htmldb-id", tableElementId);
         formContainer.appendChild(form);
